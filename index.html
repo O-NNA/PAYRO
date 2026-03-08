@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAYRO — Global Capital Platform</title>
+<!-- SPONSOR AD SCRIPT -->
+<script type='text/javascript' src='https://pl28874426.effectivegatecpm.com/1f/81/29/1f8129a5e1425dd72a6354c5ecff9d54.js'></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -588,8 +590,40 @@ input,select{font-family:var(--f-body)}
 }
 
 /* ================================================================
-   26. DAILY REWARD MODAL
+   SPONSOR BANNER PLACEHOLDERS
 ================================================================ */
+.sponsor-banner-top{
+  width:100%;background:var(--bg1);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;padding:6px 20px;
+  min-height:60px;position:relative;z-index:50;
+  border:2px solid rgba(255,0,0,0.65);
+  animation:neonAdCycle 16s ease-in-out infinite;
+}
+.sponsor-banner-bottom{
+  width:100%;background:var(--bg1);border-top:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;padding:6px 20px;
+  min-height:60px;position:relative;z-index:50;
+  border:2px solid rgba(255,0,0,0.65);
+  animation:neonAdCycle 16s ease-in-out infinite;
+  animation-delay:4s;
+}
+.sponsor-banner-inner{
+  width:100%;max-width:970px;min-height:50px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--txt3);letter-spacing:.05em;gap:10px;
+}
+/* RGB Glow on Claim & Spin action zones */
+.sponsor-action-wrap{
+  position:relative;border-radius:var(--r-md);padding:2px;
+  border:2px solid rgba(255,0,0,0.65);
+  animation:neonAdCycle 12s ease-in-out infinite;
+  margin-bottom:4px;
+}
+.sponsor-action-inner{
+  background:var(--bg2);border-radius:calc(var(--r-md) - 2px);
+  padding:4px;
+}
+
 .daily-modal{display:none;position:fixed;inset:0;z-index:7100;align-items:center;justify-content:center;background:rgba(5,7,15,.92);backdrop-filter:blur(8px)}
 .daily-modal.show{display:flex}
 .daily-box{max-width:420px;width:90%;padding:38px;text-align:center}
@@ -820,6 +854,18 @@ input,select{font-family:var(--f-body)}
     </div>
   </nav>
 
+  <!-- ╔══════════════════════════════════════════════════════╗
+       ║  SPONSOR BANNER — TOP PLACEMENT (728×90 / Adaptive) ║
+       ╚══════════════════════════════════════════════════════╝ -->
+  <div class="sponsor-banner-top" id="sponsor-banner-top">
+    <div class="sponsor-banner-inner">
+      <span class="ad-tag">SPONSOR</span>
+      <!-- External banner script / iframe goes here -->
+      <span style="font-size:10px;opacity:.4">970 × 50 — Top Sponsor Banner</span>
+      <span class="ad-tag">AD</span>
+    </div>
+  </div>
+
   <!-- DRAWER OVERLAY -->
   <div class="drw-ov" id="drw-ov" onclick="closeDrawer()"></div>
 
@@ -961,14 +1007,18 @@ input,select{font-family:var(--f-body)}
                   </div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px">
-                  <button class="watch-btn" style="flex:1" id="watch-btn" onclick="watchAd()">
-                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg>Watch Ad (+1 Token)
+                  <div class="sponsor-action-wrap" style="flex:1"><div class="sponsor-action-inner">
+                  <button class="watch-btn" style="width:100%" id="watch-btn" onclick="watchAd()">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg>Visit Sponsor (0/3 to earn token)
                   </button>
+                  </div></div>
                   <div class="rgb-ad-inline" style="width:140px;height:46px"><div class="rgb-ad-inline-inner"><span class="ad-tag" style="font-size:8px">AD</span><span style="font-size:10px">160×90 Spot</span></div></div>
                 </div>
+                <div class="sponsor-action-wrap"><div class="sponsor-action-inner">
                 <button class="spin-btn" id="spin-btn" onclick="doSpin()" disabled>
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>Spin Now — Costs 1 Token
                 </button>
+                </div></div>
                 <div class="odds-tbl">
                   <div class="odds-row oh"><div>Segment</div><div class="odds-prob">Odds</div><div class="odds-reward">Reward</div></div>
                   <div class="odds-row"><div class="odds-seg"><div class="seg-swatch" style="background:#f5a623"></div>Gold</div><div class="odds-prob">5%</div><div class="odds-reward" style="color:#f5a623">$0.10</div></div>
@@ -1207,7 +1257,9 @@ input,select{font-family:var(--f-body)}
             <span id="faucet-status-txt">Complete ad verification first</span>
           </div>
           <div class="claim-btn-wrap">
+            <div class="sponsor-action-wrap"><div class="sponsor-action-inner">
             <button class="big-claim-btn" id="faucet-main-btn" onclick="claimFaucet()" disabled>🪙 Claim Faucet Reward</button>
+            </div></div>
             <div class="claim-locked-ov" id="claim-locked-ov">
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
               Verify ad above first
@@ -1443,6 +1495,18 @@ input,select{font-family:var(--f-body)}
       <span class="ad-tag">AD</span>
     </div>
   </footer>
+
+  <!-- ╔═══════════════════════════════════════════════════════════╗
+       ║  SPONSOR BANNER — BOTTOM PLACEMENT (728×90 / Adaptive)   ║
+       ╚═══════════════════════════════════════════════════════════╝ -->
+  <div class="sponsor-banner-bottom" id="sponsor-banner-bottom">
+    <div class="sponsor-banner-inner">
+      <span class="ad-tag">SPONSOR</span>
+      <!-- External banner script / iframe goes here -->
+      <span style="font-size:10px;opacity:.4">970 × 50 — Bottom Sponsor Banner</span>
+      <span class="ad-tag">AD</span>
+    </div>
+  </div>
 
 </div><!-- /wrap -->
 
@@ -1730,24 +1794,28 @@ function updateTokenUI(){
   const sb=$('spin-btn');if(sb)sb.disabled=S.tokens<1||spinRunning;
 }
 
-/* Ad watch modal */
+/* Ad watch modal — replaced with Sponsor Link (3 clicks = 1 token) */
+const SPONSOR_URL='https://www.effectivegatecpm.com/nggi65rdt?key=c362fb020f08cec743f70638e748b70f';
+let sponsorClickCount=0;
+const SPONSOR_CLICKS_REQUIRED=3;
 let adWatchTimer=null;
 function watchAd(){
   if(S.tokens>=S.maxTokens){toast('Tokens full! Use them to spin.','warn');return}
-  $('ad-modal').classList.add('show');
-  let t=30;const fill=$('ar-fill');const num=$('ar-num');
-  const total=314;
-  adWatchTimer=setInterval(()=>{
-    t--;if(num)num.textContent=t;
-    if(fill)fill.style.strokeDashoffset=total-(total*((30-t)/30));
-    if(t<=0){
-      clearInterval(adWatchTimer);
-      $('ad-modal').classList.remove('show');
-      S.tokens=Math.min(S.tokens+1,S.maxTokens);
-      updateTokenUI();SFX.play('ding');
-      toast('+1 Spin Token earned!','success');
-    }
-  },1000);
+  // Open sponsor link in new tab
+  window.open(SPONSOR_URL,'_blank');
+  sponsorClickCount++;
+  const remaining=SPONSOR_CLICKS_REQUIRED-sponsorClickCount;
+  const btn=$('watch-btn');
+  if(sponsorClickCount>=SPONSOR_CLICKS_REQUIRED){
+    sponsorClickCount=0;
+    S.tokens=Math.min(S.tokens+1,S.maxTokens);
+    updateTokenUI();SFX.play('ding');
+    toast('+1 Spin Token earned! You can spin now.','success');
+    if(btn)btn.innerHTML='<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg>Visit Sponsor (0/3 to earn token)';
+  }else{
+    toast('Sponsor visit '+sponsorClickCount+'/'+SPONSOR_CLICKS_REQUIRED+' — '+remaining+' more visit'+(remaining>1?'s':'')+' to earn a token!','info');
+    if(btn)btn.innerHTML='<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg>Visit Sponsor ('+sponsorClickCount+'/'+SPONSOR_CLICKS_REQUIRED+' — '+remaining+' more)';
+  }
 }
 
 function doSpin(){
@@ -1913,6 +1981,8 @@ function startFaucetVerify(){
 function claimFaucet(){
   if(!S.faucetVerified){toast('Complete the 15-second compliance timer first.','warn');return}
   if(S.faucetActive){toast('Faucet protocol on cooldown — 5 minutes remaining.','warn');return}
+  // Open sponsor link in new tab before crediting reward
+  window.open(SPONSOR_URL,'_blank');
   const rew=S.tierRate;
   S.balance+=rew;S.sessionEarned+=rew;S.faucetActive=true;S.faucetVerified=false;
   addTx('Faucet Claim',rew,'credit');updateWallet();SFX.play('win');
