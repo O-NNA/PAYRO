@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GigVault Pro — 3D Gaming Ecosystem v4</title>
+<title>PAYRO — Global Capital Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -533,25 +533,58 @@ input,select{font-family:var(--f-body)}
    24. RESPONSIVE
 ================================================================ */
 /* ================================================================
-   25. RGB NEON SCREEN BORDER — Premium Gaming Frame
+   25. RGB NEON SCREEN BORDER — Red › Green › Blue › Purple cycle
 ================================================================ */
 @keyframes neonRgbCycle {
-  0%   { border-color:#ff0000;box-shadow:0 0 18px 4px #ff0000,0 0 35px 8px rgba(255,0,0,0.35),inset 0 0 18px rgba(255,0,0,0.08)}
-  10%  { border-color:#ff4400;box-shadow:0 0 18px 4px #ff4400,0 0 35px 8px rgba(255,68,0,0.35),inset 0 0 18px rgba(255,68,0,0.08)}
-  20%  { border-color:#ff9900;box-shadow:0 0 18px 4px #ff9900,0 0 35px 8px rgba(255,153,0,0.35),inset 0 0 18px rgba(255,153,0,0.08)}
-  30%  { border-color:#ffff00;box-shadow:0 0 18px 4px #ffff00,0 0 35px 8px rgba(255,255,0,0.35),inset 0 0 18px rgba(255,255,0,0.08)}
-  40%  { border-color:#00ff44;box-shadow:0 0 18px 4px #00ff44,0 0 35px 8px rgba(0,255,68,0.35),inset 0 0 18px rgba(0,255,68,0.08)}
-  50%  { border-color:#00ffdd;box-shadow:0 0 18px 4px #00ffdd,0 0 35px 8px rgba(0,255,221,0.35),inset 0 0 18px rgba(0,255,221,0.08)}
-  60%  { border-color:#00aaff;box-shadow:0 0 18px 4px #00aaff,0 0 35px 8px rgba(0,170,255,0.35),inset 0 0 18px rgba(0,170,255,0.08)}
-  70%  { border-color:#4400ff;box-shadow:0 0 18px 4px #4400ff,0 0 35px 8px rgba(68,0,255,0.35),inset 0 0 18px rgba(68,0,255,0.08)}
-  80%  { border-color:#aa00ff;box-shadow:0 0 18px 4px #aa00ff,0 0 35px 8px rgba(170,0,255,0.35),inset 0 0 18px rgba(170,0,255,0.08)}
-  90%  { border-color:#ff00bb;box-shadow:0 0 18px 4px #ff00bb,0 0 35px 8px rgba(255,0,187,0.35),inset 0 0 18px rgba(255,0,187,0.08)}
-  100% { border-color:#ff0000;box-shadow:0 0 18px 4px #ff0000,0 0 35px 8px rgba(255,0,0,0.35),inset 0 0 18px rgba(255,0,0,0.08)}
+  /* ── RED ── */
+  0%   { border-color:#ff0000;
+         box-shadow:0 0 12px 3px #ff0000,0 0 28px 6px rgba(255,0,0,0.5),0 0 55px 10px rgba(255,0,0,0.2),
+                    inset 0 0 22px rgba(255,0,0,0.06) }
+  22%  { border-color:#ff0000;
+         box-shadow:0 0 12px 3px #ff0000,0 0 28px 6px rgba(255,0,0,0.5),0 0 55px 10px rgba(255,0,0,0.2),
+                    inset 0 0 22px rgba(255,0,0,0.06) }
+  /* ── transition RED → GREEN ── */
+  28%  { border-color:#00ff44;
+         box-shadow:0 0 12px 3px #00ff44,0 0 28px 6px rgba(0,255,68,0.5),0 0 55px 10px rgba(0,255,68,0.2),
+                    inset 0 0 22px rgba(0,255,68,0.06) }
+  /* ── GREEN ── */
+  28%  { border-color:#00ff44;
+         box-shadow:0 0 12px 3px #00ff44,0 0 28px 6px rgba(0,255,68,0.5),0 0 55px 10px rgba(0,255,68,0.2),
+                    inset 0 0 22px rgba(0,255,68,0.06) }
+  47%  { border-color:#00ff44;
+         box-shadow:0 0 12px 3px #00ff44,0 0 28px 6px rgba(0,255,68,0.5),0 0 55px 10px rgba(0,255,68,0.2),
+                    inset 0 0 22px rgba(0,255,68,0.06) }
+  /* ── transition GREEN → BLUE ── */
+  53%  { border-color:#0077ff;
+         box-shadow:0 0 12px 3px #0077ff,0 0 28px 6px rgba(0,119,255,0.5),0 0 55px 10px rgba(0,119,255,0.2),
+                    inset 0 0 22px rgba(0,119,255,0.06) }
+  /* ── BLUE ── */
+  53%  { border-color:#0077ff;
+         box-shadow:0 0 12px 3px #0077ff,0 0 28px 6px rgba(0,119,255,0.5),0 0 55px 10px rgba(0,119,255,0.2),
+                    inset 0 0 22px rgba(0,119,255,0.06) }
+  72%  { border-color:#0077ff;
+         box-shadow:0 0 12px 3px #0077ff,0 0 28px 6px rgba(0,119,255,0.5),0 0 55px 10px rgba(0,119,255,0.2),
+                    inset 0 0 22px rgba(0,119,255,0.06) }
+  /* ── transition BLUE → PURPLE ── */
+  78%  { border-color:#aa00ff;
+         box-shadow:0 0 12px 3px #aa00ff,0 0 28px 6px rgba(170,0,255,0.5),0 0 55px 10px rgba(170,0,255,0.2),
+                    inset 0 0 22px rgba(170,0,255,0.06) }
+  /* ── PURPLE ── */
+  78%  { border-color:#aa00ff;
+         box-shadow:0 0 12px 3px #aa00ff,0 0 28px 6px rgba(170,0,255,0.5),0 0 55px 10px rgba(170,0,255,0.2),
+                    inset 0 0 22px rgba(170,0,255,0.06) }
+  97%  { border-color:#aa00ff;
+         box-shadow:0 0 12px 3px #aa00ff,0 0 28px 6px rgba(170,0,255,0.5),0 0 55px 10px rgba(170,0,255,0.2),
+                    inset 0 0 22px rgba(170,0,255,0.06) }
+  /* ── back to RED ── */
+  100% { border-color:#ff0000;
+         box-shadow:0 0 12px 3px #ff0000,0 0 28px 6px rgba(255,0,0,0.5),0 0 55px 10px rgba(255,0,0,0.2),
+                    inset 0 0 22px rgba(255,0,0,0.06) }
 }
 .screen-rgb-frame{
   position:fixed;inset:0;z-index:9990;pointer-events:none;
-  border:3px solid #ff0000;border-radius:0;
-  animation:neonRgbCycle 4s linear infinite;
+  border:3px solid #ff0000;
+  animation:neonRgbCycle 6s ease-in-out infinite;
 }
 
 /* ================================================================
@@ -572,11 +605,97 @@ input,select{font-family:var(--f-body)}
 @media(max-width:1050px){.spin-layout{grid-template-columns:1fr}.mines-layout{grid-template-columns:1fr}.promo-layout{grid-template-columns:1fr}}
 @media(max-width:900px){.geo-grid{grid-template-columns:1fr 1fr}.pstats{grid-template-columns:1fr 1fr}.task-grid{grid-template-columns:1fr}.faucet-body{grid-template-columns:1fr}}
 @media(max-width:600px){.main{padding:14px 12px}.navbar{padding:0 14px}.geo-grid{grid-template-columns:1fr}.pstats{grid-template-columns:1fr 1fr}.wallet-pill .wallet-bal{display:none}.mines-grid{gap:5px;padding:12px}.w-actions{grid-template-columns:1fr}.spin-layout,.mines-layout{grid-template-columns:1fr}.hub-tabs{flex-direction:column}}
+
+/* ================================================================
+   A-ADS NEON RGB GLOW WRAPPERS
+================================================================ */
+@keyframes neonAdCycle{
+  0%,24%  {border-color:#ff0000;box-shadow:0 0 14px 3px #ff0000,0 0 30px 6px rgba(255,0,0,0.45),0 0 60px 10px rgba(255,0,0,0.15)}
+  25%,49% {border-color:#00ff44;box-shadow:0 0 14px 3px #00ff44,0 0 30px 6px rgba(0,255,68,0.45),0 0 60px 10px rgba(0,255,68,0.15)}
+  50%,74% {border-color:#0077ff;box-shadow:0 0 14px 3px #0077ff,0 0 30px 6px rgba(0,119,255,0.45),0 0 60px 10px rgba(0,119,255,0.15)}
+  75%,99% {border-color:#aa00ff;box-shadow:0 0 14px 3px #aa00ff,0 0 30px 6px rgba(170,0,255,0.45),0 0 60px 10px rgba(170,0,255,0.15)}
+  100%    {border-color:#ff0000;box-shadow:0 0 14px 3px #ff0000,0 0 30px 6px rgba(255,0,0,0.45),0 0 60px 10px rgba(255,0,0,0.15)}
+}
+.aads-neon-wrap{
+  position:relative;border-radius:var(--r-md);
+  border:3px solid #ff0000;
+  animation:neonAdCycle 6s ease-in-out infinite;
+  background:var(--bg2);
+  overflow:hidden;
+  width:100%;
+}
+.aads-neon-inner{
+  padding:10px 8px;
+  background:var(--obsidian2,#060810);
+  border-radius:calc(var(--r-md) - 3px);
+  min-height:90px;
+  display:flex;align-items:center;justify-content:center;
+}
+/* STICKY TOP */
+.aads-sticky-top{
+  position:fixed;top:0;left:0;right:0;z-index:9980;
+  border-radius:0;border-left:none;border-right:none;border-top:none;
+  border-bottom:3px solid #ff0000;
+  animation:neonAdCycle 6s ease-in-out infinite;
+}
+.aads-sticky-top .aads-neon-inner{min-height:70px;padding:6px 16px}
+/* STICKY BOTTOM */
+.aads-sticky-bottom{
+  position:fixed;bottom:0;left:0;right:0;z-index:9980;
+  border-radius:0;border-left:none;border-right:none;border-bottom:none;
+  border-top:3px solid #ff0000;
+  animation:neonAdCycle 6s ease-in-out infinite;
+  animation-delay:1.5s;
+}
+.aads-sticky-bottom .aads-neon-inner{min-height:70px;padding:6px 16px}
+/* Body padding for sticky bars */
+body{padding-top:76px;padding-bottom:76px}
+/* Partner Program Section */
+.partner-hero{padding:28px;background:linear-gradient(135deg,rgba(0,212,255,.06),rgba(139,92,246,.04));border:1px solid rgba(0,212,255,.15);border-radius:var(--r-md);margin-bottom:20px;position:relative;overflow:hidden}
+.partner-hero::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.08),transparent);pointer-events:none}
+.partner-eyebrow{font-size:9px;font-weight:700;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.partner-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:ldPulse 2s ease-in-out infinite}
+.partner-title{font-family:var(--f-display);font-size:22px;font-weight:700;letter-spacing:.04em;margin-bottom:6px;background:linear-gradient(90deg,var(--cyan),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.partner-sub{font-size:13px;color:var(--txt2);line-height:1.7}
+.partner-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.ps-card{padding:18px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);text-align:center}
+.ps-val{font-family:var(--f-mono);font-size:24px;font-weight:700;color:var(--txt);line-height:1;margin-bottom:5px}
+.ps-lbl{font-size:10px;color:var(--txt3);font-weight:600;letter-spacing:.07em;text-transform:uppercase}
+.partner-layout{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+.ref-link-box{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);overflow:hidden;margin-bottom:16px}
+.rlb-header{padding:12px 16px;border-bottom:1px solid var(--bdr2);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3)}
+.rlb-link{padding:14px 16px;font-family:var(--f-mono);font-size:12px;color:var(--txt2);word-break:break-all;min-height:46px;display:flex;align-items:center}
+.generate-ref-btn{width:100%;padding:15px;border-radius:var(--r-md);background:linear-gradient(135deg,var(--cyan),#0077aa);color:#000;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .25s var(--spring);box-shadow:0 6px 24px var(--cyan-g);margin-bottom:10px}
+.generate-ref-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,212,255,.45)}
+.copy-ref-btn{width:100%;padding:12px;border-radius:var(--r-md);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);color:var(--cyan);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s var(--ease);margin-bottom:14px}
+.copy-ref-btn:hover{background:rgba(0,212,255,.15)}
+.copy-ref-btn:disabled{opacity:.35;pointer-events:none}
+.partner-tiers{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);overflow:hidden}
+.pt-header{padding:12px 16px;border-bottom:1px solid var(--bdr2);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3)}
+.pt-row{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--bdr2);font-size:12px}
+.pt-row:last-child{border-bottom:none}
+.pt-tier{font-weight:600;color:var(--txt)}
+.pt-commission{font-family:var(--f-mono);font-weight:700;color:var(--green)}
+.partner-note{margin-top:14px;padding:12px 14px;background:rgba(0,212,255,.04);border:1px dashed rgba(0,212,255,.18);border-radius:var(--r-sm);font-size:11px;color:var(--txt3);line-height:1.65}
+@media(max-width:900px){.partner-layout{grid-template-columns:1fr}.partner-stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.partner-stats-grid{grid-template-columns:1fr};body{padding-top:60px;padding-bottom:60px}}
 </style>
 </head>
 <body>
 <!-- RGB NEON SCREEN BORDER -->
 <div class="screen-rgb-frame" id="screen-rgb-frame"></div>
+
+
+<!-- ====================================================
+     STICKY TOP AD BANNER — A-ADS SLOT 1
+==================================================== -->
+<div class="aads-neon-wrap aads-sticky-top" id="aads-slot-1">
+  <div class="aads-neon-inner">
+    <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+      <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+    </div>
+  </div>
+</div>
 
 <div class="bg-wrap"></div>
 <div class="bg-grid"></div>
@@ -590,7 +709,7 @@ input,select{font-family:var(--f-body)}
   <div class="card adblock-box">
     <div class="ab-icon"><svg width="30" height="30" fill="none" stroke="var(--amber)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
     <div class="ab-title">AdBlock Detected</div>
-    <div class="ab-body">GigVault Pro is 100% free — our ads fund all the real rewards. Please whitelist us to continue earning.</div>
+    <div class="ab-body">PAYRO is 100% free — our ads fund all the real rewards. Please whitelist us to continue earning.</div>
     <div class="ab-steps">
       <div class="ab-step"><div class="ab-n">1</div><div>Click your AdBlock icon in the browser toolbar</div></div>
       <div class="ab-step"><div class="ab-n">2</div><div>Select <strong>"Don't run on this page"</strong> or <strong>"Whitelist"</strong></div></div>
@@ -605,7 +724,7 @@ input,select{font-family:var(--f-body)}
   <div class="vpn-code">ERROR_CODE: GVP-7734-VPN</div>
   <div class="vpn-icon"><svg width="38" height="38" fill="none" stroke="var(--red)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
   <div class="vpn-title">VPN / Proxy Detected</div>
-  <div class="vpn-body">GigVault Pro requires a real residential IP address to validate earnings and prevent fraud. VPN / proxy connections are blocked by our security layer.</div>
+  <div class="vpn-body">PAYRO requires a real residential IP address to validate earnings and prevent fraud. VPN / proxy connections are blocked by our security layer.</div>
   <div class="vpn-lock-box">
     <svg width="22" height="22" fill="none" stroke="var(--red)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
     <div><div class="vpn-lock-timer">Locked</div><div class="vpn-lock-label">Access restricted</div></div>
@@ -649,7 +768,7 @@ input,select{font-family:var(--f-body)}
   </div>
 </div>
 
-<!-- Daily Reward Modal -->
+<!-- Daily Dividend Modal -->
 <div class="daily-modal" id="daily-modal">
   <div class="card daily-box">
     <div class="daily-ring">
@@ -666,9 +785,9 @@ input,select{font-family:var(--f-body)}
       <div class="dr-num" id="dr-num">30</div>
     </div>
     <div style="margin-bottom:14px">
-      <div class="rgb-ad" style="height:72px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> 300 × 90 — Daily Reward Verification<span class="ad-tag">AD</span></div></div>
+      <div class="rgb-ad" style="height:72px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> 300 × 90 — Daily Dividend Verification<span class="ad-tag">AD</span></div></div>
     </div>
-    <div class="daily-title">🎁 Daily Reward</div>
+    <div class="daily-title">Daily Dividend</div>
     <div class="daily-reward-badge">+$0.05 <span style="font-size:12px;color:var(--txt3);font-family:var(--f-body);font-weight:500">Daily Bonus</span></div>
     <div class="daily-sub">Security verification in progress. Your daily bonus will be credited automatically once the 30-second timer completes.</div>
     <div class="daily-security-note">
@@ -694,7 +813,7 @@ input,select{font-family:var(--f-body)}
   <nav class="navbar" role="navigation">
     <div class="nav-brand">
       <div class="nav-logo"><svg width="20" height="20" fill="none" stroke="#000" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-      <div class="brand-name-wrap"><span class="brand-name">GigVault Pro</span><span class="brand-sub">3D Gaming Ecosystem v4</span></div>
+      <div class="brand-name-wrap"><span class="brand-name">PAYRO</span><span class="brand-sub">3D Gaming Ecosystem v4</span></div>
     </div>
     <div class="nav-right">
       <div class="geo-pill detecting" id="geo-pill"><span class="flag" id="geo-flag">🌐</span><span id="geo-country">Detecting...</span><span class="rate" id="geo-rate">—</span></div>
@@ -730,15 +849,15 @@ input,select{font-family:var(--f-body)}
     <div class="drw-sec">Earn</div>
     <div class="drw-item" onclick="scrollToId('sec-tasks')" tabindex="0" role="button">
       <div class="di" style="color:var(--green)"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-      Micro-Task Center<span class="dbadge">5 Live</span>
+      Revenue Task Engine<span class="dbadge">5 Live</span>
     </div>
     <div class="drw-item" onclick="scrollToId('sec-promo')" tabindex="0" role="button">
       <div class="di" style="color:var(--violet)"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
-      Promo Code Center<span class="dbadge new">New</span>
+      Access Code Vault<span class="dbadge new">New</span>
     </div>
     <div class="drw-item" onclick="scrollToId('sec-faucet')" tabindex="0" role="button">
       <div class="di" style="color:var(--cyan)"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg></div>
-      5-Minute Faucet<span class="dbadge">Live</span>
+      Liquidity Faucet Protocol<span class="dbadge">Live</span>
     </div>
     <div class="drw-sec">Account</div>
     <div class="drw-item" onclick="scrollToId('sec-leaderboard')" tabindex="0" role="button">
@@ -747,7 +866,7 @@ input,select{font-family:var(--f-body)}
     </div>
     <div class="drw-item" onclick="scrollToId('sec-wallet')" tabindex="0" role="button">
       <div class="di" style="color:var(--green)"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/></svg></div>
-      Wallet &amp; Withdrawals<span class="dbadge" id="drw-wallet-badge2">$0.00</span>
+      Capital Account<span class="dbadge" id="drw-wallet-badge2">$0.00</span>
     </div>
     <div class="drw-item" onclick="scrollToId('sec-roadmap')" tabindex="0" role="button">
       <div class="di" style="color:var(--violet)"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 17l6-10 5 7 3-4 4 7"/></svg></div>
@@ -767,7 +886,7 @@ input,select{font-family:var(--f-body)}
           <div class="spin3d-icon"><div class="spin3d-coin">₿</div></div>
           <div>
             <div class="geo-ey">🔴 Live Platform</div>
-            <div class="geo-h1">Welcome to <em>GigVault Pro</em></div>
+            <div class="geo-h1">Welcome to <em>PAYRO</em></div>
             <div class="geo-sub" id="geo-sub">Detecting your region for optimized reward rates...</div>
           </div>
         </div>
@@ -904,8 +1023,8 @@ input,select{font-family:var(--f-body)}
                   <div class="mult-lbl">Current Multiplier</div>
                   <div class="mult-pot" id="mult-pot">Pot: $0.00</div>
                 </div>
-                <button class="mines-bet-btn" id="mines-bet-btn" onclick="startMines()">Place Bet &amp; Start</button>
-                <button class="cashout-btn" id="cashout-btn" onclick="cashOut()">💰 Cash Out</button>
+                <button class="mines-bet-btn" id="mines-bet-btn" onclick="startMines()">Open Position</button>
+                <button class="cashout-btn" id="cashout-btn" onclick="cashOut()">Secure Settlement</button>
                 <!-- Inline ad beside bet controls -->
                 <div style="margin-top:12px">
                   <div class="rgb-ad" style="height:90px"><div class="rgb-ad-inner" style="flex-direction:column;gap:4px;font-size:10px"><span class="ad-tag">AD</span>160×90 Spot<span class="ad-tag">AD</span></div></div>
@@ -937,18 +1056,18 @@ input,select{font-family:var(--f-body)}
     </div>
 
     <!-- ── SECTION: TASKS ── -->
-    <section class="card" id="sec-tasks" style="padding:24px" aria-label="Micro-Task Center">
+    <section class="card" id="sec-tasks" style="padding:24px" aria-label="Revenue Task Engine">
       <div class="sh">
         <div class="sh-l">
           <div class="sh-ic si-green"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-          <div class="sh-title"><strong>Micro-Task Center</strong><small>Rates adjusted to your detected region</small></div>
+          <div class="sh-title"><strong>Revenue Task Engine</strong><small>Yield rates calibrated to your detected region</small></div>
         </div>
         <button class="sh-btn" onclick="scrollToId('sec-faucet')">Go to Faucet ↓</button>
       </div>
       <div class="task-grid" style="margin-bottom:14px">
         <div class="card-inset faucet-mini">
           <div>
-            <div class="gs-lbl" style="margin-bottom:6px"><div class="live-dot"></div>5-Minute Faucet</div>
+            <div class="gs-lbl" style="margin-bottom:6px"><div class="live-dot"></div>Liquidity Faucet Protocol</div>
             <div class="faucet-rate" id="faucet-rate">Loading...</div>
             <div class="faucet-cd" id="faucet-cd">Ready to claim</div>
           </div>
@@ -971,12 +1090,12 @@ input,select{font-family:var(--f-body)}
     </div>
 
     <!-- ── SECTION: PROMO CODE CENTER ── -->
-    <section class="card" id="sec-promo" style="scroll-margin-top:80px" aria-label="Promo Code Center">
+    <section class="card" id="sec-promo" style="scroll-margin-top:80px" aria-label="Access Code Vault">
       <div style="padding:28px">
         <div class="sh">
           <div class="sh-l">
             <div class="sh-ic si-violet"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
-            <div class="sh-title"><strong>Promo Code Center</strong><small>Exclusive codes — one use per code every 24 hours</small></div>
+            <div class="sh-title"><strong>Access Code Vault</strong><small>Exclusive codes — one use per code every 24 hours</small></div>
           </div>
         </div>
         <div class="promo-eyebrow"><div class="promo-eyebrow-dot"></div>Ad-Verified Instant Rewards</div>
@@ -1038,7 +1157,7 @@ input,select{font-family:var(--f-body)}
       <div class="sh">
         <div class="sh-l">
           <div class="sh-ic si-gold"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
-          <div class="sh-title"><strong>Live Leaderboard</strong><small>Top earners this session</small></div>
+          <div class="sh-title"><strong>Global Performance Index</strong><small>Top earners — live session rankings</small></div>
         </div>
         <span style="font-family:var(--f-mono);font-size:11px;color:var(--gold);background:rgba(245,166,35,.1);padding:4px 12px;border-radius:99px;border:1px solid rgba(245,166,35,.2)">Live Updates</span>
       </div>
@@ -1061,7 +1180,7 @@ input,select{font-family:var(--f-body)}
       <div class="sh">
         <div class="sh-l">
           <div class="sh-ic si-cyan"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg></div>
-          <div class="sh-title"><strong>5-Minute Faucet</strong><small>Ad-verified claims — cooldown resets every 5 min</small></div>
+          <div class="sh-title"><strong>Liquidity Faucet Protocol</strong><small>Ad-verified claims — cooldown resets every 5 min</small></div>
         </div>
       </div>
       <!-- RGB ad slot above faucet claim cards -->
@@ -1112,20 +1231,68 @@ input,select{font-family:var(--f-body)}
       <div class="sh">
         <div class="sh-l">
           <div class="sh-ic si-green"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/></svg></div>
-          <div class="sh-title"><strong>Wallet &amp; Withdrawals</strong><small>Earnings tracked in real time</small></div>
+          <div class="sh-title"><strong>Capital Account</strong><small>Earnings tracked and updated in real time</small></div>
         </div>
       </div>
       <!-- Wallet + 300x250 ad layout -->
       <div style="display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start">
         <div>
-          <div class="wallet-hero"><div class="w-lbl">Total Balance</div><div class="w-bal" id="w-big-bal">$0.00</div><div class="w-sub">USD equivalent — updates live</div></div>
-          <div class="w-actions" style="grid-template-columns:1fr 1fr 1fr">
-            <button class="w-act" onclick="toast('Minimum withdrawal: $1.00. Keep earning!','warn')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Withdraw</button>
-            <button class="w-act" onclick="toast('Transaction history exported.','info')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
-            <button class="w-act" id="daily-reward-btn" onclick="openDailyReward()" style="background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(245,166,35,.1));border-color:rgba(139,92,246,.35);color:var(--violet)"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg>Daily Reward</button>
+          <div class="wallet-hero" style="padding:18px 18px 14px">
+  <div class="w-lbl">Available Liquidity</div>
+  <!-- A-ADS SLOT 3: Inside Available Liquidity Dashboard -->
+  <div style="margin:10px 0 12px">
+    <div class="aads-neon-wrap" id="aads-slot-3">
+      <div class="aads-neon-inner" style="min-height:80px">
+        <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+          <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-bal" id="w-big-bal">$0.00</div>
+  <div class="w-sub">USD equivalent — updates in real time</div>
+  <!-- A-ADS SLOT 4: Inside Available Liquidity Dashboard -->
+  <div style="margin-top:14px">
+    <div class="aads-neon-wrap" id="aads-slot-4" style="animation-delay:2s">
+      <div class="aads-neon-inner" style="min-height:80px">
+        <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+          <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          <!-- Wallet Action Buttons Row 1: Settlement & Export -->
+          <div class="w-actions" style="grid-template-columns:1fr 1fr;margin-bottom:12px">
+            <button class="w-act" onclick="toast('Minimum settlement threshold: $1.00. Continue accumulating yield.','warn')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Secure Settlement</button>
+            <button class="w-act" onclick="toast('Transaction ledger exported to CSV.','info')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export Ledger</button>
           </div>
-          <div class="tx-title">Transaction History</div>
-          <div id="tx-list"><div class="tx-item"><span class="tx-type">No transactions yet</span><span class="tx-amt" style="color:var(--txt3)">—</span><span class="tx-time">—</span></div></div>
+          <!-- A-ADS SLOT 5: Between Daily Dividend & Secure Settlement -->
+          <div style="margin-bottom:10px">
+            <div class="aads-neon-wrap" id="aads-slot-5" style="animation-delay:0.8s">
+              <div class="aads-neon-inner" style="min-height:90px">
+                <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+                  <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- A-ADS SLOT 6: Between Daily Dividend & Secure Settlement -->
+          <div style="margin-bottom:12px">
+            <div class="aads-neon-wrap" id="aads-slot-6" style="animation-delay:2.8s">
+              <div class="aads-neon-inner" style="min-height:90px">
+                <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+                  <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Daily Dividend Button -->
+          <div style="margin-bottom:18px">
+            <button class="w-act" id="daily-reward-btn" onclick="openDailyReward()" style="width:100%;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(245,166,35,.1));border-color:rgba(139,92,246,.35);color:var(--violet);padding:14px"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg>Daily Dividend</button>
+          </div>
+          <div class="tx-title">Transaction Ledger</div>
+          <div id="tx-list"><div class="tx-item"><span class="tx-type">No transactions recorded</span><span class="tx-amt" style="color:var(--txt3)">—</span><span class="tx-time">—</span></div></div>
         </div>
         <div>
           <div class="rgb-ad" style="height:300px"><div class="rgb-ad-inner" style="flex-direction:column;gap:6px;font-size:12px"><span class="ad-tag">AD</span><div style="font-size:24px;opacity:.2">⬛</div><span>300 × 300</span><span style="font-size:10px;color:var(--txt3)">Wallet Sidebar Ad</span><span class="ad-tag">AD</span></div></div>
@@ -1138,21 +1305,99 @@ input,select{font-family:var(--f-body)}
       <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Ad Slot 9 <span class="ad-tag">AD</span></div></div>
     </div>
 
+
+    <!-- ── SECTION: PARTNER PROGRAM ── -->
+    <section class="card" id="sec-partner" style="padding:28px;scroll-margin-top:80px" aria-label="Partner Program">
+      <div class="sh">
+        <div class="sh-l">
+          <div class="sh-ic si-cyan"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div class="sh-title"><strong>Partner Program</strong><small>Earn lifetime commissions on every referred participant</small></div>
+        </div>
+        <span style="font-family:var(--f-mono);font-size:11px;color:var(--cyan);background:rgba(0,212,255,.08);padding:4px 12px;border-radius:99px;border:1px solid rgba(0,212,255,.2)">Active</span>
+      </div>
+
+      <div class="partner-hero">
+        <div class="partner-eyebrow"><div class="partner-eyebrow-dot"></div>Global Referral Network</div>
+        <div class="partner-title">Perpetual Commission Architecture</div>
+        <div class="partner-sub">Refer participants to PAYRO and earn a percentage of their lifetime platform yield. No cap, no expiry. Commissions are credited automatically to your capital account every 24 hours.</div>
+      </div>
+
+      <div class="partner-stats-grid">
+        <div class="ps-card"><div class="ps-val" id="partner-refs">0</div><div class="ps-lbl">Active Referrals</div></div>
+        <div class="ps-card"><div class="ps-val" id="partner-earned">$0.00</div><div class="ps-lbl">Commission Earned</div></div>
+        <div class="ps-card"><div class="ps-val">10%</div><div class="ps-lbl">Commission Rate</div></div>
+      </div>
+
+      <!-- A-ADS SLOT 7: Partner Program Section -->
+      <div style="margin-bottom:22px">
+        <div class="aads-neon-wrap" id="aads-slot-7" style="animation-delay:1s">
+          <div class="aads-neon-inner" style="min-height:100px">
+            <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+              <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="partner-layout">
+        <div>
+          <div class="ref-link-box">
+            <div class="rlb-header">Your Referral Link</div>
+            <div class="rlb-link" id="ref-link-display" style="color:var(--txt3);font-style:italic">Generate your link to begin</div>
+          </div>
+          <button class="generate-ref-btn" id="generate-ref-btn" onclick="generateReferralLink()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+            Generate Referral Link
+          </button>
+          <button class="copy-ref-btn" id="copy-ref-btn" onclick="copyReferralLink()" disabled>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy Link to Clipboard
+          </button>
+          <div class="partner-note">Commission payouts are processed every 24 hours. Minimum payout threshold: $0.10. All referred participants must complete at least one verified task to qualify. Self-referral is prohibited.</div>
+        </div>
+        <div>
+          <div class="partner-tiers">
+            <div class="pt-header">Commission Structure</div>
+            <div class="pt-row"><span class="pt-tier">Standard Referral</span><span class="pt-commission">10% lifetime</span></div>
+            <div class="pt-row"><span class="pt-tier">5+ Active Referrals</span><span class="pt-commission">12% lifetime</span></div>
+            <div class="pt-row"><span class="pt-tier">20+ Active Referrals</span><span class="pt-commission">15% lifetime</span></div>
+            <div class="pt-row"><span class="pt-tier">50+ Active Referrals</span><span class="pt-commission">20% lifetime</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- A-ADS SLOT 8: Partner Program Section -->
+      <div style="margin-top:22px">
+        <div class="aads-neon-wrap" id="aads-slot-8" style="animation-delay:3s">
+          <div class="aads-neon-inner" style="min-height:100px">
+            <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+              <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AD BREAK BEFORE ROADMAP -->
+    <div class="ad-break">
+      <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 x 90 — Placement <span class="ad-tag">AD</span></div></div>
+    </div>
+
     <!-- ── SECTION: ROADMAP ── -->
     <section class="card" id="sec-roadmap" style="scroll-margin-top:80px" aria-label="Roadmap">
       <div style="padding:24px 24px 0">
         <div class="sh">
-          <div class="sh-l"><div class="sh-ic si-violet"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 17l6-10 5 7 3-4 4 7"/></svg></div><div class="sh-title"><strong>10-Day Launch Roadmap</strong><small>Platform milestones &amp; upcoming features</small></div></div>
+          <div class="sh-l"><div class="sh-ic si-violet"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 17l6-10 5 7 3-4 4 7"/></svg></div><div class="sh-title"><strong>Platform Development Timeline</strong><small>Platform milestones &amp; upcoming features</small></div></div>
         </div>
       </div>
       <div class="rmap"><div class="rmap-line">
         <div class="rmap-item"><div class="rmap-dot rd-done"></div><div class="rmap-day">Day 1 — Completed</div><div class="rmap-title">Core Infrastructure &amp; Geo-Detection</div><div class="rmap-desc">Deployed geo-intelligence engine across 5 global CDN nodes.</div><span class="rmap-chip rc-done">Completed</span></div>
         <div class="rmap-item"><div class="rmap-dot rd-done"></div><div class="rmap-day">Day 2 — Completed</div><div class="rmap-title">Anti-Fraud Layer</div><div class="rmap-desc">VPN detection, device fingerprinting, and AdBlocker gate operational.</div><span class="rmap-chip rc-done">Completed</span></div>
-        <div class="rmap-item"><div class="rmap-dot rd-done"></div><div class="rmap-day">Day 3 — Completed</div><div class="rmap-title">Micro-Task Center &amp; Faucet</div><div class="rmap-desc">5-minute faucet with tier-adjusted rates and 5 task categories live.</div><span class="rmap-chip rc-done">Completed</span></div>
+        <div class="rmap-item"><div class="rmap-dot rd-done"></div><div class="rmap-day">Day 3 — Completed</div><div class="rmap-title">Revenue Task Engine &amp; Faucet</div><div class="rmap-desc">5-minute faucet with tier-adjusted rates and 5 task categories live.</div><span class="rmap-chip rc-done">Completed</span></div>
         <div class="rmap-item"><div class="rmap-dot rd-done"></div><div class="rmap-day">Day 4 — Completed</div><div class="rmap-title">Gaming Suite v1 Launch</div><div class="rmap-desc">Spin Wheel and Mines game with transparent house-edge modes.</div><span class="rmap-chip rc-done">Completed</span></div>
         <div class="rmap-item"><div class="rmap-dot rd-done"></div><div class="rmap-day">Day 5 — Completed</div><div class="rmap-title">3D VFX Gaming Ecosystem</div><div class="rmap-desc">RGB ad borders, 3D spin wheel, mines VFX, audio engine, and particle effects.</div><span class="rmap-chip rc-done">Completed</span></div>
-        <div class="rmap-item"><div class="rmap-dot rd-now"></div><div class="rmap-day">Day 6 — Current</div><div class="rmap-title">Promo Code Center + Full Ad Integration</div><div class="rmap-desc">Ad-locked promo codes, 24h cooldown, leaderboard, 9+ RGB ad slots, faucet redesign.</div><span class="rmap-chip rc-now">Live Now</span></div>
-        <div class="rmap-item"><div class="rmap-dot rd-plan"></div><div class="rmap-day">Day 7</div><div class="rmap-title">Referral Multiplier Network</div><div class="rmap-desc">Earn 10% of every referred user's lifetime earnings.</div><span class="rmap-chip rc-plan">Planned</span></div>
+        <div class="rmap-item"><div class="rmap-dot rd-now"></div><div class="rmap-day">Day 6 — Current</div><div class="rmap-title">Access Code Vault + Full Ad Integration</div><div class="rmap-desc">Ad-locked promo codes, 24h cooldown, leaderboard, 9+ RGB ad slots, faucet redesign.</div><span class="rmap-chip rc-now">Live Now</span></div>
+        <div class="rmap-item"><div class="rmap-dot rd-plan"></div><div class="rmap-day">Day 7</div><div class="rmap-title">Partner Network Commission System</div><div class="rmap-desc">Earn 10% of every referred user's lifetime earnings.</div><span class="rmap-chip rc-plan">Planned</span></div>
         <div class="rmap-item"><div class="rmap-dot rd-plan"></div><div class="rmap-day">Day 8</div><div class="rmap-title">Crypto Payout Gateway</div><div class="rmap-desc">Instant USDT/USDC withdrawals, $1.00 minimum, zero fees for verified accounts.</div><span class="rmap-chip rc-plan">Planned</span></div>
         <div class="rmap-item"><div class="rmap-dot rd-plan"></div><div class="rmap-day">Day 9</div><div class="rmap-title">Native Mobile Applications</div><div class="rmap-desc">iOS and Android apps with push notifications for high-value task alerts.</div><span class="rmap-chip rc-plan">Planned</span></div>
         <div class="rmap-item"><div class="rmap-dot rd-plan"></div><div class="rmap-day">Day 10</div><div class="rmap-title">Open Advertiser API</div><div class="rmap-desc">Full programmatic ad integration. Real-time analytics for partners.</div><span class="rmap-chip rc-plan">Planned</span></div>
@@ -1293,7 +1538,7 @@ function updateWallet(){
 function addTx(label,amt,type){
   const list=$('tx-list');if(!list)return;
   const empty=list.querySelector('.tx-item');
-  if(empty&&empty.querySelector('.tx-type')?.textContent==='No transactions yet')list.innerHTML='';
+  if(empty&&empty.querySelector('.tx-type')?.textContent==='No transactions recorded')list.innerHTML='';
   const now=new Date();const ts=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+':'+now.getSeconds().toString().padStart(2,'0');
   const sign=type==='credit'?'+':'-';const cls=type==='credit'?'tx-c':'tx-d';
   const item=document.createElement('div');item.className='tx-item';
@@ -1376,7 +1621,7 @@ async function initGeo(){
 function isVPN(){return false}
 function showVPN(){$('vpn-screen').classList.add('show')}
 function detectAB(){const t=document.createElement('div');t.className='rgb-ad';t.style.cssText='position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0';document.body.appendChild(t);const h=t.offsetHeight;document.body.removeChild(t);return h===0}
-function retryAB(){if(!detectAB()){$('adblock-gate').classList.remove('show');toast('AdBlock disabled — welcome to GigVault Pro!','success');}else{toast('AdBlock still active. Please whitelist this site.','warn')}}
+function retryAB(){if(!detectAB()){$('adblock-gate').classList.remove('show');toast('AdBlock disabled — welcome to PAYRO!','success');}else{toast('AdBlock still active. Please whitelist this site.','warn')}}
 
 /* ── Platform Stats Animation ── */
 function animStats(){
@@ -1486,7 +1731,7 @@ function doSpin(){
     const ra=$('spin-res-amt'),rl=$('spin-res-lbl');
     if(seg.reward>0){
       S.balance+=seg.reward;S.sessionEarned+=seg.reward;
-      addTx('Spin Wheel Win',seg.reward,'credit');updateWallet();
+      addTx('Fortune Protocol Yield',seg.reward,'credit');updateWallet();
       SFX.play('win');
       ra&&(ra.style.display='block',ra.textContent='+$'+seg.reward.toFixed(2),ra.style.color=seg.color);
       rl&&(rl.style.display='block',rl.textContent='Added to your wallet!');
@@ -1572,7 +1817,7 @@ function minesGameOver(){
   const m=S.mines;
   // Reveal all mines
   m.mines.forEach(idx=>{const c=$('mc'+idx);if(c&&!m.revealed.includes(idx)){c.classList.add('revealed','bomb');c.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" fill="#ef4444" opacity=".6"/><circle cx="12" cy="12" r="4" fill="#ff8888" opacity=".5"/></svg>'}});
-  toast('💥 Mine hit! Bet lost.','error');resetMines();
+  toast('Risk event — position liquidated.','error');resetMines();
 }
 function resetMines(){
   S.mines.active=false;
@@ -1586,7 +1831,7 @@ const TASK_DEFS=[
   {id:'t2',name:'App Install Offer',meta:'3–5 min • Android &amp; iOS',baseRew:0.025,icon:'#00d4ff',iconSvg:'<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>'},
   {id:'t3',name:'Sign-Up Offer',meta:'1–2 min • Email required',baseRew:0.015,icon:'#8b5cf6',iconSvg:'<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>'},
   {id:'t4',name:'Short Survey',meta:'5 min • Opinion poll',baseRew:0.005,icon:'#f59e0b',iconSvg:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>'},
-  {id:'t5',name:'Refer a Friend',meta:'Share your link • Unlimited',baseRew:0.050,icon:'#22c55e',iconSvg:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'},
+  {id:'t5',name:'Partner Referral Network',meta:'Share your link • Unlimited',baseRew:0.050,icon:'#22c55e',iconSvg:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'},
 ];
 let tasksDone={};
 function renderTasks(){
@@ -1635,8 +1880,8 @@ function startFaucetVerify(){
   },1000);
 }
 function claimFaucet(){
-  if(!S.faucetVerified){toast('Complete the 15s ad timer first!','warn');return}
-  if(S.faucetActive){toast('Faucet on cooldown — wait 5 min','warn');return}
+  if(!S.faucetVerified){toast('Complete the 15-second compliance timer first.','warn');return}
+  if(S.faucetActive){toast('Faucet protocol on cooldown — 5 minutes remaining.','warn');return}
   const rew=S.tierRate;
   S.balance+=rew;S.sessionEarned+=rew;S.faucetActive=true;S.faucetVerified=false;
   addTx('Faucet Claim',rew,'credit');updateWallet();SFX.play('win');
@@ -1650,14 +1895,14 @@ function claimFaucet(){
   const miniBtn=$('faucet-btn-mini');if(miniBtn)miniBtn.disabled=true;
   $('faucet-cd').textContent='Cooldown: 5:00';
   const winEl=$('faucet-main-btn');if(winEl){const r=winEl.getBoundingClientRect();PARTICLES.burst(r.left+r.width/2,r.top+r.height/2,['#f5a623','#ffd060','#22c55e'],40)}
-  toast('Faucet claimed — +$'+rew.toFixed(4)+'!','success');
+  toast('Liquidity claim processed — +$'+rew.toFixed(4)+'!','success');
   // 5-min cooldown countdown
   let cd=300;S.faucetCdEnd=Date.now()+cd*1000;
   faucetCdInterval=setInterval(()=>{
     cd--;const m=Math.floor(cd/60),s=cd%60;
     const cdStr=m+':'+(s<10?'0':'')+s;
     $('faucet-cd').textContent='Cooldown: '+cdStr;
-    if(cd<=0){clearInterval(faucetCdInterval);S.faucetActive=false;$('faucet-cd').textContent='Ready to claim';$('fvt-val').textContent='15';if(miniBtn)miniBtn.disabled=false;toast('Faucet ready!','info')}
+    if(cd<=0){clearInterval(faucetCdInterval);S.faucetActive=false;$('faucet-cd').textContent='Ready to claim';$('fvt-val').textContent='15';if(miniBtn)miniBtn.disabled=false;toast('Faucet protocol ready for next claim.','info')}
   },1000);
 }
 
@@ -1748,7 +1993,7 @@ function closePromoModal(){
   const log=promoGetLog();log[promoCodeKey(code)]=Date.now();promoSaveLog(log);
   // Credit
   S.balance+=def.reward;S.sessionEarned+=def.reward;
-  addTx('Promo Code: '+code,def.reward,'credit');updateWallet();SFX.play('win');
+  addTx('Access Code: '+code,def.reward,'credit');updateWallet();SFX.play('win');
   // UI feedback
   $('promo-input-wrap')?.classList.remove('pi-valid','pi-err');
   $('promo-input-wrap')?.classList.add('pi-valid');
@@ -1762,7 +2007,7 @@ function closePromoModal(){
   const list=$('promo-history-list'),cnt=$('ph-count');
   if(list){if(list.querySelector('.ph-empty'))list.innerHTML='';list.innerHTML=promoSessionLog.slice(0,6).map(e=>`<div class="ph-item"><div class="ph-dot"></div><span class="ph-code">${esc(e.code)}</span><span class="ph-reward">+$${e.reward.toFixed(2)}</span><span class="ph-time">${esc(e.ts)}</span></div>`).join('')}
   if(cnt)cnt.textContent=promoSessionLog.length+' redeemed';
-  toast('🎉 Promo redeemed — +$'+def.reward.toFixed(2)+' credited!','success');
+  toast('Access code redeemed — +$'+def.reward.toFixed(2)+' credited!','success');
   // Reset input after a moment
   setTimeout(()=>{clearPromoInput();},3500);
 }
@@ -1819,7 +2064,7 @@ function completeDailyReward(){
   // Credit reward
   const rew=0.05;
   S.balance+=rew;S.sessionEarned+=rew;
-  addTx('Daily Reward Bonus',rew,'credit');updateWallet();SFX.play('win');
+  addTx('Daily Dividend Credit',rew,'credit');updateWallet();SFX.play('win');
   // Save cooldown
   const log=getDailyRewardLog();log.lastClaim=Date.now();saveDailyRewardLog(log);
   // Disable button until tomorrow
@@ -1828,7 +2073,46 @@ function completeDailyReward(){
   // Particles
   const wBtn=$('daily-reward-btn')||$('w-big-bal');
   if(wBtn){const r=wBtn.getBoundingClientRect();PARTICLES.burst(r.left+r.width/2,r.top+r.height/2,['#8b5cf6','#a78bfa','#ffd060','#22c55e','#ff00bb'],70)}
-  toast('🎁 Daily Reward claimed — +$'+rew.toFixed(2)+' credited!','success');
+  toast('Daily Dividend credited — +$'+rew.toFixed(2)+' credited!','success');
+}
+
+
+/* ================================================================
+   PARTNER PROGRAM ENGINE
+================================================================ */
+let referralLink = null;
+function generateReferralLink() {
+  const id = 'PYR' + Math.random().toString(36).substr(2,8).toUpperCase();
+  referralLink = 'https://payro.io/ref/' + id;
+  const display = $('ref-link-display');
+  if (display) {
+    display.textContent = referralLink;
+    display.style.color = 'var(--cyan)';
+    display.style.fontStyle = 'normal';
+  }
+  const copyBtn = $('copy-ref-btn');
+  if (copyBtn) copyBtn.disabled = false;
+  const genBtn = $('generate-ref-btn');
+  if (genBtn) { genBtn.textContent = 'Regenerate Link'; }
+  SFX.play('ding');
+  toast('Referral link generated — share to earn commissions.', 'success');
+  const btn = $('generate-ref-btn');
+  if (btn) { const r = btn.getBoundingClientRect(); PARTICLES.burst(r.left+r.width/2, r.top+r.height/2, ['#00d4ff','#f5a623','#22c55e'], 40); }
+}
+function copyReferralLink() {
+  if (!referralLink) return;
+  navigator.clipboard.writeText(referralLink).then(() => {
+    toast('Referral link copied to clipboard.', 'success');
+    SFX.play('ding');
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = referralLink;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast('Referral link copied.', 'success');
+  });
 }
 
 /* ── Init ── */
@@ -1841,12 +2125,24 @@ function init(){
   setInterval(animStats,3200);
   if(detectAB()){setTimeout(()=>$('adblock-gate').classList.add('show'),1200)}
   fingerprint();
-  toast('🚀 GigVault Pro v4 loaded — Start earning!','success');
+  toast('🚀 PAYRO loaded — Capital deployment active.','success');
 }
 
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
 else init();
 </script>
+
+<!-- ====================================================
+     STICKY BOTTOM AD BANNER — A-ADS SLOT 2
+==================================================== -->
+<div class="aads-neon-wrap aads-sticky-bottom" id="aads-slot-2">
+  <div class="aads-neon-inner">
+    <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
+      <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+    </div>
+  </div>
+</div>
+
 <!-- TAWK.TO LIVE SUPPORT -->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
