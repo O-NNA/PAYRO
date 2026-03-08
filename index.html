@@ -61,11 +61,11 @@ input,select{font-family:var(--f-body)}
 .rgb-ad::before{
   content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;
   background:conic-gradient(from 0deg,#ff0000 0%,#ff4400 8%,#ff8800 16%,#ffcc00 24%,#88ff00 32%,#00ff44 40%,#00ffcc 50%,#0088ff 58%,#4400ff 66%,#aa00ff 74%,#ff00aa 82%,#ff0044 90%,#ff0000 100%);
-  animation:rgbSpin 2.8s linear infinite;border-radius:50%;z-index:0;
+  animation:rgbSpin 6s linear infinite;border-radius:50%;z-index:0;
 }
 .rgb-ad-inner{position:relative;z-index:1;background:var(--bg2);border-radius:calc(var(--r-md) - 2px);height:100%;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;color:var(--txt3);letter-spacing:.05em;overflow:hidden}
 .rgb-ad-inline{position:relative;border-radius:var(--r-sm);padding:2px;overflow:hidden;flex-shrink:0}
-.rgb-ad-inline::before{content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;background:conic-gradient(from 0deg,#ff0000,#ff8800,#ffff00,#00ff88,#00ccff,#8800ff,#ff0088,#ff0000);animation:rgbSpin 2s linear infinite;border-radius:50%;z-index:0}
+.rgb-ad-inline::before{content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;background:conic-gradient(from 0deg,#ff0000,#ff8800,#ffff00,#00ff88,#00ccff,#8800ff,#ff0088,#ff0000);animation:rgbSpin 6s linear infinite;border-radius:50%;z-index:0}
 .rgb-ad-inline-inner{position:relative;z-index:1;background:var(--bg3);border-radius:calc(var(--r-sm) - 2px);padding:8px 12px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;text-align:center;font-size:10px;color:var(--txt3);letter-spacing:.05em;white-space:nowrap;min-width:120px}
 @keyframes rgbSpin{to{transform:rotate(360deg)}}
 .ad-tag{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--txt3);border:1px solid var(--txt3);padding:1px 5px;border-radius:3px;opacity:.5}
@@ -537,54 +537,54 @@ input,select{font-family:var(--f-body)}
 ================================================================ */
 @keyframes neonRgbCycle {
   /* ── RED ── */
-  0%   { border-color:#ff0000;
-         box-shadow:0 0 12px 3px #ff0000,0 0 28px 6px rgba(255,0,0,0.5),0 0 55px 10px rgba(255,0,0,0.2),
-                    inset 0 0 22px rgba(255,0,0,0.06) }
-  22%  { border-color:#ff0000;
-         box-shadow:0 0 12px 3px #ff0000,0 0 28px 6px rgba(255,0,0,0.5),0 0 55px 10px rgba(255,0,0,0.2),
-                    inset 0 0 22px rgba(255,0,0,0.06) }
+  0%   { border-color:rgba(255,0,0,0.7);
+         box-shadow:0 0 5px 1px rgba(255,0,0,0.35),0 0 10px 2px rgba(255,0,0,0.15),
+                    inset 0 0 6px rgba(255,0,0,0.04) }
+  22%  { border-color:rgba(255,0,0,0.7);
+         box-shadow:0 0 5px 1px rgba(255,0,0,0.35),0 0 10px 2px rgba(255,0,0,0.15),
+                    inset 0 0 6px rgba(255,0,0,0.04) }
   /* ── transition RED → GREEN ── */
-  28%  { border-color:#00ff44;
-         box-shadow:0 0 12px 3px #00ff44,0 0 28px 6px rgba(0,255,68,0.5),0 0 55px 10px rgba(0,255,68,0.2),
-                    inset 0 0 22px rgba(0,255,68,0.06) }
+  28%  { border-color:rgba(0,255,68,0.7);
+         box-shadow:0 0 5px 1px rgba(0,255,68,0.35),0 0 10px 2px rgba(0,255,68,0.15),
+                    inset 0 0 6px rgba(0,255,68,0.04) }
   /* ── GREEN ── */
-  28%  { border-color:#00ff44;
-         box-shadow:0 0 12px 3px #00ff44,0 0 28px 6px rgba(0,255,68,0.5),0 0 55px 10px rgba(0,255,68,0.2),
-                    inset 0 0 22px rgba(0,255,68,0.06) }
-  47%  { border-color:#00ff44;
-         box-shadow:0 0 12px 3px #00ff44,0 0 28px 6px rgba(0,255,68,0.5),0 0 55px 10px rgba(0,255,68,0.2),
-                    inset 0 0 22px rgba(0,255,68,0.06) }
+  28%  { border-color:rgba(0,255,68,0.7);
+         box-shadow:0 0 5px 1px rgba(0,255,68,0.35),0 0 10px 2px rgba(0,255,68,0.15),
+                    inset 0 0 6px rgba(0,255,68,0.04) }
+  47%  { border-color:rgba(0,255,68,0.7);
+         box-shadow:0 0 5px 1px rgba(0,255,68,0.35),0 0 10px 2px rgba(0,255,68,0.15),
+                    inset 0 0 6px rgba(0,255,68,0.04) }
   /* ── transition GREEN → BLUE ── */
-  53%  { border-color:#0077ff;
-         box-shadow:0 0 12px 3px #0077ff,0 0 28px 6px rgba(0,119,255,0.5),0 0 55px 10px rgba(0,119,255,0.2),
-                    inset 0 0 22px rgba(0,119,255,0.06) }
+  53%  { border-color:rgba(0,119,255,0.7);
+         box-shadow:0 0 5px 1px rgba(0,119,255,0.35),0 0 10px 2px rgba(0,119,255,0.15),
+                    inset 0 0 6px rgba(0,119,255,0.04) }
   /* ── BLUE ── */
-  53%  { border-color:#0077ff;
-         box-shadow:0 0 12px 3px #0077ff,0 0 28px 6px rgba(0,119,255,0.5),0 0 55px 10px rgba(0,119,255,0.2),
-                    inset 0 0 22px rgba(0,119,255,0.06) }
-  72%  { border-color:#0077ff;
-         box-shadow:0 0 12px 3px #0077ff,0 0 28px 6px rgba(0,119,255,0.5),0 0 55px 10px rgba(0,119,255,0.2),
-                    inset 0 0 22px rgba(0,119,255,0.06) }
+  53%  { border-color:rgba(0,119,255,0.7);
+         box-shadow:0 0 5px 1px rgba(0,119,255,0.35),0 0 10px 2px rgba(0,119,255,0.15),
+                    inset 0 0 6px rgba(0,119,255,0.04) }
+  72%  { border-color:rgba(0,119,255,0.7);
+         box-shadow:0 0 5px 1px rgba(0,119,255,0.35),0 0 10px 2px rgba(0,119,255,0.15),
+                    inset 0 0 6px rgba(0,119,255,0.04) }
   /* ── transition BLUE → PURPLE ── */
-  78%  { border-color:#aa00ff;
-         box-shadow:0 0 12px 3px #aa00ff,0 0 28px 6px rgba(170,0,255,0.5),0 0 55px 10px rgba(170,0,255,0.2),
-                    inset 0 0 22px rgba(170,0,255,0.06) }
+  78%  { border-color:rgba(170,0,255,0.7);
+         box-shadow:0 0 5px 1px rgba(170,0,255,0.35),0 0 10px 2px rgba(170,0,255,0.15),
+                    inset 0 0 6px rgba(170,0,255,0.04) }
   /* ── PURPLE ── */
-  78%  { border-color:#aa00ff;
-         box-shadow:0 0 12px 3px #aa00ff,0 0 28px 6px rgba(170,0,255,0.5),0 0 55px 10px rgba(170,0,255,0.2),
-                    inset 0 0 22px rgba(170,0,255,0.06) }
-  97%  { border-color:#aa00ff;
-         box-shadow:0 0 12px 3px #aa00ff,0 0 28px 6px rgba(170,0,255,0.5),0 0 55px 10px rgba(170,0,255,0.2),
-                    inset 0 0 22px rgba(170,0,255,0.06) }
+  78%  { border-color:rgba(170,0,255,0.7);
+         box-shadow:0 0 5px 1px rgba(170,0,255,0.35),0 0 10px 2px rgba(170,0,255,0.15),
+                    inset 0 0 6px rgba(170,0,255,0.04) }
+  97%  { border-color:rgba(170,0,255,0.7);
+         box-shadow:0 0 5px 1px rgba(170,0,255,0.35),0 0 10px 2px rgba(170,0,255,0.15),
+                    inset 0 0 6px rgba(170,0,255,0.04) }
   /* ── back to RED ── */
-  100% { border-color:#ff0000;
-         box-shadow:0 0 12px 3px #ff0000,0 0 28px 6px rgba(255,0,0,0.5),0 0 55px 10px rgba(255,0,0,0.2),
-                    inset 0 0 22px rgba(255,0,0,0.06) }
+  100% { border-color:rgba(255,0,0,0.7);
+         box-shadow:0 0 5px 1px rgba(255,0,0,0.35),0 0 10px 2px rgba(255,0,0,0.15),
+                    inset 0 0 6px rgba(255,0,0,0.04) }
 }
 .screen-rgb-frame{
   position:fixed;inset:0;z-index:9990;pointer-events:none;
-  border:3px solid #ff0000;
-  animation:neonRgbCycle 6s ease-in-out infinite;
+  border:2px solid rgba(255,0,0,0.7);
+  animation:neonRgbCycle 16s ease-in-out infinite;
 }
 
 /* ================================================================
@@ -610,16 +610,16 @@ input,select{font-family:var(--f-body)}
    A-ADS NEON RGB GLOW WRAPPERS
 ================================================================ */
 @keyframes neonAdCycle{
-  0%,24%  {border-color:#ff0000;box-shadow:0 0 14px 3px #ff0000,0 0 30px 6px rgba(255,0,0,0.45),0 0 60px 10px rgba(255,0,0,0.15)}
-  25%,49% {border-color:#00ff44;box-shadow:0 0 14px 3px #00ff44,0 0 30px 6px rgba(0,255,68,0.45),0 0 60px 10px rgba(0,255,68,0.15)}
-  50%,74% {border-color:#0077ff;box-shadow:0 0 14px 3px #0077ff,0 0 30px 6px rgba(0,119,255,0.45),0 0 60px 10px rgba(0,119,255,0.15)}
-  75%,99% {border-color:#aa00ff;box-shadow:0 0 14px 3px #aa00ff,0 0 30px 6px rgba(170,0,255,0.45),0 0 60px 10px rgba(170,0,255,0.15)}
-  100%    {border-color:#ff0000;box-shadow:0 0 14px 3px #ff0000,0 0 30px 6px rgba(255,0,0,0.45),0 0 60px 10px rgba(255,0,0,0.15)}
+  0%,24%  {border-color:rgba(255,0,0,0.65);box-shadow:0 0 5px 1px rgba(255,0,0,0.28),0 0 10px 2px rgba(255,0,0,0.12)}
+  25%,49% {border-color:rgba(0,255,68,0.65);box-shadow:0 0 5px 1px rgba(0,255,68,0.28),0 0 10px 2px rgba(0,255,68,0.12)}
+  50%,74% {border-color:rgba(0,119,255,0.65);box-shadow:0 0 5px 1px rgba(0,119,255,0.28),0 0 10px 2px rgba(0,119,255,0.12)}
+  75%,99% {border-color:rgba(170,0,255,0.65);box-shadow:0 0 5px 1px rgba(170,0,255,0.28),0 0 10px 2px rgba(170,0,255,0.12)}
+  100%    {border-color:rgba(255,0,0,0.65);box-shadow:0 0 5px 1px rgba(255,0,0,0.28),0 0 10px 2px rgba(255,0,0,0.12)}
 }
 .aads-neon-wrap{
   position:relative;border-radius:var(--r-md);
-  border:3px solid #ff0000;
-  animation:neonAdCycle 6s ease-in-out infinite;
+  border:2px solid rgba(255,0,0,0.65);
+  animation:neonAdCycle 16s ease-in-out infinite;
   background:var(--bg2);
   overflow:hidden;
   width:100%;
@@ -631,25 +631,7 @@ input,select{font-family:var(--f-body)}
   min-height:90px;
   display:flex;align-items:center;justify-content:center;
 }
-/* STICKY TOP */
-.aads-sticky-top{
-  position:fixed;top:0;left:0;right:0;z-index:9980;
-  border-radius:0;border-left:none;border-right:none;border-top:none;
-  border-bottom:3px solid #ff0000;
-  animation:neonAdCycle 6s ease-in-out infinite;
-}
-.aads-sticky-top .aads-neon-inner{min-height:70px;padding:6px 16px}
-/* STICKY BOTTOM */
-.aads-sticky-bottom{
-  position:fixed;bottom:0;left:0;right:0;z-index:9980;
-  border-radius:0;border-left:none;border-right:none;border-bottom:none;
-  border-top:3px solid #ff0000;
-  animation:neonAdCycle 6s ease-in-out infinite;
-  animation-delay:1.5s;
-}
-.aads-sticky-bottom .aads-neon-inner{min-height:70px;padding:6px 16px}
-/* Body padding for sticky bars */
-body{padding-top:76px;padding-bottom:76px}
+/* Body padding for sticky bottom bar only — removed, no sticky ads remain */
 /* Partner Program Section */
 .partner-hero{padding:28px;background:linear-gradient(135deg,rgba(0,212,255,.06),rgba(139,92,246,.04));border:1px solid rgba(0,212,255,.15);border-radius:var(--r-md);margin-bottom:20px;position:relative;overflow:hidden}
 .partner-hero::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.08),transparent);pointer-events:none}
@@ -678,24 +660,45 @@ body{padding-top:76px;padding-bottom:76px}
 .pt-commission{font-family:var(--f-mono);font-weight:700;color:var(--green)}
 .partner-note{margin-top:14px;padding:12px 14px;background:rgba(0,212,255,.04);border:1px dashed rgba(0,212,255,.18);border-radius:var(--r-sm);font-size:11px;color:var(--txt3);line-height:1.65}
 @media(max-width:900px){.partner-layout{grid-template-columns:1fr}.partner-stats-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.partner-stats-grid{grid-template-columns:1fr};body{padding-top:60px;padding-bottom:60px}}
+@media(max-width:600px){.partner-stats-grid{grid-template-columns:1fr}}
+
+/* ================================================================
+   AD DIMMING — blend with dark theme (opacity + dark overlay)
+================================================================ */
+/* Neon-wrapped A-ADS units */
+.aads-neon-wrap{
+  opacity:0.85;
+}
+.aads-neon-inner{
+  background:rgba(6,8,16,0.92)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.aads-neon-inner > div{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/* RGB placeholder ad boxes */
+.rgb-ad-inner{
+  background:rgba(6,8,16,0.88)!important;
+  opacity:0.85;
+}
+/* All ad iframes — center block */
+.aads-neon-inner iframe,
+.aads-neon-wrap iframe{
+  display:block!important;
+  margin:0 auto!important;
+}
+/* Sticky bottom bar dimming — removed (no sticky bars remain) */
 </style>
 </head>
 <body>
 <!-- RGB NEON SCREEN BORDER -->
 <div class="screen-rgb-frame" id="screen-rgb-frame"></div>
 
-
-<!-- ====================================================
-     STICKY TOP AD BANNER — A-ADS SLOT 1
-==================================================== -->
-<div class="aads-neon-wrap aads-sticky-top" id="aads-slot-1">
-  <div class="aads-neon-inner">
-    <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
-      <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-    </div>
-  </div>
-</div>
 
 <div class="bg-wrap"></div>
 <div class="bg-grid"></div>
@@ -801,13 +804,6 @@ body{padding-top:76px;padding-bottom:76px}
      MAIN WRAPPER
 ============================================================ -->
 <div class="wrap">
-
-  <!-- TOP AD BAR -->
-  <div style="background:var(--bg1);border-bottom:1px solid var(--bdr2);padding:5px 16px;display:flex;align-items:center;justify-content:center;gap:8px">
-    <span class="ad-tag">AD</span>
-    <div class="rgb-ad" style="flex:1;max-width:970px;height:44px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 970 × 44 — Top Leaderboard Banner Ad Slot <span class="ad-tag">AD</span></div></div>
-    <span class="ad-tag">AD</span>
-  </div>
 
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation">
@@ -1376,6 +1372,28 @@ body{padding-top:76px;padding-bottom:76px}
           </div>
         </div>
       </div>
+
+      <!-- RELOCATED TOP AD #1 — previously sticky-top slot -->
+      <div style="margin-top:16px">
+        <div class="aads-neon-wrap" id="aads-slot-1" style="animation-delay:1s">
+          <div class="aads-neon-inner" style="min-height:90px">
+            <div style="width:100%;margin:auto;position:relative;z-index:99998;">
+              <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RELOCATED TOP AD #2 — previously 970×44 leaderboard banner -->
+      <div style="margin-top:16px">
+        <div class="aads-neon-wrap" id="aads-slot-top2" style="animation-delay:2s">
+          <div class="aads-neon-inner" style="min-height:90px">
+            <div style="width:100%;margin:auto;position:relative;z-index:99998;">
+              <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- AD BREAK BEFORE ROADMAP -->
@@ -1406,11 +1424,24 @@ body{padding-top:76px;padding-bottom:76px}
 
   </main><!-- /main -->
 
-  <!-- FOOTER AD -->
-  <footer class="ad-foot" role="complementary">
-    <span class="ad-tag">AD</span>
-    <div class="rgb-ad" style="width:730px;height:54px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 50 — Footer Banner Ad Slot <span class="ad-tag">AD</span></div></div>
-    <span class="ad-tag">AD</span>
+  <!-- RELOCATED BOTTOM AD — previously sticky-bottom slot 2, now static above footer -->
+  <div style="max-width:1260px;margin:0 auto;width:100%;padding:0 20px 18px">
+    <div class="aads-neon-wrap" id="aads-slot-2" style="animation-delay:4.5s;opacity:0.85">
+      <div class="aads-neon-inner" style="min-height:90px">
+        <div style="width:100%;margin:auto;position:relative;z-index:99998;">
+          <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER ADS -->
+  <footer class="ad-foot" role="complementary" style="flex-direction:column;gap:12px;padding:14px 20px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:1260px">
+      <span class="ad-tag">AD</span>
+      <div class="rgb-ad" style="width:730px;height:54px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 50 — Footer Banner Ad Slot <span class="ad-tag">AD</span></div></div>
+      <span class="ad-tag">AD</span>
+    </div>
   </footer>
 
 </div><!-- /wrap -->
@@ -2131,17 +2162,6 @@ function init(){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
 else init();
 </script>
-
-<!-- ====================================================
-     STICKY BOTTOM AD BANNER — A-ADS SLOT 2
-==================================================== -->
-<div class="aads-neon-wrap aads-sticky-bottom" id="aads-slot-2">
-  <div class="aads-neon-inner">
-    <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
-      <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-    </div>
-  </div>
-</div>
 
 <!-- TAWK.TO LIVE SUPPORT -->
 <script type="text/javascript">
