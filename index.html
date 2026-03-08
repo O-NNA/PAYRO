@@ -532,12 +532,52 @@ input,select{font-family:var(--f-body)}
 /* ================================================================
    24. RESPONSIVE
 ================================================================ */
+/* ================================================================
+   25. RGB NEON SCREEN BORDER — Premium Gaming Frame
+================================================================ */
+@keyframes neonRgbCycle {
+  0%   { border-color:#ff0000;box-shadow:0 0 18px 4px #ff0000,0 0 35px 8px rgba(255,0,0,0.35),inset 0 0 18px rgba(255,0,0,0.08)}
+  10%  { border-color:#ff4400;box-shadow:0 0 18px 4px #ff4400,0 0 35px 8px rgba(255,68,0,0.35),inset 0 0 18px rgba(255,68,0,0.08)}
+  20%  { border-color:#ff9900;box-shadow:0 0 18px 4px #ff9900,0 0 35px 8px rgba(255,153,0,0.35),inset 0 0 18px rgba(255,153,0,0.08)}
+  30%  { border-color:#ffff00;box-shadow:0 0 18px 4px #ffff00,0 0 35px 8px rgba(255,255,0,0.35),inset 0 0 18px rgba(255,255,0,0.08)}
+  40%  { border-color:#00ff44;box-shadow:0 0 18px 4px #00ff44,0 0 35px 8px rgba(0,255,68,0.35),inset 0 0 18px rgba(0,255,68,0.08)}
+  50%  { border-color:#00ffdd;box-shadow:0 0 18px 4px #00ffdd,0 0 35px 8px rgba(0,255,221,0.35),inset 0 0 18px rgba(0,255,221,0.08)}
+  60%  { border-color:#00aaff;box-shadow:0 0 18px 4px #00aaff,0 0 35px 8px rgba(0,170,255,0.35),inset 0 0 18px rgba(0,170,255,0.08)}
+  70%  { border-color:#4400ff;box-shadow:0 0 18px 4px #4400ff,0 0 35px 8px rgba(68,0,255,0.35),inset 0 0 18px rgba(68,0,255,0.08)}
+  80%  { border-color:#aa00ff;box-shadow:0 0 18px 4px #aa00ff,0 0 35px 8px rgba(170,0,255,0.35),inset 0 0 18px rgba(170,0,255,0.08)}
+  90%  { border-color:#ff00bb;box-shadow:0 0 18px 4px #ff00bb,0 0 35px 8px rgba(255,0,187,0.35),inset 0 0 18px rgba(255,0,187,0.08)}
+  100% { border-color:#ff0000;box-shadow:0 0 18px 4px #ff0000,0 0 35px 8px rgba(255,0,0,0.35),inset 0 0 18px rgba(255,0,0,0.08)}
+}
+.screen-rgb-frame{
+  position:fixed;inset:0;z-index:9990;pointer-events:none;
+  border:3px solid #ff0000;border-radius:0;
+  animation:neonRgbCycle 4s linear infinite;
+}
+
+/* ================================================================
+   26. DAILY REWARD MODAL
+================================================================ */
+.daily-modal{display:none;position:fixed;inset:0;z-index:7100;align-items:center;justify-content:center;background:rgba(5,7,15,.92);backdrop-filter:blur(8px)}
+.daily-modal.show{display:flex}
+.daily-box{max-width:420px;width:90%;padding:38px;text-align:center}
+.daily-ring{position:relative;width:110px;height:110px;margin:0 auto 20px}
+.daily-ring svg{transform:rotate(-90deg)}
+.dr-bg{fill:none;stroke:var(--bg3);stroke-width:9}
+.dr-fill{fill:none;stroke:url(#drGradient);stroke-width:9;stroke-linecap:round;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset .08s linear;filter:drop-shadow(0 0 8px var(--violet))}
+.dr-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:24px;font-weight:700;color:var(--violet);text-shadow:0 0 14px rgba(139,92,246,.7)}
+.daily-title{font-family:var(--f-display);font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:.04em;background:linear-gradient(90deg,var(--gold),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.daily-sub{font-size:13px;color:var(--txt2);line-height:1.6;margin-bottom:16px}
+.daily-reward-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:99px;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(245,166,35,.12));border:1px solid rgba(139,92,246,.35);font-family:var(--f-mono);font-size:18px;font-weight:700;color:var(--gold);margin-bottom:16px;text-shadow:0 0 12px var(--gold-g)}
+.daily-security-note{font-size:11px;color:var(--txt3);display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px}
 @media(max-width:1050px){.spin-layout{grid-template-columns:1fr}.mines-layout{grid-template-columns:1fr}.promo-layout{grid-template-columns:1fr}}
 @media(max-width:900px){.geo-grid{grid-template-columns:1fr 1fr}.pstats{grid-template-columns:1fr 1fr}.task-grid{grid-template-columns:1fr}.faucet-body{grid-template-columns:1fr}}
 @media(max-width:600px){.main{padding:14px 12px}.navbar{padding:0 14px}.geo-grid{grid-template-columns:1fr}.pstats{grid-template-columns:1fr 1fr}.wallet-pill .wallet-bal{display:none}.mines-grid{gap:5px;padding:12px}.w-actions{grid-template-columns:1fr}.spin-layout,.mines-layout{grid-template-columns:1fr}.hub-tabs{flex-direction:column}}
 </style>
 </head>
 <body>
+<!-- RGB NEON SCREEN BORDER -->
+<div class="screen-rgb-frame" id="screen-rgb-frame"></div>
+
 <div class="bg-wrap"></div>
 <div class="bg-grid"></div>
 <canvas id="particle-canvas"></canvas>
@@ -605,6 +645,35 @@ input,select{font-family:var(--f-body)}
       </div>
       <div class="pmb-ring-lbl">seconds remaining</div>
       <button class="pmb-close-btn" id="pmb-close-btn" onclick="closePromoModal()" disabled>Continue to Redeem</button>
+    </div>
+  </div>
+</div>
+
+<!-- Daily Reward Modal -->
+<div class="daily-modal" id="daily-modal">
+  <div class="card daily-box">
+    <div class="daily-ring">
+      <svg width="110" height="110" viewBox="0 0 110 110">
+        <defs>
+          <linearGradient id="drGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:var(--violet)"/>
+            <stop offset="100%" style="stop-color:var(--gold)"/>
+          </linearGradient>
+        </defs>
+        <circle class="dr-bg" cx="55" cy="55" r="50"/>
+        <circle class="dr-fill" id="dr-fill" cx="55" cy="55" r="50"/>
+      </svg>
+      <div class="dr-num" id="dr-num">30</div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div class="rgb-ad" style="height:72px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> 300 × 90 — Daily Reward Verification<span class="ad-tag">AD</span></div></div>
+    </div>
+    <div class="daily-title">🎁 Daily Reward</div>
+    <div class="daily-reward-badge">+$0.05 <span style="font-size:12px;color:var(--txt3);font-family:var(--f-body);font-weight:500">Daily Bonus</span></div>
+    <div class="daily-sub">Security verification in progress. Your daily bonus will be credited automatically once the 30-second timer completes.</div>
+    <div class="daily-security-note">
+      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Anti-bot security timer — do not close this window
     </div>
   </div>
 </div>
@@ -1050,9 +1119,10 @@ input,select{font-family:var(--f-body)}
       <div style="display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start">
         <div>
           <div class="wallet-hero"><div class="w-lbl">Total Balance</div><div class="w-bal" id="w-big-bal">$0.00</div><div class="w-sub">USD equivalent — updates live</div></div>
-          <div class="w-actions">
+          <div class="w-actions" style="grid-template-columns:1fr 1fr 1fr">
             <button class="w-act" onclick="toast('Minimum withdrawal: $1.00. Keep earning!','warn')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Withdraw</button>
             <button class="w-act" onclick="toast('Transaction history exported.','info')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+            <button class="w-act" id="daily-reward-btn" onclick="openDailyReward()" style="background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(245,166,35,.1));border-color:rgba(139,92,246,.35);color:var(--violet)"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg>Daily Reward</button>
           </div>
           <div class="tx-title">Transaction History</div>
           <div id="tx-list"><div class="tx-item"><span class="tx-type">No transactions yet</span><span class="tx-amt" style="color:var(--txt3)">—</span><span class="tx-time">—</span></div></div>
@@ -1700,6 +1770,67 @@ function closePromoModal(){
 /* ── Device fingerprint (silent) ── */
 function fingerprint(){try{const cvs=document.createElement('canvas');const ctx=cvs.getContext('2d');ctx.textBaseline='top';ctx.font='14px Arial';ctx.fillText('GigVault',2,2);return cvs.toDataURL().slice(-20)}catch{return'unknown'}}
 
+/* ================================================================
+   DAILY REWARD ENGINE — 30-second security timer
+================================================================ */
+const DAILY_REWARD_LS_KEY='gvp_daily_reward_v4';
+const DAILY_REWARD_COOLDOWN_MS=24*60*60*1000; // 24 hours
+let dailyRewardTimer=null;
+
+function getDailyRewardLog(){try{return JSON.parse(localStorage.getItem(DAILY_REWARD_LS_KEY)||'{}')}catch{return{}}}
+function saveDailyRewardLog(log){try{localStorage.setItem(DAILY_REWARD_LS_KEY,JSON.stringify(log))}catch(e){}}
+function checkDailyRewardCooldown(){
+  const log=getDailyRewardLog();
+  if(!log.lastClaim)return null;
+  const elapsed=Date.now()-log.lastClaim;
+  return elapsed>=DAILY_REWARD_COOLDOWN_MS?null:DAILY_REWARD_COOLDOWN_MS-elapsed;
+}
+function fmtDailyCD(ms){
+  const s=Math.ceil(ms/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return(h>0?h+'h ':'')+String(m).padStart(2,'0')+'m '+String(sec).padStart(2,'0')+'s';
+}
+function openDailyReward(){
+  const rem=checkDailyRewardCooldown();
+  if(rem!==null){
+    toast('Daily reward already claimed! Come back in '+fmtDailyCD(rem),'warn');
+    SFX.play('thud');return;
+  }
+  // Open modal and start 30-second timer
+  $('daily-modal').classList.add('show');
+  const fill=$('dr-fill'),num=$('dr-num');
+  const total=314;
+  let t=30;
+  if(fill)fill.style.strokeDashoffset=total;
+  if(num)num.textContent=t;
+  dailyRewardTimer=setInterval(()=>{
+    t--;
+    if(num)num.textContent=t;
+    if(fill)fill.style.strokeDashoffset=total-(total*((30-t)/30));
+    if(t<=5&&num)num.style.color='var(--green)';
+    if(t<=0){
+      clearInterval(dailyRewardTimer);
+      completeDailyReward();
+    }
+  },1000);
+}
+function completeDailyReward(){
+  $('daily-modal').classList.remove('show');
+  if(num=$('dr-num'))num.style.color='var(--violet)';
+  // Credit reward
+  const rew=0.05;
+  S.balance+=rew;S.sessionEarned+=rew;
+  addTx('Daily Reward Bonus',rew,'credit');updateWallet();SFX.play('win');
+  // Save cooldown
+  const log=getDailyRewardLog();log.lastClaim=Date.now();saveDailyRewardLog(log);
+  // Disable button until tomorrow
+  const btn=$('daily-reward-btn');
+  if(btn){btn.disabled=true;btn.style.opacity='.4';btn.style.pointerEvents='none';}
+  // Particles
+  const wBtn=$('daily-reward-btn')||$('w-big-bal');
+  if(wBtn){const r=wBtn.getBoundingClientRect();PARTICLES.burst(r.left+r.width/2,r.top+r.height/2,['#8b5cf6','#a78bfa','#ffd060','#22c55e','#ff00bb'],70)}
+  toast('🎁 Daily Reward claimed — +$'+rew.toFixed(2)+' credited!','success');
+}
+
 /* ── Init ── */
 function init(){
   drawWheel3D(0);
@@ -1715,6 +1846,18 @@ function init(){
 
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
 else init();
+</script>
+<!-- TAWK.TO LIVE SUPPORT -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/67cca0a83350291909995167/1ilqf4t05';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
 </body>
 </html>
