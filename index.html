@@ -2,7 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ═══════════════════════════════════════
+     GOOGLE ANALYTICS 4  ·  G-V12JF8RPZF
+     Manual installation — do not remove
+═══════════════════════════════════════ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V12JF8RPZF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V12JF8RPZF', {
+    send_page_view: true,
+    cookie_flags: 'SameSite=None;Secure'
+  });
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>PAYRO — Global Capital Platform</title>
 <!-- SPONSOR AD SCRIPT -->
 <script type='text/javascript' src='https://pl28874426.effectivegatecpm.com/1f/81/29/1f8129a5e1425dd72a6354c5ecff9d54.js'></script>
@@ -118,19 +132,10 @@ input,select{font-family:var(--f-body)}
    Uses border-color + box-shadow + transform/opacity only.
 ================================================================ */
 
-/* rgbSpin kept for the ONE hub frame element only */
-@keyframes rgbSpin{to{transform:rotate(360deg)}}
-
-/* Full-spectrum glow — only border-color + box-shadow */
-@keyframes rgbGlow{
-  0%   {border-color:rgba(255,0,0,.95);  box-shadow:0 0 7px 2px rgba(255,0,0,.65),  0 0 20px 4px rgba(255,0,0,.25)}
-  14%  {border-color:rgba(255,110,0,.95);box-shadow:0 0 7px 2px rgba(255,110,0,.65),0 0 20px 4px rgba(255,110,0,.25)}
-  28%  {border-color:rgba(255,215,0,.95);box-shadow:0 0 7px 2px rgba(255,215,0,.65),0 0 20px 4px rgba(255,215,0,.25)}
-  42%  {border-color:rgba(0,255,80,.95); box-shadow:0 0 7px 2px rgba(0,255,80,.65), 0 0 20px 4px rgba(0,255,80,.25)}
-  57%  {border-color:rgba(0,200,255,.95);box-shadow:0 0 7px 2px rgba(0,200,255,.65),0 0 20px 4px rgba(0,200,255,.25)}
-  71%  {border-color:rgba(80,0,255,.95); box-shadow:0 0 7px 2px rgba(80,0,255,.65), 0 0 20px 4px rgba(80,0,255,.25)}
-  85%  {border-color:rgba(220,0,255,.95);box-shadow:0 0 7px 2px rgba(220,0,255,.65),0 0 20px 4px rgba(220,0,255,.25)}
-  100% {border-color:rgba(255,0,0,.95);  box-shadow:0 0 7px 2px rgba(255,0,0,.65),  0 0 20px 4px rgba(255,0,0,.25)}
+/* Single-color subtle cyan pulse — compositor-only */
+@keyframes cyanPulse{
+  0%,100%{box-shadow:0 0 6px 1px rgba(0,212,255,.3),0 0 14px 2px rgba(0,212,255,.12)}
+  50%    {box-shadow:0 0 9px 2px rgba(0,212,255,.45),0 0 20px 3px rgba(0,212,255,.18)}
 }
 
 /* Sweep shimmer — transform + opacity only (compositor thread) */
@@ -144,9 +149,9 @@ input,select{font-family:var(--f-body)}
 /* ── Main rgb-ad wrapper ── */
 .rgb-ad{
   position:relative;border-radius:var(--r-md);overflow:hidden;
-  border:2px solid rgba(255,0,0,.95);
-  animation:rgbGlow 7s linear infinite;
-  will-change:border-color,box-shadow;
+  border:1.5px solid rgba(0,212,255,.35);
+  box-shadow:0 0 8px rgba(0,212,255,.12);
+  will-change:box-shadow;
   contain:layout paint style;
   transform:translateZ(0);
 }
@@ -171,9 +176,9 @@ input,select{font-family:var(--f-body)}
 /* ── Inline small ad ── */
 .rgb-ad-inline{
   position:relative;border-radius:var(--r-sm);overflow:hidden;flex-shrink:0;
-  border:2px solid rgba(255,0,0,.95);
-  animation:rgbGlow 7s linear infinite;animation-delay:.8s;
-  will-change:border-color,box-shadow;contain:layout paint style;
+  border:1.5px solid rgba(0,212,255,.3);
+  box-shadow:0 0 6px rgba(0,212,255,.1);
+  will-change:box-shadow;contain:layout paint style;
   transform:translateZ(0);
 }
 .rgb-ad-inline-inner{
@@ -406,8 +411,8 @@ input,select{font-family:var(--f-body)}
 ================================================================ */
 #sec-games-hub{position:relative;overflow:hidden;scroll-margin-top:80px}
 .hub-rgb-frame{position:absolute;inset:0;border-radius:var(--r-xl);overflow:hidden;z-index:0}
-.hub-rgb-frame::before{content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;background:conic-gradient(from 0deg,rgba(255,0,0,.6) 0%,rgba(255,128,0,.6) 12%,rgba(255,255,0,.6) 24%,rgba(0,255,128,.6) 36%,rgba(0,200,255,.6) 48%,rgba(100,0,255,.6) 60%,rgba(255,0,200,.6) 72%,rgba(245,166,35,.8) 84%,rgba(255,0,0,.6) 100%);animation:rgbSpin 4.5s linear infinite}
-.hub-rgb-frame::after{content:'';position:absolute;inset:2px;background:var(--bg1);border-radius:calc(var(--r-xl) - 2px)}
+.hub-rgb-frame::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,.18),rgba(245,166,35,.12),rgba(0,212,255,.1));border-radius:var(--r-xl)}
+.hub-rgb-frame::after{content:'';position:absolute;inset:1.5px;background:var(--bg1);border-radius:calc(var(--r-xl) - 1.5px)}
 .hub-inner{position:relative;z-index:1;background:var(--glass);border-radius:calc(var(--r-xl) - 2px);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .hub-header{padding:22px 26px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
 .hub-icon{width:46px;height:46px;border-radius:var(--r-md);flex-shrink:0;background:linear-gradient(135deg,rgba(245,166,35,.25),rgba(245,166,35,.06));border:1px solid rgba(245,166,35,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(245,166,35,.2)}
@@ -693,23 +698,9 @@ input,select{font-family:var(--f-body)}
    24. RESPONSIVE
 ================================================================ */
 /* ================================================================
-   25. RGB NEON SCREEN BORDER — Red › Green › Blue › Purple cycle
+   25. SCREEN FRAME — removed RGB cycle, hidden for performance
 ================================================================ */
-@keyframes neonRgbCycle {
-  0%   {border-color:rgba(255,0,0,.9);  box-shadow:0 0 6px 1px rgba(255,0,0,.5),  inset 0 0 6px rgba(255,0,0,.08)}
-  14%  {border-color:rgba(255,110,0,.9);box-shadow:0 0 6px 1px rgba(255,110,0,.5),inset 0 0 6px rgba(255,110,0,.08)}
-  28%  {border-color:rgba(255,220,0,.9);box-shadow:0 0 6px 1px rgba(255,220,0,.5),inset 0 0 6px rgba(255,220,0,.08)}
-  42%  {border-color:rgba(0,255,80,.9); box-shadow:0 0 6px 1px rgba(0,255,80,.5), inset 0 0 6px rgba(0,255,80,.08)}
-  57%  {border-color:rgba(0,200,255,.9);box-shadow:0 0 6px 1px rgba(0,200,255,.5),inset 0 0 6px rgba(0,200,255,.08)}
-  71%  {border-color:rgba(60,0,255,.9); box-shadow:0 0 6px 1px rgba(60,0,255,.5), inset 0 0 6px rgba(60,0,255,.08)}
-  85%  {border-color:rgba(210,0,255,.9);box-shadow:0 0 6px 1px rgba(210,0,255,.5),inset 0 0 6px rgba(210,0,255,.08)}
-  100% {border-color:rgba(255,0,0,.9);  box-shadow:0 0 6px 1px rgba(255,0,0,.5),  inset 0 0 6px rgba(255,0,0,.08)}
-}
-.screen-rgb-frame{
-  position:fixed;inset:0;z-index:9990;pointer-events:none;
-  border:2px solid rgba(255,0,0,.9);
-  animation:neonRgbCycle 7s linear infinite;
-}
+.screen-rgb-frame{display:none}
 
 /* ================================================================
    SPONSOR BANNER PLACEHOLDERS
@@ -718,8 +709,7 @@ input,select{font-family:var(--f-body)}
   width:100%;background:linear-gradient(135deg,#0d1020,#060810);
   display:flex;align-items:center;justify-content:center;padding:6px 20px;
   min-height:60px;position:relative;z-index:50;overflow:hidden;
-  border:2px solid rgba(255,0,0,.9);
-  animation:neonAdCycle 7s linear infinite;
+  border-top:1px solid rgba(0,212,255,.18);border-bottom:1px solid rgba(0,212,255,.18);
 }
 .sponsor-banner-top::after{
   content:'';position:absolute;top:0;left:0;width:40%;height:100%;
@@ -730,9 +720,7 @@ input,select{font-family:var(--f-body)}
   width:100%;background:linear-gradient(135deg,#0d1020,#060810);
   display:flex;align-items:center;justify-content:center;padding:6px 20px;
   min-height:60px;position:relative;z-index:50;overflow:hidden;
-  border:2px solid rgba(255,0,0,.9);
-  animation:neonAdCycle 7s linear infinite;
-  animation-delay:3.5s;
+  border-top:1px solid rgba(0,212,255,.18);border-bottom:1px solid rgba(0,212,255,.18);
 }
 .sponsor-banner-bottom::after{
   content:'';position:absolute;top:0;left:0;width:40%;height:100%;
@@ -748,8 +736,8 @@ input,select{font-family:var(--f-body)}
 /* RGB Glow on Claim & Spin action zones */
 .sponsor-action-wrap{
   position:relative;border-radius:var(--r-md);padding:2px;
-  border:2px solid rgba(255,0,0,.9);
-  animation:neonAdCycle 7s linear infinite;animation-delay:2s;
+  border:1.5px solid rgba(0,212,255,.3);
+  box-shadow:0 0 10px rgba(0,212,255,.1);
   margin-bottom:4px;overflow:hidden;
 }
 .sponsor-action-wrap::after{
@@ -890,23 +878,12 @@ input,select{font-family:var(--f-body)}
 }
 
 /* ================================================================
-   A-ADS NEON RGB GLOW WRAPPERS — unified with rgb-ad engine
+   A-ADS WRAPPERS — single cyan border, no RGB cycling
 ================================================================ */
-@keyframes neonAdCycle{
-  0%   {border-color:rgba(255,0,0,.95);  box-shadow:0 0 7px 2px rgba(255,0,0,.65),  0 0 20px 4px rgba(255,0,0,.25)}
-  14%  {border-color:rgba(255,110,0,.95);box-shadow:0 0 7px 2px rgba(255,110,0,.65),0 0 20px 4px rgba(255,110,0,.25)}
-  28%  {border-color:rgba(255,215,0,.95);box-shadow:0 0 7px 2px rgba(255,215,0,.65),0 0 20px 4px rgba(255,215,0,.25)}
-  42%  {border-color:rgba(0,255,80,.95); box-shadow:0 0 7px 2px rgba(0,255,80,.65), 0 0 20px 4px rgba(0,255,80,.25)}
-  57%  {border-color:rgba(0,200,255,.95);box-shadow:0 0 7px 2px rgba(0,200,255,.65),0 0 20px 4px rgba(0,200,255,.25)}
-  71%  {border-color:rgba(80,0,255,.95); box-shadow:0 0 7px 2px rgba(80,0,255,.65), 0 0 20px 4px rgba(80,0,255,.25)}
-  85%  {border-color:rgba(220,0,255,.95);box-shadow:0 0 7px 2px rgba(220,0,255,.65),0 0 20px 4px rgba(220,0,255,.25)}
-  100% {border-color:rgba(255,0,0,.95);  box-shadow:0 0 7px 2px rgba(255,0,0,.65),  0 0 20px 4px rgba(255,0,0,.25)}
-}
 .aads-neon-wrap{
   position:relative;border-radius:var(--r-md);
-  border:2px solid rgba(255,0,0,.95);
-  animation:neonAdCycle 7s linear infinite;
-  will-change:border-color,box-shadow;
+  border:1.5px solid rgba(0,212,255,.32);
+  box-shadow:0 0 10px rgba(0,212,255,.1);
   background:linear-gradient(160deg,#0e1122,#07090f);
   overflow:hidden;width:100%;
   transform:translateZ(0);contain:layout paint style;
@@ -1036,15 +1013,13 @@ input,select{font-family:var(--f-body)}
   .navbar { backdrop-filter: blur(14px) saturate(1.4) !important;
             -webkit-backdrop-filter: blur(14px) saturate(1.4) !important }
 
-  /* Reduce glow layers — drop 3rd spread shadow on mobile */
-  .rgb-ad, .rgb-ad-inline, .aads-neon-wrap {
-    animation-name: rgbGlowMobile !important;
-  }
-  /* Slow down sweep shimmer significantly */
+  /* Reduce glow on mobile */
+  .rgb-ad, .rgb-ad-inline, .aads-neon-wrap { box-shadow: none }
+  /* Slow sweep shimmer */
   .rgb-ad-inner::before, .rgb-ad-inline-inner::before { animation-duration: 9s !important }
 
-  /* Hub frame: stop spinning conic (single biggest paint cost) */
-  .hub-rgb-frame::before { animation-play-state: paused !important }
+  /* Hub frame: static, no spin */
+  .hub-rgb-frame::before { display: none }
 
   /* Simplify coin spin */
   .spin3d-coin { animation-duration: 3.5s !important }
@@ -1053,18 +1028,6 @@ input,select{font-family:var(--f-body)}
   .mc:hover:not(.revealed):not(.locked) { transform: none }
   .watch-btn:hover, .spin-btn:hover,
   .mines-bet-btn:hover, .cashout-btn:hover { transform: none }
-}
-
-/* Lighter 2-layer glow for mobile (saves GPU fillrate) */
-@keyframes rgbGlowMobile {
-  0%   { border-color:rgba(255,0,0,.9);   box-shadow:0 0 5px 1px rgba(255,0,0,.55) }
-  14%  { border-color:rgba(255,110,0,.9); box-shadow:0 0 5px 1px rgba(255,110,0,.55) }
-  28%  { border-color:rgba(255,215,0,.9); box-shadow:0 0 5px 1px rgba(255,215,0,.55) }
-  42%  { border-color:rgba(0,255,80,.9);  box-shadow:0 0 5px 1px rgba(0,255,80,.55) }
-  57%  { border-color:rgba(0,200,255,.9); box-shadow:0 0 5px 1px rgba(0,200,255,.55) }
-  71%  { border-color:rgba(80,0,255,.9);  box-shadow:0 0 5px 1px rgba(80,0,255,.55) }
-  85%  { border-color:rgba(220,0,255,.9); box-shadow:0 0 5px 1px rgba(220,0,255,.55) }
-  100% { border-color:rgba(255,0,0,.9);   box-shadow:0 0 5px 1px rgba(255,0,0,.55) }
 }
 
 /* ── MOBILE TIER 2 (≤480px): strip it further ── */
@@ -1089,34 +1052,24 @@ input,select{font-family:var(--f-body)}
   /* Slow all rgb-ad cycles even more to 12s */
   .rgb-ad, .rgb-ad-inline, .aads-neon-wrap { animation-duration: 12s !important }
 
-  /* Kill sweep shimmer entirely on tiny phones */
+  /* Kill sweep shimmer on tiny phones */
   .rgb-ad-inner::before, .rgb-ad-inline-inner::before { display: none }
 
   /* Simpler shadows on mine cells */
   .mc.revealed.safe { animation: gemReveal .3s ease forwards !important }
   .mc.revealed.bomb { animation: bombBlast .3s ease !important }
-
-  /* Screen frame: just border, no box-shadow on small screens */
-  .screen-rgb-frame { animation-name: rgbGlowMobile !important }
 }
 
 /* ── Smooth scroll ── */
 html { scroll-behavior: smooth }
 * { -webkit-tap-highlight-color: transparent }
 
-/* ── prefers-reduced-motion: kill everything for accessibility ── */
+/* ── prefers-reduced-motion: kill animations for accessibility ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
-  }
-  /* Keep border-color visible but static */
-  .rgb-ad, .rgb-ad-inline, .aads-neon-wrap,
-  .sponsor-banner-top, .sponsor-banner-bottom,
-  .sponsor-action-wrap, .screen-rgb-frame {
-    border-color: rgba(0,200,255,.8) !important;
-    box-shadow: 0 0 6px 1px rgba(0,200,255,.4) !important;
   }
 }
 
@@ -1224,7 +1177,7 @@ html { scroll-behavior: smooth }
 .ref-tier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .ref-tier-item{padding:12px;background:var(--bg4);border:1px solid var(--bdr2);border-radius:var(--r-sm);text-align:center;position:relative}
 .ref-tier-item.unlocked{border-color:rgba(245,166,35,.35);background:rgba(245,166,35,.04)}
-.ref-tier-item.next-up{border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.04);animation:neonAdCycle 7s linear infinite}
+.ref-tier-item.next-up{border-color:rgba(0,212,255,.4);background:rgba(0,212,255,.04);box-shadow:0 0 10px rgba(0,212,255,.12);animation:cyanPulse 3s ease-in-out infinite}
 .ref-tier-item-rate{font-family:var(--f-mono);font-size:15px;font-weight:700;color:var(--txt);margin-bottom:2px}
 .ref-tier-item.unlocked .ref-tier-item-rate{color:var(--gold)}
 .ref-tier-item-req{font-size:9px;color:var(--txt3);letter-spacing:.04em}
@@ -1302,17 +1255,7 @@ html { scroll-behavior: smooth }
 .lsb-item::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(245,166,35,.07),transparent);opacity:0;transition:opacity .14s ease;pointer-events:none}
 .lsb-item:hover{color:var(--txt);transform:translateX(4px) translateZ(0)}
 .lsb-item:hover::before{opacity:1}
-.lsb-item:hover{animation:lsbGlow 4.5s linear infinite}
-@keyframes lsbGlow{
-  0%  {border-left-color:rgba(255,0,0,.95);  box-shadow:-3px 0 14px rgba(255,0,0,.3)}
-  14% {border-left-color:rgba(255,110,0,.95);box-shadow:-3px 0 14px rgba(255,110,0,.3)}
-  28% {border-left-color:rgba(255,215,0,.95);box-shadow:-3px 0 14px rgba(255,215,0,.3)}
-  42% {border-left-color:rgba(0,255,80,.95); box-shadow:-3px 0 14px rgba(0,255,80,.3)}
-  57% {border-left-color:rgba(0,200,255,.95);box-shadow:-3px 0 14px rgba(0,200,255,.3)}
-  71% {border-left-color:rgba(80,0,255,.95); box-shadow:-3px 0 14px rgba(80,0,255,.3)}
-  85% {border-left-color:rgba(220,0,255,.95);box-shadow:-3px 0 14px rgba(220,0,255,.3)}
-  100%{border-left-color:rgba(255,0,0,.95);  box-shadow:-3px 0 14px rgba(255,0,0,.3)}
-}
+.lsb-item:hover{animation:none;border-left-color:var(--cyan);box-shadow:-2px 0 10px rgba(0,212,255,.18)}
 .lsb-ic{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid var(--bdr2);flex-shrink:0;transition:background .14s ease,border-color .14s ease,box-shadow .14s ease}
 .lsb-item:hover .lsb-ic{background:rgba(245,166,35,.1);border-color:rgba(245,166,35,.35);box-shadow:0 0 8px rgba(245,166,35,.2)}
 .lsb-badge{margin-left:auto;font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:99px;letter-spacing:.05em;flex-shrink:0;white-space:nowrap}
@@ -1342,17 +1285,8 @@ html { scroll-behavior: smooth }
 .task-card{transition:border-color .15s ease,background .15s ease,transform .2s var(--spring),box-shadow .2s ease!important}
 .task-card:hover:not(.done-t){
   transform:translateY(-5px) scale(1.016) translateZ(0)!important;
-  animation:cardGlow 4.5s linear infinite!important;
-}
-@keyframes cardGlow{
-  0%  {border-color:rgba(255,0,0,.9);  box-shadow:0 0 14px 3px rgba(255,0,0,.4),  0 12px 36px rgba(0,0,0,.5)}
-  14% {border-color:rgba(255,110,0,.9);box-shadow:0 0 14px 3px rgba(255,110,0,.4),0 12px 36px rgba(0,0,0,.5)}
-  28% {border-color:rgba(255,215,0,.9);box-shadow:0 0 14px 3px rgba(255,215,0,.4),0 12px 36px rgba(0,0,0,.5)}
-  42% {border-color:rgba(0,255,80,.9); box-shadow:0 0 14px 3px rgba(0,255,80,.4), 0 12px 36px rgba(0,0,0,.5)}
-  57% {border-color:rgba(0,200,255,.9);box-shadow:0 0 14px 3px rgba(0,200,255,.4),0 12px 36px rgba(0,0,0,.5)}
-  71% {border-color:rgba(80,0,255,.9); box-shadow:0 0 14px 3px rgba(80,0,255,.4), 0 12px 36px rgba(0,0,0,.5)}
-  85% {border-color:rgba(220,0,255,.9);box-shadow:0 0 14px 3px rgba(220,0,255,.4),0 12px 36px rgba(0,0,0,.5)}
-  100%{border-color:rgba(255,0,0,.9);  box-shadow:0 0 14px 3px rgba(255,0,0,.4),  0 12px 36px rgba(0,0,0,.5)}
+  border-color:rgba(0,212,255,.55)!important;
+  box-shadow:0 0 18px 3px rgba(0,212,255,.22),0 12px 36px rgba(0,0,0,.5)!important;
 }
 
 /* ── 200-TASK GRID ── */
@@ -1384,26 +1318,912 @@ html { scroll-behavior: smooth }
 .t200-box::after{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(255,255,255,.04),transparent 60%);pointer-events:none}
 .t200-box:hover{
   transform:translateY(-6px) scale(1.06) translateZ(0);
-  animation:t200Glow 4.5s linear infinite;
-}
-@keyframes t200Glow{
-  0%  {border-color:rgba(255,0,0,.95);  box-shadow:0 0 12px 3px rgba(255,0,0,.5),  0 10px 28px rgba(0,0,0,.45)}
-  14% {border-color:rgba(255,110,0,.95);box-shadow:0 0 12px 3px rgba(255,110,0,.5),0 10px 28px rgba(0,0,0,.45)}
-  28% {border-color:rgba(255,215,0,.95);box-shadow:0 0 12px 3px rgba(255,215,0,.5),0 10px 28px rgba(0,0,0,.45)}
-  42% {border-color:rgba(0,255,80,.95); box-shadow:0 0 12px 3px rgba(0,255,80,.5), 0 10px 28px rgba(0,0,0,.45)}
-  57% {border-color:rgba(0,200,255,.95);box-shadow:0 0 12px 3px rgba(0,200,255,.5),0 10px 28px rgba(0,0,0,.45)}
-  71% {border-color:rgba(80,0,255,.95); box-shadow:0 0 12px 3px rgba(80,0,255,.5), 0 10px 28px rgba(0,0,0,.45)}
-  85% {border-color:rgba(220,0,255,.95);box-shadow:0 0 12px 3px rgba(220,0,255,.5),0 10px 28px rgba(0,0,0,.45)}
-  100%{border-color:rgba(255,0,0,.95);  box-shadow:0 0 12px 3px rgba(255,0,0,.5),  0 10px 28px rgba(0,0,0,.45)}
+  border-color:rgba(0,212,255,.6);
+  box-shadow:0 0 14px 2px rgba(0,212,255,.28),0 10px 28px rgba(0,0,0,.45);
 }
 .t200-box.t200-done{opacity:.35;filter:grayscale(.7);pointer-events:none;cursor:default}
 .t200-num{position:absolute;top:4px;left:6px;font-family:var(--f-mono);font-size:8px;color:var(--txt3);font-weight:700;line-height:1}
 .t200-coin{width:28px;height:28px;flex-shrink:0;position:relative;z-index:1}
 .t200-val{font-family:var(--f-mono);font-size:9px;font-weight:700;color:var(--gold);line-height:1;position:relative;z-index:1}
 .t200-usd{font-size:8px;color:var(--txt3);line-height:1;position:relative;z-index:1}
+/* P-Coin navbar logo */
+.nav-logo-pcoin{display:flex;align-items:center;justify-content:center;flex-shrink:0;filter:drop-shadow(0 0 6px rgba(0,212,255,.45)) drop-shadow(0 0 12px rgba(245,166,35,.3));transition:filter .25s var(--ease)}
+.nav-logo-pcoin:hover{filter:drop-shadow(0 0 10px rgba(0,212,255,.7)) drop-shadow(0 0 18px rgba(245,166,35,.4))}
+
+/* ================================================================
+   AFFILIATE DASHBOARD — Professional UI
+================================================================ */
+
+/* Hero Strip */
+.aff-hero{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;background:linear-gradient(135deg,rgba(0,212,255,.06),rgba(139,92,246,.04));border:1px solid rgba(0,212,255,.16);border-radius:var(--r-md);padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden}
+.aff-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.08),transparent);pointer-events:none}
+.aff-hero-label{font-size:9px;font-weight:700;letter-spacing:.16em;color:var(--txt3);text-transform:uppercase;margin-bottom:6px}
+.aff-hero-uid{font-family:var(--f-mono);font-size:17px;font-weight:700;color:var(--cyan);letter-spacing:.06em;margin-bottom:6px;word-break:break-all}
+.aff-hero-sub{font-size:11px;color:var(--txt3);line-height:1.55;max-width:280px}
+
+/* KPI Grid */
+.aff-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.aff-kpi{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-sm);padding:12px 14px;text-align:center;transition:border-color .2s ease}
+.aff-kpi:hover{border-color:rgba(0,212,255,.25)}
+.aff-kpi-accent{border-color:rgba(0,212,255,.3)!important;background:rgba(0,212,255,.04)!important;box-shadow:0 0 12px rgba(0,212,255,.08)}
+.aff-kpi-val{font-family:var(--f-mono);font-size:16px;font-weight:700;color:var(--txt);line-height:1;margin-bottom:3px}
+.aff-kpi-accent .aff-kpi-val{color:var(--cyan)}
+.aff-kpi-lbl{font-size:9.5px;color:var(--txt3);font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+
+/* Main grid */
+.aff-main-grid{display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:22px}
+
+/* Panel */
+.aff-panel{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);overflow:hidden}
+.aff-panel-hdr{padding:11px 16px;background:var(--bg4);border-bottom:1px solid var(--bdr2);font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--txt3);display:flex;align-items:center;justify-content:space-between}
+.aff-panel-body{padding:16px}
+
+/* Affiliate link box */
+.aff-link-box{display:flex;align-items:center;background:var(--bg1);border:1.5px solid rgba(0,212,255,.3);border-radius:var(--r-md);overflow:hidden;margin-bottom:12px;transition:border-color .2s ease;box-shadow:0 0 12px rgba(0,212,255,.08)}
+.aff-link-box:hover{border-color:rgba(0,212,255,.55)}
+.aff-link-box.has-link{border-color:rgba(0,212,255,.5);box-shadow:0 0 16px rgba(0,212,255,.14)}
+.aff-link-url{flex:1;padding:12px 14px;font-family:var(--f-mono);font-size:11px;color:var(--cyan);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;letter-spacing:.02em}
+.aff-link-copy-btn{display:flex;align-items:center;gap:6px;padding:12px 14px;background:rgba(0,212,255,.12);border-left:1px solid rgba(0,212,255,.2);color:var(--cyan);font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .15s ease;border:none;font-family:var(--f-body);letter-spacing:.04em}
+.aff-link-copy-btn:hover{background:rgba(0,212,255,.22)}
+
+/* Fields */
+.aff-field-row{margin-bottom:12px}
+.aff-field{display:flex;flex-direction:column;gap:5px}
+.aff-field-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase}
+.aff-input{background:var(--bg1);border:1px solid var(--bdr2);border-radius:var(--r-sm);padding:9px 12px;font-family:var(--f-mono);font-size:11px;color:var(--txt);outline:none;width:100%;transition:border-color .15s ease}
+.aff-input:focus{border-color:rgba(0,212,255,.45)}
+.aff-input::placeholder{color:var(--txt3)}
+
+/* Generate button */
+.aff-gen-btn{width:100%;padding:13px;border-radius:var(--r-md);background:linear-gradient(135deg,var(--cyan),#0077aa);color:#000;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;box-shadow:0 5px 20px rgba(0,212,255,.25);margin-bottom:8px;border:none;font-family:var(--f-body)}
+.aff-gen-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,212,255,.4)}
+.aff-copy-btn{width:100%;padding:10px;border-radius:var(--r-md);background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);color:var(--cyan);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background .15s ease;margin-bottom:10px;font-family:var(--f-body)}
+.aff-copy-btn:hover{background:rgba(0,212,255,.14)}
+
+/* Share row */
+.aff-share-label{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-bottom:8px}
+.aff-share-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.aff-share-btn{padding:9px 4px;border-radius:var(--r-sm);font-size:11px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;border:none;transition:transform .15s ease,opacity .15s ease;font-family:var(--f-body)}
+.aff-share-btn:hover{transform:translateY(-1px);opacity:.85}
+.aff-sb-x{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)!important;color:var(--txt)}
+.aff-sb-tg{background:rgba(42,171,238,.12);border:1px solid rgba(42,171,238,.22)!important;color:#2AABEE}
+.aff-sb-wa{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2)!important;color:#25D366}
+
+/* Tier widget */
+.aff-tier-wrap{margin-bottom:14px}
+.aff-tier-label{font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:8px}
+.aff-tier-track{height:6px;background:var(--bg1);border-radius:99px;overflow:hidden;margin-bottom:5px}
+.aff-tier-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:99px;transition:width .5s var(--ease)}
+.aff-tier-next{font-size:10px;color:var(--txt3)}
+.aff-tier-table{width:100%;border-collapse:collapse;margin-top:10px}
+.aff-tier-table th{font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--txt3);text-transform:uppercase;text-align:left;padding:6px 8px;border-bottom:1px solid var(--bdr2)}
+.aff-tier-table td{font-size:12px;color:var(--txt2);padding:7px 8px;border-bottom:1px solid var(--bdr2)}
+.aff-tier-table tr:last-child td{border-bottom:none}
+.aff-td-rate{font-family:var(--f-mono);font-weight:700;color:var(--green)!important}
+.aff-tier-row.aff-tr-active td{color:var(--cyan)!important}
+
+/* How it works */
+.aff-how-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:11px;font-size:12px;color:var(--txt2);line-height:1.55}
+.aff-how-row:last-child{margin-bottom:0}
+.aff-how-num{width:22px;height:22px;border-radius:50%;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--cyan);flex-shrink:0;margin-top:1px}
+
+/* Data Tables */
+.aff-table-section{margin-bottom:22px}
+.aff-table-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.aff-table-title{font-size:12px;font-weight:700;color:var(--txt);letter-spacing:.03em}
+.aff-table-wrap{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);overflow:hidden;overflow-x:auto}
+.aff-data-table{width:100%;border-collapse:collapse;min-width:480px}
+.aff-data-table thead tr{background:var(--bg4)}
+.aff-data-table th{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--bdr2);white-space:nowrap}
+.aff-data-table td{font-size:12px;color:var(--txt2);padding:11px 14px;border-bottom:1px solid var(--bdr2)}
+.aff-data-table tr:last-child td{border-bottom:none}
+.aff-data-table tbody tr:hover{background:rgba(0,212,255,.03)}
+.ref-td-mono{font-family:var(--f-mono);font-size:11px}
+.ref-td-earn{font-family:var(--f-mono);font-size:11px;font-weight:700;color:var(--green)}
+.ref-td-date{font-size:11px;color:var(--txt3)}
+.ref-table-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:8px;vertical-align:middle;flex-shrink:0}
+.ref-status-active{background:var(--green);box-shadow:0 0 5px var(--green)}
+.ref-status-pause{background:var(--amber);box-shadow:0 0 5px var(--amber)}
+.ref-table-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.05);color:var(--txt3)}
+.payout-chip{display:inline-block;font-size:10px;font-weight:700;padding:2px 9px;border-radius:99px;letter-spacing:.04em}
+.pc-done{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.pc-pend{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+
+/* Analytics Grid */
+.aff-analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.aff-bar-row{margin-bottom:10px}
+.aff-bar-row:last-child{margin-bottom:0}
+.aff-bar-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.aff-bar-name{font-size:11px;color:var(--txt2);font-weight:500}
+.aff-bar-pct{font-family:var(--f-mono);font-size:10px;font-weight:700;color:var(--txt3)}
+.aff-bar-track{height:5px;background:var(--bg1);border-radius:99px;overflow:hidden}
+.aff-bar-fill{height:100%;border-radius:99px;transition:width .5s var(--ease)}
+
+/* Activity Feed */
+.aff-activity-feed{max-height:200px;overflow-y:auto}
+.aff-activity-feed::-webkit-scrollbar{width:3px}
+.aff-activity-feed::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:99px}
+.aff-feed-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--bdr2);font-size:11px}
+.aff-feed-row:last-child{border-bottom:none}
+.aff-feed-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.aff-dot-cyan{background:var(--cyan)}
+.aff-dot-green{background:var(--green)}
+.aff-dot-gold{background:var(--gold)}
+.aff-dot-violet{background:var(--violet)}
+.aff-dot-info{background:var(--txt3)}
+.aff-feed-msg{flex:1;color:var(--txt2);line-height:1.4}
+.aff-feed-time{font-family:var(--f-mono);font-size:9px;color:var(--txt3);white-space:nowrap;flex-shrink:0}
+
+/* Responsive */
+@media(max-width:900px){
+  .aff-main-grid{grid-template-columns:1fr}
+  .aff-analytics-grid{grid-template-columns:1fr}
+  .aff-hero{grid-template-columns:1fr}
+  .aff-kpi-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .aff-hero{padding:16px}
+  .aff-kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .aff-hero-uid{font-size:13px}
+}
 /* P-Coin in navbar */
 .nav-pcoin{width:15px;height:15px;margin-right:1px;flex-shrink:0;vertical-align:middle}
 
+/* ================================================================
+   STAKE PREMIUM BANNER SLOTS
+================================================================ */
+
+/* ── Shimmer sweep (compositor-only) ── */
+@keyframes bannerShimmer{
+  0%  {transform:translateX(-140%) skewX(-18deg);opacity:0}
+  18% {opacity:.22}
+  82% {opacity:.10}
+  100%{transform:translateX(260%)  skewX(-18deg);opacity:0}
+}
+/* ── Subtle border pulse ── */
+@keyframes stakePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0),0 8px 32px rgba(0,0,0,.55)}
+  50%    {box-shadow:0 0 0 3px rgba(0,212,255,.12),0 12px 40px rgba(0,0,0,.65)}
+}
+
+/* ── TOP BANNER 728×90 ── */
+.stake-top-banner{
+  width:100%;display:block;text-decoration:none;color:inherit;
+  position:relative;overflow:hidden;
+  background:linear-gradient(105deg,#050e08 0%,#081a10 35%,#040d09 65%,#060f0a 100%);
+  border-top:1px solid rgba(0,212,255,.15);
+  border-bottom:1px solid rgba(0,212,255,.15);
+  min-height:90px;
+  animation:stakePulse 4s ease-in-out infinite;
+  will-change:box-shadow;
+  transform:translateZ(0);
+  cursor:pointer;
+}
+/* radial accent lights */
+.stake-top-banner::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 380px 100% at 8% 50%,rgba(0,180,50,.09),transparent),
+    radial-gradient(ellipse 320px 100% at 92% 50%,rgba(0,212,255,.07),transparent),
+    radial-gradient(ellipse 200px 80% at 50% 120%,rgba(245,166,35,.06),transparent);
+}
+/* shimmer sweep */
+.stake-top-banner::after{
+  content:'';position:absolute;top:0;left:0;width:36%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.055),transparent);
+  animation:bannerShimmer 6s ease-in-out infinite;
+  pointer-events:none;will-change:transform,opacity;
+}
+.stb-inner{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1220px;margin:0 auto;
+  padding:0 28px;height:90px;gap:20px;
+}
+
+/* ── Stake S-logo mark ── */
+.stb-logo-wrap{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.stb-s-mark{
+  width:42px;height:42px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#00b533,#00d455);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 18px rgba(0,180,50,.45),inset 0 1px 0 rgba(255,255,255,.18);
+}
+.stb-wordmark{display:flex;flex-direction:column;gap:1px}
+.stb-name{font-family:'Rajdhani',sans-serif;font-size:21px;font-weight:700;letter-spacing:.06em;color:#fff;line-height:1}
+.stb-tagline{font-size:9.5px;font-weight:600;letter-spacing:.14em;color:rgba(0,220,80,.75);text-transform:uppercase}
+
+/* ── Center copy ── */
+.stb-copy{flex:1;text-align:center;padding:0 12px}
+.stb-headline{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;letter-spacing:.04em;color:#fff;line-height:1.1;margin-bottom:4px}
+.stb-headline em{font-style:normal;color:#00d455}
+.stb-sub{font-size:11px;color:rgba(255,255,255,.48);letter-spacing:.04em}
+.stb-badges{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:5px}
+.stb-badge{font-size:8.5px;font-weight:700;letter-spacing:.1em;padding:2px 8px;border-radius:99px;text-transform:uppercase}
+.stb-badge-g{background:rgba(0,180,50,.14);border:1px solid rgba(0,180,50,.3);color:#00d455}
+.stb-badge-c{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--cyan)}
+.stb-badge-gold{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);color:var(--gold)}
+
+/* ── Right: offer + CTA ── */
+.stb-right{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.stb-offer{text-align:right}
+.stb-offer-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--gold);line-height:1;text-shadow:0 0 16px rgba(245,166,35,.4)}
+.stb-offer-lbl{font-size:9px;font-weight:600;letter-spacing:.1em;color:rgba(255,255,255,.38);text-transform:uppercase;margin-top:1px}
+.stb-join-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:11px 24px;border-radius:10px;
+  background:linear-gradient(135deg,#00c940,#00a832);
+  color:#fff;font-family:'Rajdhani',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  box-shadow:0 4px 20px rgba(0,180,50,.4),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .18s ease;
+  white-space:nowrap;flex-shrink:0;
+}
+.stb-join-btn:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 8px 28px rgba(0,180,50,.55),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.stb-divider{width:1px;height:44px;background:rgba(255,255,255,.07);flex-shrink:0}
+.stb-ad-tag{
+  position:absolute;top:5px;right:8px;
+  font-size:7.5px;font-weight:700;letter-spacing:.12em;
+  color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);padding:1px 5px;border-radius:3px;
+  text-transform:uppercase;pointer-events:none;
+}
+
+/* ─────────────────────────────────────────────
+   SIDEBAR 300×250 SLOT
+───────────────────────────────────────────── */
+.stake-sidebar-ad{
+  width:300px;flex-shrink:0;
+  display:block;text-decoration:none;color:inherit;
+  position:relative;overflow:hidden;border-radius:16px;
+  background:linear-gradient(160deg,#060f08 0%,#091808 40%,#050d06 100%);
+  border:1px solid rgba(0,180,50,.22);
+  box-shadow:0 16px 48px rgba(0,0,0,.6),0 0 0 0 rgba(0,212,255,0);
+  animation:stakePulse 4s ease-in-out infinite 1.5s;
+  will-change:box-shadow;transform:translateZ(0);cursor:pointer;
+  min-height:250px;
+}
+.stake-sidebar-ad::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 200px 180px at 50% -10%,rgba(0,180,50,.12),transparent),
+    radial-gradient(ellipse 180px 160px at 110% 80%,rgba(0,212,255,.07),transparent);
+}
+.stake-sidebar-ad::after{
+  content:'';position:absolute;top:0;left:0;width:55%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.045),transparent);
+  animation:bannerShimmer 7s ease-in-out infinite 2s;
+  pointer-events:none;will-change:transform,opacity;
+}
+.ssb-inner{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  padding:22px 20px 20px;height:250px;gap:0;
+}
+/* Top row: logo + verified badge */
+.ssb-header{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ssb-logo-row{display:flex;align-items:center;gap:9px}
+.ssb-s-mark{
+  width:36px;height:36px;border-radius:9px;
+  background:linear-gradient(135deg,#00b533,#00d455);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px rgba(0,180,50,.4),inset 0 1px 0 rgba(255,255,255,.18);
+  flex-shrink:0;
+}
+.ssb-name{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;letter-spacing:.05em;color:#fff;line-height:1}
+.ssb-sub{font-size:8px;font-weight:600;letter-spacing:.12em;color:rgba(0,220,80,.7);text-transform:uppercase}
+.ssb-verified{display:flex;align-items:center;gap:4px;font-size:8.5px;font-weight:700;letter-spacing:.06em;color:rgba(0,212,255,.85);text-transform:uppercase;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);padding:3px 7px;border-radius:99px}
+
+/* Bonus display */
+.ssb-bonus-wrap{
+  width:100%;padding:12px 14px;border-radius:10px;
+  background:linear-gradient(135deg,rgba(0,180,50,.12),rgba(0,212,255,.06));
+  border:1px solid rgba(0,180,50,.2);
+  text-align:center;margin-bottom:12px;
+  position:relative;overflow:hidden;
+}
+.ssb-bonus-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.03),transparent);pointer-events:none}
+.ssb-bonus-label{font-size:8.5px;font-weight:700;letter-spacing:.14em;color:rgba(0,220,80,.7);text-transform:uppercase;margin-bottom:4px}
+.ssb-bonus-val{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--gold);line-height:1;text-shadow:0 0 18px rgba(245,166,35,.35)}
+.ssb-bonus-sub{font-size:9.5px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* Stats row */
+.ssb-stats{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
+.ssb-stat{padding:7px 8px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);text-align:center}
+.ssb-stat-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:#fff;line-height:1;margin-bottom:2px}
+.ssb-stat-lbl{font-size:7.5px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.32);text-transform:uppercase}
+
+/* CTA */
+.ssb-cta{
+  width:100%;padding:12px 0;border-radius:10px;
+  background:linear-gradient(135deg,#00c940,#00a832);
+  color:#fff;font-family:'Rajdhani',sans-serif;
+  font-size:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  text-align:center;
+  box-shadow:0 6px 22px rgba(0,180,50,.38),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .18s ease;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:auto;
+}
+.ssb-cta:hover{
+  transform:translateY(-2px) scale(1.02);
+  box-shadow:0 10px 30px rgba(0,180,50,.52),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.ssb-ad-tag{
+  position:absolute;top:6px;right:8px;
+  font-size:7px;font-weight:700;letter-spacing:.1em;
+  color:rgba(255,255,255,.25);background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);padding:1px 5px;border-radius:3px;
+  text-transform:uppercase;pointer-events:none;
+}
+/* Disclaimer text */
+.banner-disclaimer{
+  font-size:8.5px;color:rgba(255,255,255,.2);
+  text-align:center;padding:3px 0 0;letter-spacing:.03em;
+}
+
+/* ── Layout grid that holds content + sidebar ad ── */
+.content-ad-grid{
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:20px;
+  align-items:start;
+}
+.content-ad-grid .content-col{
+  display:flex;flex-direction:column;gap:22px;min-width:0;
+}
+/* Sidebar ad sticks while scrolling */
+.sidebar-ad-col{
+  position:sticky;top:80px;
+  display:flex;flex-direction:column;gap:14px;
+}
+@media(max-width:1050px){
+  .content-ad-grid{grid-template-columns:1fr}
+  .sidebar-ad-col{display:none}
+}
+
+/* Mobile: top banner compact */
+@media(max-width:768px){
+  .stb-copy,.stb-badges,.stb-divider,.stb-offer{display:none}
+  .stb-inner{padding:0 16px;gap:12px}
+  .stb-join-btn{padding:9px 18px;font-size:13px}
+  .stb-s-mark{width:36px;height:36px}
+  .stb-name{font-size:17px}
+}
+@media(max-width:480px){
+  .stb-tagline{display:none}
+  .stake-top-banner{min-height:68px}
+  .stb-inner{height:68px}
+}
+
+
+/* ================================================================
+   AFFILIATE DASHBOARD v6 — PREMIUM DARK GOLD UI
+   Clean link format: p-y-r-1.github.io/PAYRO/ref/XXXXX
+================================================================ */
+
+/* ── Hero banner ── */
+.aff-hero-banner{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#060d18 0%,#080f1e 40%,#050b14 100%);
+  border-bottom:1px solid rgba(0,212,255,.12);
+  padding:0;
+}
+.aff-hero-glow-l{position:absolute;top:-80px;left:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.1),transparent 70%);pointer-events:none}
+.aff-hero-glow-r{position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.08),transparent 70%);pointer-events:none}
+.aff-hero-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;padding:32px 28px;gap:24px;flex-wrap:wrap}
+.aff-hero-eyebrow{font-size:9px;font-weight:700;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.aff-live-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:ldPulse 2s ease-in-out infinite;flex-shrink:0}
+.aff-hero-title{font-family:var(--f-display);font-size:26px;font-weight:700;letter-spacing:.03em;color:#fff;margin-bottom:6px}
+.aff-hero-tagline{font-size:13px;color:var(--txt2);line-height:1.6;max-width:480px;margin-bottom:14px}
+.aff-hero-badges{display:flex;flex-wrap:wrap;gap:8px}
+.aff-hbadge{font-size:9px;font-weight:700;letter-spacing:.1em;padding:3px 10px;border-radius:99px;text-transform:uppercase}
+.aff-hbadge-cyan{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--cyan)}
+.aff-hbadge-gold{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);color:var(--gold)}
+.aff-hbadge-green{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--green)}
+/* ID card widget */
+.aff-hero-id-card{
+  padding:20px 24px;border-radius:14px;text-align:center;
+  background:linear-gradient(135deg,rgba(0,212,255,.07),rgba(245,166,35,.04));
+  border:1px solid rgba(0,212,255,.2);
+  box-shadow:0 8px 28px rgba(0,0,0,.4),0 0 0 0 rgba(0,212,255,0);
+  min-width:200px;
+}
+.aff-id-label{font-size:8.5px;font-weight:700;letter-spacing:.18em;color:rgba(0,212,255,.7);text-transform:uppercase;margin-bottom:10px}
+.aff-id-code{
+  font-family:var(--f-mono);font-size:32px;font-weight:700;
+  letter-spacing:.18em;color:var(--gold);
+  text-shadow:0 0 20px rgba(245,166,35,.4);
+  line-height:1;margin-bottom:8px;
+}
+.aff-id-sub{font-size:9px;color:var(--txt3);letter-spacing:.06em}
+
+/* ── KPI strip ── */
+.aff-kpi-strip{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.aff-kpi-card{
+  padding:16px 14px;border-right:1px solid rgba(255,255,255,.05);
+  text-align:center;
+  transition:background .2s ease;
+}
+.aff-kpi-card:last-child{border-right:none}
+.aff-kpi-card:hover{background:rgba(255,255,255,.02)}
+.aff-kpi-card-accent{background:rgba(0,212,255,.04)}
+.aff-kpi-val{font-family:var(--f-mono);font-size:18px;font-weight:700;color:var(--txt);line-height:1;margin-bottom:4px}
+.aff-kpi-card-accent .aff-kpi-val{color:var(--cyan)}
+.aff-kpi-lbl{font-size:9px;font-weight:600;letter-spacing:.08em;color:var(--txt3);text-transform:uppercase}
+
+/* ── Main grid ── */
+.aff-main-grid{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-bottom:22px}
+.aff-panel{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);overflow:hidden}
+.aff-panel-featured{border-color:rgba(0,212,255,.2);box-shadow:0 0 24px rgba(0,212,255,.06)}
+.aff-panel-hdr{
+  padding:13px 16px;border-bottom:1px solid var(--bdr2);
+  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--txt2);display:flex;align-items:center;justify-content:space-between;
+}
+.aff-live-badge{font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);padding:2px 8px;border-radius:99px;text-transform:uppercase}
+.aff-tier-pill{font-size:10px;font-weight:700;color:var(--cyan);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);padding:2px 9px;border-radius:99px;font-family:var(--f-mono)}
+.aff-panel-body{padding:16px}
+
+/* ── Link display — THE HERO ELEMENT ── */
+.aff-link-preview-label{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;margin-bottom:8px}
+.aff-link-display-box{
+  display:flex;align-items:center;
+  background:var(--bg1);
+  border:2px solid rgba(0,212,255,.3);border-radius:12px;
+  overflow:hidden;margin-bottom:8px;
+  box-shadow:0 0 16px rgba(0,212,255,.1);
+  transition:border-color .2s ease,box-shadow .2s ease;
+  min-height:54px;
+}
+.aff-link-display-box:hover,.aff-link-display-box:focus-within{
+  border-color:rgba(0,212,255,.55);
+  box-shadow:0 0 24px rgba(0,212,255,.18);
+}
+.aff-link-domain{
+  padding:14px 0 14px 16px;
+  font-family:var(--f-mono);font-size:12px;
+  color:rgba(0,212,255,.5);white-space:nowrap;flex-shrink:0;
+  letter-spacing:.02em;
+}
+.aff-link-code{
+  flex:1;padding:14px 8px;
+  font-family:var(--f-mono);font-size:16px;font-weight:700;
+  color:var(--cyan);letter-spacing:.14em;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.aff-link-copy-inline{
+  display:flex;align-items:center;gap:6px;
+  padding:0 18px;height:54px;
+  background:rgba(0,212,255,.14);
+  border:none;border-left:1px solid rgba(0,212,255,.2);
+  color:var(--cyan);font-family:var(--f-mono);font-size:11px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;white-space:nowrap;flex-shrink:0;
+  transition:background .15s ease,transform .15s ease;
+}
+.aff-link-copy-inline:hover{background:rgba(0,212,255,.26);transform:none}
+.aff-link-copy-inline:active{background:rgba(0,212,255,.35)}
+
+/* Full URL text line */
+.aff-full-url-wrap{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 11px;background:rgba(0,0,0,.25);border-radius:7px;
+  margin-bottom:0;
+}
+.aff-full-url-lbl{font-size:8.5px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.aff-full-url-text{
+  font-family:var(--f-mono);font-size:10.5px;color:rgba(0,212,255,.7);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  flex:1;min-width:0;user-select:all;cursor:text;
+}
+
+/* Buttons */
+.aff-gen-btn{
+  width:100%;padding:14px;border-radius:10px;margin-top:14px;margin-bottom:8px;
+  background:linear-gradient(135deg,var(--cyan),#007aaa);
+  color:#000;font-family:var(--f-body);font-size:14px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  border:none;cursor:pointer;
+  box-shadow:0 6px 22px rgba(0,212,255,.3),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .18s ease;
+}
+.aff-gen-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,212,255,.45)}
+.aff-gen-btn:active{transform:translateY(0)}
+.aff-copy-btn{
+  width:100%;padding:11px;border-radius:10px;margin-bottom:14px;
+  background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);
+  color:var(--cyan);font-family:var(--f-body);font-size:13px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;letter-spacing:.03em;
+}
+.aff-copy-btn:hover{background:rgba(0,212,255,.13);border-color:rgba(0,212,255,.35)}
+.aff-copy-btn:disabled{opacity:.3;pointer-events:none}
+
+/* Share */
+.aff-share-label{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;margin-bottom:8px}
+.aff-share-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.aff-share-btn{
+  padding:9px 4px;border-radius:var(--r-sm);font-size:11px;font-weight:700;
+  letter-spacing:.03em;display:flex;align-items:center;justify-content:center;
+  gap:5px;cursor:pointer;transition:transform .15s ease,opacity .15s ease;border:none;
+}
+.aff-share-btn:hover{transform:translateY(-1px)}
+.aff-sb-x  {background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)!important;color:var(--txt)}
+.aff-sb-tg {background:rgba(0,136,255,.1);border:1px solid rgba(0,136,255,.2)!important;color:#2AABEE}
+.aff-sb-wa {background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.18)!important;color:#25D366}
+
+/* Tier */
+.aff-tier-wrap{margin-bottom:14px}
+.aff-tier-label{font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:8px}
+.aff-tier-track{height:6px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-bottom:5px}
+.aff-tier-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold));border-radius:99px;transition:width .6s ease}
+.aff-tier-next{font-size:10px;color:var(--txt3);letter-spacing:.04em}
+.aff-tier-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px}
+.aff-tier-table th{padding:6px 8px;background:var(--bg4);color:var(--txt3);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-align:left;border-bottom:1px solid var(--bdr2)}
+.aff-tier-row td{padding:8px 8px;border-bottom:1px solid var(--bdr2);color:var(--txt2)}
+.aff-tier-row:last-child td{border-bottom:none}
+.aff-tr-active td{color:var(--cyan);background:rgba(0,212,255,.04)}
+.aff-td-rate{font-family:var(--f-mono);font-weight:700;color:var(--green)}
+
+/* How it works */
+.aff-how-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr2);font-size:12px;color:var(--txt2);line-height:1.6}
+.aff-how-row:last-child{border-bottom:none}
+.aff-how-num{width:22px;height:22px;border-radius:50%;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--cyan);flex-shrink:0}
+
+/* Tables */
+.aff-table-section{margin-bottom:20px}
+.aff-table-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg3);border:1px solid var(--bdr2);border-bottom:none;border-radius:var(--r-md) var(--r-md) 0 0}
+.aff-table-title{font-size:12px;font-weight:700;color:var(--txt2);letter-spacing:.04em}
+.aff-table-wrap{border:1px solid var(--bdr2);border-radius:0 0 var(--r-md) var(--r-md);overflow:hidden}
+.aff-data-table{width:100%;border-collapse:collapse;font-size:12px}
+.aff-data-table th{padding:10px 14px;background:var(--bg3);color:var(--txt3);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-align:left;border-bottom:1px solid var(--bdr2)}
+.aff-data-table td{padding:11px 14px;border-bottom:1px solid var(--bdr2);color:var(--txt2)}
+.aff-data-table tr:last-child td{border-bottom:none}
+.aff-data-table tr:hover td{background:rgba(255,255,255,.015)}
+.ref-td-mono{font-family:var(--f-mono);font-size:11px}
+.ref-td-earn{font-family:var(--f-mono);font-weight:700;color:var(--green)}
+.ref-td-date{font-size:11px;color:var(--txt3)}
+.ref-table-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+.ref-status-active{background:var(--green);box-shadow:0 0 6px var(--green)}
+.ref-status-pause{background:var(--amber)}
+.payout-chip{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.06em}
+.pc-done{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.pc-pend{background:rgba(245,166,35,.1);color:var(--amber);border:1px solid rgba(245,166,35,.2)}
+
+/* Analytics grid */
+.aff-analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.aff-bar-row{margin-bottom:10px}
+.aff-bar-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.aff-bar-name{font-size:11px;color:var(--txt2)}
+.aff-bar-pct{font-family:var(--f-mono);font-size:10px;color:var(--txt3)}
+.aff-bar-track{height:5px;background:var(--bg4);border-radius:99px;overflow:hidden}
+.aff-bar-fill{height:100%;border-radius:99px;transition:width .5s ease}
+
+/* Activity feed */
+.aff-activity-feed{max-height:200px;overflow-y:auto}
+.aff-activity-feed::-webkit-scrollbar{width:3px}
+.aff-activity-feed::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:99px}
+.aff-feed-row{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--bdr2);font-size:11px}
+.aff-feed-row:last-child{border-bottom:none}
+.aff-feed-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.aff-dot-cyan{background:var(--cyan);box-shadow:0 0 5px var(--cyan)}
+.aff-dot-green{background:var(--green);box-shadow:0 0 5px var(--green)}
+.aff-dot-gold{background:var(--gold);box-shadow:0 0 5px var(--gold)}
+.aff-dot-violet{background:var(--violet)}
+.aff-dot-info{background:var(--txt3)}
+.aff-feed-msg{flex:1;color:var(--txt2);line-height:1.45}
+.aff-feed-time{font-family:var(--f-mono);font-size:9px;color:var(--txt3);white-space:nowrap;flex-shrink:0}
+
+/* Responsive */
+@media(max-width:900px){
+  .aff-main-grid{grid-template-columns:1fr}
+  .aff-analytics-grid{grid-template-columns:1fr}
+  .aff-kpi-strip{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .aff-hero-inner{flex-direction:column;padding:20px 16px}
+  .aff-hero-id-card{width:100%}
+  .aff-id-code{font-size:26px}
+  .aff-kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .aff-link-domain{font-size:10px;padding-left:10px}
+  .aff-link-code{font-size:13px}
+  .aff-share-row{grid-template-columns:1fr}
+}
+
+/* ── Input ── */
+.aff-field-row{display:grid;gap:10px}
+.aff-field{display:flex;flex-direction:column;gap:5px}
+.aff-field-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase}
+.aff-input{background:var(--bg1);border:1px solid var(--bdr2);border-radius:var(--r-sm);padding:9px 12px;font-family:var(--f-mono);font-size:11px;color:var(--txt);outline:none;width:100%;transition:border-color .15s ease;box-sizing:border-box}
+.aff-input:focus{border-color:rgba(0,212,255,.4)}
+.aff-input::placeholder{color:var(--txt3)}
+
+
+/* ================================================================
+   PREMIUM WALLET CARD — fintech dark style
+================================================================ */
+.wallet-card{
+  background:linear-gradient(160deg,#070f0a 0%,#050c07 40%,#060a0d 100%);
+  border:1px solid rgba(34,197,94,.18);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 0 0 rgba(34,197,94,0),inset 0 1px 0 rgba(34,197,94,.08);
+}
+.wc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 24px 0;
+}
+.wc-eyebrow{
+  font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(34,197,94,.65);display:flex;align-items:center;gap:7px;margin-bottom:4px;
+}
+.wc-live-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px var(--green);animation:ldPulse 2s ease-in-out infinite;flex-shrink:0;
+}
+.wc-title{
+  font-family:var(--f-display);font-size:18px;font-weight:700;
+  letter-spacing:.04em;color:var(--txt);
+}
+.wc-pill-btn{
+  display:flex;align-items:center;gap:6px;padding:7px 14px;
+  background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);
+  border-radius:99px;color:var(--violet);font-size:11px;font-weight:700;
+  letter-spacing:.04em;cursor:pointer;transition:all .2s var(--ease);white-space:nowrap;
+}
+.wc-pill-btn:hover{background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.4);transform:translateY(-1px)}
+.wc-pill-btn:active{transform:translateY(0)}
+
+/* Balance display */
+.wc-balance-area{
+  text-align:center;padding:28px 24px 20px;
+  position:relative;overflow:visible;
+}
+.wc-bal-label{
+  font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(34,197,94,.55);margin-bottom:10px;
+}
+.wc-bal-main{
+  display:inline-flex;align-items:baseline;gap:3px;
+  line-height:1;margin-bottom:6px;
+}
+.wc-bal-currency{
+  font-family:var(--f-mono);font-size:28px;font-weight:700;
+  color:rgba(34,197,94,.7);align-self:flex-start;margin-top:6px;
+}
+.wc-bal-int{
+  font-family:var(--f-mono);font-size:60px;font-weight:700;
+  color:var(--green);letter-spacing:-.02em;
+  text-shadow:0 0 30px rgba(34,197,94,.5),0 0 60px rgba(34,197,94,.2);
+  transition:all .08s ease;
+}
+.wc-bal-dec{
+  font-family:var(--f-mono);font-size:22px;font-weight:500;
+  color:rgba(34,197,94,.6);align-self:flex-end;margin-bottom:6px;letter-spacing:.02em;
+}
+.wc-bal-fiat{
+  font-size:12px;color:var(--txt3);letter-spacing:.04em;
+}
+/* Balance flash animation */
+@keyframes balFlash{
+  0%{text-shadow:0 0 30px rgba(34,197,94,.5),0 0 60px rgba(34,197,94,.2)}
+  40%{text-shadow:0 0 50px rgba(34,197,94,1),0 0 90px rgba(34,197,94,.6),0 0 120px rgba(34,197,94,.3)}
+  100%{text-shadow:0 0 30px rgba(34,197,94,.5),0 0 60px rgba(34,197,94,.2)}
+}
+.wc-bal-int.balance-pop{animation:balFlash .7s ease forwards}
+
+/* Stats row */
+.wc-stats-row{
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
+  align-items:center;
+  padding:0 24px 20px;gap:0;
+}
+.wc-stat{text-align:center;padding:10px 0}
+.wc-stat-divider{width:1px;height:36px;background:rgba(255,255,255,.06)}
+.wc-stat-val{
+  font-family:var(--f-mono);font-size:15px;font-weight:700;
+  color:var(--txt);line-height:1;margin-bottom:4px;
+}
+.wc-stat-green{color:var(--green)}
+.wc-stat-lbl{font-size:9px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--txt3)}
+
+/* Action buttons */
+.wc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 20px}
+.wc-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;
+  letter-spacing:.02em;cursor:pointer;
+  transition:transform .2s var(--spring),box-shadow .2s ease,background .2s ease;
+  position:relative;overflow:hidden;
+}
+.wc-btn::after{
+  content:'';position:absolute;inset:0;background:rgba(255,255,255,0);
+  transition:background .15s ease;
+}
+.wc-btn:hover::after{background:rgba(255,255,255,.04)}
+.wc-btn:hover{transform:translateY(-2px)}
+.wc-btn:active{transform:translateY(0)}
+.wc-btn-primary{
+  background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(6,182,212,.08));
+  border:1px solid rgba(34,197,94,.25);color:var(--green);
+  box-shadow:0 4px 16px rgba(34,197,94,.1);
+}
+.wc-btn-primary:hover{box-shadow:0 8px 24px rgba(34,197,94,.2)}
+.wc-btn-secondary{
+  background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);
+  color:var(--gold);
+}
+.wc-btn-secondary:hover{background:rgba(245,166,35,.12)}
+
+/* Ledger */
+.wc-ledger{padding:0 20px 20px}
+.wc-ledger-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0 10px;border-top:1px solid rgba(255,255,255,.05);
+}
+.wc-ledger-title{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);
+}
+.wc-ledger-count{
+  font-family:var(--f-mono);font-size:10px;color:var(--txt3);
+  background:var(--bg3);padding:2px 8px;border-radius:99px;
+}
+/* Transaction items — cleaner */
+.tx-item{
+  display:grid;grid-template-columns:1fr auto auto;align-items:center;
+  gap:12px;padding:11px 12px;border-radius:8px;margin-bottom:3px;
+  background:rgba(255,255,255,.015);transition:background .15s ease;
+}
+.tx-item:hover{background:rgba(255,255,255,.03)}
+.tx-item.tx-empty{grid-template-columns:1fr;background:none;padding:18px 0;text-align:center}
+.tx-type{color:var(--txt2);font-size:12px}
+.tx-amt{font-family:var(--f-mono);font-weight:700;font-size:13px}
+.tx-c{color:var(--green)}
+.tx-d{color:var(--red)}
+.tx-time{font-size:10px;color:var(--txt3);font-family:var(--f-mono)}
+
+/* ── FLOATING COIN ANIMATION ── */
+@keyframes floatUp{
+  0%  {transform:translateY(0) scale(1);opacity:1}
+  60% {transform:translateY(-80px) scale(1.15);opacity:1}
+  100%{transform:translateY(-140px) scale(.8);opacity:0}
+}
+.wallet-float-coin{
+  position:fixed;
+  font-family:var(--f-mono);font-weight:700;
+  color:var(--green);font-size:16px;
+  pointer-events:none;z-index:9001;
+  text-shadow:0 0 12px rgba(34,197,94,.8);
+  animation:floatUp .9s cubic-bezier(0.2,0.8,0.4,1) forwards;
+  white-space:nowrap;
+}
+
+/* ── 60-SECOND MISSION TIMER ── */
+.ref-mission-timer{
+  display:none;
+  align-items:center;gap:18px;
+  padding:16px 18px;
+  background:linear-gradient(135deg,rgba(0,212,255,.04),rgba(34,197,94,.03));
+  border:1px solid rgba(0,212,255,.15);border-radius:14px;
+  margin-bottom:18px;
+  transition:opacity .5s ease;
+}
+.ref-mission-timer.show{display:flex}
+.ref-mission-timer.rmt-done{
+  background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(0,212,255,.04));
+  border-color:rgba(34,197,94,.25);
+}
+
+/* Ring */
+.rmt-ring-wrap{position:relative;flex-shrink:0;width:64px;height:64px}
+.rmt-svg{width:64px;height:64px}
+.rmt-ring-bg{fill:none;stroke:rgba(255,255,255,.05);stroke-width:3}
+.rmt-ring-fill{
+  fill:none;stroke:var(--cyan);stroke-width:3;stroke-linecap:round;
+  transition:stroke-dashoffset .9s linear;
+}
+.rmt-seconds-wrap{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.rmt-seconds{
+  font-family:var(--f-mono);font-size:20px;font-weight:700;
+  color:var(--cyan);line-height:1;transition:color .3s ease;
+}
+.rmt-sunit{font-size:8px;color:var(--txt3);letter-spacing:.08em;font-weight:600}
+
+/* Text side */
+.rmt-text{flex:1}
+.rmt-title{
+  font-size:13px;font-weight:700;color:var(--txt);
+  margin-bottom:4px;letter-spacing:.02em;
+}
+.rmt-msg{font-size:11px;color:var(--txt2);margin-bottom:10px;line-height:1.5}
+.rmt-bar-track{height:4px;background:rgba(0,212,255,.1);border-radius:99px;overflow:hidden}
+.rmt-bar-fill{
+  height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));
+  border-radius:99px;width:0%;transition:width .9s linear;
+}
+
+/* Done state */
+.rmt-done-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--green);flex-shrink:0;
+}
+.rmt-done-title{font-size:14px;font-weight:700;color:var(--green);margin-bottom:4px}
+.rmt-done-sub{font-size:11px;color:var(--txt2)}
+
+/* ── SIDEBAR FEATURED ITEM (affiliate) ── */
+.lsb-item-featured{
+  background:linear-gradient(90deg,rgba(0,212,255,.06),transparent)!important;
+  border-left-color:var(--cyan)!important;
+  color:var(--cyan)!important;
+}
+.lsb-item-featured .lsb-ic{
+  background:rgba(0,212,255,.1)!important;border-color:rgba(0,212,255,.25)!important;
+}
+
+/* Responsive wallet */
+@media(max-width:600px){
+  .wc-bal-int{font-size:44px}
+  .wc-bal-currency{font-size:20px}
+  .wc-bal-dec{font-size:16px}
+  .wc-stats-row{grid-template-columns:1fr 1fr;gap:0}
+  .wc-stat-divider{display:none}
+  .wc-stat{border-bottom:1px solid rgba(255,255,255,.05);padding:10px 14px;text-align:left}
+  .ref-mission-timer{flex-direction:column;text-align:center}
+}
+
+/* ── Wallet spring glow — triggers on every credit ── */
+@keyframes walletCreditGlow{
+  0%  {box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 0 0 rgba(34,197,94,0)}
+  25% {box-shadow:0 24px 64px rgba(0,0,0,.5),0 0 0 8px rgba(34,197,94,.22),0 0 60px rgba(34,197,94,.18) inset}
+  60% {box-shadow:0 24px 64px rgba(0,0,0,.55),0 0 0 14px rgba(34,197,94,.1),0 0 40px rgba(34,197,94,.1) inset}
+  100%{box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 0 0 rgba(34,197,94,0)}
+}
+.wallet-card-crediting{
+  animation:walletCreditGlow 1.1s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+
+/* ── Spring overshoot scale on integer digit ── */
+@keyframes springPop{
+  0%  {transform:scale(1)}
+  30% {transform:scale(1.07)}
+  55% {transform:scale(0.97)}
+  75% {transform:scale(1.025)}
+  90% {transform:scale(0.995)}
+  100%{transform:scale(1)}
+}
+.wc-bal-int.balance-pop{
+  animation:springPop .85s cubic-bezier(0.34,1.56,0.64,1) forwards,
+            balFlash   .85s ease forwards;
+  display:inline-block;
+}
+
+/* ── Float coin — physics arc ── */
+@keyframes floatUp{
+  0%  {transform:translateY(0) scale(1);  opacity:1}
+  35% {transform:translateY(-45px) scale(1.18) rotate(-3deg);opacity:1}
+  65% {transform:translateY(-90px) scale(1.05) rotate(2deg); opacity:.9}
+  100%{transform:translateY(-155px) scale(.75); opacity:0}
+}
+.wallet-float-coin{
+  position:fixed;
+  font-family:var(--f-mono);font-size:15px;font-weight:700;
+  color:var(--green);pointer-events:none;z-index:9002;
+  text-shadow:0 0 14px rgba(34,197,94,.9);
+  animation:floatUp 1.05s cubic-bezier(0.2,0.85,0.4,1) forwards;
+  white-space:nowrap;will-change:transform,opacity;
+}
 </style>
 </head>
 <body>
@@ -1470,6 +2290,18 @@ html { scroll-behavior: smooth }
     </div>
   </div>
 
+  <!-- ─ Referral — TOP ─ -->
+  <div class="lsb-sec" style="color:var(--cyan)">Referral</div>
+  <div class="lsb-item lsb-item-featured" onclick="scrollToId('sec-partner');closeLsb()" tabindex="0" role="button" aria-label="Affiliate Dashboard">
+    <div class="lsb-ic" style="color:var(--cyan)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    </div>
+    Affiliate Dashboard
+    <span class="lsb-badge live">Earn</span>
+  </div>
+
+  <div class="lsb-divider"></div>
+
   <!-- ─ Games ─ -->
   <div class="lsb-sec">Games</div>
   <div class="lsb-item" onclick="scrollToId('sec-games-hub');closeLsb()" tabindex="0" role="button" aria-label="Lucky Spin">
@@ -1535,12 +2367,7 @@ html { scroll-behavior: smooth }
     </div>
     10-Day Roadmap
   </div>
-  <div class="lsb-item" onclick="scrollToId('sec-partner');closeLsb()" tabindex="0" role="button" aria-label="Partner">
-    <div class="lsb-ic" style="color:var(--cyan)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-    </div>
-    Partner Program
-  </div>
+
 
   <div class="lsb-footer">PAYRO v4 &nbsp;·&nbsp; <strong>3D Ecosystem</strong></div>
 </aside>
@@ -1657,8 +2484,22 @@ html { scroll-behavior: smooth }
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation">
     <div class="nav-brand">
-      <div class="nav-logo"><svg width="20" height="20" fill="none" stroke="#000" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-      <div class="brand-name-wrap"><span class="brand-name">PAYRO</span><span class="brand-sub">3D Gaming Ecosystem v4</span></div>
+      <!-- P-Coin Logo replacing text brand -->
+      <div class="nav-logo-pcoin" title="PAYRO">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="38" height="38" aria-label="PAYRO">
+          <circle cx="18" cy="18" r="17" fill="rgba(0,0,0,0.35)"/>
+          <circle cx="18" cy="18" r="16" fill="url(#pcGF)"/>
+          <circle cx="18" cy="18" r="15.2" fill="none" stroke="rgba(255,200,60,0.5)" stroke-width="1.2"/>
+          <circle cx="18" cy="18" r="13.5" fill="none" stroke="rgba(120,70,0,0.4)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="12" rx="5" ry="3" fill="rgba(255,255,255,0.22)" transform="rotate(-30 13 12)"/>
+          <ellipse cx="11" cy="11" rx="2.5" ry="1.2" fill="rgba(255,255,255,0.35)" transform="rotate(-30 11 11)"/>
+          <text x="10.5" y="24" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#3d2200" opacity="0.85">P</text>
+          <text x="11" y="23.5" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#7a4400" opacity="0.6">P</text>
+          <circle cx="18" cy="3" r="1" fill="rgba(255,240,150,0.7)"/>
+          <circle cx="31" cy="10" r="0.8" fill="rgba(255,240,150,0.5)"/>
+        </svg>
+      </div>
+      <div><span class="brand-sub" style="font-size:10px;display:block">3D Gaming Ecosystem v4</span></div>
     </div>
     <div class="nav-right">
       <div class="geo-pill detecting" id="geo-pill"><span class="flag" id="geo-flag">🌐</span><span id="geo-country">Detecting...</span><span class="rate" id="geo-rate">—</span></div>
@@ -1678,17 +2519,55 @@ html { scroll-behavior: smooth }
     </div>
   </nav>
 
-  <!-- ╔══════════════════════════════════════════════════════╗
-       ║  SPONSOR BANNER — TOP PLACEMENT (728×90 / Adaptive) ║
-       ╚══════════════════════════════════════════════════════╝ -->
-  <div class="sponsor-banner-top" id="sponsor-banner-top">
-    <div class="sponsor-banner-inner">
-      <span class="ad-tag">SPONSOR</span>
-      <!-- External banner script / iframe goes here -->
-      <span style="font-size:10px;opacity:.4">970 × 50 — Top Sponsor Banner</span>
-      <span class="ad-tag">AD</span>
+  <!-- ╔═══════════════════════════════════════════════════════════╗
+       ║  STAKE TOP BANNER — 728×90 Premium Sponsor Placement     ║
+       ╚═══════════════════════════════════════════════════════════╝ -->
+  <a class="stake-top-banner" href="https://www.effectivegatecpm.com/nggi65rdt?key=c362fb020f08cec743f70638e748b70f" target="_blank" rel="noopener sponsored" onclick="window._armPopunder&&window._armPopunder()" aria-label="Stake.com – Join Now">
+    <div class="stb-inner">
+
+      <!-- Left: Stake branding -->
+      <div class="stb-logo-wrap">
+        <div class="stb-s-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M19 5H9a2 2 0 00-2 2v2a2 2 0 002 2h6a2 2 0 012 2v2a2 2 0 01-2 2H5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="stb-wordmark">
+          <div class="stb-name">STAKE</div>
+          <div class="stb-tagline">World's #1 Casino</div>
+        </div>
+      </div>
+
+      <div class="stb-divider"></div>
+
+      <!-- Center: copy + badges -->
+      <div class="stb-copy">
+        <div class="stb-headline">Play &amp; Win with <em>Stake</em> — 5,000+ Games</div>
+        <div class="stb-sub">Instant withdrawals · Provably fair · No wagering</div>
+        <div class="stb-badges">
+          <span class="stb-badge stb-badge-g">Licensed &amp; Trusted</span>
+          <span class="stb-badge stb-badge-c">Crypto Accepted</span>
+          <span class="stb-badge stb-badge-gold">VIP Rewards</span>
+        </div>
+      </div>
+
+      <div class="stb-divider"></div>
+
+      <!-- Right: offer + CTA -->
+      <div class="stb-right">
+        <div class="stb-offer">
+          <div class="stb-offer-val">200%</div>
+          <div class="stb-offer-lbl">Welcome Bonus</div>
+        </div>
+        <div class="stb-join-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Join Now
+        </div>
+      </div>
+
     </div>
-  </div>
+    <span class="stb-ad-tag">SPONSOR</span>
+  </a>
 
   <!-- DRAWER OVERLAY -->
   <div class="drw-ov" id="drw-ov" onclick="closeDrawer()"></div>
@@ -1738,6 +2617,10 @@ html { scroll-behavior: smooth }
       <div class="di" style="color:var(--violet)"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 17l6-10 5 7 3-4 4 7"/></svg></div>
       10-Day Roadmap<span class="dbadge violet">Updated</span>
     </div>
+    <div class="drw-item" onclick="scrollToId('sec-partner')" tabindex="0" role="button">
+      <div class="di" style="color:var(--cyan)"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+      Affiliate Dashboard<span class="dbadge live">Earn</span>
+    </div>
   </aside>
 
   <!-- ============================================================
@@ -1745,29 +2628,306 @@ html { scroll-behavior: smooth }
   ============================================================ -->
   <main class="main" id="main-content">
 
+
+    <!-- ── AFFILIATE DASHBOARD — TOP PLACEMENT (first section users see) ── -->
+    <section class="card" id="sec-partner" style="scroll-margin-top:80px;overflow:hidden;padding:0" aria-label="Affiliate Dashboard">
+
+      <!-- ═══════════════════════════════════════════════════════════
+           PAYRO AFFILIATE DASHBOARD — TOP PRIORITY PLACEMENT
+           Clean referral links: p-y-r-1.github.io/PAYRO/ref/XXXXX
+      ═══════════════════════════════════════════════════════════════ -->
+
+      <!-- ── Hero banner ── -->
+      <div class="aff-hero-banner">
+        <div class="aff-hero-glow-l"></div>
+        <div class="aff-hero-glow-r"></div>
+        <div class="aff-hero-inner">
+          <div class="aff-hero-left">
+            <div class="aff-hero-eyebrow">
+              <span class="aff-live-dot"></span>
+              LIVE AFFILIATE PROGRAM
+            </div>
+            <div class="aff-hero-title">Your Referral Dashboard</div>
+            <div class="aff-hero-tagline">Earn 10–20% commission on every referral. Clean links. Real payouts.</div>
+            <div class="aff-hero-badges">
+              <span class="aff-hbadge aff-hbadge-cyan">Zero-Cost Entry</span>
+              <span class="aff-hbadge aff-hbadge-gold">Lifetime Commission</span>
+              <span class="aff-hbadge aff-hbadge-green">Instant Tracking</span>
+            </div>
+          </div>
+          <div class="aff-hero-right">
+            <div class="aff-hero-id-card">
+              <div class="aff-id-label">YOUR AFFILIATE CODE</div>
+              <div class="aff-id-code" id="aff-uid">— — — — —</div>
+              <div class="aff-id-sub">Permanent · Unique · 5-Character ID</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── KPI row ── -->
+      <div class="aff-kpi-strip">
+        <div class="aff-kpi-card">
+          <div class="aff-kpi-val" id="aff-total-refs">0</div>
+          <div class="aff-kpi-lbl">Total Referrals</div>
+        </div>
+        <div class="aff-kpi-card">
+          <div class="aff-kpi-val" id="aff-active">0</div>
+          <div class="aff-kpi-lbl">Active Members</div>
+        </div>
+        <div class="aff-kpi-card">
+          <div class="aff-kpi-val" id="aff-clicks">0</div>
+          <div class="aff-kpi-lbl">Link Clicks</div>
+        </div>
+        <div class="aff-kpi-card">
+          <div class="aff-kpi-val" id="aff-convs">0</div>
+          <div class="aff-kpi-lbl">Conversions</div>
+        </div>
+        <div class="aff-kpi-card aff-kpi-card-accent">
+          <div class="aff-kpi-val" id="aff-commission">$0.00000</div>
+          <div class="aff-kpi-lbl">Commission Earned</div>
+        </div>
+        <div class="aff-kpi-card">
+          <div class="aff-kpi-val" id="aff-ctr">0.0%</div>
+          <div class="aff-kpi-lbl">Conv. Rate</div>
+        </div>
+      </div>
+
+      <div style="padding:24px">
+
+        <!-- ── Referral arrival banner ── -->
+        <div class="ref-incoming" id="ref-incoming-banner">
+          <div class="ref-incoming-icon">✅</div>
+          <div class="ref-incoming-txt">
+            <div class="ref-incoming-title" id="ref-incoming-title">You joined via a referral link</div>
+            <div class="ref-incoming-sub" id="ref-incoming-sub">Stay active for 60 seconds to unlock the referral reward.</div>
+          </div>
+        </div>
+
+        <!-- ── 60-Second Mission Countdown (shown only to referred visitors) ── -->
+        <div class="ref-mission-timer" id="ref-mission-timer" style="display:none">
+          <div class="rmt-ring-wrap">
+            <svg class="rmt-svg" viewBox="0 0 64 64">
+              <circle class="rmt-ring-bg" cx="32" cy="32" r="28"/>
+              <circle class="rmt-ring-fill" id="rmt-ring-fill" cx="32" cy="32" r="28"
+                stroke-dasharray="175.9" stroke-dashoffset="175.9"
+                transform="rotate(-90 32 32)"/>
+            </svg>
+            <div class="rmt-seconds-wrap">
+              <span class="rmt-seconds" id="rmt-seconds">60</span>
+              <span class="rmt-sunit">sec</span>
+            </div>
+          </div>
+          <div class="rmt-text">
+            <div class="rmt-title">Referral Mission Active</div>
+            <div class="rmt-msg" id="rmt-msg">Stay on the page to unlock your inviter's reward.</div>
+            <div class="rmt-bar-track"><div class="rmt-bar-fill" id="rmt-progress-bar"></div></div>
+          </div>
+        </div>
+
+        <!-- ── Main two-column grid ── -->
+        <div class="aff-main-grid">
+
+          <!-- LEFT: Link Generator — the centerpiece -->
+          <div class="aff-panel aff-panel-featured">
+            <div class="aff-panel-hdr">
+              <span style="display:flex;align-items:center;gap:8px">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                Affiliate Link Generator
+              </span>
+              <span class="aff-live-badge">Auto-saved · Persistent</span>
+            </div>
+            <div class="aff-panel-body">
+
+              <!-- Link preview label -->
+              <div class="aff-link-preview-label">Your Clean Referral Link</div>
+
+              <!-- Link display box — LARGE, prominent -->
+              <div class="aff-link-display-box" id="aff-link-wrap">
+                <div class="aff-link-domain">p-y-r-1.github.io/PAYRO/ref/</div>
+                <div class="aff-link-code" id="aff-link-display">—————</div>
+                <button class="aff-link-copy-inline" id="aff-link-copy-mini" onclick="refCopyLink()" title="Copy full link">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  COPY
+                </button>
+              </div>
+
+              <!-- Full URL read-only text (selectable) -->
+              <div class="aff-full-url-wrap">
+                <span class="aff-full-url-lbl">Full URL</span>
+                <span class="aff-full-url-text" id="aff-full-url-text">Press Generate to build your link</span>
+              </div>
+
+              <!-- Optional campaign -->
+              <div class="aff-field-row" style="margin-top:12px">
+                <div class="aff-field">
+                  <label class="aff-field-lbl">Campaign Label <span style="color:var(--txt3)">(optional — for tracking only)</span></label>
+                  <input class="aff-input" id="aff-campaign" placeholder="e.g. twitter-bio, youtube, reddit" maxlength="40">
+                </div>
+              </div>
+
+              <!-- Primary Generate CTA -->
+              <button class="aff-gen-btn" id="aff-gen-btn" onclick="refGenerateLink()">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Generate My Link
+              </button>
+
+              <!-- Secondary copy CTA -->
+              <button class="aff-copy-btn" id="aff-copy-btn" onclick="refCopyLink()">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copy Full Link to Clipboard
+              </button>
+
+              <!-- Share row -->
+              <div class="aff-share-label">Share via</div>
+              <div class="aff-share-row">
+                <button class="aff-share-btn aff-sb-x" onclick="refShare('x')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  Twitter / X
+                </button>
+                <button class="aff-share-btn aff-sb-tg" onclick="refShare('telegram')">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                  Telegram
+                </button>
+                <button class="aff-share-btn aff-sb-wa" onclick="refShare('whatsapp')">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                  WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+
+            <!-- Commission Tier -->
+            <div class="aff-panel">
+              <div class="aff-panel-hdr">
+                <span>Commission Tier</span>
+                <span id="aff-tier-badge" class="aff-tier-pill">Standard — 10%</span>
+              </div>
+              <div class="aff-panel-body">
+                <div class="aff-tier-wrap">
+                  <div class="aff-tier-label" id="aff-tier">Standard — 10%</div>
+                  <div class="aff-tier-track"><div class="aff-tier-fill" id="aff-tier-fill" style="width:0%"></div></div>
+                  <div class="aff-tier-next" id="aff-tier-next">5 more referrals to next tier</div>
+                </div>
+                <table class="aff-tier-table">
+                  <thead><tr><th>Tier</th><th>Refs</th><th>Rate</th></tr></thead>
+                  <tbody>
+                    <tr class="aff-tier-row aff-tr-active"><td>Standard</td><td>0+</td><td class="aff-td-rate">10%</td></tr>
+                    <tr class="aff-tier-row"><td>Silver</td><td>5+</td><td class="aff-td-rate">12%</td></tr>
+                    <tr class="aff-tier-row"><td>Gold</td><td>20+</td><td class="aff-td-rate">15%</td></tr>
+                    <tr class="aff-tier-row"><td>Elite</td><td>50+</td><td class="aff-td-rate">20%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="aff-panel">
+              <div class="aff-panel-hdr">How It Works</div>
+              <div class="aff-panel-body">
+                <div class="aff-how-row"><div class="aff-how-num">1</div><div>Click <strong>Generate My Link</strong>. You get a clean URL: <code style="font-size:10px;color:var(--cyan);word-break:break-all">p-y-r-1.github.io/PAYRO/ref/XXXXX</code></div></div>
+                <div class="aff-how-row"><div class="aff-how-num">2</div><div>Share it anywhere. When someone opens that URL, their browser saves your 5-char code as <code style="font-size:10px;color:var(--gold)">Referrer_ID</code>.</div></div>
+                <div class="aff-how-row"><div class="aff-how-num">3</div><div>Every task they complete credits <strong style="color:var(--green)">10% commission</strong> directly to your balance — automatically.</div></div>
+                <div class="aff-how-row"><div class="aff-how-num">4</div><div>Grow referrals to unlock <strong style="color:var(--gold)">Silver (12%)</strong>, <strong style="color:var(--gold)">Gold (15%)</strong>, and <strong style="color:var(--gold)">Elite (20%)</strong> tiers.</div></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── Referral Commission Ledger ── -->
+        <div class="aff-table-section">
+          <div class="aff-table-hdr">
+            <div class="aff-table-title">Referral Commission Ledger</div>
+            <span style="font-size:10px;color:var(--txt3)">Campaign-level breakdown</span>
+          </div>
+          <div class="aff-table-wrap">
+            <table class="aff-data-table">
+              <thead>
+                <tr>
+                  <th>Campaign / Source</th>
+                  <th>Clicks</th>
+                  <th>Conversions</th>
+                  <th>Commission Earned</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="aff-ref-tbody">
+                <tr><td colspan="5" style="padding:22px;text-align:center;color:var(--txt3);font-size:12px">No referrals yet — share your link to start earning</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── Payout History ── -->
+        <div class="aff-table-section">
+          <div class="aff-table-hdr">
+            <div class="aff-table-title">Payout Commissions</div>
+            <span style="font-size:10px;color:var(--txt3)">Auto-credited to your balance</span>
+          </div>
+          <div class="aff-table-wrap">
+            <table class="aff-data-table">
+              <thead>
+                <tr><th>Date</th><th>Amount</th><th>Transaction ID</th><th>Status</th></tr>
+              </thead>
+              <tbody id="aff-payout-tbody">
+                <tr><td colspan="4" style="padding:20px;text-align:center;color:var(--txt3);font-size:12px">No payout history yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── Analytics + Feed ── -->
+        <div class="aff-analytics-grid">
+          <div class="aff-panel">
+            <div class="aff-panel-hdr">Traffic Analytics — Source Breakdown</div>
+            <div class="aff-panel-body" id="aff-source-bars">
+              <div class="aff-bar-row"><div class="aff-bar-meta"><span class="aff-bar-name">Direct</span><span class="aff-bar-pct">—</span></div><div class="aff-bar-track"><div class="aff-bar-fill" style="width:0%;background:var(--cyan)"></div></div></div>
+              <div class="aff-bar-row"><div class="aff-bar-meta"><span class="aff-bar-name">Twitter / X</span><span class="aff-bar-pct">—</span></div><div class="aff-bar-track"><div class="aff-bar-fill" style="width:0%;background:var(--txt)"></div></div></div>
+              <div class="aff-bar-row"><div class="aff-bar-meta"><span class="aff-bar-name">Telegram</span><span class="aff-bar-pct">—</span></div><div class="aff-bar-track"><div class="aff-bar-fill" style="width:0%;background:#2AABEE"></div></div></div>
+              <div class="aff-bar-row"><div class="aff-bar-meta"><span class="aff-bar-name">WhatsApp</span><span class="aff-bar-pct">—</span></div><div class="aff-bar-track"><div class="aff-bar-fill" style="width:0%;background:var(--green)"></div></div></div>
+              <div class="aff-bar-row"><div class="aff-bar-meta"><span class="aff-bar-name">Other</span><span class="aff-bar-pct">—</span></div><div class="aff-bar-track"><div class="aff-bar-fill" style="width:0%;background:var(--txt3)"></div></div></div>
+            </div>
+          </div>
+          <div class="aff-panel">
+            <div class="aff-panel-hdr">Live Activity Feed</div>
+            <div class="aff-panel-body">
+              <div class="aff-activity-feed" id="aff-activity-feed">
+                <div class="aff-feed-row"><div class="aff-feed-dot aff-dot-info"></div><div class="aff-feed-msg">Affiliate engine initialised — ready for first referral</div><div class="aff-feed-time">now</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ad slot -->
+        <div style="margin-top:20px">
+          <div class="aads-neon-wrap" id="aads-slot-7">
+            <div class="aads-neon-inner" style="min-height:100px">
+              <div style="width:100%;margin:auto;position:relative;z-index:99998;">
+                <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- ── SECTION: GEO / WELCOME ── -->
     <section class="card glow-card" id="sec-home" aria-label="Welcome">
       <div class="geo-panel-inner">
         <div class="welcome-row">
-          <div class="spin3d-icon"><div class="spin3d-coin">₿</div></div>
           <div>
-            <div class="geo-ey">🔴 Live Platform</div>
+            <div class="geo-ey">PAYRO Capital Platform</div>
             <div class="geo-h1">Welcome to <em>PAYRO</em></div>
-            <div class="geo-sub" id="geo-sub">Detecting your region for optimized reward rates...</div>
+            <div class="geo-sub" id="geo-sub">Your earnings dashboard is ready.</div>
           </div>
         </div>
-        <div class="geo-grid">
-          <div class="gs"><div class="gs-lbl"><div class="live-dot"></div>Your Region</div><div class="gs-val" id="gs-region">🌐 Detecting</div><div class="gs-sub" id="gs-tier">Fetching tier...</div></div>
-          <div class="gs"><div class="gs-lbl"><div class="live-dot"></div>Faucet Rate</div><div class="gs-val" id="gs-faucet-rate">$0.00</div><div class="gs-sub">Per 5-min claim</div></div>
-          <div class="gs"><div class="gs-lbl"><div class="live-dot"></div>Task Multiplier</div><div class="gs-val" id="gs-task-mult">1.0×</div><div class="gs-sub">Regional boost</div></div>
-          <div class="gs"><div class="gs-lbl"><div class="live-dot"></div>Spin Tokens</div><div class="gs-val" id="gs-tokens">0 / 3</div><div class="gs-sub">Watch ads to earn</div></div>
-        </div>
-        <div class="tier-tbl">
-          <div class="tier-row th"><div>Tier</div><div>Region</div><div>Rate/Claim</div></div>
-          <div class="tier-row" id="t1-row"><div><span class="t-badge t1b">Tier 1</span></div><div>US, UK, CA, AU</div><div class="t-rate">$0.010</div></div>
-          <div class="tier-row" id="t2-row"><div><span class="t-badge t2b">Tier 2</span></div><div>EU, JP, KR, SG</div><div class="t-rate">$0.006</div></div>
-          <div class="tier-row" id="t3-row"><div><span class="t-badge t3b">Tier 3</span></div><div>IN, BR, PH &amp; more</div><div class="t-rate">$0.002</div></div>
-        </div>
+
+
       </div>
     </section>
 
@@ -1776,20 +2936,65 @@ html { scroll-behavior: smooth }
       <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Ad Slot 1 <span class="ad-tag">AD</span></div></div>
     </div>
 
-    <!-- ── SECTION: PLATFORM STATS ── -->
-    <section class="pstats" aria-label="Platform stats">
-      <div class="card pstat"><div class="pstat-val" id="ps-users">24,831</div><div class="pstat-lbl">Active Users</div><div class="pstat-trend tup">▲ 4.2%</div></div>
-      <div class="card pstat"><div class="pstat-val" id="ps-paid">$18,440</div><div class="pstat-lbl">Paid Out Today</div><div class="pstat-trend tup">▲ 2.1%</div></div>
-      <div class="card pstat"><div class="pstat-val" id="ps-tasks">6,209</div><div class="pstat-lbl">Tasks Completed</div><div class="pstat-trend tup">▲ 8.7%</div></div>
-      <div class="card pstat"><div class="pstat-val" id="ps-spins">3,120</div><div class="pstat-lbl">Spins Today</div><div class="pstat-trend tup">▲ 5.4%</div></div>
-    </section>
 
-    <!-- AD BREAK 2 — after stats -->
-    <div style="display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start">
+
+    <!-- AD BREAK 2 + SIDEBAR 300×250 — Stake Sponsor -->
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start">
       <div class="ad-break">
         <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Ad Slot 2 <span class="ad-tag">AD</span></div></div>
       </div>
-      <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner" style="flex-direction:column;gap:4px;font-size:11px"><span class="ad-tag">AD</span>300 × 90<span class="ad-tag">AD</span></div></div>
+
+      <!-- ── STAKE 300×250 SIDEBAR SQUARE ── -->
+      <a class="stake-sidebar-ad" href="https://www.effectivegatecpm.com/nggi65rdt?key=c362fb020f08cec743f70638e748b70f" target="_blank" rel="noopener sponsored" onclick="window._armPopunder&&window._armPopunder()" aria-label="Stake.com – Get 200% Welcome Bonus">
+        <div class="ssb-inner">
+
+          <!-- Header row -->
+          <div class="ssb-header">
+            <div class="ssb-logo-row">
+              <div class="ssb-s-mark" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+                  <path d="M19 5H9a2 2 0 00-2 2v2a2 2 0 002 2h6a2 2 0 012 2v2a2 2 0 01-2 2H5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="ssb-name">STAKE</div>
+                <div class="ssb-sub">Official Partner</div>
+              </div>
+            </div>
+            <div class="ssb-verified">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Verified
+            </div>
+          </div>
+
+          <!-- Bonus display -->
+          <div class="ssb-bonus-wrap">
+            <div class="ssb-bonus-label">Welcome Bonus</div>
+            <div class="ssb-bonus-val">200%</div>
+            <div class="ssb-bonus-sub">Up to $2,000 on first deposit</div>
+          </div>
+
+          <!-- Mini stats -->
+          <div class="ssb-stats">
+            <div class="ssb-stat">
+              <div class="ssb-stat-val">5,000+</div>
+              <div class="ssb-stat-lbl">Games</div>
+            </div>
+            <div class="ssb-stat">
+              <div class="ssb-stat-val">Instant</div>
+              <div class="ssb-stat-lbl">Withdrawals</div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="ssb-cta">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Join Now — It's Free
+          </div>
+
+        </div>
+        <span class="ssb-ad-tag">SPONSOR</span>
+      </a>
     </div>
 
     <!-- ── SECTION: GAMES HUB ── -->
@@ -2220,77 +3425,110 @@ html { scroll-behavior: smooth }
       <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Ad Slot 8 <span class="ad-tag">AD</span></div></div>
     </div>
 
-    <!-- ── SECTION: WALLET ── -->
-    <section class="card" id="sec-wallet" style="padding:24px;scroll-margin-top:80px" aria-label="Wallet">
-      <div class="sh">
-        <div class="sh-l">
-          <div class="sh-ic si-green"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/></svg></div>
-          <div class="sh-title"><strong>Capital Account</strong><small>Earnings tracked and updated in real time</small></div>
-        </div>
-      </div>
-      <!-- Wallet + 300x250 ad layout -->
-      <div class="sec-wallet-inner" style="display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start">
-        <div>
-          <div class="wallet-hero" style="padding:18px 18px 14px">
-  <div class="w-lbl">Available Liquidity</div>
-  <!-- A-ADS SLOT 3: Inside Available Liquidity Dashboard -->
-  <div style="margin:10px 0 12px">
-    <div class="aads-neon-wrap" id="aads-slot-3">
-      <div class="aads-neon-inner" style="min-height:80px">
-        <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
-          <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="w-bal" id="w-big-bal">$0.00</div>
-  <div class="w-sub">USD equivalent — updates in real time</div>
-  <!-- A-ADS SLOT 4: Inside Available Liquidity Dashboard -->
-  <div style="margin-top:14px">
-    <div class="aads-neon-wrap" id="aads-slot-4" style="animation-delay:2s">
-      <div class="aads-neon-inner" style="min-height:80px">
-        <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
-          <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-          <!-- Wallet Action Buttons Row 1: Settlement & Export -->
-          <div class="w-actions" style="grid-template-columns:1fr 1fr;margin-bottom:12px">
-            <button class="w-act" onclick="toast('Minimum settlement threshold: $1.00. Continue accumulating yield.','warn')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Secure Settlement</button>
-            <button class="w-act" onclick="toast('Transaction ledger exported to CSV.','info')"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export Ledger</button>
+    <!-- ── SECTION: WALLET — PREMIUM CAPITAL ACCOUNT ── -->
+    <section id="sec-wallet" style="scroll-margin-top:80px" aria-label="Capital Account">
+
+      <!-- Floating coin animations container (injected by JS) -->
+      <div id="wallet-float-container" style="position:fixed;inset:0;pointer-events:none;z-index:9000;overflow:hidden"></div>
+
+      <div class="wallet-card">
+
+        <!-- Header -->
+        <div class="wc-header">
+          <div class="wc-header-left">
+            <div class="wc-eyebrow">
+              <span class="wc-live-dot"></span>
+              LIVE BALANCE
+            </div>
+            <div class="wc-title">Capital Account</div>
           </div>
-          <!-- A-ADS SLOT 5: Between Daily Dividend & Secure Settlement -->
-          <div style="margin-bottom:10px">
-            <div class="aads-neon-wrap" id="aads-slot-5" style="animation-delay:0.8s">
-              <div class="aads-neon-inner" style="min-height:90px">
-                <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
-                  <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-                </div>
+          <div class="wc-header-right">
+            <button class="wc-pill-btn" id="daily-reward-btn" onclick="openDailyReward()">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Daily Reward
+            </button>
+          </div>
+        </div>
+
+        <!-- Big balance display -->
+        <div class="wc-balance-area">
+          <div class="wc-bal-label">Total Earnings</div>
+          <div class="wc-bal-main" id="w-big-bal">
+            <span class="wc-bal-currency">$</span><span class="wc-bal-int" id="wc-bal-int">0</span><span class="wc-bal-dec" id="wc-bal-dec">.00000</span>
+          </div>
+          <div class="wc-bal-fiat" id="wc-bal-fiat">≈ ₹0.00 INR</div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="wc-stats-row">
+          <div class="wc-stat">
+            <div class="wc-stat-val" id="wc-today">+$0.00</div>
+            <div class="wc-stat-lbl">Today</div>
+          </div>
+          <div class="wc-stat-divider"></div>
+          <div class="wc-stat">
+            <div class="wc-stat-val" id="wc-commission">$0.00</div>
+            <div class="wc-stat-lbl">Referral Commission</div>
+          </div>
+          <div class="wc-stat-divider"></div>
+          <div class="wc-stat">
+            <div class="wc-stat-val" id="wc-tx-count">0</div>
+            <div class="wc-stat-lbl">Transactions</div>
+          </div>
+          <div class="wc-stat-divider"></div>
+          <div class="wc-stat">
+            <div class="wc-stat-val wc-stat-green" id="wc-streak">0 days</div>
+            <div class="wc-stat-lbl">Streak</div>
+          </div>
+        </div>
+
+        <!-- Ad slot inside wallet -->
+        <div style="padding:0 20px">
+          <div class="aads-neon-wrap" id="aads-slot-3">
+            <div class="aads-neon-inner" style="min-height:80px">
+              <div style="width:100%;margin:auto;position:relative;z-index:99998;">
+                <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
               </div>
             </div>
           </div>
-          <!-- A-ADS SLOT 6: Between Daily Dividend & Secure Settlement -->
-          <div style="margin-bottom:12px">
-            <div class="aads-neon-wrap" id="aads-slot-6" style="animation-delay:2.8s">
-              <div class="aads-neon-inner" style="min-height:90px">
-                <div id="frame" style="width:100%;margin:auto;position:relative;z-index:99998;">
-                  <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-                </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="wc-actions">
+          <button class="wc-btn wc-btn-primary" onclick="toast('Minimum settlement threshold: $1.00. Continue accumulating earnings.','warn')">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            Secure Settlement
+          </button>
+          <button class="wc-btn wc-btn-secondary" onclick="toast('Transaction ledger exported to CSV.','info')">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export Ledger
+          </button>
+        </div>
+
+        <!-- Ad slot 2 -->
+        <div style="padding:0 20px">
+          <div class="aads-neon-wrap" id="aads-slot-4" style="animation-delay:1.5s">
+            <div class="aads-neon-inner" style="min-height:80px">
+              <div style="width:100%;margin:auto;position:relative;z-index:99998;">
+                <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
               </div>
             </div>
           </div>
-          <!-- Daily Dividend Button -->
-          <div style="margin-bottom:18px">
-            <button class="w-act" id="daily-reward-btn" onclick="openDailyReward()" style="width:100%;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(245,166,35,.1));border-color:rgba(139,92,246,.35);color:var(--violet);padding:14px"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg>Daily Dividend</button>
+        </div>
+
+        <!-- Transaction Ledger -->
+        <div class="wc-ledger">
+          <div class="wc-ledger-header">
+            <span class="wc-ledger-title">Transaction Ledger</span>
+            <span class="wc-ledger-count" id="wc-tx-count-badge">0 entries</span>
           </div>
-          <div class="tx-title">Transaction Ledger</div>
-          <div id="tx-list"><div class="tx-item"><span class="tx-type">No transactions recorded</span><span class="tx-amt" style="color:var(--txt3)">—</span><span class="tx-time">—</span></div></div>
+          <div id="tx-list">
+            <div class="tx-item tx-empty">
+              <span class="tx-type">No transactions yet — start earning to see your ledger</span>
+            </div>
+          </div>
         </div>
-        <div class="wallet-ad-col">
-          <div class="rgb-ad" style="height:300px"><div class="rgb-ad-inner" style="flex-direction:column;gap:6px;font-size:12px"><span class="ad-tag">AD</span><div style="font-size:24px;opacity:.2">⬛</div><span>300 × 300</span><span style="font-size:10px;color:var(--txt3)">Wallet Sidebar Ad</span><span class="ad-tag">AD</span></div></div>
-        </div>
+
       </div>
     </section>
 
@@ -2300,241 +3538,7 @@ html { scroll-behavior: smooth }
     </div>
 
 
-    <!-- ── SECTION: PARTNER PROGRAM ── -->
-    <section class="card" id="sec-partner" style="padding:28px;scroll-margin-top:80px" aria-label="Partner Program">
-      <div class="sh">
-        <div class="sh-l">
-          <div class="sh-ic si-cyan"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <div class="sh-title"><strong>Partner Program</strong><small>Ultra referral tracking — campaigns, attribution &amp; live analytics</small></div>
-        </div>
-        <span id="ref-tier-badge" style="font-family:var(--f-mono);font-size:11px;color:var(--cyan);background:rgba(0,212,255,.08);padding:4px 12px;border-radius:99px;border:1px solid rgba(0,212,255,.2)">Standard · 10%</span>
-      </div>
-
-      <!-- Incoming referral notification (shown if user arrived via ref link) -->
-      <div class="ref-incoming" id="ref-incoming-banner">
-        <div class="ref-incoming-icon">🎯</div>
-        <div class="ref-incoming-txt">
-          <div class="ref-incoming-title" id="ref-incoming-title">You were referred!</div>
-          <div class="ref-incoming-sub" id="ref-incoming-sub">Your referrer earns commission on your activity. Welcome to PAYRO.</div>
-        </div>
-      </div>
-
-      <!-- Hero -->
-      <div class="ref-hero">
-        <div class="ref-hero-eyebrow"><div class="ref-hero-dot"></div>Global Referral Intelligence Network</div>
-        <div class="ref-hero-title">Perpetual Commission Architecture</div>
-        <div class="ref-hero-sub">Refer participants and earn lifetime commissions with full attribution tracking. Sub-ID campaigns, UTM tagging, real-time click analytics, QR codes, and social sharing — all in one dashboard.</div>
-        <div class="ref-hero-badges">
-          <span class="ref-badge ref-badge-cyan">📊 Real-Time Analytics</span>
-          <span class="ref-badge ref-badge-violet">🔗 UTM Builder</span>
-          <span class="ref-badge ref-badge-gold">💰 Lifetime Commission</span>
-          <span class="ref-badge ref-badge-green">✅ No Cap · No Expiry</span>
-          <span class="ref-badge ref-badge-cyan">📱 QR Code Generator</span>
-        </div>
-      </div>
-
-      <!-- Live stats strip -->
-      <div class="ref-stats-row">
-        <div class="ref-stat"><div class="ref-stat-val" id="rs-clicks">0</div><div class="ref-stat-lbl">Total Clicks</div><div class="ref-stat-delta neu" id="rs-clicks-d">—</div></div>
-        <div class="ref-stat"><div class="ref-stat-val" id="rs-convs">0</div><div class="ref-stat-lbl">Conversions</div><div class="ref-stat-delta up" id="rs-convs-d">—</div></div>
-        <div class="ref-stat"><div class="ref-stat-val" id="rs-refs">0</div><div class="ref-stat-lbl">Active Refs</div><div class="ref-stat-delta up" id="rs-refs-d">—</div></div>
-        <div class="ref-stat"><div class="ref-stat-val" id="rs-earned">$0.00</div><div class="ref-stat-lbl">Earned</div><div class="ref-stat-delta up" id="rs-earned-d">—</div></div>
-        <div class="ref-stat"><div class="ref-stat-val" id="rs-ctr">0%</div><div class="ref-stat-lbl">Conv. Rate</div><div class="ref-stat-delta neu" id="rs-ctr-d">—</div></div>
-      </div>
-
-      <!-- Main grid: link builder + QR -->
-      <div class="ref-main-grid">
-
-        <!-- Link builder -->
-        <div class="ref-panel">
-          <div class="ref-panel-hdr">🔗 Link Builder &amp; Campaign Manager <span id="ref-link-count-badge">0 links generated</span></div>
-          <div class="ref-panel-body">
-
-            <!-- Live link display -->
-            <div class="ref-link-display-wrap" id="ref-link-wrap">
-              <div class="ref-link-text" id="ref-link-display">Generate your link to begin tracking</div>
-              <div class="ref-link-copy-mini" onclick="refCopyLink()">⎘ Copy</div>
-            </div>
-
-            <!-- Sub-ID + campaign name -->
-            <div class="ref-subid-row">
-              <div class="ref-input-wrap">
-                <div class="ref-input-lbl">Campaign Name</div>
-                <input class="ref-input" id="ref-campaign" placeholder="e.g. twitter-bio" maxlength="30">
-              </div>
-              <div class="ref-input-wrap">
-                <div class="ref-input-lbl">Sub-ID / Publisher</div>
-                <input class="ref-input" id="ref-subid" placeholder="e.g. pub001" maxlength="20">
-              </div>
-            </div>
-
-            <!-- UTM params -->
-            <div class="ref-utm-row">
-              <div class="ref-input-wrap">
-                <div class="ref-input-lbl">UTM Source</div>
-                <input class="ref-input" id="utm-source" placeholder="twitter" maxlength="30">
-              </div>
-              <div class="ref-input-wrap">
-                <div class="ref-input-lbl">UTM Medium</div>
-                <input class="ref-input" id="utm-medium" placeholder="social" maxlength="30">
-              </div>
-              <div class="ref-input-wrap">
-                <div class="ref-input-lbl">UTM Content</div>
-                <input class="ref-input" id="utm-content" placeholder="bio-link" maxlength="30">
-              </div>
-            </div>
-
-            <button class="ref-gen-btn" id="ref-gen-btn" onclick="refGenerateLink()">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-              Generate Tracking Link
-            </button>
-            <button class="ref-copy-btn" id="ref-copy-btn" onclick="refCopyLink()" disabled>
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-              Copy Full Link to Clipboard
-            </button>
-
-            <!-- Social share -->
-            <div style="font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-bottom:8px">Share Directly</div>
-            <div class="ref-share-row">
-              <button class="ref-share-btn rsb-x" onclick="refShare('x')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                𝕏 / Twitter
-              </button>
-              <button class="ref-share-btn rsb-tg" onclick="refShare('telegram')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                Telegram
-              </button>
-              <button class="ref-share-btn rsb-wa" onclick="refShare('whatsapp')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                WhatsApp
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- QR Code + tier sidebar -->
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <!-- QR Code -->
-          <div class="ref-panel">
-            <div class="ref-panel-hdr">📱 QR Code</div>
-            <div class="ref-qr-wrap" id="ref-qr-wrap">
-              <div class="ref-qr-placeholder" id="ref-qr-placeholder">Generate a link to create QR code</div>
-              <canvas id="ref-qr-canvas" style="display:none"></canvas>
-              <div class="ref-qr-lbl">Scan to visit your referral link</div>
-              <div class="ref-qr-dl" id="ref-qr-dl" style="display:none" onclick="refDownloadQR()">⬇ Download PNG</div>
-            </div>
-          </div>
-
-          <!-- Payout schedule -->
-          <div class="ref-panel">
-            <div class="ref-panel-hdr">💸 Payout Schedule</div>
-            <div style="padding:14px 16px">
-              <div id="ref-payout-list">
-                <div class="ref-payout-row"><span class="ref-payout-date">No payouts yet</span><span></span><span></span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Campaign tracker table -->
-      <div style="margin-bottom:22px">
-        <div class="ref-panel">
-          <div class="ref-panel-hdr">📋 Campaign Tracker <span id="ref-camp-count">0 active</span></div>
-          <div style="padding:14px 16px 16px">
-            <div class="ref-camp-table" id="ref-camp-table">
-              <div class="ref-camp-row rch">
-                <div>Campaign</div><div>Clicks</div><div>Conv.</div><div>Earned</div><div>Conv. Rate</div><div>Actions</div>
-              </div>
-              <div id="ref-camp-body">
-                <div style="padding:20px;text-align:center;font-size:12px;color:var(--txt3)">Generate your first campaign link to start tracking</div>
-              </div>
-            </div>
-            <button class="ref-camp-add" onclick="refAddCampaign()">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add New Campaign
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tier progress bar -->
-      <div class="ref-tier-progress">
-        <div class="ref-tier-hdr">
-          <div class="ref-tier-ttl">📈 Commission Tier Progress</div>
-          <div class="ref-tier-cur" id="ref-tier-cur">Standard · 10%</div>
-        </div>
-        <div class="ref-tier-track"><div class="ref-tier-fill" id="ref-tier-fill" style="width:0%"></div></div>
-        <div class="ref-tier-milestones"><span>0</span><span>5 refs</span><span>20 refs</span><span>50 refs</span></div>
-        <div class="ref-tier-grid">
-          <div class="ref-tier-item unlocked" id="tier-1"><div class="ref-tier-item-rate">10%</div><div class="ref-tier-item-req">Standard</div><div class="ref-tier-lock">✓</div></div>
-          <div class="ref-tier-item next-up" id="tier-2"><div class="ref-tier-item-rate">12%</div><div class="ref-tier-item-req">5+ Refs</div><div class="ref-tier-lock">🔒</div></div>
-          <div class="ref-tier-item" id="tier-3"><div class="ref-tier-item-rate">15%</div><div class="ref-tier-item-req">20+ Refs</div><div class="ref-tier-lock">🔒</div></div>
-          <div class="ref-tier-item" id="tier-4"><div class="ref-tier-item-rate">20%</div><div class="ref-tier-item-req">50+ Refs</div><div class="ref-tier-lock">🔒</div></div>
-        </div>
-      </div>
-
-      <!-- Attribution breakdown -->
-      <div class="ref-attribution">
-        <div class="ref-attr-card">
-          <div class="ref-attr-title">🌐 Traffic Source Breakdown</div>
-          <div id="ref-source-bars">
-            <div class="ref-bar-row"><div class="ref-bar-meta"><span class="ref-bar-name">Direct / No referrer</span><span class="ref-bar-pct">—</span></div><div class="ref-bar-track"><div class="ref-bar-fill ref-bar-cyan" style="width:0%"></div></div></div>
-            <div class="ref-bar-row"><div class="ref-bar-meta"><span class="ref-bar-name">Twitter / X</span><span class="ref-bar-pct">—</span></div><div class="ref-bar-track"><div class="ref-bar-fill ref-bar-violet" style="width:0%"></div></div></div>
-            <div class="ref-bar-row"><div class="ref-bar-meta"><span class="ref-bar-name">Telegram</span><span class="ref-bar-pct">—</span></div><div class="ref-bar-track"><div class="ref-bar-fill ref-bar-gold" style="width:0%"></div></div></div>
-            <div class="ref-bar-row"><div class="ref-bar-meta"><span class="ref-bar-name">WhatsApp</span><span class="ref-bar-pct">—</span></div><div class="ref-bar-track"><div class="ref-bar-fill ref-bar-green" style="width:0%"></div></div></div>
-            <div class="ref-bar-row"><div class="ref-bar-meta"><span class="ref-bar-name">Other</span><span class="ref-bar-pct">—</span></div><div class="ref-bar-track"><div class="ref-bar-fill ref-bar-red" style="width:0%"></div></div></div>
-          </div>
-        </div>
-        <div class="ref-attr-card">
-          <div class="ref-attr-title">📱 Device Breakdown</div>
-          <div id="ref-device-breakdown">
-            <div class="ref-device-row"><div class="ref-device-icon">💻</div><div><div class="ref-device-name">Desktop</div><div class="ref-device-bar"><div class="ref-device-fill" style="width:0%"></div></div></div><div class="ref-device-pct" id="dd-desktop">—</div></div>
-            <div class="ref-device-row"><div class="ref-device-icon">📱</div><div><div class="ref-device-name">Mobile</div><div class="ref-device-bar"><div class="ref-device-fill" style="width:0%"></div></div></div><div class="ref-device-pct" id="dd-mobile">—</div></div>
-            <div class="ref-device-row"><div class="ref-device-icon">📟</div><div><div class="ref-device-name">Tablet</div><div class="ref-device-bar"><div class="ref-device-fill" style="width:0%"></div></div></div><div class="ref-device-pct" id="dd-tablet">—</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Activity log -->
-      <div class="ref-panel" style="margin-bottom:22px">
-        <div class="ref-panel-hdr">📜 Live Activity Log <span id="ref-log-count">0 events</span></div>
-        <div style="padding:14px 16px">
-          <div class="ref-log" id="ref-activity-log">
-            <div class="ref-log-row"><div class="ref-log-dot view"></div><div class="ref-log-msg">Referral engine initialised — awaiting first click</div><div class="ref-log-time">now</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- A-ADS slots -->
-      <div style="margin-bottom:18px">
-        <div class="aads-neon-wrap" id="aads-slot-7" style="animation-delay:1s">
-          <div class="aads-neon-inner" style="min-height:100px">
-            <div style="width:100%;margin:auto;position:relative;z-index:99998;">
-              <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="margin-bottom:18px">
-        <div class="aads-neon-wrap" id="aads-slot-8" style="animation-delay:3s">
-          <div class="aads-neon-inner" style="min-height:100px">
-            <div style="width:100%;margin:auto;position:relative;z-index:99998;">
-              <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:16px">
-        <div class="aads-neon-wrap" id="aads-slot-1" style="animation-delay:1s">
-          <div class="aads-neon-inner" style="min-height:90px">
-            <div style="width:100%;margin:auto;position:relative;z-index:99998;">
-              <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- ── SECTION: AFFILIATE DASHBOARD ── -->
 
     <!-- AD BREAK BEFORE ROADMAP -->
     <div class="ad-break">
@@ -2711,39 +3715,154 @@ function toggleMute(){S.muted=!S.muted;SFX._m=S.muted;$('mute-btn').classList.to
 function toggleTheme(){S.theme=S.theme==='dark'?'light':'dark';document.body.style.filter=S.theme==='light'?'invert(1) hue-rotate(180deg)':''}
 
 /* ── Wallet update ── */
+/* Wallet prev balance for count-up */
+let _prevWalletBalance = 0;
+
+function spawnFloatCoin(amtStr, anchorEl){
+  const container = document.getElementById('wallet-float-container');
+  if(!container) return;
+  const base = anchorEl || document.getElementById('sec-wallet');
+  if(!base) return;
+  const rect = base.getBoundingClientRect();
+  const span = document.createElement('div');
+  span.className = 'wallet-float-coin';
+  span.textContent = amtStr;
+  const x = rect.left + rect.width * 0.35 + Math.random() * rect.width * 0.3;
+  const y = Math.max(80, rect.top + rect.height * 0.25);
+  span.style.left = x + 'px';
+  span.style.top  = y + 'px';
+  container.appendChild(span);
+  setTimeout(() => span.remove(), 1100);
+}
+
+let _walletRafId = null;
+
+/* ── True spring physics easing ────────────────────────────────
+   Models a damped harmonic oscillator.
+   ζ (zeta)  = damping ratio  — controls how much it overshoots
+   ω (omega) = angular freq   — controls speed of oscillation
+   Returns value in [0..~1.05] with natural overshoot + settle.
+──────────────────────────────────────────────────────────────── */
+function springEase(t, zeta, omega){
+  if(t <= 0) return 0;
+  if(zeta >= 1){
+    // Critically / over-damped — no overshoot
+    return 1 - Math.exp(-omega * t) * (1 + omega * t);
+  }
+  const wd  = omega * Math.sqrt(1 - zeta * zeta);       // damped frequency
+  return 1 - Math.exp(-zeta * omega * t) *
+    (Math.cos(wd * t) + (zeta * omega / wd) * Math.sin(wd * t));
+}
+
+function animateBalance(from, to){
+  if(_walletRafId) cancelAnimationFrame(_walletRafId);
+  const intEl  = document.getElementById('wc-bal-int');
+  const decEl  = document.getElementById('wc-bal-dec');
+  const cardEl = document.querySelector('.wallet-card');
+  if(!intEl || !decEl) return;
+
+  /* Spring parameters — tune here for feel */
+  const ZETA  = 0.55;   // 0 = pure bounce, 1 = no overshoot. 0.55 = subtle overshoot
+  const OMEGA = 8.5;    // angular frequency — higher = faster
+  const SETTLE_T = 1.4; // seconds until animation is "done"
+
+  const diff  = to - from;
+  const start = performance.now();
+
+  /* Glow the wallet card on credit */
+  if(diff > 0 && cardEl){
+    cardEl.classList.add('wallet-card-crediting');
+    setTimeout(() => cardEl.classList.remove('wallet-card-crediting'), 1200);
+  }
+
+  const step = (now) => {
+    const elapsed = (now - start) / 1000;       // seconds
+    const s = springEase(elapsed, ZETA, OMEGA); // 0 → ~1 with overshoot
+
+    /* Clamp: never go below from, allow tiny overshoot above to */
+    const cur = from + diff * Math.min(s, 1.06);
+    const clamped = diff > 0 ? Math.min(cur, to * 1.003) : Math.max(cur, to * 0.997);
+
+    intEl.textContent = Math.floor(Math.abs(clamped));
+    const dec = (Math.abs(clamped) - Math.floor(Math.abs(clamped))).toFixed(5).slice(1);
+    decEl.textContent = dec;
+
+    if(elapsed < SETTLE_T){
+      _walletRafId = requestAnimationFrame(step);
+    } else {
+      /* Snap to exact final value */
+      intEl.textContent = Math.floor(to);
+      decEl.textContent = (to - Math.floor(to)).toFixed(5).slice(1);
+      intEl.classList.add('balance-pop');
+      setTimeout(() => intEl.classList.remove('balance-pop'), 900);
+    }
+  };
+  _walletRafId = requestAnimationFrame(step);
+}
+
 function updateWallet(){
   const f=v=>'$'+v.toFixed(4);
   const f2=v=>'$'+v.toFixed(2);
   const b=S.balance;
   $('nav-bal')&&($('nav-bal').textContent=f2(b));
-  $('w-big-bal')&&($('w-big-bal').textContent=f(b));
   $('drw-bal')&&($('drw-bal').textContent=f2(b));
   $('drw-earned')&&($('drw-earned').textContent=f2(S.sessionEarned));
   $('drw-wallet-badge2')&&($('drw-wallet-badge2').textContent=f2(b));
   $('hub-bal')&&($('hub-bal').textContent=f(b));
+  /* Premium wallet display */
+  const fiatEl = document.getElementById('wc-bal-fiat');
+  if(fiatEl) fiatEl.textContent = '\u2248 \u20b9' + (b * 83.5).toFixed(2) + ' INR';
+  const todayEl = document.getElementById('wc-today');
+  if(todayEl) todayEl.textContent = '+$' + S.sessionEarned.toFixed(4);
+  const commEl = document.getElementById('wc-commission');
+  if(commEl && window.REF) commEl.textContent = '$' + (REF.getState().totalCommission||0).toFixed(5);
+  const streakEl = document.getElementById('wc-streak');
+  if(streakEl) streakEl.textContent = (S.loginStreak||0) + ' days';
+  /* Animate balance count-up if changed */
+  if(Math.abs(b - _prevWalletBalance) > 0.000001){
+    if(b > _prevWalletBalance){
+      const diff = b - _prevWalletBalance;
+      const floatStr = '+$' + diff.toFixed(diff < 0.01 ? 5 : 3);
+      spawnFloatCoin(floatStr);
+    }
+    animateBalance(_prevWalletBalance, b);
+    _prevWalletBalance = b;
+  }
   renderLeaderboard();
 }
 function addTx(label,amt,type){
   const list=$('tx-list');if(!list)return;
   const empty=list.querySelector('.tx-item');
-  if(empty&&empty.querySelector('.tx-type')?.textContent==='No transactions recorded')list.innerHTML='';
+  if(empty&&(empty.querySelector('.tx-type')?.textContent==='No transactions recorded'||empty.classList.contains('tx-empty')))list.innerHTML='';
+
+  /* update transaction count badges */
+  const allTx = list.querySelectorAll('.tx-item');
+  const countBadge = list.querySelectorAll('.tx-item').length + 1;
+  const countEl = document.getElementById('wc-tx-count-badge');
+  const countEl2 = document.getElementById('wc-tx-count');
+  if(countEl) countEl.textContent = countBadge + ' entries';
+  if(countEl2) countEl2.textContent = countBadge;
   const now=new Date();const ts=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+':'+now.getSeconds().toString().padStart(2,'0');
   const sign=type==='credit'?'+':'-';const cls=type==='credit'?'tx-c':'tx-d';
   const item=document.createElement('div');item.className='tx-item';
   item.innerHTML=`<span class="tx-type">${esc(label)}</span><span class="tx-amt ${cls}">${sign}$${Math.abs(amt).toFixed(4)}</span><span class="tx-time">${ts}</span>`;
   list.insertBefore(item,list.firstChild);
   if(list.children.length>20)list.removeChild(list.lastChild);
+  // ── Referral Commission Chain: credit 10% to referrer ──────────
+  if(type==='credit' && amt>0 && window.REF && typeof REF.creditCommission==='function'){
+    REF.creditCommission(amt);
+  }
 }
 
 /* ── Leaderboard ── */
 const LB_NAMES=[
-  {name:'CryptoKing_88',tag:'Tier 1 — US'},
-  {name:'EarnerPro_Max',tag:'Tier 1 — UK'},
-  {name:'SatoshiHunter',tag:'Tier 2 — JP'},
-  {name:'VortexGamer_X',tag:'Tier 2 — DE'},
-  {name:'WealthMiner99',tag:'Tier 1 — CA'},
-  {name:'ClickBoss_IN',tag:'Tier 3 — IN'},
-  {name:'GoldRush2025',tag:'Tier 1 — AU'},
+  {name:'CryptoKing_88',tag:'US'},
+  {name:'EarnerPro_Max',tag:'UK'},
+  {name:'SatoshiHunter',tag:'JP'},
+  {name:'VortexGamer_X',tag:'DE'},
+  {name:'WealthMiner99',tag:'CA'},
+  {name:'ClickBoss_IN',tag:'IN'},
+  {name:'GoldRush2025',tag:'AU'},
 ];
 const LB_BASE_AMT=[4.2212,3.8804,3.1245,2.9001,2.5432,1.8810,1.2345];
 function renderLeaderboard(){
@@ -3276,446 +4395,630 @@ function completeDailyReward(){
 /* ================================================================
    ULTRA REFERRAL TRACKING ENGINE
 ================================================================ */
+/* ================================================================
+   AFFILIATE SYSTEM — Robust Referral Engine
+   Domain: https://p-y-r-1.github.io
+   Link format: https://p-y-r-1.github.io/PAYRO/ref/XXXXX
+   Commission: 10% of every referred user's task earnings
+================================================================ */
 const REF = (function(){
-  const LS = 'payro_ref_v2';
-  const DOMAIN = 'https://p-y-r-1.github.io/PAYRO';
+
+
+  /* ================================================================
+     PAYRO AFFILIATE ENGINE v6
+     Base URL  : https://p-y-r-1.github.io/PAYRO/
+     Ref path  : https://p-y-r-1.github.io/PAYRO/ref/XXXXX
+     Ref code  : exactly 5 chars A-Z0-9 — CLEAN PATH, zero query strings
+     Detection : window.location.pathname  /PAYRO/ref/XXXXX
+     Storage   : localStorage key 'Referrer_ID' (exact business requirement)
+  ================================================================ */
+
+  const LS_KEY      = 'payro_affiliate_v6';
+  const LS_REF_BY   = 'Referrer_ID';            // required exact key name
+  const BASE_URL    = 'https://p-y-r-1.github.io/PAYRO/';
+  const COMMISSION  = 0.10;                      // 10% flat rate
 
   // ── State ──────────────────────────────────────────────────────
   let state = {
-    userId: null,          // persistent referrer ID
-    currentLink: null,     // active generated link
-    linkCount: 0,
-    totalClicks: 0,
-    totalConversions: 0,
-    totalEarned: 0,
-    activeRefs: 0,
-    campaigns: [],         // [{id, name, subid, utm, clicks, convs, earned, createdAt}]
-    activityLog: [],       // [{type, msg, ts}]
-    sourceCounts: {direct:0, twitter:0, telegram:0, whatsapp:0, other:0},
-    deviceCounts: {desktop:0, mobile:0, tablet:0},
-    payouts: [],
-    incomingRef: null,     // set if page was opened via a referral link
+    userId           : null,   // Permanent 5-char affiliate code (A-Z, 0-9)
+    myLink           : null,   // Canonical link — BASE_URL + ref/XXXXX (clean path, no query strings)
+    referredBy       : null,   // Referrer's 5-char code (if this user arrived via ref)
+    totalReferrals   : 0,
+    totalClicks      : 0,
+    totalConversions : 0,
+    totalCommission  : 0,
+    activeRefs       : 0,
+    campaigns        : [],
+    activityLog      : [],
+    payouts          : [],
+    sourceCounts     : {direct:0,twitter:0,telegram:0,whatsapp:0,other:0},
+    deviceCounts     : {desktop:0,mobile:0,tablet:0},
+    pendingCommission: 0,
+    totalEarned      : 0,      // alias
+    currentLink      : null,   // alias — always = myLink after generation
+    linkCount        : 0,
   };
 
+  /* ── Generate exactly 5-char code (A-Z + 0-9) ─────────────────
+     Uses crypto.getRandomValues when available for true randomness.
+     Falls back to Math.random() on very old browsers.
+  ──────────────────────────────────────────────────────────────── */
+  function makeRefCode(){
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const LEN   = 5;
+    let code    = '';
+    if(window.crypto && window.crypto.getRandomValues){
+      const buf = new Uint8Array(LEN);
+      window.crypto.getRandomValues(buf);
+      for(let i=0;i<LEN;i++) code += CHARS[buf[i] % CHARS.length];
+    } else {
+      for(let i=0;i<LEN;i++) code += CHARS[Math.floor(Math.random()*CHARS.length)];
+    }
+    return code;
+  }
+
+  /* Validate that a code is exactly 5 chars of A-Z0-9 */
+  function isValidCode(code){
+    return typeof code === 'string' && /^[A-Z0-9]{5}$/.test(code);
+  }
+
   // ── Persistence ────────────────────────────────────────────────
-  function save(){ try{ localStorage.setItem(LS, JSON.stringify(state)) }catch(e){} }
+  function save(){
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
   function load(){
     try{
-      const d = localStorage.getItem(LS);
-      if(d){ const parsed = JSON.parse(d); state = Object.assign(state, parsed); }
-    }catch(e){}
-    // Generate stable userId if not set
-    if(!state.userId){
-      state.userId = 'PYR' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(2,4).toUpperCase();
-      save();
-    }
-  }
-
-  // ── Incoming referral detection ────────────────────────────────
-  function detectIncoming(){
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get('ref') || params.get('r');
-    const utm_src = params.get('utm_source');
-    if(ref && ref !== state.userId){
-      state.incomingRef = { ref, utm_src, ts: Date.now() };
-      // Count as a click on the referrer's behalf (best-effort client-side sim)
-      save();
-      const banner = document.getElementById('ref-incoming-banner');
-      if(banner){
-        document.getElementById('ref-incoming-title').textContent = '🎯 You arrived via a referral!';
-        document.getElementById('ref-incoming-sub').textContent = `Ref: ${ref}${utm_src?' · Source: '+utm_src:''}`;
-        banner.classList.add('show');
+      const raw = localStorage.getItem(LS_KEY);
+      if(raw){
+        const parsed = JSON.parse(raw);
+        state = Object.assign({}, state, parsed);
       }
+    }catch(e){}
+
+    /* ── Enforce 5-char code
+         If the stored userId is the old long format (e.g. "PYRM7A3B1K2XY")
+         or missing, generate a fresh 5-char code and persist it.
+    ── */
+    if(!isValidCode(state.userId)){
+      state.userId = makeRefCode();
     }
+
+    /* Canonical affiliate link — always points to root */
+    state.myLink      = BASE_URL + 'ref/' + state.userId;
+    state.currentLink = state.myLink;
+    state.totalEarned = state.totalCommission;
+
+    /* Load referredBy from its own LS key */
+    try{
+      const rb = localStorage.getItem(LS_REF_BY);
+      if(isValidCode(rb) && rb !== state.userId) state.referredBy = rb;
+    }catch(e){}
+
+    save();
   }
 
-  // ── Fingerprint / detect current device ───────────────────────
-  function detectDevice(){
-    const ua = navigator.userAgent;
-    if(/tablet|ipad|playbook|silk/i.test(ua)) return 'tablet';
-    if(/mobile|iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(ua)) return 'mobile';
-    return 'desktop';
+  /* ── Incoming referral detection ──────────────────────────────
+     Reads window.location.pathname for the clean path /PAYRO/ref/XXXXX
+     No query strings, no '?' symbols — pure clean URL routing.
+     Pattern: /PAYRO/ref/<5-char-code>
+     Stores referrer code in localStorage as 'Referrer_ID'.
+     Fires immediately on every page load.
+  ──────────────────────────────────────────────────────────────── */
+  /* ── 60-SECOND REFERRAL MISSION TIMER ──────────────────────────
+     Core business rule: commission is credited ONLY after the
+     referred user has been active on the page for 60 seconds.
+     Until then the reward is "pending" — shown via countdown UI.
+  ──────────────────────────────────────────────────────────────── */
+  const MISSION_DURATION = 60; // seconds
+
+  function detectIncoming(){
+    const pathname = window.location.pathname;
+    const match = pathname.match(/\/ref\/([A-Z0-9]{5})\/?$/i);
+    if(!match) return;
+
+    const refId = match[1].toUpperCase();
+    if(!isValidCode(refId)) return;
+    if(refId === state.userId) return;
+
+    try{ localStorage.setItem(LS_REF_BY, refId); }catch(e){}
+    state.referredBy = refId;
+    save();
+
+    /* Check if mission was already completed (e.g. page reload) */
+    const missionKey = 'payro_mission_' + refId;
+    const alreadyDone = localStorage.getItem(missionKey) === 'done';
+    if(alreadyDone){
+      showMissionComplete(refId);
+      return;
+    }
+
+    /* Start mission countdown */
+    startMissionTimer(refId, MISSION_DURATION);
+    logEvent('ref', `Referral mission started · Referrer: ${refId} · Duration: 60s`);
   }
 
-  // ── Generate link ──────────────────────────────────────────────
+  function startMissionTimer(refId, seconds){
+    /* Build or reveal the countdown UI */
+    const el = document.getElementById('ref-mission-timer');
+    if(!el) return;
+    el.style.display = 'flex';
+    el.classList.add('show');
+
+    const ring = document.getElementById('rmt-ring-fill');
+    const numEl = document.getElementById('rmt-seconds');
+    const msgEl = document.getElementById('rmt-msg');
+    const barEl = document.getElementById('rmt-progress-bar');
+    const circumference = 2 * Math.PI * 28; // r=28
+
+    if(ring) ring.style.strokeDasharray = circumference;
+
+    let remaining = seconds;
+    let active = true;
+    let lastActivity = Date.now();
+    const ACTIVITY_GRACE = 8000; // 8s idle grace — keeps going as long as user moves
+
+    /* Track activity */
+    const activityEvents = ['mousemove','click','keydown','scroll','touchstart'];
+    const onActivity = () => { lastActivity = Date.now(); };
+    activityEvents.forEach(ev => document.addEventListener(ev, onActivity, {passive:true}));
+
+    const tick = setInterval(() => {
+      if(!active) return;
+      const idle = Date.now() - lastActivity;
+      if(idle > ACTIVITY_GRACE) return; // pause countdown while idle — don't count idle time
+
+      remaining--;
+      const pct = (seconds - remaining) / seconds;
+
+      if(numEl) numEl.textContent = remaining;
+      if(ring)  ring.style.strokeDashoffset = circumference * (1 - pct);
+      if(barEl) barEl.style.width = (pct * 100) + '%';
+
+      if(remaining <= 10 && msgEl) msgEl.textContent = 'Almost there — keep going!';
+      if(remaining <= 5  && numEl) numEl.style.color = 'var(--green)';
+
+      if(remaining <= 0){
+        clearInterval(tick);
+        active = false;
+        activityEvents.forEach(ev => document.removeEventListener(ev, onActivity));
+        completeMission(refId);
+      }
+    }, 1000);
+  }
+
+  function completeMission(refId){
+    const missionKey = 'payro_mission_' + refId;
+    try{ localStorage.setItem(missionKey, 'done'); }catch(e){}
+
+    /* Credit commission immediately */
+    const sharedKey = 'payro_comm_' + refId;
+    try{
+      const existing = parseFloat(localStorage.getItem(sharedKey) || '0');
+      localStorage.setItem(sharedKey, (existing + 0.001).toFixed(6));
+    }catch(e){}
+
+    state.totalConversions++;
+    save(); renderAll();
+
+    /* ── GA4: referral_success_verified ──────────────────────────
+       Fires ONLY after confirmed 60-second active session.
+       Parameters sent to GA4 dashboard for analysis.
+    ──────────────────────────────────────────────────────────────── */
+    try{
+      if(typeof gtag === 'function'){
+        gtag('event', 'referral_success_verified', {
+          referrer_code    : refId,
+          mission_duration : 60,
+          platform         : 'PAYRO',
+          timestamp_ms     : Date.now()
+        });
+      }
+    }catch(e){ /* gtag not loaded — fail silently */ }
+
+    showMissionComplete(refId);
+    logEvent('ref', `Mission complete — commission unlocked for referrer ${refId}`);
+    if(window.toast) toast('Mission complete! Referral reward unlocked.', 'success');
+  }
+
+  function showMissionComplete(refId){
+    const el = document.getElementById('ref-mission-timer');
+    if(!el) return;
+    el.innerHTML = `
+      <div class="rmt-done-icon">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="rmt-done-text">
+        <div class="rmt-done-title">Mission Complete</div>
+        <div class="rmt-done-sub">Referral commission unlocked for your inviter.</div>
+      </div>`;
+    el.classList.add('rmt-done');
+    setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.style.display = 'none', 600); }, 4000);
+  }
+
+  // ── Commission credit (called every time this user earns) ──────
+  function creditCommission(earnedAmt){
+    if(!state.referredBy) return;
+    const commission = parseFloat((earnedAmt * COMMISSION).toFixed(6));
+    if(commission <= 0) return;
+    const sharedKey = 'payro_comm_' + state.referredBy;
+    try{
+      const existing = parseFloat(localStorage.getItem(sharedKey) || '0');
+      localStorage.setItem(sharedKey, (existing + commission).toFixed(6));
+    }catch(e){}
+    logEvent('comm', `10% commission ($${commission.toFixed(6)}) queued for referrer ${state.referredBy}`);
+  }
+
+  // ── Collect pending commissions earned by this user's referrals ─
+  function collectPendingCommissions(){
+    const sharedKey = 'payro_comm_' + state.userId;
+    try{
+      const pending = parseFloat(localStorage.getItem(sharedKey) || '0');
+      if(pending > 0){
+        state.totalCommission  = parseFloat((state.totalCommission + pending).toFixed(6));
+        state.totalEarned      = state.totalCommission;
+        state.pendingCommission = 0;
+        state.totalConversions++;
+        state.activeRefs++;
+        addPayoutRecord(pending);
+        localStorage.setItem(sharedKey, '0');
+        logEvent('earn', `💰 Commission collected: +$${pending.toFixed(6)}`);
+        save();
+        renderAll();
+        if(window.toast) toast(`💰 Affiliate commission: +$${pending.toFixed(5)}`, 'success');
+      }
+    }catch(e){}
+  }
+
+  /* ================================================================
+     generateLink()
+     ─────────────────────────────────────────────────────────────
+     Business requirements:
+       1. Base URL  : https://p-y-r-1.github.io/PAYRO/
+       2. Link format: BASE_URL + ref/ + 5-char-code  (NO query strings, NO ? symbols)
+       3. Full clean URL shown immediately in the display field on generation
+       4. Entire clean URL copied to clipboard in one tap
+       5. Optional campaign label stored internally — never pollutes the clean link
+  ================================================================ */
   function generateLink(){
-    const campaign = (document.getElementById('ref-campaign')||{}).value.trim().replace(/\s+/g,'-').toLowerCase() || 'default';
-    const subid    = (document.getElementById('ref-subid')||{}).value.trim() || '';
-    const utm_src  = (document.getElementById('utm-source')||{}).value.trim() || '';
-    const utm_med  = (document.getElementById('utm-medium')||{}).value.trim() || '';
-    const utm_cnt  = (document.getElementById('utm-content')||{}).value.trim() || '';
+    /* Step 1 — Build the canonical CLEAN URL (path-based, no query strings) */
+    const campaign = ((document.getElementById('aff-campaign')||{}).value||'')
+                       .trim().replace(/\s+/g,'-').toLowerCase() || null;
 
-    let url = `${DOMAIN}/`;
-    const p = new URLSearchParams();
-    p.set('r', state.userId);
-    if(campaign && campaign!=='default') p.set('utm_campaign', campaign);
-    if(subid) p.set('sid', subid);
-    if(utm_src) p.set('utm_source', utm_src);
-    if(utm_med) p.set('utm_medium', utm_med);
-    if(utm_cnt) p.set('utm_content', utm_cnt);
-    url += '?' + p.toString();
+    /* Clean path: https://p-y-r-1.github.io/PAYRO/ref/XXXXX — zero '?' or '&' */
+    const url = BASE_URL + 'ref/' + state.userId;
 
+    /* Step 2 — Persist */
+    state.myLink      = BASE_URL + 'ref/' + state.userId; // canonical never changes
     state.currentLink = url;
     state.linkCount++;
 
-    // Add to campaigns if name is unique
-    const existIdx = state.campaigns.findIndex(c => c.name === campaign);
-    if(existIdx === -1){
-      state.campaigns.unshift({
-        id: 'c'+Date.now(), name: campaign, subid,
-        utm: {src:utm_src, med:utm_med, cnt:utm_cnt},
-        clicks:0, convs:0, earned:0, createdAt: Date.now(), active:true
-      });
-      if(state.campaigns.length > 20) state.campaigns.pop();
+    /* Step 3 — Track campaign */
+    if(campaign){
+      const idx = state.campaigns.findIndex(c=>c.name===campaign);
+      if(idx === -1){
+        state.campaigns.unshift({
+          id:'c'+Date.now(), name:campaign,
+          clicks:0, convs:0, earned:0, active:true, createdAt:Date.now()
+        });
+        if(state.campaigns.length > 15) state.campaigns.pop();
+      }
     }
 
-    logEvent('click', `New campaign link generated: "${campaign}"`);
+    /* Step 4 — Render full URL in display */
+    renderAffiliateLink(url);
     save();
     renderAll();
-    generateQR(url);
 
-    const btn = document.getElementById('ref-gen-btn');
-    if(btn){ const r=btn.getBoundingClientRect(); if(window.PARTICLES) PARTICLES.burst(r.left+r.width/2,r.top+r.height/2,['#00d4ff','#f5a623','#22c55e','#a78bfa'],40); }
+    /* Step 5 — Copy full URL to clipboard immediately */
+    copyToClipboard(url);
+
+    logEvent('gen', `Link generated · Code: ${state.userId} · URL: ${url}`);
     if(window.SFX) SFX.play('ding');
-    if(window.toast) toast('🔗 Tracking link generated!','success');
+    if(window.toast) toast('🔗 Link generated & copied to clipboard!', 'success');
   }
 
-  // ── Simulate a click (demo — in production this fires server-side) ──
-  function simulateClick(campaignName, source){
-    state.totalClicks++;
-    state.sourceCounts[source] = (state.sourceCounts[source]||0) + 1;
-    state.deviceCounts[detectDevice()]++;
-    const c = state.campaigns.find(x=>x.name===campaignName);
-    if(c) c.clicks++;
-    logEvent('click', `Click tracked · source: ${source} · campaign: ${campaignName}`);
-    save(); renderAll();
+  /* Render the full URL into every display element */
+  function renderAffiliateLink(url){
+    /* Extract just the 5-char code for the big display */
+    const match   = url.match(/\/ref\/([A-Z0-9]{5})\/?/i);
+    const code    = match ? match[1].toUpperCase() : url;
+
+    /* aff-link-display — shows the 5-char code in the big box */
+    const disp    = document.getElementById('aff-link-display');
+    if(disp) disp.textContent = code;
+
+    /* aff-full-url-text — shows the full clean URL as selectable text */
+    const fullUrl = document.getElementById('aff-full-url-text');
+    if(fullUrl) fullUrl.textContent = url;
+
+    /* Enable copy button */
+    const btn  = document.getElementById('aff-copy-btn');
+    const mini = document.getElementById('aff-link-copy-mini');
+    if(btn)  btn.disabled = false;
+    if(mini) mini.disabled = false;
+
+    /* Mark wrapper as active */
+    const wrap = document.getElementById('aff-link-wrap');
+    if(wrap) wrap.classList.add('has-link');
   }
 
-  // ── Simulate a conversion ──────────────────────────────────────
-  function simulateConversion(campaignName){
-    state.totalConversions++;
-    state.activeRefs++;
-    const rate = getTierRate();
-    const earn = parseFloat((0.001 + Math.random()*0.004).toFixed(4));
-    const commission = parseFloat((earn * rate).toFixed(5));
-    state.totalEarned = parseFloat((state.totalEarned + commission).toFixed(5));
-    const c = state.campaigns.find(x=>x.name===campaignName);
-    if(c){ c.convs++; c.earned = parseFloat((c.earned+commission).toFixed(5)); }
-    logEvent('conv', `Conversion! +$${commission.toFixed(5)} commission · campaign: ${campaignName}`);
-    addPayout(commission);
-    updateTierProgress();
-    save(); renderAll();
-    if(window.toast) toast(`💰 Referral converted! +$${commission.toFixed(4)} earned`,'success');
-  }
-
-  // ── Copy link ──────────────────────────────────────────────────
+  /* ── copyLink() — copies full URL on button click ─────────────
+     Always reads from state.currentLink which is set by generateLink().
+     Falls back to generating the canonical link if not yet generated.
+  ──────────────────────────────────────────────────────────────── */
   function copyLink(){
-    if(!state.currentLink){ if(window.toast) toast('Generate a link first','warn'); return; }
-    navigator.clipboard.writeText(state.currentLink).then(()=>{
-      if(window.toast) toast('📋 Link copied to clipboard!','success');
-      if(window.SFX) SFX.play('ding');
-      logEvent('click','Link copied to clipboard');
-      save(); renderAll();
-    }).catch(()=>{
-      const ta=document.createElement('textarea');ta.value=state.currentLink;
-      document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-      if(window.toast) toast('📋 Link copied!','success');
+    /* If user clicks Copy before Generate, auto-generate first */
+    if(!state.currentLink){
+      state.currentLink = BASE_URL + 'ref/' + state.userId;
+      state.myLink      = state.currentLink;
+      renderAffiliateLink(state.currentLink);
+    }
+    copyToClipboard(state.currentLink);
+  }
+
+  function copyToClipboard(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text)
+        .then(()=> showCopied())
+        .catch(()=> fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try{ document.execCommand('copy'); showCopied(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  function showCopied(){
+    if(window.toast) toast('📋 Link copied to clipboard!', 'success');
+    const btn  = document.getElementById('aff-copy-btn');
+    const mini = document.getElementById('aff-link-copy-mini');
+    [btn, mini].forEach(el=>{
+      if(!el) return;
+      const orig = el.innerHTML;
+      el.innerHTML = el.innerHTML.replace(/Copy.*/,'Copied ✓');
+      el.style.color='var(--green)';
+      setTimeout(()=>{ el.innerHTML=orig; el.style.color=''; },1800);
     });
   }
 
   // ── Social share ───────────────────────────────────────────────
   function share(platform){
-    if(!state.currentLink){ if(window.toast) toast('Generate a link first','warn'); return; }
-    const src = state.currentLink.includes('utm_source=') ? state.currentLink : state.currentLink + '&utm_source='+platform;
-    const txt = encodeURIComponent('🚀 Earn crypto for free on PAYRO — spin, mine, and claim. No deposit needed.');
-    const enc = encodeURIComponent(src);
+    /* Always use the canonical clean link — never append query strings */
+    const url = state.myLink || (BASE_URL + 'ref/' + state.userId);
+    if(!url){ if(window.toast) toast('Generate your link first','warn'); return; }
+    const txt  = encodeURIComponent('🚀 Earn real crypto free on PAYRO — no deposit needed. Join via my link:');
+    const enc  = encodeURIComponent(url);
     const urls = {
-      x:`https://twitter.com/intent/tweet?text=${txt}&url=${enc}`,
-      telegram:`https://t.me/share/url?url=${enc}&text=${txt}`,
-      whatsapp:`https://wa.me/?text=${txt}%20${enc}`
+      x        : `https://twitter.com/intent/tweet?text=${txt}&url=${enc}`,
+      telegram : `https://t.me/share/url?url=${enc}&text=${txt}`,
+      whatsapp : `https://wa.me/?text=${txt}%20${enc}`
     };
-    if(urls[platform]){ window.open(urls[platform],'_blank'); }
-    simulateClick(getCurrentCampaignName(), platform);
-    logEvent('click', `Shared on ${platform}`);
+    if(urls[platform]) window.open(urls[platform],'_blank');
+    state.totalClicks++;
+    state.sourceCounts[platform] = (state.sourceCounts[platform]||0) + 1;
+    logEvent('share', `Shared on ${platform}`);
     save(); renderAll();
   }
 
-  // ── QR Code generator (pure canvas, no library) ────────────────
-  function generateQR(url){
-    // We encode a minimal data matrix using a visual QR-like grid
-    // Real QR via a free CDN API for accuracy
-    const ph = document.getElementById('ref-qr-placeholder');
-    const cv = document.getElementById('ref-qr-canvas');
-    const dl = document.getElementById('ref-qr-dl');
-    if(!ph||!cv) return;
-    const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}&bgcolor=ffffff&color=000000&margin=2`;
-    // Draw as image on canvas
-    const img = new Image();
-    img.crossOrigin='anonymous';
-    img.onload=()=>{
-      cv.width=154; cv.height=154;
-      const ctx=cv.getContext('2d');
-      ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,154,154);
-      ctx.drawImage(img,2,2,150,150);
-      ph.style.display='none';
-      cv.style.display='block';
-      if(dl) dl.style.display='inline-flex';
-    };
-    img.onerror=()=>{
-      // Fallback: show URL text
-      ph.style.display='flex';
-      ph.textContent='QR: Link ready — copy to use';
-      cv.style.display='none';
-    };
-    img.src=apiUrl;
+  // ── Device detect ─────────────────────────────────────────────
+  function detectDevice(){
+    const ua = navigator.userAgent;
+    if(/tablet|ipad/i.test(ua)) return 'tablet';
+    if(/mobile|iphone|android/i.test(ua)) return 'mobile';
+    return 'desktop';
   }
 
-  function downloadQR(){
-    const cv=document.getElementById('ref-qr-canvas');
-    if(!cv||cv.style.display==='none') return;
-    const a=document.createElement('a');
-    a.download='payro-referral-qr.png';
-    a.href=cv.toDataURL('image/png');
-    a.click();
-  }
-
-  // ── Activity log ───────────────────────────────────────────────
-  function logEvent(type, msg){
+  // ── Payout record ─────────────────────────────────────────────
+  function addPayoutRecord(amt){
     const now = new Date();
-    const time = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+':'+now.getSeconds().toString().padStart(2,'0');
-    state.activityLog.unshift({type,msg,time});
-    if(state.activityLog.length>50) state.activityLog.pop();
-  }
-
-  function addPayout(amt){
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'});
-    state.payouts.unshift({date:dateStr, amt:amt.toFixed(5), status:'pending'});
-    // Mark oldest pending as processed
+    const dateStr = now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    const txId = 'TX' + Date.now().toString(36).toUpperCase().slice(-6);
+    state.payouts.unshift({date:dateStr, amt:amt.toFixed(6), status:'pending', txId});
     if(state.payouts.length>1) state.payouts[1].status='processed';
-    if(state.payouts.length>10) state.payouts.pop();
+    if(state.payouts.length>12) state.payouts.pop();
   }
 
-  // ── Tier system ────────────────────────────────────────────────
+  // ── Commission tier ───────────────────────────────────────────
   function getTierRate(){
     const r = state.activeRefs;
     if(r>=50) return 0.20;
     if(r>=20) return 0.15;
     if(r>=5)  return 0.12;
-    return 0.10;
+    return COMMISSION;
   }
   function getTierLabel(){
     const r = state.activeRefs;
-    if(r>=50) return 'Elite · 20%';
-    if(r>=20) return 'Gold · 15%';
-    if(r>=5)  return 'Silver · 12%';
-    return 'Standard · 10%';
-  }
-  function updateTierProgress(){
-    const r = state.activeRefs;
-    let pct=0, next=5, label=getTierLabel();
-    if(r<5)       { pct=(r/5)*25 }
-    else if(r<20) { pct=25+(r-5)/15*25 }
-    else if(r<50) { pct=50+(r-20)/30*25 }
-    else          { pct=100 }
-    const fill=document.getElementById('ref-tier-fill');
-    if(fill) fill.style.width=Math.min(100,pct)+'%';
-    const cur=document.getElementById('ref-tier-cur');
-    if(cur) cur.textContent=label;
-    const badge=document.getElementById('ref-tier-badge');
-    if(badge) badge.textContent=label;
-    // Tier item highlights
-    [1,2,3,4].forEach(i=>{
-      const el=document.getElementById('tier-'+i);
-      if(!el) return;
-      el.classList.remove('unlocked','next-up');
-      const thresholds=[0,5,20,50];
-      if(r>=thresholds[i-1]) el.classList.add('unlocked');
-      else if(r>=thresholds[i-2]||i===2&&r<5) el.classList.add('next-up');
-    });
+    if(r>=50) return 'Elite — 20%';
+    if(r>=20) return 'Gold — 15%';
+    if(r>=5)  return 'Silver — 12%';
+    return 'Standard — 10%';
   }
 
-  // ── Render all UI ──────────────────────────────────────────────
+  // ── Activity log ─────────────────────────────────────────────
+  function logEvent(type, msg){
+    const now  = new Date();
+    const time = now.toTimeString().slice(0,8);
+    state.activityLog.unshift({type, msg, time});
+    if(state.activityLog.length>60) state.activityLog.pop();
+  }
+
+  // ── Render ────────────────────────────────────────────────────
   function renderAll(){
-    // Stats strip
-    const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
-    set('rs-clicks', state.totalClicks.toLocaleString());
-    set('rs-convs',  state.totalConversions.toLocaleString());
-    set('rs-refs',   state.activeRefs.toLocaleString());
-    set('rs-earned', '$'+state.totalEarned.toFixed(4));
-    const ctr = state.totalClicks>0 ? ((state.totalConversions/state.totalClicks)*100).toFixed(1)+'%' : '0%';
-    set('rs-ctr', ctr);
-    set('ref-link-count-badge', state.linkCount+' link'+(state.linkCount!==1?'s':'')+' generated');
+    const set = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
 
-    // Link display
-    const wrap = document.getElementById('ref-link-wrap');
-    const disp = document.getElementById('ref-link-display');
-    const copy = document.getElementById('ref-copy-btn');
-    if(disp && state.currentLink){
-      disp.textContent = state.currentLink;
-      if(wrap) wrap.classList.add('has-link');
-      if(copy) copy.disabled=false;
-    }
+    // Header stats
+    set('aff-uid',       state.userId);       // 5-char code e.g. A1B2C
+    set('aff-total-refs',state.totalReferrals);
+    set('aff-clicks',    state.totalClicks.toLocaleString());
+    set('aff-convs',     state.totalConversions.toLocaleString());
+    set('aff-commission','$'+state.totalCommission.toFixed(5));
+    set('aff-tier',      getTierLabel());
+    set('aff-tier-badge',getTierLabel());
+    set('aff-active',    state.activeRefs);
+    const ctr = state.totalClicks>0 ? ((state.totalConversions/state.totalClicks)*100).toFixed(1)+'%' : '0.0%';
+    set('aff-ctr', ctr);
 
-    // Campaign table
-    renderCampaigns();
+    // Sidebar sync
+    set('partner-refs',   state.activeRefs);
+    set('partner-earned', '$'+state.totalCommission.toFixed(4));
 
-    // Activity log
-    renderLog();
+    // Link display — always show the canonical full URL
+    const myUrl = BASE_URL + 'ref/' + state.userId;
+    state.myLink      = myUrl;
+    state.currentLink = state.currentLink || myUrl;
+    renderAffiliateLink(state.currentLink);
 
-    // Source bars
+    renderCommissionTable();
+    renderPayoutsTable();
+    renderActivityFeed();
     renderSourceBars();
-
-    // Device breakdown
-    renderDevices();
-
-    // Payout list
-    renderPayouts();
-
-    // Tier progress
-    updateTierProgress();
-
-    // Sync legacy ids (wallet section uses partner-refs / partner-earned)
-    set('partner-refs', state.activeRefs);
-    set('partner-earned', '$'+state.totalEarned.toFixed(4));
+    renderTierProgress();
   }
 
-  function renderCampaigns(){
-    const body=document.getElementById('ref-camp-body');
-    const cnt=document.getElementById('ref-camp-count');
-    if(!body) return;
-    const active=state.campaigns.filter(c=>c.active);
-    if(cnt) cnt.textContent=active.length+' active';
-    if(!state.campaigns.length){
-      body.innerHTML='<div style="padding:20px;text-align:center;font-size:12px;color:var(--txt3)">Generate your first campaign link to start tracking</div>';
+  function renderCommissionTable(){
+    const tbody = document.getElementById('aff-ref-tbody');
+    if(!tbody) return;
+    if(!state.campaigns.length && state.totalConversions === 0){
+      tbody.innerHTML = `<tr><td colspan="5" style="padding:22px;text-align:center;color:var(--txt3);font-size:12px">No referrals yet — share your link to start earning</td></tr>`;
       return;
     }
-    body.innerHTML=state.campaigns.map(c=>{
-      const cr=c.clicks>0?((c.convs/c.clicks)*100).toFixed(1)+'%':'0%';
-      return`<div class="ref-camp-row">
-        <div class="ref-camp-name"><div class="ref-camp-dot ${c.active?'active':'pause'}"></div>${c.name}</div>
-        <div class="ref-camp-stat">${c.clicks}</div>
-        <div class="ref-camp-stat">${c.convs}</div>
-        <div class="ref-camp-earn">$${c.earned.toFixed(4)}</div>
-        <div class="ref-camp-rate">${cr}</div>
-        <div class="ref-camp-action">
-          <button class="ref-camp-btn primary" onclick="REF.loadCampaign('${c.id}')">Load</button>
-          <button class="ref-camp-btn" onclick="REF.toggleCampaign('${c.id}')">${c.active?'Pause':'Resume'}</button>
-        </div>
-      </div>`;
+    // Show campaigns or dummy row if conversions exist
+    const rows = state.campaigns.length ? state.campaigns : [{
+      id:'default', name:'Organic', clicks:state.totalClicks,
+      convs:state.totalConversions, earned:state.totalCommission, active:true
+    }];
+    tbody.innerHTML = rows.map(c=>{
+      const cr = c.clicks>0 ? ((c.convs/c.clicks)*100).toFixed(1)+'%' : '—';
+      const statusDot = c.active ? 'ref-status-active' : 'ref-status-pause';
+      const statusLabel = c.active ? 'Active' : 'Paused';
+      return `<tr>
+        <td><span class="ref-table-dot ${statusDot}"></span> ${esc(c.name)}</td>
+        <td class="ref-td-mono">${c.clicks}</td>
+        <td class="ref-td-mono">${c.convs}</td>
+        <td class="ref-td-earn">$${(c.earned||0).toFixed(5)}</td>
+        <td><span class="ref-table-status">${statusLabel}</span></td>
+      </tr>`;
     }).join('');
   }
 
-  function renderLog(){
-    const log=document.getElementById('ref-activity-log');
-    const cnt=document.getElementById('ref-log-count');
-    if(!log) return;
-    if(cnt) cnt.textContent=state.activityLog.length+' events';
-    log.innerHTML=state.activityLog.slice(0,30).map(e=>`
-      <div class="ref-log-row">
-        <div class="ref-log-dot ${e.type}"></div>
-        <div class="ref-log-msg">${e.msg}</div>
-        <div class="ref-log-time">${e.time}</div>
+  function renderPayoutsTable(){
+    const tbody = document.getElementById('aff-payout-tbody');
+    if(!tbody) return;
+    if(!state.payouts.length){
+      tbody.innerHTML = `<tr><td colspan="4" style="padding:20px;text-align:center;color:var(--txt3);font-size:12px">No payout history yet</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = state.payouts.slice(0,8).map(p=>`
+      <tr>
+        <td class="ref-td-date">${p.date}</td>
+        <td class="ref-td-earn">$${p.amt}</td>
+        <td class="ref-td-mono" style="font-size:10px;color:var(--txt3)">${p.txId||'—'}</td>
+        <td><span class="payout-chip ${p.status==='processed'?'pc-done':'pc-pend'}">${p.status==='processed'?'Processed':'Pending'}</span></td>
+      </tr>`).join('');
+  }
+
+  function renderActivityFeed(){
+    const feed = document.getElementById('aff-activity-feed');
+    if(!feed) return;
+    if(!state.activityLog.length){
+      feed.innerHTML = `<div class="aff-feed-row"><div class="aff-feed-dot aff-dot-info"></div><div class="aff-feed-msg">System ready — awaiting first referral click</div><div class="aff-feed-time">now</div></div>`;
+      return;
+    }
+    const typeMap = { gen:'aff-dot-cyan', ref:'aff-dot-green', earn:'aff-dot-gold', comm:'aff-dot-violet', share:'aff-dot-info', click:'aff-dot-info', view:'aff-dot-info' };
+    feed.innerHTML = state.activityLog.slice(0,25).map(e=>`
+      <div class="aff-feed-row">
+        <div class="aff-feed-dot ${typeMap[e.type]||'aff-dot-info'}"></div>
+        <div class="aff-feed-msg">${esc(e.msg)}</div>
+        <div class="aff-feed-time">${e.time}</div>
       </div>`).join('');
   }
 
   function renderSourceBars(){
-    const total=Object.values(state.sourceCounts).reduce((a,b)=>a+b,0)||1;
-    const bars=document.querySelectorAll('#ref-source-bars .ref-bar-row');
-    const keys=['direct','twitter','telegram','whatsapp','other'];
+    const total = Object.values(state.sourceCounts).reduce((a,b)=>a+b,0)||1;
+    const keys  = ['direct','twitter','telegram','whatsapp','other'];
+    const bars  = document.querySelectorAll('#aff-source-bars .aff-bar-row');
     bars.forEach((row,i)=>{
-      const v=state.sourceCounts[keys[i]]||0;
-      const pct=Math.round(v/total*100);
-      const fill=row.querySelector('.ref-bar-fill');
-      const pctEl=row.querySelector('.ref-bar-pct');
-      if(fill) fill.style.width=pct+'%';
-      if(pctEl) pctEl.textContent=total>1?pct+'%':'—';
+      const v   = state.sourceCounts[keys[i]]||0;
+      const pct = Math.round(v/total*100);
+      const fill= row.querySelector('.aff-bar-fill');
+      const pctEl = row.querySelector('.aff-bar-pct');
+      if(fill)  fill.style.width = (total>1 ? pct : 0) + '%';
+      if(pctEl) pctEl.textContent = total>1 ? pct+'%' : '—';
     });
   }
 
-  function renderDevices(){
-    const total=Object.values(state.deviceCounts).reduce((a,b)=>a+b,0)||1;
-    ['desktop','mobile','tablet'].forEach(d=>{
-      const v=state.deviceCounts[d]||0;
-      const pct=Math.round(v/total*100);
-      const el=document.getElementById('dd-'+d);
-      const row=el&&el.closest('.ref-device-row');
-      if(el) el.textContent=total>1?pct+'%':'—';
-      const bar=row&&row.querySelector('.ref-device-fill');
-      if(bar) bar.style.width=pct+'%';
-    });
+  function renderTierProgress(){
+    const r = state.activeRefs;
+    let pct = 0;
+    if(r<5)       pct = (r/5)*25;
+    else if(r<20) pct = 25+(r-5)/15*25;
+    else if(r<50) pct = 50+(r-20)/30*25;
+    else          pct = 100;
+    const fill = document.getElementById('aff-tier-fill');
+    if(fill) fill.style.width = Math.min(100,pct).toFixed(1)+'%';
+    const next = r<5?5:r<20?20:r<50?50:null;
+    const nextEl = document.getElementById('aff-tier-next');
+    if(nextEl) nextEl.textContent = next ? `${next-r} more referral${next-r!==1?'s':''} to next tier` : '🏆 Max Tier Reached';
   }
 
-  function renderPayouts(){
-    const list=document.getElementById('ref-payout-list');
-    if(!list) return;
-    if(!state.payouts.length){
-      list.innerHTML='<div class="ref-payout-row"><span class="ref-payout-date">No payouts yet</span><span></span><span></span></div>';
-      return;
-    }
-    list.innerHTML=state.payouts.slice(0,5).map(p=>`
-      <div class="ref-payout-row">
-        <span class="ref-payout-date">${p.date}</span>
-        <span class="ref-payout-amt">$${p.amt}</span>
-        <span class="ref-payout-status ${p.status==='processed'?'rps-processed':'rps-pending'}">${p.status==='processed'?'Processed':'Pending'}</span>
-      </div>`).join('');
-  }
-
-  function getCurrentCampaignName(){
-    const el=document.getElementById('ref-campaign');
-    return (el&&el.value.trim().replace(/\s+/g,'-').toLowerCase())||'default';
-  }
-
-  // ── Public campaign actions ────────────────────────────────────
-  function loadCampaign(id){
-    const c=state.campaigns.find(x=>x.id===id);
-    if(!c) return;
-    const set=(el,v)=>{const d=document.getElementById(el);if(d)d.value=v};
-    set('ref-campaign',c.name);
-    set('ref-subid',c.subid||'');
-    set('utm-source',c.utm&&c.utm.src||'');
-    set('utm-medium',c.utm&&c.utm.med||'');
-    set('utm-content',c.utm&&c.utm.cnt||'');
-    generateLink();
-  }
-  function toggleCampaign(id){
-    const c=state.campaigns.find(x=>x.id===id);
-    if(c){ c.active=!c.active; save(); renderCampaigns(); }
-  }
-  function addCampaign(){
-    const name=prompt('Campaign name (e.g. reddit-post):','');
-    if(!name||!name.trim()) return;
-    const el=document.getElementById('ref-campaign');
-    if(el) el.value=name.trim();
-    generateLink();
-  }
-
-  // ── Init ───────────────────────────────────────────────────────
+  // ── Public API ────────────────────────────────────────────────
   function init(){
     load();
     detectIncoming();
+    collectPendingCommissions();  // collect any commissions queued from referred users
     renderAll();
-    logEvent('view', `Session started · User: ${state.userId} · Device: ${detectDevice()}`);
+    logEvent('view', `Affiliate session · ID: ${state.userId} · Device: ${detectDevice()}`);
     save();
-    // Animate bars in after a short delay
-    setTimeout(()=>{ renderSourceBars(); renderDevices(); }, 400);
   }
 
+  // Expose creditCommission so addTx can call it
   return {
-    init, generateLink, copyLink, share, downloadQR,
-    loadCampaign, toggleCampaign, addCampaign, simulateConversion,
-    // Expose for demo/testing
-    get state(){ return state; }
+    init, generateLink, copyLink, share,
+    creditCommission,
+    getState(){ return {...state}; },
+    get userId(){ return state.userId; },
+    get state()  { return state; },
+    // Legacy
+    loadCampaign(){ generateLink(); },
+    toggleCampaign(){},
+    addCampaign(){
+      const name = prompt('Campaign label (e.g. reddit-bio):','');
+      if(name && name.trim()){
+        const el = document.getElementById('aff-campaign');
+        if(el) el.value = name.trim();
+        generateLink();
+      }
+    },
+    simulateConversion(){
+      state.totalConversions++;
+      state.activeRefs++;
+      const comm = parseFloat((0.001+Math.random()*0.006).toFixed(6));
+      state.totalCommission = parseFloat((state.totalCommission + comm).toFixed(6));
+      state.totalEarned = state.totalCommission;
+      addPayoutRecord(comm);
+      logEvent('earn', `Referral conversion · +$${comm.toFixed(6)} commission`);
+      save(); renderAll();
+      if(window.toast) toast(`💰 Referral converted! +$${comm.toFixed(5)}`,'success');
+    }
   };
 })();
 
-// Global functions called by HTML onclick
+// ── Global shims for onclick handlers ───────────────────────────
 function refGenerateLink(){ REF.generateLink(); }
 function refCopyLink(){ REF.copyLink(); }
 function refShare(p){ REF.share(p); }
-function refDownloadQR(){ REF.downloadQR(); }
+function refDownloadQR(){ /* QR removed for performance */ }
 function refAddCampaign(){ REF.addCampaign(); }
-// Keep legacy compatibility
 function generateReferralLink(){ REF.generateLink(); }
 function copyReferralLink(){ REF.copyLink(); }
 
@@ -3737,18 +5040,17 @@ function init(){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
 else init();
 
-/* ── Performance: pause animations on off-screen ad slots ── */
+/* ── Performance: ad slots paused when off-screen (sweep shimmer only) ── */
 (function(){
   if(!window.IntersectionObserver)return;
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(el=>{
-      el.target.style.animationPlayState=el.isIntersecting?'running':'paused';
-      // Also pause children
+      const state=el.isIntersecting?'running':'paused';
       el.target.querySelectorAll('*').forEach(c=>{
-        if(c.style!==undefined)c.style.animationPlayState=el.isIntersecting?'running':'paused';
+        if(c.style!==undefined)c.style.animationPlayState=state;
       });
     });
-  },{rootMargin:'120px 0px'}); // start 120px before entering viewport
+  },{rootMargin:'120px 0px'});
   document.querySelectorAll('.rgb-ad,.rgb-ad-inline,.aads-neon-wrap').forEach(el=>obs.observe(el));
 })();
 
