@@ -5170,6 +5170,824 @@ input:focus,select:focus,textarea:focus{
   padding-bottom:110px;
 }
 </style>
+<!-- ═══════════════════════════════════════════════════════
+     PAYRO — PREMIUM COLOR SYSTEM v2.0
+     Futuristic · Addictive · Performance-Optimised
+     Color Psychology: Curiosity · Reward · Trust · Focus
+════════════════════════════════════════════════════════ -->
+<style>
+/* ════════════════════════════════════════════════
+   DESIGN TOKEN OVERRIDES — Premium Color System
+════════════════════════════════════════════════ */
+:root{
+  /* ── Primary Gold → Electric Amber-Gold
+     Psychology: Achievement, reward, excitement.
+     Slightly warmer & more saturated than before —
+     triggers dopamine "prize" association. ── */
+  --gold:#FFA827;
+  --gold2:#FFD84A;
+  --gold-g:rgba(255,168,39,0.32);
+  --gold-glow:0 0 18px rgba(255,168,39,0.55), 0 0 40px rgba(255,168,39,0.22);
+
+  /* ── Cyan → Neon Electric Cyan
+     Psychology: Tech trust, focus, clarity.
+     The sharper, more electric hue reads as
+     cutting-edge and premium. ── */
+  --cyan:#00EEFF;
+  --cyan2:#40F8FF;
+  --cyan-g:rgba(0,238,255,0.28);
+  --cyan-glow:0 0 18px rgba(0,238,255,0.5), 0 0 38px rgba(0,238,255,0.18);
+
+  /* ── Green → Neon Mint Green
+     Psychology: Reward, growth, money.
+     Neon mint > flat green — feels alive,
+     triggers "earning" emotion. ── */
+  --green:#00F0A0;
+  --green2:#30FFB8;
+  --green-g:rgba(0,240,160,0.28);
+  --green-glow:0 0 16px rgba(0,240,160,0.5), 0 0 34px rgba(0,240,160,0.16);
+
+  /* ── Violet → Electric Purple
+     Psychology: Luxury, mystery, exclusivity.
+     Brighter violet = premium gaming feel. ── */
+  --violet:#B855F7;
+  --violet2:#D08BFF;
+  --violet-g:rgba(184,85,247,0.28);
+  --violet-glow:0 0 18px rgba(184,85,247,0.5), 0 0 38px rgba(184,85,247,0.18);
+
+  /* ── Red → Neon Crimson ── */
+  --red:#FF3D60;
+  --red-g:rgba(255,61,96,0.25);
+
+  /* ── Amber ── */
+  --amber:#FFAD00;
+
+  /* ── Deep Space Backgrounds
+     More contrast between layers makes depth
+     pop — elements feel "lifted". ── */
+  --bg:#020410;
+  --bg1:#050918;
+  --bg2:#080E20;
+  --bg3:#0C1428;
+  --bg4:#111B32;
+
+  /* ── Glassmorphism — richer, more dramatic ── */
+  --glass:rgba(8,13,28,0.88);
+  --glass2:rgba(5,9,22,0.92);
+
+  /* ── Borders ── */
+  --bdr:rgba(255,168,39,0.18);
+  --bdr2:rgba(255,255,255,0.07);
+  --bdr-glow:rgba(255,168,39,0.35);
+  --bdr-cyan:rgba(0,238,255,0.22);
+
+  /* ── Card Shadows — multi-layer depth ── */
+  --card-sh:0 4px 6px rgba(0,0,0,0.4), 0 16px 40px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04);
+  --card-sh-gold:0 16px 48px rgba(0,0,0,0.65), 0 0 32px rgba(255,168,39,0.08), 0 0 0 1px rgba(255,168,39,0.12);
+
+  /* ── Text ── */
+  --txt:#F0F4FF;
+  --txt2:#7A8DB8;
+  --txt3:#35426A;
+}
+
+/* ════════════════════════════════════════════════
+   ELEVATED BACKGROUND — Aurora Depth System
+════════════════════════════════════════════════ */
+.bg-wrap::before{
+  background:radial-gradient(ellipse 70% 60% at 20% 20%, rgba(255,168,39,0.07), transparent 70%) !important;
+  width:1400px !important;
+  height:1400px !important;
+  animation:bgA 24s ease-in-out infinite alternate !important;
+}
+.bg-wrap::after{
+  background:radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,238,255,0.055), transparent 70%) !important;
+  animation:bgB 30s ease-in-out infinite alternate !important;
+}
+
+/* Third aurora orb — violet mid-center depth */
+.bg-wrap{
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(184,85,247,0.028), transparent 70%) !important;
+}
+
+/* Grid — slightly brighter, with cyan tint */
+.bg-grid{
+  background-image:
+    linear-gradient(rgba(0,238,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,168,39,0.025) 1px, transparent 1px) !important;
+  background-size:60px 60px !important;
+}
+
+/* ════════════════════════════════════════════════
+   NAVBAR — Frosted Glass Premium
+════════════════════════════════════════════════ */
+.navbar{
+  background:rgba(2,4,16,0.92) !important;
+  border-bottom:1px solid rgba(255,168,39,0.16) !important;
+  box-shadow:0 1px 0 rgba(255,168,39,0.08), 0 4px 24px rgba(0,0,0,0.5) !important;
+}
+
+/* Logo glow boost */
+.nav-logo{
+  background:linear-gradient(135deg, #FFA827, #FF7A00) !important;
+  box-shadow:0 4px 20px rgba(255,168,39,0.45), 0 0 40px rgba(255,168,39,0.2), inset 0 1px 0 rgba(255,255,255,0.25) !important;
+}
+
+/* Brand name gradient upgrade */
+.brand-name{
+  background:linear-gradient(90deg, #FFA827 0%, #FFD84A 50%, #FF9F00 100%) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+}
+.brand-name-wrap{
+  filter:drop-shadow(0 0 12px rgba(255,168,39,0.55)) !important;
+}
+
+/* Wallet pill — richer green glow */
+.wallet-pill{
+  background:linear-gradient(135deg, #00D688, #008C5A) !important;
+  box-shadow:0 4px 20px rgba(0,214,136,0.38), 0 0 32px rgba(0,214,136,0.14) !important;
+}
+.wallet-pill:hover{
+  box-shadow:0 8px 32px rgba(0,214,136,0.55), 0 0 48px rgba(0,214,136,0.22) !important;
+  transform:translateY(-2px) !important;
+}
+
+/* Hamburger button */
+.hbg{
+  border-color:rgba(255,168,39,0.14) !important;
+  background:rgba(255,168,39,0.06) !important;
+}
+.hbg:hover{
+  border-color:var(--gold) !important;
+  box-shadow:var(--gold-glow) !important;
+  background:rgba(255,168,39,0.12) !important;
+}
+
+/* ════════════════════════════════════════════════
+   GLASS CARDS — Premium Multi-Layer Depth
+════════════════════════════════════════════════ */
+.card{
+  background:rgba(8,14,30,0.86) !important;
+  border:1px solid rgba(255,168,39,0.13) !important;
+  box-shadow:var(--card-sh) !important;
+  backdrop-filter:blur(28px) saturate(1.8) !important;
+  -webkit-backdrop-filter:blur(28px) saturate(1.8) !important;
+}
+.card-inset{
+  background:rgba(0,0,0,0.38) !important;
+  border:1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* ════════════════════════════════════════════════
+   BALANCE HERO — Crown Jewel Component
+════════════════════════════════════════════════ */
+#payro-hdr{
+  background:linear-gradient(135deg, rgba(2,4,16,0.97) 0%, rgba(5,10,24,0.97) 100%) !important;
+  border-bottom:1px solid rgba(0,238,255,0.12) !important;
+  box-shadow:0 2px 0 rgba(0,238,255,0.06), 0 8px 32px rgba(0,0,0,0.5) !important;
+}
+
+/* ════════════════════════════════════════════════
+   BOTTOM NAVIGATION — Floating Glass Dock
+════════════════════════════════════════════════ */
+.bnav{
+  background:rgba(3,5,18,0.96) !important;
+  border-top:1px solid rgba(255,168,39,0.14) !important;
+  box-shadow:0 -1px 0 rgba(255,168,39,0.08), 0 -8px 40px rgba(0,0,0,0.6) !important;
+}
+.bnav-btn.active{
+  color:var(--gold) !important;
+}
+.bnav-btn.active .bnav-icon{
+  background:rgba(255,168,39,0.14) !important;
+  box-shadow:0 0 18px rgba(255,168,39,0.3) !important;
+}
+
+/* ════════════════════════════════════════════════
+   SECTION HEADER ICONS — Vibrant Gradient Chips
+════════════════════════════════════════════════ */
+.si-gold{
+  background:linear-gradient(135deg, rgba(255,168,39,0.22), rgba(255,168,39,0.06)) !important;
+  box-shadow:0 0 16px rgba(255,168,39,0.2) !important;
+  color:var(--gold) !important;
+}
+.si-cyan{
+  background:linear-gradient(135deg, rgba(0,238,255,0.22), rgba(0,238,255,0.06)) !important;
+  box-shadow:0 0 16px rgba(0,238,255,0.2) !important;
+  color:var(--cyan) !important;
+}
+.si-green{
+  background:linear-gradient(135deg, rgba(0,240,160,0.22), rgba(0,240,160,0.06)) !important;
+  box-shadow:0 0 16px rgba(0,240,160,0.2) !important;
+  color:var(--green) !important;
+}
+.si-violet{
+  background:linear-gradient(135deg, rgba(184,85,247,0.22), rgba(184,85,247,0.06)) !important;
+  box-shadow:0 0 16px rgba(184,85,247,0.2) !important;
+  color:var(--violet) !important;
+}
+.si-red{
+  background:linear-gradient(135deg, rgba(255,61,96,0.22), rgba(255,61,96,0.06)) !important;
+  box-shadow:0 0 16px rgba(255,61,96,0.2) !important;
+  color:var(--red) !important;
+}
+
+/* ════════════════════════════════════════════════
+   GEO / HERO PANEL — Aurora Accent Strip
+════════════════════════════════════════════════ */
+.geo-panel-inner::after{
+  background:linear-gradient(90deg, transparent, rgba(255,168,39,0.045)) !important;
+}
+.geo-ey{
+  color:var(--gold) !important;
+  text-shadow:0 0 14px rgba(255,168,39,0.6) !important;
+}
+.geo-h1 em{
+  background:linear-gradient(90deg, #FFA827, #FFD84A, #FFAA00) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+  filter:drop-shadow(0 0 12px rgba(255,168,39,0.65)) !important;
+}
+
+/* Geo stat cards */
+.gs{
+  background:rgba(12,20,40,0.8) !important;
+  border:1px solid rgba(255,255,255,0.07) !important;
+  transition:border-color .25s, box-shadow .25s !important;
+}
+.gs:hover{
+  border-color:rgba(255,168,39,0.28) !important;
+  box-shadow:0 0 20px rgba(255,168,39,0.1) !important;
+}
+.live-dot{
+  background:var(--green) !important;
+  box-shadow:0 0 12px var(--green), 0 0 24px rgba(0,240,160,0.3) !important;
+}
+
+/* ════════════════════════════════════════════════
+   SPIN COIN — More Electric Gold
+════════════════════════════════════════════════ */
+.spin3d-coin{
+  background:conic-gradient(#FFA827 0deg,#FFD84A 45deg,#C87000 90deg,#FFA827 135deg,#FFE060 180deg,#C87000 225deg,#FFA827 270deg,#FFD84A 315deg,#C87000 360deg) !important;
+  box-shadow:0 0 30px rgba(255,168,39,0.9), 0 0 60px rgba(255,168,39,0.4), 0 0 100px rgba(255,168,39,0.15), inset 0 2px 4px rgba(255,255,255,0.55), inset 0 -2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* ════════════════════════════════════════════════
+   PLATFORM STATS — Number Glow Boost
+════════════════════════════════════════════════ */
+.pstat-val{
+  text-shadow:0 0 14px rgba(255,168,39,0.4), 0 0 30px rgba(255,168,39,0.15) !important;
+}
+.tup{
+  background:rgba(0,240,160,0.12) !important;
+  color:var(--green) !important;
+  box-shadow:0 0 10px rgba(0,240,160,0.12) !important;
+}
+
+/* ════════════════════════════════════════════════
+   GAMES HUB FRAME — Iridescent RGB Border
+════════════════════════════════════════════════ */
+.hub-rgb-frame::before{
+  background:linear-gradient(135deg,
+    rgba(0,238,255,0.22) 0%,
+    rgba(255,168,39,0.18) 35%,
+    rgba(184,85,247,0.14) 65%,
+    rgba(0,238,255,0.12) 100%) !important;
+}
+.hub-rgb-frame::after{
+  background:var(--bg1) !important;
+}
+.hub-inner{
+  background:rgba(6,10,24,0.9) !important;
+}
+
+/* Hub title gradient */
+.hub-ttl{
+  background:linear-gradient(90deg, #FFA827 0%, #FFE060 40%, #00EEFF 100%) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+  filter:drop-shadow(0 0 10px rgba(255,168,39,0.4)) !important;
+}
+.hub-eyebrow{
+  text-shadow:0 0 14px rgba(255,168,39,0.7) !important;
+}
+
+/* Hub tabs */
+.hub-tab.tab-spin-active{
+  border-color:var(--gold) !important;
+  color:var(--gold) !important;
+  background:rgba(255,168,39,0.1) !important;
+  box-shadow:0 0 24px rgba(255,168,39,0.2), inset 0 0 12px rgba(255,168,39,0.06) !important;
+}
+.hub-tab.tab-mines-active{
+  border-color:var(--red) !important;
+  color:var(--red) !important;
+  background:rgba(255,61,96,0.1) !important;
+  box-shadow:0 0 24px rgba(255,61,96,0.2), inset 0 0 12px rgba(255,61,96,0.06) !important;
+}
+.hub-tab:hover{
+  border-color:rgba(255,168,39,0.3) !important;
+  color:var(--txt) !important;
+  background:rgba(255,168,39,0.05) !important;
+}
+
+/* ════════════════════════════════════════════════
+   SPIN WHEEL BUTTONS — High-Impact CTA
+════════════════════════════════════════════════ */
+.watch-btn{
+  background:linear-gradient(135deg, #FFA827 0%, #FF7B00 60%, #C25A00 100%) !important;
+  box-shadow:0 6px 24px rgba(255,168,39,0.4), 0 0 40px rgba(255,168,39,0.16), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+  position:relative;
+  overflow:hidden;
+}
+.watch-btn::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 55%);
+  pointer-events:none;
+  border-radius:inherit;
+}
+.watch-btn:hover:not(:disabled){
+  box-shadow:0 10px 36px rgba(255,168,39,0.6), 0 0 60px rgba(255,168,39,0.25) !important;
+  transform:translateY(-3px) scale(1.01) !important;
+}
+
+.spin-btn{
+  background:linear-gradient(135deg, #00EEFF 0%, #0094A8 60%, #006070 100%) !important;
+  box-shadow:0 6px 24px rgba(0,238,255,0.38), 0 0 40px rgba(0,238,255,0.14), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+  position:relative;overflow:hidden;
+}
+.spin-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.15) 0%,transparent 55%);
+  pointer-events:none;border-radius:inherit;
+}
+.spin-btn:hover:not(:disabled){
+  box-shadow:0 10px 36px rgba(0,238,255,0.55), 0 0 60px rgba(0,238,255,0.22) !important;
+  transform:translateY(-3px) scale(1.01) !important;
+}
+
+/* Token dots */
+.tdot.filled{
+  background:linear-gradient(90deg, #FFA827, #FFD84A) !important;
+  border-color:var(--gold) !important;
+  box-shadow:0 0 14px rgba(255,168,39,0.5), 0 0 28px rgba(255,168,39,0.2) !important;
+}
+
+/* ════════════════════════════════════════════════
+   FAUCET — Pulse + Timer Colors
+════════════════════════════════════════════════ */
+.faucet-big-icon{
+  background:radial-gradient(circle, rgba(255,168,39,0.28), rgba(255,168,39,0.06)) !important;
+  border:1.5px solid rgba(255,168,39,0.45) !important;
+  box-shadow:0 0 40px rgba(255,168,39,0.3), 0 0 80px rgba(255,168,39,0.12) !important;
+}
+@keyframes faucetPulse{
+  0%,100%{box-shadow:0 0 40px rgba(255,168,39,0.3), 0 0 80px rgba(255,168,39,0.12)}
+  50%{box-shadow:0 0 60px rgba(255,168,39,0.6), 0 0 120px rgba(255,168,39,0.25), 0 0 160px rgba(255,168,39,0.08)}
+}
+.faucet-big-title{
+  background:linear-gradient(90deg, #FFA827, #FFD84A) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+}
+.fvt-val{
+  color:var(--cyan) !important;
+  text-shadow:0 0 24px rgba(0,238,255,0.7), 0 0 50px rgba(0,238,255,0.28) !important;
+}
+
+/* Faucet verify / claim buttons */
+.faucet-verify-btn{
+  background:linear-gradient(135deg, #00EEFF, #006070) !important;
+  box-shadow:0 5px 20px rgba(0,238,255,0.36) !important;
+}
+.faucet-verify-btn:hover:not(:disabled){
+  box-shadow:0 8px 32px rgba(0,238,255,0.55) !important;
+  transform:translateY(-2px) !important;
+}
+.faucet-btn{
+  background:linear-gradient(135deg, #FFA827 0%, #FF7B00 60%, #B85A00 100%) !important;
+  box-shadow:0 7px 24px rgba(255,168,39,0.42) !important;
+}
+.faucet-btn:hover:not(:disabled){
+  box-shadow:0 10px 36px rgba(255,168,39,0.62) !important;
+  transform:translateY(-3px) !important;
+}
+
+/* ════════════════════════════════════════════════
+   TASK CARDS — Interactive Depth
+════════════════════════════════════════════════ */
+.task-card{
+  background:rgba(10,16,32,0.82) !important;
+  border:1px solid rgba(255,255,255,0.065) !important;
+  transition:border-color .22s, box-shadow .22s, transform .22s !important;
+}
+.task-card:hover:not(.done-t){
+  border-color:rgba(255,168,39,0.3) !important;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4), 0 0 24px rgba(255,168,39,0.1) !important;
+  transform:translateY(-3px) !important;
+}
+.task-rew{
+  color:var(--green) !important;
+  text-shadow:0 0 10px rgba(0,240,160,0.5) !important;
+}
+.ts-avail{
+  background:rgba(0,240,160,0.12) !important;
+  color:var(--green) !important;
+  box-shadow:0 0 10px rgba(0,240,160,0.15) !important;
+}
+
+/* ════════════════════════════════════════════════
+   PROMO CODE CENTER — Violet Premium
+════════════════════════════════════════════════ */
+.promo-eyebrow{
+  background:rgba(184,85,247,0.12) !important;
+  border-color:rgba(184,85,247,0.3) !important;
+  box-shadow:0 0 18px rgba(184,85,247,0.18) !important;
+}
+.promo-eyebrow-dot{
+  background:var(--violet) !important;
+  box-shadow:0 0 12px var(--violet), 0 0 24px rgba(184,85,247,0.3) !important;
+}
+.promo-input-wrap:focus-within{
+  border-color:rgba(184,85,247,0.7) !important;
+  box-shadow:0 0 0 3px rgba(184,85,247,0.14), 0 0 28px rgba(184,85,247,0.22) !important;
+}
+.promo-redeem-btn{
+  background:linear-gradient(135deg, #A040E8, #5C1A9E) !important;
+  box-shadow:0 6px 28px rgba(184,85,247,0.42), inset 0 1px 0 rgba(255,255,255,0.18) !important;
+}
+.promo-redeem-btn:hover:not(:disabled){
+  box-shadow:0 12px 42px rgba(184,85,247,0.62), 0 0 60px rgba(184,85,247,0.2) !important;
+  transform:translateY(-2px) scale(1.01) !important;
+}
+.promo-reward-card{
+  background:linear-gradient(135deg, rgba(184,85,247,0.1), rgba(184,85,247,0.03)) !important;
+  border:1px solid rgba(184,85,247,0.22) !important;
+  box-shadow:0 0 30px rgba(184,85,247,0.08) !important;
+}
+.prc-amount{
+  background:linear-gradient(135deg, #D08BFF, #A040E8) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+  filter:drop-shadow(0 0 16px rgba(184,85,247,0.55)) !important;
+}
+
+/* ════════════════════════════════════════════════
+   LEADERBOARD — Rank Glow Enhancement
+════════════════════════════════════════════════ */
+.lb-row{
+  background:rgba(10,16,32,0.8) !important;
+  border:1px solid rgba(255,255,255,0.06) !important;
+  transition:border-color .22s, transform .22s, box-shadow .22s !important;
+}
+.lb-row:hover{
+  border-color:rgba(255,168,39,0.25) !important;
+  box-shadow:0 0 20px rgba(255,168,39,0.08) !important;
+  transform:translateX(4px) !important;
+}
+.lb-row.lb-you{
+  background:rgba(255,168,39,0.07) !important;
+  border-color:rgba(255,168,39,0.3) !important;
+  box-shadow:0 0 24px rgba(255,168,39,0.1), inset 0 0 20px rgba(255,168,39,0.03) !important;
+}
+.lb-rank.rk-gold{
+  color:var(--gold) !important;
+  text-shadow:0 0 12px rgba(255,168,39,0.7) !important;
+}
+.lb-amt{
+  color:var(--green) !important;
+  text-shadow:0 0 10px rgba(0,240,160,0.45) !important;
+}
+
+/* ════════════════════════════════════════════════
+   TIER BADGE GRADIENTS
+════════════════════════════════════════════════ */
+.t1b{
+  background:linear-gradient(90deg, #FF9F1C, #FF3D60) !important;
+  box-shadow:0 2px 14px rgba(255,159,28,0.4) !important;
+}
+.t2b{
+  background:linear-gradient(90deg, #4A90FF, #B855F7) !important;
+  box-shadow:0 2px 14px rgba(74,144,255,0.4) !important;
+}
+.t3b{
+  background:linear-gradient(90deg, #00F0A0, #00CCCC) !important;
+  box-shadow:0 2px 14px rgba(0,240,160,0.4) !important;
+}
+.t-rate{
+  color:var(--green) !important;
+  text-shadow:0 0 10px rgba(0,240,160,0.5) !important;
+}
+
+/* ════════════════════════════════════════════════
+   AD MODAL PROGRESS RINGS
+════════════════════════════════════════════════ */
+.ar-fill{
+  stroke:var(--gold) !important;
+  filter:drop-shadow(0 0 8px rgba(255,168,39,0.8)) !important;
+}
+.ar-num{
+  color:var(--gold) !important;
+  text-shadow:0 0 16px rgba(255,168,39,0.8) !important;
+}
+.pmb-ar-fill{
+  stroke:var(--violet) !important;
+  filter:drop-shadow(0 0 8px rgba(184,85,247,0.8)) !important;
+}
+.pmb-ring-num{
+  color:var(--violet) !important;
+  text-shadow:0 0 16px rgba(184,85,247,0.8) !important;
+}
+.dr-fill{
+  filter:drop-shadow(0 0 10px rgba(184,85,247,0.8)) !important;
+}
+.dr-num{
+  color:var(--violet) !important;
+  text-shadow:0 0 16px rgba(184,85,247,0.9) !important;
+}
+
+/* ════════════════════════════════════════════════
+   PROMO MODAL HEADER
+════════════════════════════════════════════════ */
+.promo-modal-box{
+  border:1px solid rgba(184,85,247,0.35) !important;
+  box-shadow:0 0 80px rgba(184,85,247,0.3), 0 0 160px rgba(184,85,247,0.12), var(--card-sh) !important;
+}
+.pmb-header{
+  background:linear-gradient(135deg, rgba(184,85,247,0.18), rgba(184,85,247,0.05)) !important;
+}
+.pmb-icon{
+  background:linear-gradient(135deg, #A040E8, #5C1A9E) !important;
+  box-shadow:0 0 28px rgba(184,85,247,0.5) !important;
+}
+.pmb-close-btn{
+  background:linear-gradient(135deg, #A040E8, #5C1A9E) !important;
+  box-shadow:0 5px 24px rgba(184,85,247,0.44) !important;
+}
+.pmb-close-btn:hover:not(:disabled){
+  box-shadow:0 8px 36px rgba(184,85,247,0.64) !important;
+}
+
+/* ════════════════════════════════════════════════
+   DRAWER (SIDE MENU) — Deeper Glass
+════════════════════════════════════════════════ */
+.drw{
+  background:rgba(5,8,20,0.97) !important;
+  border-left:1px solid rgba(255,168,39,0.14) !important;
+  box-shadow:-8px 0 60px rgba(0,0,0,0.7) !important;
+}
+.drw-item:hover{
+  background:rgba(255,168,39,0.06) !important;
+  border-left-color:var(--gold) !important;
+  color:var(--txt) !important;
+}
+.drw-item .di{
+  background:rgba(255,168,39,0.1) !important;
+  color:var(--gold) !important;
+}
+.drw-stats{
+  background:rgba(255,168,39,0.05) !important;
+  border:1px solid rgba(255,168,39,0.14) !important;
+}
+
+/* ════════════════════════════════════════════════
+   RGB AD SLOTS — More Electric Cyan
+════════════════════════════════════════════════ */
+.rgb-ad{
+  border-color:rgba(0,238,255,0.38) !important;
+  box-shadow:0 0 12px rgba(0,238,255,0.14), 0 0 30px rgba(0,238,255,0.06) !important;
+}
+.rgb-ad-inner{
+  background:linear-gradient(160deg, #0A1028 0%, #050918 100%) !important;
+}
+.rgb-ad-inline{
+  border-color:rgba(0,238,255,0.32) !important;
+  box-shadow:0 0 10px rgba(0,238,255,0.12) !important;
+}
+.rgb-ad-inline-inner{
+  background:linear-gradient(160deg, #0A1028, #050918) !important;
+}
+
+/* ════════════════════════════════════════════════
+   SPONSOR BANNERS — Polished Strips
+════════════════════════════════════════════════ */
+.sponsor-banner-top,
+.sponsor-banner-bottom{
+  background:linear-gradient(135deg, #08102A, #040A1A) !important;
+  border-color:rgba(0,238,255,0.2) !important;
+}
+
+/* ════════════════════════════════════════════════
+   FAUCET TIMER DISPLAY
+════════════════════════════════════════════════ */
+.faucet-timer-wrap{
+  background:rgba(5,10,24,0.9) !important;
+  border:1px solid rgba(0,238,255,0.14) !important;
+  box-shadow:inset 0 0 30px rgba(0,238,255,0.04) !important;
+}
+
+/* ════════════════════════════════════════════════
+   DAILY REWARD — Multi-Color Gradient Title
+════════════════════════════════════════════════ */
+.daily-title{
+  background:linear-gradient(90deg, #FFA827, #B855F7) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+}
+.daily-reward-badge{
+  background:linear-gradient(135deg, rgba(184,85,247,0.2), rgba(255,168,39,0.14)) !important;
+  border:1px solid rgba(184,85,247,0.4) !important;
+  color:var(--gold) !important;
+  text-shadow:0 0 14px rgba(255,168,39,0.6) !important;
+  box-shadow:0 0 24px rgba(184,85,247,0.2) !important;
+}
+
+/* ════════════════════════════════════════════════
+   SECTION HEADER BUTTONS
+════════════════════════════════════════════════ */
+.sh-btn{
+  background:rgba(255,168,39,0.08) !important;
+  border:1px solid rgba(255,168,39,0.18) !important;
+  color:var(--gold) !important;
+}
+.sh-btn:hover{
+  background:rgba(255,168,39,0.16) !important;
+  box-shadow:0 0 16px rgba(255,168,39,0.22) !important;
+}
+
+/* ════════════════════════════════════════════════
+   ADBLOCK GATE & VPN SCREENS — Polished Modals
+════════════════════════════════════════════════ */
+.adblock-gate{
+  background:rgba(2,4,16,0.97) !important;
+}
+.ab-icon{
+  background:radial-gradient(circle, rgba(255,168,39,0.2), rgba(255,168,39,0.05)) !important;
+  box-shadow:0 0 40px rgba(255,168,39,0.24) !important;
+}
+.ab-retry{
+  background:linear-gradient(135deg, #FFA827, #C07000) !important;
+  box-shadow:0 6px 24px rgba(255,168,39,0.4) !important;
+}
+.ab-retry:hover{
+  box-shadow:0 10px 36px rgba(255,168,39,0.6) !important;
+}
+.vpn-icon{
+  background:radial-gradient(circle, rgba(255,61,96,0.22), rgba(255,61,96,0.05)) !important;
+  box-shadow:0 0 50px rgba(255,61,96,0.24) !important;
+}
+.vpn-lock-timer{
+  text-shadow:0 0 20px rgba(255,61,96,0.6) !important;
+}
+
+/* ════════════════════════════════════════════════
+   SCROLLBAR — Premium Gold Accent
+════════════════════════════════════════════════ */
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg, rgba(255,168,39,0.5), rgba(255,168,39,0.25)) !important;
+  border-radius:99px !important;
+  box-shadow:0 0 8px rgba(255,168,39,0.3) !important;
+}
+::-webkit-scrollbar-track{
+  background:rgba(5,9,24,0.8) !important;
+}
+
+/* ════════════════════════════════════════════════
+   ACTIVITY FEED ROWS
+════════════════════════════════════════════════ */
+.v3-act-row{
+  transition:background .2s !important;
+}
+.v3-act-row:hover{
+  background:rgba(255,168,39,0.04) !important;
+}
+.v3-act-icon{
+  background:rgba(255,255,255,0.05) !important;
+}
+
+/* ════════════════════════════════════════════════
+   BALANCE HERO BUMP ANIMATION — Brighter Flash
+════════════════════════════════════════════════ */
+@keyframes bump{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.12);color:#FFD84A;text-shadow:0 0 28px rgba(255,216,74,0.9),0 0 50px rgba(255,168,39,0.5)}
+  100%{transform:scale(1)}
+}
+
+/* ════════════════════════════════════════════════
+   MINES GAME — Grid Depth
+════════════════════════════════════════════════ */
+.mine-cell{
+  transition:transform .18s, box-shadow .18s, border-color .18s !important;
+}
+.mine-cell:hover:not(.revealed):not(.mine-cell-boom){
+  transform:scale(1.06) !important;
+  box-shadow:0 0 18px rgba(255,168,39,0.25), 0 4px 16px rgba(0,0,0,0.4) !important;
+  border-color:rgba(255,168,39,0.4) !important;
+  z-index:2 !important;
+}
+
+/* ════════════════════════════════════════════════
+   PARTNER / REFERRAL — Cyan Accent Theme
+════════════════════════════════════════════════ */
+.partner-hero-card,
+.ref-link-card{
+  background:linear-gradient(135deg, rgba(0,238,255,0.07), rgba(0,238,255,0.02)) !important;
+  border:1px solid rgba(0,238,255,0.18) !important;
+  box-shadow:0 0 40px rgba(0,238,255,0.06) !important;
+}
+
+/* ════════════════════════════════════════════════
+   WALLET HERO
+════════════════════════════════════════════════ */
+.wallet-hero{
+  background:linear-gradient(135deg, rgba(0,240,160,0.1), rgba(0,240,160,0.03)) !important;
+  border:1px solid rgba(0,240,160,0.2) !important;
+  box-shadow:0 0 40px rgba(0,240,160,0.08) !important;
+}
+
+/* ════════════════════════════════════════════════
+   GLOBAL HOVER MICRO-INTERACTION — All interactive elements
+════════════════════════════════════════════════ */
+button:not(:disabled):not([style*="cursor:default"]):hover{
+  filter:brightness(1.06) !important;
+}
+
+/* ════════════════════════════════════════════════
+   GENERAL CARD IMPROVEMENTS
+════════════════════════════════════════════════ */
+.faucet-card,
+.token-bar,
+.odds-tbl{
+  background:rgba(10,16,32,0.8) !important;
+  border-color:rgba(255,255,255,0.07) !important;
+}
+
+/* Section card inset grids */
+.tier-tbl{
+  border-color:rgba(255,255,255,0.07) !important;
+}
+.tier-row.th{
+  background:rgba(12,20,40,0.85) !important;
+}
+.tier-row.active-t{
+  background:rgba(255,168,39,0.05) !important;
+}
+
+/* ════════════════════════════════════════════════
+   NAV ITEMS
+════════════════════════════════════════════════ */
+.nav-ibtn{
+  border-color:rgba(255,255,255,0.07) !important;
+  background:rgba(255,168,39,0.05) !important;
+}
+.nav-ibtn:hover{
+  border-color:rgba(255,168,39,0.28) !important;
+  box-shadow:0 0 16px rgba(255,168,39,0.2) !important;
+  background:rgba(255,168,39,0.1) !important;
+  color:var(--gold) !important;
+}
+
+/* ════════════════════════════════════════════════
+   PROMO HISTORY
+════════════════════════════════════════════════ */
+.ph-dot{
+  background:var(--green) !important;
+  box-shadow:0 0 8px var(--green), 0 0 16px rgba(0,240,160,0.25) !important;
+}
+.ph-reward{
+  color:var(--green) !important;
+  text-shadow:0 0 8px rgba(0,240,160,0.4) !important;
+}
+
+/* ════════════════════════════════════════════════
+   VPN/ADBLOCK OVERLAY SCREENS
+════════════════════════════════════════════════ */
+.vpn-screen{
+  background:rgba(2,4,16,0.99) !important;
+}
+
+/* ════════════════════════════════════════════════
+   NEON SHIMMER KEYFRAME BOOST
+════════════════════════════════════════════════ */
+@keyframes cyanPulse{
+  0%,100%{box-shadow:0 0 8px 2px rgba(0,238,255,.38), 0 0 18px 3px rgba(0,238,255,.14)}
+  50%    {box-shadow:0 0 14px 3px rgba(0,238,255,.58), 0 0 28px 5px rgba(0,238,255,.22)}
+}
+@keyframes ldPulse{
+  0%,100%{opacity:1;box-shadow:0 0 12px currentColor}
+  50%{opacity:.35;box-shadow:0 0 4px currentColor}
+}
+</style>
 </head>
 <body>
 
@@ -7381,6 +8199,218 @@ input:focus,select:focus,textarea:focus{
 
     </div><!-- /games-section -->
 
+    <!-- ╔══════════════════════════════════════════════════════════════╗
+         ║  PREDICTION TRADING SYSTEM — SPA Section                    ║
+         ╚══════════════════════════════════════════════════════════════╝ -->
+    <div class="spa-section" id="trade-section" style="display:none;padding:0;overflow-y:auto;">
+
+      <!-- Risk Banner -->
+      <div class="pt-risk-banner">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r=".8" fill="currentColor" stroke="none"/></svg>
+        <span><strong>Risk Warning:</strong> Trading involves risk. Analyze the market carefully before placing trades. Only trade what you can afford to lose.</span>
+      </div>
+
+      <div class="pt-root">
+
+        <!-- ═══ HEADER ═══ -->
+        <div class="pt-header">
+          <div class="pt-header-left">
+            <div class="pt-live-pill"><span class="pt-live-ping"></span>LIVE MARKET</div>
+            <div class="pt-header-title">Prediction Trading</div>
+          </div>
+          <div class="pt-header-bal">
+            <div class="pt-hb-lbl">Balance</div>
+            <div class="pt-hb-val" id="pt-hb-val">$0.00000</div>
+          </div>
+        </div>
+
+        <!-- ═══ ASSET TABS ═══ -->
+        <div class="pt-asset-strip">
+          <button class="pt-asset-btn pt-asset-active" id="pt-btn-PYO" onclick="ptPickAsset('PYO')">
+            <span class="pt-ab-dot" style="background:#00F0A0;box-shadow:0 0 6px #00F0A0"></span>
+            <span class="pt-ab-sym">PYO</span>
+            <span class="pt-ab-name">PayRo Coin</span>
+          </button>
+          <button class="pt-asset-btn" id="pt-btn-VRT" onclick="ptPickAsset('VRT')">
+            <span class="pt-ab-dot" style="background:#B855F7;box-shadow:0 0 6px #B855F7"></span>
+            <span class="pt-ab-sym">VRT</span>
+            <span class="pt-ab-name">Vortex Token</span>
+          </button>
+          <!-- Live price display -->
+          <div class="pt-price-box">
+            <div class="pt-price-val" id="pt-price-val">$0.00000</div>
+            <div class="pt-price-chg" id="pt-price-chg">+0.00%</div>
+          </div>
+        </div>
+
+        <!-- ═══ CHART CARD ═══ -->
+        <div class="pt-chart-card">
+          <div class="pt-chart-top-bar">
+            <div class="pt-chart-title-row">
+              <span class="pt-chart-pair" id="pt-chart-pair">PYO / USD</span>
+              <span class="pt-chart-tf">1s · 5min</span>
+            </div>
+            <div class="pt-chart-ohlc" id="pt-chart-ohlc">O — H — L — C —</div>
+          </div>
+
+          <!-- Canvas -->
+          <div class="pt-chart-body" id="pt-chart-body">
+            <canvas id="pt-canvas" class="pt-canvas"></canvas>
+            <!-- Zoom/Pan overlay hint -->
+            <div class="pt-chart-hint" id="pt-chart-hint">Pinch to zoom · Drag to pan</div>
+          </div>
+
+          <!-- MA Legend + Volume -->
+          <div class="pt-chart-footer">
+            <span class="pt-legend-item"><i class="pt-leg-line" style="background:#FFA827"></i>MA7</span>
+            <span class="pt-legend-item"><i class="pt-leg-line" style="background:#00EEFF"></i>MA20</span>
+            <span class="pt-legend-sep">|</span>
+            <span class="pt-legend-vol" id="pt-legend-vol">Vol: —</span>
+            <span class="pt-legend-sep" style="margin-left:auto">|</span>
+            <span class="pt-chart-hint-sm" id="pt-drag-hint">← drag chart →</span>
+          </div>
+        </div>
+
+        <!-- ═══ TRADE CARD ═══ -->
+        <div class="pt-trade-card">
+
+          <!-- Amount row -->
+          <div class="pt-amount-row">
+            <div class="pt-ar-label">Trade Amount (USD)</div>
+            <div class="pt-ar-input-wrap">
+              <span class="pt-ar-sym">$</span>
+              <input class="pt-ar-input" id="pt-bet-input" type="number" min="0.0001" step="0.0001" value="0.0010" autocomplete="off">
+            </div>
+            <div class="pt-quick-row">
+              <button onclick="ptQ(0.0001)">MIN</button>
+              <button onclick="ptQ(0.001)">$0.001</button>
+              <button onclick="ptQ(0.005)">$0.005</button>
+              <button onclick="ptQ(0.01)">$0.010</button>
+              <button onclick="ptHalf()">½</button>
+              <button onclick="ptDouble()">2×</button>
+            </div>
+          </div>
+
+          <!-- Payout preview -->
+          <div class="pt-payout-strip">
+            <div class="pt-ps-item">
+              <div class="pt-ps-lbl">Stake</div>
+              <div class="pt-ps-val" id="pt-ps-stake">$0.0010</div>
+            </div>
+            <div class="pt-ps-arrow">⟶</div>
+            <div class="pt-ps-item">
+              <div class="pt-ps-lbl">Win Payout ×1.8</div>
+              <div class="pt-ps-val" id="pt-ps-payout" style="color:var(--pt-green)">$0.0018</div>
+            </div>
+            <div class="pt-ps-item">
+              <div class="pt-ps-lbl">Duration</div>
+              <div class="pt-ps-val">5 min</div>
+            </div>
+          </div>
+
+          <!-- UP / DOWN Buttons -->
+          <div class="pt-dir-row" id="pt-dir-row">
+            <button class="pt-btn-up" id="pt-btn-up" onclick="ptTrade('UP')">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+              <span class="pt-dir-label">UP</span>
+              <span class="pt-dir-sub">Price rises</span>
+            </button>
+            <button class="pt-btn-down" id="pt-btn-down" onclick="ptTrade('DOWN')">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              <span class="pt-dir-label">DOWN</span>
+              <span class="pt-dir-sub">Price falls</span>
+            </button>
+          </div>
+
+          <!-- Active Trade Panel (hidden until trade placed) -->
+          <div class="pt-active-panel" id="pt-active-panel" style="display:none">
+            <div class="pt-ap-header">
+              <div class="pt-ap-live-badge"><span class="pt-ap-dot"></span>TRADE LIVE</div>
+              <div class="pt-ap-direction" id="pt-ap-dir">▲ UP</div>
+            </div>
+
+            <!-- Countdown timer -->
+            <div class="pt-timer-block">
+              <svg class="pt-timer-ring" width="110" height="110" viewBox="0 0 110 110">
+                <circle class="pt-ring-bg" cx="55" cy="55" r="48"/>
+                <circle class="pt-ring-fill" id="pt-ring" cx="55" cy="55" r="48" style="stroke-dashoffset:301.6"/>
+              </svg>
+              <div class="pt-timer-inner">
+                <div class="pt-timer-val" id="pt-timer-val">5:00</div>
+                <div class="pt-timer-sub">remaining</div>
+              </div>
+            </div>
+
+            <!-- Live trade stats -->
+            <div class="pt-ap-stats">
+              <div class="pt-ap-stat">
+                <div class="pt-aps-lbl">Entry Price</div>
+                <div class="pt-aps-val" id="pt-ap-entry">—</div>
+              </div>
+              <div class="pt-ap-stat">
+                <div class="pt-aps-lbl">Current Price</div>
+                <div class="pt-aps-val" id="pt-ap-cur">—</div>
+              </div>
+              <div class="pt-ap-stat">
+                <div class="pt-aps-lbl">Position</div>
+                <div class="pt-aps-val" id="pt-ap-pos">—</div>
+              </div>
+              <div class="pt-ap-stat">
+                <div class="pt-aps-lbl">Potential Win</div>
+                <div class="pt-aps-val" id="pt-ap-win" style="color:var(--pt-green)">$0.00</div>
+              </div>
+            </div>
+
+            <!-- Early exit -->
+            <div class="pt-early-row">
+              <span class="pt-early-txt">Exit now → get back <strong id="pt-early-amt">$0.00</strong></span>
+              <button class="pt-early-btn" onclick="ptEarlyExit()">Exit Early (50%)</button>
+            </div>
+          </div>
+
+        </div><!-- /pt-trade-card -->
+
+        <!-- ═══ HISTORY ═══ -->
+        <div class="pt-history-card">
+          <div class="pt-hc-header">
+            <div class="pt-hc-title">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Trade History
+            </div>
+            <span class="pt-hc-count" id="pt-hc-count">0 trades</span>
+          </div>
+          <div class="pt-hc-list" id="pt-hc-list">
+            <div class="pt-hc-empty">No trades placed yet — be the first to trade!</div>
+          </div>
+        </div>
+
+        <!-- ═══ STATS BAR ═══ -->
+        <div class="pt-stats-bar">
+          <div class="pt-sb-chip">
+            <div class="pt-sb-val" id="pts-total">0</div>
+            <div class="pt-sb-lbl">Total</div>
+          </div>
+          <div class="pt-sb-chip">
+            <div class="pt-sb-val" id="pts-wins" style="color:var(--pt-green)">0</div>
+            <div class="pt-sb-lbl">Wins</div>
+          </div>
+          <div class="pt-sb-chip">
+            <div class="pt-sb-val" id="pts-losses" style="color:var(--pt-red)">0</div>
+            <div class="pt-sb-lbl">Losses</div>
+          </div>
+          <div class="pt-sb-chip">
+            <div class="pt-sb-val" id="pts-wr">0%</div>
+            <div class="pt-sb-lbl">Win Rate</div>
+          </div>
+          <div class="pt-sb-chip">
+            <div class="pt-sb-val" id="pts-pnl">$0.00</div>
+            <div class="pt-sb-lbl">Net P&amp;L</div>
+          </div>
+        </div>
+
+      </div><!-- /pt-root -->
+    </div><!-- /trade-section -->
+
   </main><!-- /main -->
   <!-- Footer ads — hidden in tab mode -->
   <div style="display:none" aria-hidden="true">
@@ -8987,6 +10017,18 @@ else init();
     <span class="bnav-lbl">Profile</span>
   </button>
 
+  <!-- Trade — Prediction Trading -->
+  <button class="bnav-item bnav-trade-pulse" id="bnav-trade" onclick="bnavGo('trade-section','bnav-trade')" aria-label="Trade">
+    <div class="bnav-ic" style="position:relative">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+        <polyline points="16 7 22 7 22 13"/>
+      </svg>
+      <span class="bnav-trade-live-dot"></span>
+    </div>
+    <span class="bnav-lbl">Trade</span>
+  </button>
+
 </nav>
 
 <script>
@@ -9004,7 +10046,8 @@ else init();
     'bnav-games':    'games-section',
     'bnav-wallet':   'wallet-section',
     'bnav-referral': 'referral-section',
-    'bnav-profile':  'profile-section'
+    'bnav-profile':  'profile-section',
+    'bnav-trade':    'trade-section'
   };
   var BTNS = Object.keys(TAB_MAP);
   var currentTab = 'home-section';
@@ -10982,5 +12025,2430 @@ setInterval(function(){
 })();
 </script>
 
+<style>
+/* ═══════════════════════════════════════════════════════════
+   PAYRO GAMES ENGINE v2 — Enhanced Visuals & Animations
+═══════════════════════════════════════════════════════════ */
+
+/* ── MINES TILE SYSTEM ── */
+.mine-cell{
+  aspect-ratio:1;
+  border-radius:10px;
+  border:1.5px solid rgba(255,255,255,0.1);
+  background:linear-gradient(145deg,#0f172a,#1e293b);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:clamp(18px,3.5vw,26px);
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1),
+             border-color .18s, box-shadow .18s, background .18s;
+  position:relative;overflow:hidden;
+  transform-style:preserve-3d;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.mine-cell::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.08) 0%,transparent 60%);
+  border-radius:inherit;pointer-events:none;
+}
+.mine-cell:hover:not(.mine-cell-gem):not(.mine-cell-boom):not([disabled]){
+  transform:scale(1.08) translateY(-3px);
+  border-color:rgba(255,168,39,0.5);
+  background:linear-gradient(145deg,#1a2540,#243050);
+  box-shadow:0 6px 20px rgba(255,168,39,0.2),
+             0 0 0 1px rgba(255,168,39,0.2),
+             inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.mine-cell:active:not(.mine-cell-gem):not(.mine-cell-boom):not([disabled]){
+  transform:scale(0.96);
+}
+/* Unflipped default icon */
+.mine-cell-default{ color:rgba(255,255,255,0.2); }
+
+/* ── GEM tile ── */
+.mine-cell.mine-cell-gem{
+  cursor:default;
+  border-color:rgba(0,240,160,0.55) !important;
+  background:linear-gradient(145deg,rgba(0,240,160,0.14),rgba(0,240,160,0.05)) !important;
+  box-shadow:0 0 16px rgba(0,240,160,0.35),
+             0 0 36px rgba(0,240,160,0.12),
+             inset 0 0 16px rgba(0,240,160,0.08) !important;
+  animation:gemGlowPulse 2.2s ease-in-out infinite !important;
+}
+@keyframes gemGlowPulse{
+  0%,100%{box-shadow:0 0 14px rgba(0,240,160,0.35),0 0 32px rgba(0,240,160,0.12)}
+  50%    {box-shadow:0 0 22px rgba(0,240,160,0.55),0 0 50px rgba(0,240,160,0.22),0 0 80px rgba(0,240,160,0.08)}
+}
+
+/* ── BOMB tile ── */
+.mine-cell.mine-cell-boom{
+  cursor:default;
+  border-color:rgba(255,61,96,0.7) !important;
+  background:linear-gradient(145deg,rgba(255,61,96,0.22),rgba(255,61,96,0.06)) !important;
+  animation:bombExplode .5s cubic-bezier(.36,.07,.19,.97) forwards !important;
+}
+.mine-cell.mine-cell-boom-reveal{
+  cursor:default;
+  border-color:rgba(255,61,96,0.4) !important;
+  background:linear-gradient(145deg,rgba(255,61,96,0.14),rgba(255,61,96,0.04)) !important;
+  animation:bombRevealFade .6s ease forwards !important;
+}
+@keyframes bombExplode{
+  0% {transform:scale(1);}
+  15%{transform:scale(1.65) rotate(-5deg);box-shadow:0 0 30px rgba(255,61,96,.8),0 0 60px rgba(255,61,96,.4);}
+  30%{transform:scale(0.82) rotate(3deg);}
+  50%{transform:scale(1.3) rotate(-2deg);box-shadow:0 0 20px rgba(255,61,96,.6);}
+  70%{transform:scale(0.95);}
+  100%{transform:scale(1);box-shadow:0 0 12px rgba(255,61,96,.4);}
+}
+@keyframes bombRevealFade{
+  0%{transform:scale(0.6) rotateY(90deg);opacity:0}
+  60%{transform:scale(1.08) rotateY(-5deg);opacity:1}
+  100%{transform:scale(1) rotateY(0deg);opacity:.8}
+}
+
+/* ── Safe reveal ── */
+.mine-cell.mine-cell-safe-reveal{
+  cursor:default;
+  border-color:rgba(0,240,160,0.25) !important;
+  background:linear-gradient(145deg,rgba(0,240,160,0.08),rgba(0,240,160,0.02)) !important;
+  animation:safeReveal .4s ease forwards !important;
+  opacity:0.7;
+}
+@keyframes safeReveal{
+  0%{transform:scale(0.5) rotateY(90deg);opacity:0}
+  70%{transform:scale(1.05) rotateY(-4deg);opacity:.8}
+  100%{transform:scale(1) rotateY(0deg);}
+}
+
+/* ── Tile flip animation ── */
+@keyframes tileFlipIn{
+  0%  {transform:rotateY(90deg) scale(0.9);opacity:0}
+  55% {transform:rotateY(-8deg) scale(1.05);opacity:1}
+  80% {transform:rotateY(3deg) scale(0.98)}
+  100%{transform:rotateY(0deg) scale(1)}
+}
+.mine-cell.flipping{
+  animation:tileFlipIn .38s cubic-bezier(.34,1.56,.64,1) forwards !important;
+}
+
+/* ── Multiplier display ── */
+#mines-mult-lbl{
+  transition:color .3s, text-shadow .3s;
+  font-weight:800;
+}
+.mult-bump{
+  animation:multBump .35s cubic-bezier(.34,1.56,.64,1) !important;
+}
+@keyframes multBump{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.35);color:#FFD84A !important;text-shadow:0 0 16px rgba(255,216,74,.9) !important}
+  100%{transform:scale(1)}
+}
+
+/* ── Cashout button pulse ── */
+#mines-cashout-btn{
+  animation:cashoutPulse 2s ease-in-out infinite;
+}
+@keyframes cashoutPulse{
+  0%,100%{box-shadow:0 5px 16px rgba(0,240,160,0.3)}
+  50%    {box-shadow:0 8px 32px rgba(0,240,160,0.6),0 0 50px rgba(0,240,160,0.2)}
+}
+
+/* ═══════════════════════════════════════════════════════
+   CRASH GAME IMPROVEMENTS
+═══════════════════════════════════════════════════════ */
+.crash-canvas{
+  border-radius:10px;
+  background:rgba(5,9,22,0.9);
+  border:1px solid rgba(0,240,160,0.12);
+  display:block;width:100%;height:auto;
+}
+.crash-mult-val{
+  font-family:'Rajdhani','DM Mono',monospace;
+  font-size:clamp(36px,8vw,56px);
+  font-weight:800;
+  letter-spacing:.04em;
+  line-height:1;
+  color:#00F0A0;
+  text-shadow:0 0 20px rgba(0,240,160,0.6),0 0 40px rgba(0,240,160,0.25);
+  transition:color .2s, text-shadow .2s;
+  animation:multCountPulse 1s ease-in-out infinite;
+}
+@keyframes multCountPulse{
+  0%,100%{filter:brightness(1)}
+  50%    {filter:brightness(1.25)}
+}
+.crash-mult-val.crashed{
+  color:#FF3D60 !important;
+  text-shadow:0 0 20px rgba(255,61,96,0.7),0 0 50px rgba(255,61,96,0.3) !important;
+  animation:crashShake .5s ease forwards !important;
+}
+@keyframes crashShake{
+  0%,100%{transform:translate(0)}
+  10%{transform:translate(-8px,-4px) rotate(-2deg)}
+  20%{transform:translate(8px,4px) rotate(2deg)}
+  30%{transform:translate(-6px,3px) rotate(-1.5deg)}
+  40%{transform:translate(6px,-3px) rotate(1.5deg)}
+  50%{transform:translate(-4px,2px) rotate(-1deg)}
+  60%{transform:translate(4px,-2px) rotate(1deg)}
+  70%{transform:translate(-2px,1px)}
+  80%{transform:translate(2px,-1px)}
+  90%{transform:translate(-1px,0)}
+}
+.crash-mult-val.cashed{
+  color:#FFD84A !important;
+  text-shadow:0 0 22px rgba(255,216,74,.8),0 0 50px rgba(255,168,39,.3) !important;
+  animation:cashedBounce .45s cubic-bezier(.34,1.56,.64,1) forwards !important;
+}
+@keyframes cashedBounce{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.22)}
+  100%{transform:scale(1)}
+}
+
+/* Crash history pills */
+.crash-hist-pill{
+  padding:3px 9px;border-radius:99px;
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:700;
+  letter-spacing:.04em;
+  transition:transform .15s;
+}
+.crash-hist-pill:hover{transform:scale(1.1)}
+.crash-hist-low {background:rgba(255,61,96,0.14);color:#FF3D60;border:1px solid rgba(255,61,96,0.25)}
+.crash-hist-med {background:rgba(255,168,39,0.14);color:#FFA827;border:1px solid rgba(255,168,39,0.25)}
+.crash-hist-high{background:rgba(0,240,160,0.14);color:#00F0A0;border:1px solid rgba(0,240,160,0.25)}
+
+/* ═══════════════════════════════════════════════════════
+   PLINKO IMPROVEMENTS
+═══════════════════════════════════════════════════════ */
+.plinko-canvas{
+  border-radius:12px;
+  background:rgba(5,9,22,0.92);
+  border:1px solid rgba(184,85,247,0.15);
+  display:block;width:100%;height:auto;
+  box-shadow:inset 0 0 30px rgba(0,0,0,0.5);
+}
+.plinko-mult-row{
+  display:flex;gap:3px;flex-wrap:nowrap;
+  justify-content:center;margin-top:6px;
+}
+.plinko-slot{
+  flex:1;padding:5px 2px;
+  text-align:center;border-radius:6px;
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:700;
+  letter-spacing:.02em;border:1px solid transparent;
+  transition:transform .2s, box-shadow .2s, background .2s;
+}
+.plinko-slot-high {background:rgba(0,240,160,0.14);color:#00F0A0;border-color:rgba(0,240,160,0.25)}
+.plinko-slot-mid  {background:rgba(255,168,39,0.12);color:#FFA827;border-color:rgba(255,168,39,0.22)}
+.plinko-slot-low  {background:rgba(255,61,96,0.12);color:#FF3D60;border-color:rgba(255,61,96,0.22)}
+.plinko-slot.hit{
+  animation:slotHit .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes slotHit{
+  0%{transform:scaleY(1)}
+  40%{transform:scaleY(1.35);filter:brightness(1.6)}
+  70%{transform:scaleY(0.9)}
+  100%{transform:scaleY(1)}
+}
+.plinko-result{
+  text-align:center;padding:12px;border-radius:10px;
+  font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;
+  letter-spacing:.04em;margin-top:8px;
+}
+.plinko-win {
+  background:rgba(0,240,160,0.1);
+  border:1px solid rgba(0,240,160,0.3);
+  color:#00F0A0;
+  text-shadow:0 0 12px rgba(0,240,160,0.5);
+  animation:resultPop .4s cubic-bezier(.34,1.56,.64,1);
+}
+.plinko-lose{
+  background:rgba(255,61,96,0.08);
+  border:1px solid rgba(255,61,96,0.22);
+  color:#FF3D60;
+  animation:resultPop .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes resultPop{
+  0%{transform:scale(0.8);opacity:0}
+  70%{transform:scale(1.05);opacity:1}
+  100%{transform:scale(1)}
+}
+
+/* ═══════════════════════════════════════════════════════
+   WALLET REAL-TIME UPDATE FLASH
+═══════════════════════════════════════════════════════ */
+.gm-bal-val{
+  transition:color .3s, text-shadow .3s;
+}
+.gm-bal-val.flash-green{
+  animation:walletFlashGreen .6s ease forwards;
+}
+.gm-bal-val.flash-red{
+  animation:walletFlashRed .4s ease forwards;
+}
+@keyframes walletFlashGreen{
+  0%{color:inherit}
+  30%{color:#00F0A0;text-shadow:0 0 16px rgba(0,240,160,0.8)}
+  100%{color:inherit;text-shadow:none}
+}
+@keyframes walletFlashRed{
+  0%{color:inherit}
+  30%{color:#FF3D60;text-shadow:0 0 16px rgba(255,61,96,0.8)}
+  100%{color:inherit;text-shadow:none}
+}
+
+/* ── Floating win amount ── */
+.gm-float-win{
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:800;font-size:20px;
+  letter-spacing:.06em;
+  text-shadow:0 0 12px currentColor;
+  animation:floatUp .9s cubic-bezier(.25,.46,.45,.94) forwards;
+}
+@keyframes floatUp{
+  0%  {transform:translateY(0)   scale(1);  opacity:1}
+  60% {transform:translateY(-50px) scale(1.1);opacity:1}
+  100%{transform:translateY(-90px) scale(0.9);opacity:0}
+}
+
+/* ── Game action buttons ── */
+.gm-action-btn{
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .18s, filter .18s !important;
+}
+.gm-action-btn:hover:not(:disabled){
+  transform:translateY(-3px) scale(1.02) !important;
+  filter:brightness(1.1) !important;
+}
+.gm-action-btn:active:not(:disabled){
+  transform:scale(0.97) !important;
+}
+</style>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   PAYRO GAMES ENGINE v2 — Enhanced Logic Override
+   Improves: Mines, Crash, Plinko | Keeps all existing logic
+═══════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ── Utility helpers ── */
+function byId(id){ return document.getElementById(id); }
+
+function spawnFloatWin(text, color, anchorEl){
+  var el = document.createElement('div');
+  el.className = 'gm-float-win';
+  el.textContent = text;
+  el.style.color = color || '#00F0A0';
+  var rect = (anchorEl || document.body).getBoundingClientRect();
+  el.style.left = (rect.left + rect.width/2 - 40) + 'px';
+  el.style.top  = (rect.top + rect.height/2) + 'px';
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, 950);
+}
+
+function flashWalletBal(win){
+  var el = byId('gm-bal-val');
+  if(!el) return;
+  el.classList.remove('flash-green','flash-red');
+  void el.offsetWidth;
+  el.classList.add(win ? 'flash-green' : 'flash-red');
+}
+
+/* ── Audio context helper (reuse existing SFX or polyfill) ── */
+var _ac = null;
+function getAC(){
+  if(!_ac) try { _ac = new (window.AudioContext||window.webkitAudioContext)(); } catch(e){}
+  return _ac;
+}
+function playTone(freq, type, gain, dur){
+  var ac = getAC(); if(!ac) return;
+  try{
+    var o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.type = type||'sine'; o.frequency.value = freq||440;
+    g.gain.setValueAtTime(gain||0.2, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + (dur||0.3));
+    o.start(); o.stop(ac.currentTime + (dur||0.3));
+  }catch(e){}
+}
+function soundGem(){
+  playTone(880,'sine',0.22,0.18);
+  setTimeout(function(){ playTone(1320,'sine',0.15,0.14); }, 60);
+}
+function soundBoom(){
+  playTone(80,'sawtooth',0.35,0.4);
+  setTimeout(function(){ playTone(50,'square',0.25,0.35); }, 40);
+}
+function soundCashout(){
+  [0,80,160,260].forEach(function(delay,i){
+    setTimeout(function(){
+      playTone([523,659,784,1047][i],'sine',0.22,0.28);
+    }, delay);
+  });
+}
+function soundTick(){
+  playTone(700,'square',0.06,0.04);
+}
+function soundCrash(){
+  playTone(120,'sawtooth',0.3,0.5);
+  setTimeout(function(){ playTone(60,'square',0.2,0.4); }, 80);
+}
+function soundPlinko(){
+  playTone(600 + Math.random()*200,'sine',0.12,0.12);
+}
+
+/* ═══════════════════════════════════════════════════════
+   MINES GAME — Complete Enhanced Override
+═══════════════════════════════════════════════════════ */
+
+/* Override renderMinesGrid — richer cells */
+var _origRenderMinesGrid = window.renderMinesGrid;
+window.renderMinesGrid = function(){
+  var grid = byId('mines-arena-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+
+  // Access the state — it may be on minesState or via closure
+  var state = window.minesState;
+  if(!state) { if(_origRenderMinesGrid) _origRenderMinesGrid(); return; }
+
+  state.grid.forEach(function(cell, idx){
+    var btn = document.createElement('button');
+    btn.className = 'mine-cell';
+    btn.id = 'mc-' + idx;
+
+    // Use a subtle question mark icon by default
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".8" fill="rgba(255,255,255,0.18)" stroke="none"/></svg>';
+
+    // Staggered entrance
+    btn.style.opacity = '0';
+    btn.style.transform = 'scale(0.75) translateY(6px)';
+    setTimeout(function(){
+      btn.style.transition = 'opacity .22s ease, transform .28s cubic-bezier(.34,1.56,.64,1)';
+      btn.style.opacity = '1';
+      btn.style.transform = 'scale(1) translateY(0)';
+    }, idx * 22);
+
+    if(!cell.revealed && state.active){
+      btn.onclick = function(){ minesRevealEnhanced(idx); };
+    }
+    grid.appendChild(btn);
+  });
+};
+
+/* Enhanced reveal with animations */
+function minesRevealEnhanced(idx){
+  var state = window.minesState;
+  if(!state || !state.active) return;
+  var cell = state.grid[idx];
+  if(!cell || cell.revealed) return;
+
+  var btn = byId('mc-' + idx);
+  if(!btn) return;
+
+  cell.revealed = true;
+  btn.onclick = null;
+
+  // Flip animation
+  btn.classList.add('flipping');
+
+  if(cell.mine){
+    /* ── BOMB HIT ── */
+    setTimeout(function(){
+      btn.innerHTML = '💥';
+      btn.classList.remove('flipping');
+      btn.classList.add('mine-cell-boom');
+      soundBoom();
+
+      // Shake the grid
+      var g = byId('mines-arena-grid');
+      if(g){ g.style.animation = 'none'; void g.offsetWidth; g.style.animation = 'bombExplode .45s ease'; }
+
+      // Screen flash red
+      var flash = document.createElement('div');
+      flash.style.cssText = 'position:fixed;inset:0;background:rgba(255,61,96,0.18);pointer-events:none;z-index:9998;animation:flashOut .4s ease forwards';
+      var style = document.createElement('style');
+      style.textContent = '@keyframes flashOut{0%{opacity:1}100%{opacity:0}}';
+      document.head.appendChild(style);
+      document.body.appendChild(flash);
+      setTimeout(function(){ flash.remove(); style.remove(); }, 450);
+
+      // Disable all cells
+      state.active = false;
+
+      // Reveal all mines with delay cascade
+      state.grid.forEach(function(c, i){
+        var b = byId('mc-' + i);
+        if(!b) return;
+        b.onclick = null;
+        if(c.mine && i !== idx){
+          setTimeout(function(){
+            b.innerHTML = '💣';
+            b.classList.add('mine-cell-boom-reveal');
+            b.style.animationDelay = '';
+          }, 60 + Math.abs(i - idx) * 30);
+        } else if(!c.mine && !c.revealed){
+          setTimeout(function(){
+            b.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(0,240,160,0.3)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
+            b.classList.add('mine-cell-safe-reveal');
+          }, 40 + i * 18);
+        }
+      });
+
+      flashWalletBal(false);
+      var gm = typeof gmToast === 'function' ? gmToast : function(){};
+      gm('💥 Mine hit! Position liquidated.', 'red');
+      byId('mines-cashout-btn').style.display = 'none';
+      byId('mines-start-btn').style.display = 'flex';
+      byId('mines-count-sel').disabled = false;
+      byId('mines-mult-lbl').textContent = '0.00';
+      byId('mines-profit-lbl').textContent = '$0.00';
+    }, 80);
+
+  } else {
+    /* ── GEM FOUND ── */
+    setTimeout(function(){
+      btn.innerHTML = '💎';
+      btn.classList.remove('flipping');
+      btn.classList.add('mine-cell-gem');
+      soundGem();
+
+      state.revealed++;
+
+      // Bump multiplier display
+      updateMinesInfoEnhanced();
+      var multEl = byId('mines-mult-lbl');
+      if(multEl){
+        multEl.classList.remove('mult-bump');
+        void multEl.offsetWidth;
+        multEl.classList.add('mult-bump');
+      }
+
+      // Particle burst from cell
+      var r = btn.getBoundingClientRect();
+      if(window.PARTICLES){
+        window.PARTICLES.burst(r.left+r.width/2, r.top+r.height/2,
+          ['#00F0A0','#FFD84A','#00EEFF','#B855F7'], 18);
+      }
+
+      // Floating +mult text
+      spawnFloatWin('+💎', '#00F0A0', btn);
+
+      // Auto-cashout
+      if(state.revealed >= state.safeCells){ window.minesCashout(); }
+    }, 90);
+  }
+}
+
+/* Smooth multiplier info update */
+function updateMinesInfoEnhanced(){
+  var state = window.minesState;
+  if(!state) return;
+  var m = window.minesCalcMult
+    ? window.minesCalcMult(state.revealed, state.mineCount)
+    : state.mult || 1;
+  state.mult = m;
+  var profit = (state.bet * m) - state.bet;
+  var multEl = byId('mines-mult-lbl');
+  var profEl = byId('mines-profit-lbl');
+  var caEl   = byId('mines-cashout-amt');
+  if(multEl) multEl.textContent = m.toFixed(2);
+  if(profEl){ profEl.textContent = '+$' + profit.toFixed(5); profEl.style.color = '#00F0A0'; }
+  if(caEl)   caEl.textContent   = ' $' + (state.bet*m).toFixed(5);
+}
+
+/* Override updateMinesInfo too */
+window.updateMinesInfo = updateMinesInfoEnhanced;
+
+/* Override minesReveal to point to our enhanced version */
+window.minesReveal = minesRevealEnhanced;
+
+/* Enhanced minesCashout — add particles & sound */
+var _origMinesCashout = window.minesCashout;
+window.minesCashout = function(){
+  if(!window.minesState || !window.minesState.active) return;
+  window.minesState.active = false;
+  var m = window.minesState.mult;
+  var payout = window.minesState.bet * m;
+  if(window.creditWin) window.creditWin(payout);
+  if(window.logTx) window.logTx('Mines Win ×' + m.toFixed(2), payout, true);
+
+  soundCashout();
+  flashWalletBal(true);
+
+  var btn = byId('mines-cashout-btn');
+  if(btn){
+    var r = btn.getBoundingClientRect();
+    spawnFloatWin('+$' + payout.toFixed(4), '#00F0A0', btn);
+    if(window.PARTICLES) window.PARTICLES.burst(r.left+r.width/2, r.top+r.height/2,
+      ['#00F0A0','#FFD84A','#00EEFF','#B855F7'], 55);
+  }
+
+  var gm = typeof gmToast === 'function' ? gmToast : function(){};
+  gm('💎 Cashed out $' + payout.toFixed(5) + '!');
+
+  // Reveal all cells elegantly
+  window.minesState.grid.forEach(function(c,i){
+    var b = byId('mc-'+i);
+    if(!b) return;
+    b.onclick = null;
+    if(c.mine){
+      setTimeout(function(){ b.innerHTML='💣'; b.style.opacity='.55'; }, i*14);
+    } else if(!c.revealed){
+      setTimeout(function(){
+        b.innerHTML='💎';
+        b.classList.add('mine-cell-safe-reveal');
+      }, i*14);
+    }
+  });
+
+  byId('mines-cashout-btn').style.display = 'none';
+  byId('mines-start-btn').style.display = 'flex';
+  byId('mines-count-sel').disabled = false;
+  if(window.syncGmBal) window.syncGmBal();
+};
+
+/* ═══════════════════════════════════════════════════════
+   CRASH GAME — Enhanced Chart & Multiplier
+═══════════════════════════════════════════════════════ */
+
+/* Better crash chart with glow line, gradient, grid */
+function crashDrawChartEnhanced(points, crashed){
+  var canvas = byId('crash-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  // Background grid
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  for(var xi = 0; xi <= 4; xi++){
+    ctx.beginPath(); ctx.moveTo(W/4*xi,0); ctx.lineTo(W/4*xi,H); ctx.stroke();
+  }
+  for(var yi = 0; yi <= 3; yi++){
+    ctx.beginPath(); ctx.moveTo(0,H/3*yi); ctx.lineTo(W,H/3*yi); ctx.stroke();
+  }
+  ctx.restore();
+
+  if(!points || points.length < 2) return;
+
+  var maxMult = Math.max(3, points[points.length-1] * 1.15);
+  var PAD_L = 28, PAD_B = 22, PAD_R = 12, PAD_T = 14;
+  var plotW = W - PAD_L - PAD_R;
+  var plotH = H - PAD_T - PAD_B;
+
+  var pts = points.map(function(m, i){
+    return {
+      x: PAD_L + (i / (points.length - 1)) * plotW,
+      y: H - PAD_B - ((m - 1) / (maxMult - 1)) * plotH
+    };
+  });
+
+  var lineColor = crashed ? '#FF3D60' : '#00F0A0';
+  var glowColor = crashed ? 'rgba(255,61,96,' : 'rgba(0,240,160,';
+
+  // Gradient fill under curve
+  var grad = ctx.createLinearGradient(0, PAD_T, 0, H - PAD_B);
+  grad.addColorStop(0, glowColor + '0.22)');
+  grad.addColorStop(0.5, glowColor + '0.1)');
+  grad.addColorStop(1, glowColor + '0.01)');
+
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, H - PAD_B);
+  pts.forEach(function(p){ ctx.lineTo(p.x, p.y); });
+  ctx.lineTo(pts[pts.length-1].x, H - PAD_B);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Glow line — drawn twice: outer glow + sharp line
+  [
+    { lw: 6,   alpha: 0.25, blur: 12 },
+    { lw: 2.5, alpha: 1,    blur:  8 }
+  ].forEach(function(pass){
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    pts.forEach(function(p){ ctx.lineTo(p.x, p.y); });
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth   = pass.lw;
+    ctx.shadowBlur  = pass.blur;
+    ctx.shadowColor = lineColor;
+    ctx.globalAlpha = pass.alpha;
+    ctx.stroke();
+  });
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur  = 0;
+
+  // Moving dot at tip
+  if(!crashed && pts.length > 0){
+    var tip = pts[pts.length-1];
+    // Outer glow ring
+    ctx.beginPath();
+    ctx.arc(tip.x, tip.y, 7, 0, Math.PI*2);
+    ctx.fillStyle = glowColor + '0.3)';
+    ctx.fill();
+    // Inner dot
+    ctx.beginPath();
+    ctx.arc(tip.x, tip.y, 4, 0, Math.PI*2);
+    ctx.fillStyle = lineColor;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = lineColor;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // Y-axis labels
+  ctx.fillStyle = 'rgba(255,255,255,0.28)';
+  ctx.font = '10px "DM Mono",monospace';
+  ctx.textAlign = 'right';
+  [1, Math.round(maxMult/2), Math.round(maxMult)].forEach(function(v){
+    var y = H - PAD_B - ((v-1)/(maxMult-1))*plotH;
+    if(y > PAD_T && y < H-PAD_B){
+      ctx.fillText(v+'×', PAD_L-4, y+3);
+    }
+  });
+}
+
+/* Override crashDrawChart */
+window.crashDrawChart = crashDrawChartEnhanced;
+
+/* Enhanced crash tick — smooth exponential, glow changes by mult */
+var _origCrashPlaceBet = window.crashPlaceBet;
+window.crashPlaceBet = function(){
+  var state = window.crashState;
+  if(state && state.active) return;
+
+  var bet = window.getBetAmt ? window.getBetAmt() : 0.001;
+  if(bet > (window.getBal ? window.getBal() : 0)){
+    if(window.gmToast) window.gmToast('Insufficient balance!','red');
+    return;
+  }
+  if(window.deductBet) window.deductBet(bet);
+  if(window.logTx) window.logTx('Crash Bet', bet, false);
+
+  window.crashState = { active:true, mult:1, bet:bet, cashed:false, crashed:false };
+  window.crashPoints = [1];
+
+  var multEl = byId('crash-mult-val');
+  var subEl  = byId('crash-mult-sub');
+  if(multEl){ multEl.className='crash-mult-val'; multEl.textContent='1.00×'; }
+  if(subEl)  subEl.textContent = '🚀 Running — cash out!';
+  byId('crash-bet-btn').style.display = 'none';
+  byId('crash-cashout-btn').style.display = 'flex';
+
+  var crashAt = window.crashGenerateCrash ? window.crashGenerateCrash() : (1.01 + Math.random()*4);
+  var startTime = performance.now();
+  var speed = 0.07;
+  var lastTick = 0;
+
+  function tick(ts){
+    if(!window.crashState.active) return;
+    var elapsed = (ts - startTime) / 1000;
+    var m = parseFloat(Math.pow(1 + speed, elapsed * 20).toFixed(3));
+    m = Math.max(1, m);
+    window.crashState.mult = m;
+    window.crashPoints.push(m);
+    if(window.crashPoints.length > 120) window.crashPoints.shift();
+
+    // Update multiplier display with color shifts
+    if(multEl){
+      multEl.textContent = m.toFixed(2) + '×';
+      if(m < 2)        multEl.style.color = '#00F0A0';
+      else if(m < 4)   multEl.style.color = '#FFA827';
+      else if(m < 8)   multEl.style.color = '#FFD84A';
+      else             multEl.style.color = '#B855F7';
+      multEl.style.textShadow = '0 0 20px currentColor, 0 0 40px currentColor';
+    }
+
+    // Tick sound every ~0.4s
+    if(ts - lastTick > 400){ soundTick(); lastTick = ts; }
+
+    crashDrawChartEnhanced(window.crashPoints, false);
+
+    if(m >= crashAt){
+      // CRASH
+      window.crashState.active = false;
+      window.crashState.crashed = true;
+      var finalMult = parseFloat(crashAt.toFixed(2));
+      window.crashHistory.push(finalMult);
+      if(window.renderCrashHistory) window.renderCrashHistory();
+
+      crashDrawChartEnhanced(window.crashPoints, true);
+      soundCrash();
+
+      if(multEl){ multEl.className='crash-mult-val crashed'; multEl.textContent=finalMult+'×'; }
+      if(subEl)  subEl.textContent = '💥 CRASHED!';
+
+      var prevEl = byId('crash-prev-lbl');
+      if(prevEl) prevEl.textContent = finalMult + '×';
+
+      // Screen flash
+      var flash = document.createElement('div');
+      flash.style.cssText='position:fixed;inset:0;background:rgba(255,61,96,0.14);pointer-events:none;z-index:9998;animation:flashOut .5s ease forwards';
+      document.body.appendChild(flash);
+      setTimeout(function(){ flash.remove(); }, 550);
+
+      flashWalletBal(false);
+      byId('crash-cashout-btn').style.display = 'none';
+      byId('crash-bet-btn').style.display = 'flex';
+      if(window.gmToast) window.gmToast('💥 Crashed at ' + finalMult + '×', 'red');
+      if(window.syncGmBal) window.syncGmBal();
+      window.crashRaf = null;
+      return;
+    }
+    window.crashRaf = requestAnimationFrame(tick);
+  }
+  window.crashRaf = requestAnimationFrame(tick);
+};
+
+/* Enhanced cashout */
+var _origCrashCashout = window.crashCashout;
+window.crashCashout = function(){
+  if(!window.crashState || !window.crashState.active) return;
+  window.crashState.active = false;
+  if(window.crashRaf){ cancelAnimationFrame(window.crashRaf); window.crashRaf = null; }
+  var m = window.crashState.mult;
+  var payout = window.crashState.bet * m;
+  if(window.creditWin) window.creditWin(payout);
+  if(window.logTx) window.logTx('Crash ×' + m.toFixed(2), payout, true);
+
+  var multEl = byId('crash-mult-val');
+  var subEl  = byId('crash-mult-sub');
+  if(multEl) multEl.className = 'crash-mult-val cashed';
+  if(subEl)  subEl.textContent = '✅ Cashed out!';
+
+  crashDrawChartEnhanced(window.crashPoints, false);
+
+  soundCashout();
+  flashWalletBal(true);
+
+  var cashBtn = byId('crash-cashout-btn');
+  if(cashBtn) spawnFloatWin('+$' + payout.toFixed(4), '#FFD84A', cashBtn);
+  if(window.PARTICLES && cashBtn){
+    var r = cashBtn.getBoundingClientRect();
+    window.PARTICLES.burst(r.left+r.width/2, r.top+r.height/2,
+      ['#FFD84A','#00F0A0','#B855F7','#00EEFF'], 45);
+  }
+
+  byId('crash-cashout-btn').style.display = 'none';
+  byId('crash-bet-btn').style.display = 'flex';
+  if(window.gmToast) window.gmToast('💸 Cashed ×' + m.toFixed(2) + ' = $' + payout.toFixed(5) + '!');
+  if(window.syncGmBal) window.syncGmBal();
+};
+
+/* ═══════════════════════════════════════════════════════
+   PLINKO — Enhanced Physics & Rendering
+═══════════════════════════════════════════════════════ */
+
+var PLINKO_STATE = {
+  running: false,
+  pegs: [],
+  rows: 8,
+  W: 340, H: 300,
+  PAD_T: 28, PAD_B: 44,
+  ball: null,
+  path: [],
+  bucketIdx: 0
+};
+
+function plinkoInit(){
+  var canvas = byId('plinko-canvas');
+  if(!canvas) return;
+  PLINKO_STATE.W = canvas.width  = Math.min(canvas.parentElement ? canvas.parentElement.clientWidth : 340, 400);
+  PLINKO_STATE.H = canvas.height = 300;
+  plinkoUpdateConfig();
+  plinkoDrawStatic([]);
+  renderPlinkoMultRow();
+}
+
+function plinkoUpdateConfig(){
+  var rows = parseInt((byId('plinko-rows-sel')||{value:'8'}).value) || 8;
+  var risk = (byId('plinko-risk-sel')||{value:'medium'}).value || 'medium';
+  PLINKO_STATE.rows = rows;
+  if(byId('plinko-rows-lbl')) byId('plinko-rows-lbl').textContent = rows;
+  if(byId('plinko-risk-lbl')) byId('plinko-risk-lbl').textContent = risk.charAt(0).toUpperCase()+risk.slice(1);
+  buildPlinkoBoard(rows);
+  renderPlinkoMultRow();
+  plinkoDrawStatic([]);
+}
+
+function buildPlinkoBoard(rows){
+  var W = PLINKO_STATE.W, H = PLINKO_STATE.H;
+  var PAD_T = PLINKO_STATE.PAD_T, PAD_B = PLINKO_STATE.PAD_B;
+  var usableH = H - PAD_T - PAD_B;
+  var rowH = usableH / (rows + 1);
+  PLINKO_STATE.pegs = [];
+
+  for(var r = 1; r <= rows; r++){
+    var count = r + 2;
+    for(var c = 0; c < count; c++){
+      var x = W/2 + (c - (count-1)/2) * (W / (rows + 3));
+      var y = PAD_T + r * rowH;
+      PLINKO_STATE.pegs.push({ x: x, y: y });
+    }
+  }
+}
+
+function renderPlinkoMultRow(){
+  var row = byId('plinko-mult-row');
+  if(!row) return;
+  var mults = plinkoGetMultsEnhanced();
+  if(!mults){ row.innerHTML=''; return; }
+
+  row.innerHTML = mults.map(function(m, i){
+    var cls = m >= 5 ? 'plinko-slot-high' : m >= 1 ? 'plinko-slot-mid' : 'plinko-slot-low';
+    return '<div class="plinko-slot '+cls+'" id="plinko-slot-'+i+'">'+m+'×</div>';
+  }).join('');
+}
+
+function plinkoGetMultsEnhanced(){
+  var rows = PLINKO_STATE.rows;
+  var risk = (byId('plinko-risk-sel')||{value:'medium'}).value || 'medium';
+  var MULTS = window.PLINKO_MULTS;
+  if(!MULTS || !MULTS[risk]) return null;
+  return MULTS[risk][rows] || MULTS[risk][8] || null;
+}
+
+function plinkoDrawStatic(highlightPath){
+  var canvas = byId('plinko-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = PLINKO_STATE.W, H = PLINKO_STATE.H;
+  ctx.clearRect(0,0,W,H);
+
+  var pathSet = {};
+  (highlightPath||[]).forEach(function(p){ pathSet[p.x.toFixed(0)+','+p.y.toFixed(0)] = true; });
+
+  // Pegs
+  PLINKO_STATE.pegs.forEach(function(peg){
+    var key = peg.x.toFixed(0)+','+peg.y.toFixed(0);
+    var lit = pathSet[key];
+    ctx.beginPath();
+    ctx.arc(peg.x, peg.y, lit ? 5.5 : 4, 0, Math.PI*2);
+    ctx.fillStyle = lit ? '#00EEFF' : 'rgba(255,255,255,0.35)';
+    if(lit){
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = '#00EEFF';
+    }
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  });
+
+  // Bucket dividers
+  var mults = plinkoGetMultsEnhanced();
+  if(mults){
+    var bucketCount = mults.length;
+    var bW = W / bucketCount;
+    var botY = H - PLINKO_STATE.PAD_B + 8;
+    for(var b = 0; b <= bucketCount; b++){
+      ctx.beginPath();
+      ctx.moveTo(b*bW, botY);
+      ctx.lineTo(b*bW, H);
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+}
+
+/* Physics-based ball animation */
+function animatePlinkoBall(path, bucketIdx, onDone){
+  var canvas = byId('plinko-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var stepMs = 75; // ms per row step — smooth
+  var step = 0;
+  var totalSteps = path.length;
+  var ballR = 7;
+
+  function drawFrame(){
+    plinkoDrawStatic(path.slice(0, step+1));
+
+    if(step >= totalSteps) return;
+
+    var pt = path[step];
+    var nextPt = path[step+1] || pt;
+
+    // Interpolate smoothly between current and next point
+    var frac = 0;
+    var lastTime = performance.now();
+
+    function subFrame(now){
+      var elapsed = now - lastTime;
+      frac = Math.min(elapsed / stepMs, 1);
+      var ease = frac < 0.5 ? 2*frac*frac : -1+(4-2*frac)*frac; // smooth
+
+      var bx = pt.x + (nextPt.x - pt.x) * ease;
+      var by = pt.y + (nextPt.y - pt.y) * ease;
+
+      plinkoDrawStatic(path.slice(0, step+1));
+
+      // Ball trail
+      ctx.beginPath();
+      ctx.arc(bx, by, ballR + 3, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(184,85,247,0.18)';
+      ctx.fill();
+
+      // Ball
+      var bGrad = ctx.createRadialGradient(bx-2, by-2, 1, bx, by, ballR);
+      bGrad.addColorStop(0, '#D08BFF');
+      bGrad.addColorStop(1, '#7B2FBE');
+      ctx.beginPath();
+      ctx.arc(bx, by, ballR, 0, Math.PI*2);
+      ctx.fillStyle = bGrad;
+      ctx.shadowBlur = 14;
+      ctx.shadowColor = 'rgba(184,85,247,0.7)';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      if(frac < 1){
+        requestAnimationFrame(subFrame);
+      } else {
+        // Peg collision effect
+        if(step < totalSteps - 1){
+          soundPlinko();
+          // Small spark at peg
+          if(window.PARTICLES){
+            window.PARTICLES.burst(nextPt.x, nextPt.y,
+              ['#B855F7','#00EEFF','#FFD84A'], 5);
+          }
+        }
+        step++;
+        if(step < totalSteps){ drawFrame(); }
+        else { if(onDone) onDone(); }
+      }
+    }
+    requestAnimationFrame(subFrame);
+  }
+
+  drawFrame();
+}
+
+/* Override plinkoRun */
+window.plinkoRun = function(){
+  if(window.plinkoRunning) return;
+  var bet = window.getBetAmt ? window.getBetAmt() : 0.001;
+  if(bet > (window.getBal ? window.getBal() : 0)){
+    if(window.gmToast) window.gmToast('Insufficient balance!','red');
+    return;
+  }
+  if(window.deductBet) window.deductBet(bet);
+
+  window.plinkoRunning = true;
+  var dropBtn = byId('plinko-drop-btn');
+  if(dropBtn) dropBtn.disabled = true;
+  byId('plinko-result').style.display = 'none';
+
+  var rows = PLINKO_STATE.rows;
+  var W = PLINKO_STATE.W;
+  var PAD_T = PLINKO_STATE.PAD_T, PAD_B = PLINKO_STATE.PAD_B;
+  var usableH = PLINKO_STATE.H - PAD_T - PAD_B;
+  var rowH = usableH / (rows + 1);
+
+  // Simulate path
+  var bucket = 0;
+  var path = [];
+  path.push({ x: W/2, y: PAD_T - 10 });
+
+  for(var r = 1; r <= rows; r++){
+    var goRight = (Math.random() < 0.5);
+    if(goRight) bucket++;
+    var count = r + 2;
+    var colIdx = bucket;
+    var nx = W/2 + (colIdx - (count-1)/2) * (W / (rows + 3));
+    var ny = PAD_T + r * rowH;
+    path.push({ x: nx, y: ny });
+  }
+
+  // Final bucket center
+  var mults = plinkoGetMultsEnhanced();
+  var bucketCount = mults ? mults.length : (rows + 1);
+  var bW = W / bucketCount;
+  path.push({ x: bucket * bW + bW/2, y: PLINKO_STATE.H - PAD_B + 18 });
+
+  animatePlinkoBall(path, bucket, function(){
+    var mult = mults ? (mults[bucket] || 0.2) : 0.5;
+    var payout = bet * mult;
+    var win = payout >= bet;
+
+    if(payout > 0 && window.creditWin) window.creditWin(payout);
+    if(window.logTx) window.logTx('Plinko ' + (win?'Win':'Loss'), win?payout:bet, win);
+
+    // Highlight bucket
+    var slotEl = byId('plinko-slot-' + bucket);
+    if(slotEl){
+      slotEl.classList.remove('hit');
+      void slotEl.offsetWidth;
+      slotEl.classList.add('hit');
+    }
+
+    var res = byId('plinko-result');
+    if(res){
+      res.style.display = 'block';
+      res.className = 'plinko-result ' + (win ? 'plinko-win' : 'plinko-lose');
+      res.textContent = (win ? '🎉 ' : '💔 ') + mult + '× → ' + (win?'+':'') + '$' + payout.toFixed(5);
+    }
+
+    if(win){
+      soundCashout();
+      flashWalletBal(true);
+      spawnFloatWin('+$' + payout.toFixed(4), '#00F0A0', res);
+      if(window.PARTICLES && res){
+        var r2 = res.getBoundingClientRect();
+        window.PARTICLES.burst(r2.left+r2.width/2, r2.top+r2.height/2,
+          ['#B855F7','#00EEFF','#00F0A0','#FFD84A'], 40);
+      }
+      if(window.gmToast) window.gmToast('🔮 Plinko! ×'+mult+' = $'+payout.toFixed(5));
+    } else {
+      flashWalletBal(false);
+      if(window.gmToast) window.gmToast('Plinko: ×'+mult, 'red');
+    }
+
+    window.plinkoRunning = false;
+    if(dropBtn) dropBtn.disabled = false;
+    if(window.syncGmBal) window.syncGmBal();
+  });
+};
+
+/* Override plinkoUpdateConfig */
+window.plinkoUpdateConfig = plinkoUpdateConfig;
+
+/* Re-init on openGame for plinko */
+var _origOpenGame = window.openGame;
+window.openGame = function(name){
+  if(_origOpenGame) _origOpenGame.apply(this, arguments);
+  if(name === 'plinko') setTimeout(plinkoInit, 50);
+};
+
+/* ═══════════════════════════════════════════════════════
+   REAL-TIME WALLET UPDATE ENHANCEMENT
+═══════════════════════════════════════════════════════ */
+
+/* Hook deductBet to flash the balance display red */
+var _origDeductBet = window.deductBet;
+window.deductBet = function(amt){
+  if(_origDeductBet) _origDeductBet.apply(this, arguments);
+  flashWalletBal(false);
+  var gmBal = byId('gm-bal-val');
+  if(gmBal){ gmBal.classList.remove('flash-red'); void gmBal.offsetWidth; gmBal.classList.add('flash-red'); }
+};
+
+/* Hook creditWin to flash the balance display green */
+var _origCreditWin = window.creditWin;
+window.creditWin = function(amt){
+  if(_origCreditWin) _origCreditWin.apply(this, arguments);
+  flashWalletBal(true);
+  var gmBal = byId('gm-bal-val');
+  if(gmBal){ gmBal.classList.remove('flash-green'); void gmBal.offsetWidth; gmBal.classList.add('flash-green'); }
+};
+
+/* ── Init on DOMContentLoaded ── */
+document.addEventListener('DOMContentLoaded', function(){
+  // Initialize plinko board
+  setTimeout(function(){
+    buildPlinkoBoard(8);
+    plinkoDrawStatic([]);
+    renderPlinkoMultRow();
+  }, 300);
+
+  // Inject flashOut keyframe if not present
+  var style = document.createElement('style');
+  style.textContent = '@keyframes flashOut{0%{opacity:1}100%{opacity:0}}';
+  document.head.appendChild(style);
+});
+
+/* Override plinkoInit reference */
+window.plinkoInit = plinkoInit;
+
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     PAYRO PREDICTION TRADING ENGINE  —  CSS + JS
+════════════════════════════════════════════════════════════════ -->
+<style>
+/* ─── CSS Variables ─── */
+:root{
+  --pt-green:#00F0A0;
+  --pt-red:#FF3D60;
+  --pt-gold:#FFA827;
+  --pt-cyan:#00EEFF;
+  --pt-violet:#B855F7;
+  --pt-bg0:#020410;
+  --pt-bg1:#050918;
+  --pt-bg2:#080E20;
+  --pt-bg3:#0C1428;
+  --pt-txt:#F0F4FF;
+  --pt-txt2:#7A8DB8;
+  --pt-txt3:#35426A;
+  --pt-bdr:rgba(255,255,255,0.07);
+  --pt-r:12px;
+}
+
+/* ─── Live dot on bnav ─── */
+.bnav-trade-live-dot{
+  position:absolute;top:-3px;right:-5px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--pt-green);
+  box-shadow:0 0 8px var(--pt-green);
+  animation:ptPing 1.6s ease-in-out infinite;
+}
+@keyframes ptPing{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
+
+/* ─── Section layout ─── */
+#trade-section{
+  background:var(--pt-bg0);
+  min-height:100%;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* ─── Risk banner ─── */
+.pt-risk-banner{
+  display:flex;align-items:flex-start;gap:9px;
+  padding:10px 16px;
+  background:rgba(255,168,39,.07);
+  border-bottom:1px solid rgba(255,168,39,.2);
+  font-size:11.5px;line-height:1.5;
+  color:rgba(255,168,39,.88);
+  font-weight:500;
+}
+.pt-risk-banner strong{font-weight:800;}
+
+/* ─── Root padding ─── */
+.pt-root{
+  max-width:640px;margin:0 auto;
+  padding:12px 12px 110px;
+  display:flex;flex-direction:column;gap:11px;
+}
+
+/* ─── Header ─── */
+.pt-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:4px 2px;
+}
+.pt-live-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:9px;font-weight:800;letter-spacing:.14em;
+  color:var(--pt-green);text-transform:uppercase;margin-bottom:3px;
+}
+.pt-live-ping{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--pt-green);
+  box-shadow:0 0 8px var(--pt-green);
+  animation:ptPing 1.8s ease-in-out infinite;
+}
+.pt-header-title{
+  font-family:'Rajdhani','DM Sans',sans-serif;
+  font-size:22px;font-weight:800;letter-spacing:.04em;
+  color:var(--pt-txt);
+}
+.pt-header-bal{text-align:right;}
+.pt-hb-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--pt-txt3);margin-bottom:2px;}
+.pt-hb-val{
+  font-family:'DM Mono',monospace;
+  font-size:17px;font-weight:700;color:var(--pt-green);
+  text-shadow:0 0 12px rgba(0,240,160,.35);
+  transition:color .3s;
+}
+
+/* ─── Asset tabs ─── */
+.pt-asset-strip{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.pt-asset-btn{
+  display:flex;align-items:center;gap:7px;
+  padding:8px 14px;border-radius:10px;
+  border:1.5px solid var(--pt-bdr);
+  background:rgba(8,14,32,.8);
+  cursor:pointer;transition:all .2s;
+  color:var(--pt-txt2);font-family:inherit;
+}
+.pt-asset-btn:hover{border-color:rgba(255,255,255,.18);color:var(--pt-txt);}
+.pt-asset-btn.pt-asset-active{
+  border-color:rgba(0,240,160,.4);
+  background:rgba(0,240,160,.07);
+  color:var(--pt-txt);
+  box-shadow:0 0 18px rgba(0,240,160,.12);
+}
+.pt-ab-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.pt-ab-sym{
+  font-family:'Rajdhani','DM Mono',monospace;
+  font-size:15px;font-weight:800;letter-spacing:.07em;
+}
+.pt-ab-name{font-size:10px;color:var(--pt-txt3);}
+.pt-price-box{
+  margin-left:auto;display:flex;align-items:center;gap:9px;
+  padding:8px 14px;border-radius:10px;
+  background:rgba(8,14,32,.85);border:1px solid var(--pt-bdr);
+}
+.pt-price-val{
+  font-family:'DM Mono',monospace;font-size:18px;font-weight:700;
+  color:var(--pt-txt);letter-spacing:.04em;transition:color .25s;
+}
+.pt-price-chg{
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:99px;transition:all .3s;
+}
+.pt-price-chg.up{background:rgba(0,240,160,.13);color:var(--pt-green);}
+.pt-price-chg.dn{background:rgba(255,61,96,.13);color:var(--pt-red);}
+
+/* ─── Chart card ─── */
+.pt-chart-card{
+  background:rgba(8,14,30,.92);
+  border:1px solid var(--pt-bdr);
+  border-radius:var(--pt-r);
+  overflow:hidden;
+  user-select:none;
+}
+.pt-chart-top-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px 7px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.pt-chart-title-row{display:flex;align-items:center;gap:9px;}
+.pt-chart-pair{
+  font-family:'Rajdhani',sans-serif;
+  font-size:15px;font-weight:800;letter-spacing:.06em;color:var(--pt-txt);
+}
+.pt-chart-tf{
+  font-size:10px;font-weight:700;padding:2px 8px;
+  border-radius:5px;background:rgba(255,168,39,.13);
+  color:var(--pt-gold);letter-spacing:.08em;
+}
+.pt-chart-ohlc{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--pt-txt3);letter-spacing:.02em;
+}
+.pt-chart-body{
+  position:relative;
+  height:clamp(180px,45vw,240px);
+  cursor:crosshair;overflow:hidden;
+  touch-action:none;
+}
+.pt-canvas{
+  position:absolute;inset:0;
+  width:100%!important;height:100%!important;
+  display:block;
+}
+.pt-chart-hint{
+  position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  font-size:9px;color:rgba(255,255,255,.18);
+  pointer-events:none;white-space:nowrap;
+  opacity:1;transition:opacity 1s;
+}
+.pt-chart-footer{
+  display:flex;align-items:center;gap:10px;
+  padding:6px 14px 10px;
+  border-top:1px solid rgba(255,255,255,.03);
+  font-size:10px;color:var(--pt-txt3);
+}
+.pt-legend-item{display:flex;align-items:center;gap:4px;}
+.pt-leg-line{display:inline-block;width:18px;height:2px;border-radius:2px;flex-shrink:0;}
+.pt-legend-sep{color:rgba(255,255,255,.1);margin:0 2px;}
+.pt-legend-vol{}
+.pt-chart-hint-sm{font-size:9px;color:rgba(255,255,255,.15);}
+
+/* ─── Trade card ─── */
+.pt-trade-card{
+  background:rgba(8,14,30,.92);
+  border:1px solid var(--pt-bdr);
+  border-radius:var(--pt-r);
+  padding:16px;
+  display:flex;flex-direction:column;gap:14px;
+}
+
+/* Amount input */
+.pt-amount-row{display:flex;flex-direction:column;gap:7px;}
+.pt-ar-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pt-txt3);}
+.pt-ar-input-wrap{
+  display:flex;align-items:center;
+  background:rgba(0,0,0,.35);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:10px;overflow:hidden;
+  min-height:44px;transition:border-color .2s,box-shadow .2s;
+}
+.pt-ar-input-wrap:focus-within{
+  border-color:rgba(255,168,39,.5);
+  box-shadow:0 0 0 3px rgba(255,168,39,.1);
+}
+.pt-ar-sym{
+  padding:0 12px;
+  font-family:'DM Mono',monospace;font-size:15px;font-weight:700;
+  color:var(--pt-gold);border-right:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;flex-shrink:0;align-self:stretch;
+}
+.pt-ar-input{
+  flex:1;padding:0 12px;background:transparent;border:none;outline:none;
+  font-family:'DM Mono',monospace;font-size:15px;font-weight:700;
+  color:var(--pt-txt);min-width:0;
+}
+.pt-ar-input::placeholder{color:var(--pt-txt3);}
+.pt-quick-row{display:flex;flex-wrap:wrap;gap:5px;}
+.pt-quick-row button{
+  padding:5px 10px;border-radius:7px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,168,39,.07);color:var(--pt-gold);
+  font-size:10px;font-weight:700;letter-spacing:.04em;
+  transition:all .18s;font-family:inherit;
+}
+.pt-quick-row button:hover{background:rgba(255,168,39,.16);border-color:rgba(255,168,39,.3);}
+
+/* Payout strip */
+.pt-payout-strip{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 12px;
+  background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.05);
+  border-radius:10px;
+}
+.pt-ps-item{flex:1;text-align:center;}
+.pt-ps-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--pt-txt3);font-weight:600;margin-bottom:3px;}
+.pt-ps-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--pt-txt);}
+.pt-ps-arrow{color:var(--pt-txt3);font-size:16px;flex-shrink:0;}
+
+/* UP / DOWN buttons */
+.pt-dir-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.pt-btn-up,.pt-btn-down{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:3px;
+  padding:18px 10px;border-radius:12px;border:none;
+  cursor:pointer;font-family:'Rajdhani','DM Sans',sans-serif;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .2s,filter .18s;
+  position:relative;overflow:hidden;
+}
+.pt-btn-up::after,.pt-btn-down::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.14) 0%,transparent 55%);
+  pointer-events:none;
+}
+.pt-btn-up{
+  background:linear-gradient(145deg,#00C87A,#007A44);
+  color:#fff;
+  box-shadow:0 6px 28px rgba(0,200,122,.4),0 0 50px rgba(0,240,160,.1);
+}
+.pt-btn-up:hover:not(:disabled){
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 12px 40px rgba(0,200,122,.58),0 0 70px rgba(0,240,160,.2);
+  filter:brightness(1.08);
+}
+.pt-btn-down{
+  background:linear-gradient(145deg,#E52248,#8A0A28);
+  color:#fff;
+  box-shadow:0 6px 28px rgba(229,34,72,.4),0 0 50px rgba(255,61,96,.1);
+}
+.pt-btn-down:hover:not(:disabled){
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 12px 40px rgba(229,34,72,.58),0 0 70px rgba(255,61,96,.2);
+  filter:brightness(1.08);
+}
+.pt-btn-up:active:not(:disabled),.pt-btn-down:active:not(:disabled){transform:scale(.96);}
+.pt-btn-up:disabled,.pt-btn-down:disabled{opacity:.3;pointer-events:none;}
+.pt-dir-label{font-size:22px;font-weight:900;letter-spacing:.1em;}
+.pt-dir-sub{font-size:10px;opacity:.7;letter-spacing:.04em;}
+
+/* ─── Active trade panel ─── */
+.pt-active-panel{
+  background:rgba(0,0,0,.32);
+  border:1.5px solid rgba(255,168,39,.22);
+  border-radius:12px;padding:16px;
+  animation:ptSlideFade .35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes ptSlideFade{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+.pt-ap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.pt-ap-live-badge{
+  display:flex;align-items:center;gap:6px;
+  font-size:9px;font-weight:800;letter-spacing:.16em;
+  color:var(--pt-gold);text-transform:uppercase;
+}
+.pt-ap-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--pt-gold);box-shadow:0 0 10px var(--pt-gold);
+  animation:ptPing 1s ease-in-out infinite;
+}
+.pt-ap-direction{
+  font-family:'Rajdhani',sans-serif;
+  font-size:14px;font-weight:800;letter-spacing:.08em;
+  padding:4px 13px;border-radius:99px;
+}
+.pt-ap-direction.up{background:rgba(0,200,122,.18);color:var(--pt-green);border:1px solid rgba(0,240,160,.3);}
+.pt-ap-direction.dn{background:rgba(229,34,72,.16);color:var(--pt-red);border:1px solid rgba(255,61,96,.3);}
+
+/* Ring timer */
+.pt-timer-block{
+  display:flex;justify-content:center;position:relative;margin-bottom:14px;
+}
+.pt-timer-ring{transform:rotate(-90deg);}
+.pt-ring-bg{fill:none;stroke:rgba(255,255,255,.07);stroke-width:6;}
+.pt-ring-fill{
+  fill:none;stroke:var(--pt-cyan);stroke-width:6;
+  stroke-linecap:round;
+  stroke-dasharray:301.6;
+  transition:stroke-dashoffset .5s linear,stroke .3s;
+  filter:drop-shadow(0 0 6px var(--pt-cyan));
+}
+.pt-timer-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.pt-timer-val{
+  font-family:'DM Mono',monospace;
+  font-size:28px;font-weight:700;letter-spacing:.06em;
+  color:var(--pt-cyan);
+  text-shadow:0 0 18px rgba(0,238,255,.5),0 0 36px rgba(0,238,255,.2);
+  transition:color .3s;
+}
+.pt-timer-sub{font-size:9px;color:var(--pt-txt3);letter-spacing:.08em;text-transform:uppercase;}
+
+/* Active stats */
+.pt-ap-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;
+}
+.pt-ap-stat{
+  padding:8px 10px;
+  background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.05);
+  border-radius:8px;
+}
+.pt-aps-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--pt-txt3);margin-bottom:3px;}
+.pt-aps-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--pt-txt);transition:color .3s;}
+
+/* Early exit */
+.pt-early-row{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding-top:10px;border-top:1px solid rgba(255,255,255,.05);
+}
+.pt-early-txt{font-size:11px;color:var(--pt-txt2);}
+.pt-early-txt strong{color:var(--pt-gold);}
+.pt-early-btn{
+  padding:7px 14px;border-radius:8px;cursor:pointer;
+  background:rgba(255,168,39,.1);
+  border:1px solid rgba(255,168,39,.28);
+  color:var(--pt-gold);font-size:11px;font-weight:700;
+  letter-spacing:.04em;transition:all .18s;
+  font-family:inherit;white-space:nowrap;
+}
+.pt-early-btn:hover{background:rgba(255,168,39,.22);box-shadow:0 0 16px rgba(255,168,39,.18);}
+
+/* ─── History card ─── */
+.pt-history-card{
+  background:rgba(8,14,30,.92);
+  border:1px solid var(--pt-bdr);
+  border-radius:var(--pt-r);overflow:hidden;
+}
+.pt-hc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);
+}
+.pt-hc-title{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:700;color:var(--pt-txt);
+}
+.pt-hc-count{
+  font-size:10px;font-weight:700;padding:2px 9px;
+  border-radius:99px;background:rgba(255,168,39,.1);
+  color:var(--pt-gold);font-family:'DM Mono',monospace;
+}
+.pt-hc-list{max-height:220px;overflow-y:auto;}
+.pt-hc-empty{padding:22px;text-align:center;font-size:12px;color:var(--pt-txt3);}
+.pt-hr{
+  display:grid;grid-template-columns:28px 1fr auto auto;
+  align-items:center;gap:10px;
+  padding:9px 14px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:12px;
+  animation:ptSlideFade .25s ease;
+}
+.pt-hr:last-child{border-bottom:none;}
+.pt-hr-badge{
+  width:26px;height:26px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;flex-shrink:0;
+}
+.pt-hr-badge.w{background:rgba(0,240,160,.13);color:var(--pt-green);}
+.pt-hr-badge.l{background:rgba(255,61,96,.13);color:var(--pt-red);}
+.pt-hr-info{min-width:0;}
+.pt-hr-sym{font-weight:700;color:var(--pt-txt);}
+.pt-hr-meta{font-size:10px;color:var(--pt-txt3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pt-hr-dir{
+  font-size:10px;font-weight:800;padding:2px 7px;border-radius:5px;
+  letter-spacing:.05em;flex-shrink:0;
+}
+.pt-hr-dir.u{background:rgba(0,240,160,.1);color:var(--pt-green);}
+.pt-hr-dir.d{background:rgba(255,61,96,.1);color:var(--pt-red);}
+.pt-hr-pnl{
+  font-family:'DM Mono',monospace;font-size:13px;font-weight:700;
+  text-align:right;flex-shrink:0;
+}
+.pt-hr-pnl.w{color:var(--pt-green);}
+.pt-hr-pnl.l{color:var(--pt-red);}
+
+/* ─── Stats bar ─── */
+.pt-stats-bar{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+}
+.pt-sb-chip{
+  background:rgba(8,14,30,.92);border:1px solid var(--pt-bdr);
+  border-radius:10px;padding:10px 4px;text-align:center;
+}
+.pt-sb-val{
+  font-family:'DM Mono',monospace;font-size:13px;font-weight:700;
+  color:var(--pt-txt);margin-bottom:3px;
+}
+.pt-sb-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--pt-txt3);}
+
+/* ─── Result overlay ─── */
+.pt-result-ov{
+  position:fixed;inset:0;z-index:9997;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+.pt-result-box{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:28px 48px;border-radius:20px;
+  font-family:'Rajdhani',sans-serif;
+  backdrop-filter:blur(18px) saturate(1.5);
+  animation:ptResPop .55s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes ptResPop{
+  0%{transform:scale(.6) translateY(20px);opacity:0}
+  65%{transform:scale(1.04) translateY(-4px)}
+  100%{transform:scale(1) translateY(0);opacity:1}
+}
+.pt-result-box.win{
+  background:rgba(0,240,160,.16);
+  border:2px solid rgba(0,240,160,.5);
+  box-shadow:0 0 60px rgba(0,240,160,.3),0 0 120px rgba(0,240,160,.1);
+}
+.pt-result-box.lose{
+  background:rgba(255,61,96,.16);
+  border:2px solid rgba(255,61,96,.5);
+  box-shadow:0 0 60px rgba(255,61,96,.3),0 0 120px rgba(255,61,96,.1);
+}
+.pt-res-emoji{font-size:48px;line-height:1;}
+.pt-res-title{font-size:36px;font-weight:900;letter-spacing:.08em;}
+.pt-res-sub{font-size:17px;font-weight:600;opacity:.82;}
+.pt-res-detail{font-size:12px;opacity:.55;margin-top:2px;}
+
+/* ─── Floating win label ─── */
+.pt-float-win{
+  position:fixed;pointer-events:none;z-index:9999;
+  font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:800;
+  letter-spacing:.06em;text-shadow:0 0 14px currentColor;
+  animation:ptFloat .95s cubic-bezier(.25,.46,.45,.94) forwards;
+}
+@keyframes ptFloat{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  55%{transform:translateY(-55px) scale(1.1);opacity:1}
+  100%{transform:translateY(-100px) scale(.88);opacity:0}
+}
+
+/* Balance flash */
+@keyframes ptBalFlash{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.12);filter:brightness(1.4)}
+  100%{transform:scale(1);filter:none}
+}
+
+/* ─── Responsive ─── */
+@media(max-width:420px){
+  .pt-stats-bar{grid-template-columns:repeat(3,1fr);}
+  .pt-price-box{display:none;}
+  .pt-chart-ohlc{display:none;}
+}
+@media(max-width:360px){
+  .pt-btn-up,.pt-btn-down{padding:14px 8px;}
+  .pt-dir-label{font-size:18px;}
+}
+</style>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   PAYRO PREDICTION TRADING SYSTEM  v1.0
+   Assets: PYO / VRT  |  Duration: 5 min  |  Payout: ×1.8
+   Wallet: hooks into window.S.balance / addTx / updateWallet
+════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ─── Utility ─── */
+var $ = function(id){ return document.getElementById(id); };
+var fmt = function(v,d){ return '$'+(+v).toFixed(d===undefined?5:d); };
+var fmtTs = function(ts){
+  var d=new Date(ts);
+  return d.getHours().toString().padStart(2,'0')+':'+
+         d.getMinutes().toString().padStart(2,'0')+':'+
+         d.getSeconds().toString().padStart(2,'0');
+};
+
+/* ════════════════════════════════════════════════════════════════
+   PRICE ENGINE — Realistic Brownian motion with mean reversion
+════════════════════════════════════════════════════════════════ */
+var ASSETS = {
+  PYO: {
+    label:'PYO / USD', color:'#00F0A0', shadowColor:'rgba(0,240,160,.6)',
+    base:0.08420, price:0.08420, prev:0.08420,
+    vol:0.0026, trend:0.000008, drift:0,
+    candles:[], ma7:[], ma20:[],
+    dayOpen:0.08420, dayHigh:0.08420, dayLow:0.08420
+  },
+  VRT: {
+    label:'VRT / USD', color:'#B855F7', shadowColor:'rgba(184,85,247,.6)',
+    base:0.12450, price:0.12450, prev:0.12450,
+    vol:0.0018, trend:-0.000004, drift:0,
+    candles:[], ma7:[], ma20:[],
+    dayOpen:0.12450, dayHigh:0.12450, dayLow:0.12450
+  }
+};
+
+var PT_CANDLE_SECS = 10;   // seconds per candle
+var PT_MAX_CANDLES = 80;   // candles retained
+var ptTickSinceCandle = 0;
+var ptCurrentCandle  = null;
+
+/* Simulate one 1-second price tick */
+function ptSimTick(sym){
+  var a = ASSETS[sym];
+  a.prev = a.price;
+  /* Gaussian-ish noise via CLT approx */
+  var u = 0;
+  for(var i=0;i<6;i++) u += Math.random();
+  u = (u-3)/3;
+  /* Mean reversion */
+  var mr = (a.base - a.price) * 0.006;
+  /* Occasional regime drift */
+  if(Math.random() < 0.015) a.drift = (Math.random()-.5)*a.vol*0.8;
+  /* New price */
+  a.price = Math.max(a.base*.4, a.price + u*a.vol*0.55 + a.trend + mr + a.drift);
+  /* Day stats */
+  a.dayHigh = Math.max(a.dayHigh, a.price);
+  a.dayLow  = Math.min(a.dayLow,  a.price);
+  return a.price;
+}
+
+/* Update or close the current candle */
+function ptCandleTick(sym){
+  var price = ptSimTick(sym);
+  var a = ASSETS[sym];
+  if(!ptCurrentCandle){
+    ptCurrentCandle = {o:price,h:price,l:price,c:price,v:Math.random()*900+200};
+  } else {
+    ptCurrentCandle.h = Math.max(ptCurrentCandle.h,price);
+    ptCurrentCandle.l = Math.min(ptCurrentCandle.l,price);
+    ptCurrentCandle.c = price;
+    ptCurrentCandle.v += Math.random()*140;
+  }
+  ptTickSinceCandle++;
+  if(ptTickSinceCandle >= PT_CANDLE_SECS){
+    a.candles.push(JSON.parse(JSON.stringify(ptCurrentCandle)));
+    if(a.candles.length > PT_MAX_CANDLES) a.candles.shift();
+    ptCalcMAs(sym);
+    ptCurrentCandle = null;
+    ptTickSinceCandle = 0;
+  }
+}
+
+function ptCalcMAs(sym){
+  var c = ASSETS[sym].candles;
+  ASSETS[sym].ma7 = c.map(function(_,i){
+    if(i<6)return null;
+    var s=0;for(var j=i-6;j<=i;j++)s+=c[j].c;return s/7;
+  });
+  ASSETS[sym].ma20 = c.map(function(_,i){
+    if(i<19)return null;
+    var s=0;for(var j=i-19;j<=i;j++)s+=c[j].c;return s/20;
+  });
+}
+
+/* Seed historical candles so chart has data on open */
+function ptSeedHistory(sym){
+  var a = ASSETS[sym];
+  a.candles=[];ptCurrentCandle=null;ptTickSinceCandle=0;
+  var p = a.base;
+  for(var i=0;i<50;i++){
+    var o=p, r=a.vol*5;
+    var h=o+Math.random()*r, l=o-Math.random()*r;
+    var c=l+Math.random()*(h-l);
+    a.candles.push({o:o,h:h,l:l,c:c,v:Math.random()*1400+300});
+    p=c;
+  }
+  a.price=p; a.prev=p;
+  a.dayOpen=a.candles[0].o;
+  a.dayHigh=Math.max.apply(null,a.candles.map(function(x){return x.h;}));
+  a.dayLow =Math.min.apply(null,a.candles.map(function(x){return x.l;}));
+  ptCalcMAs(sym);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CHART RENDERER — Professional candlestick with MAs
+   Supports zoom (mouse wheel / pinch) and pan (drag / touch)
+════════════════════════════════════════════════════════════════ */
+var PT_CHART = {
+  sym: 'PYO',
+  offsetX: 0,        // pan offset in candles
+  zoom: 1.0,         // zoom factor (1 = normal)
+  dragging: false,
+  dragStartX: 0,
+  dragStartOffset: 0,
+  pinchDist: 0,
+  pinchZoom: 1
+};
+
+function ptDrawChart(){
+  var canvas = $('pt-canvas');
+  if(!canvas) return;
+  var sym = PT_CHART.sym;
+  var a   = ASSETS[sym];
+
+  /* Retina-aware sizing */
+  var dpr  = window.devicePixelRatio || 1;
+  var body = $('pt-chart-body');
+  if(!body) return;
+  var W = body.clientWidth, H = body.clientHeight;
+  if(W===0||H===0) return;
+  canvas.width  = W*dpr; canvas.height = H*dpr;
+  canvas.style.width = W+'px'; canvas.style.height = H+'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+
+  var PAD_L=46, PAD_R=8, PAD_T=10, PAD_B=32;
+  var cW=W-PAD_L-PAD_R, cH=H-PAD_T-PAD_B;
+
+  ctx.clearRect(0,0,W,H);
+
+  /* ── Candlestick data ── */
+  var allCandles = a.candles.slice();
+  if(ptCurrentCandle && PT_CHART.sym === sym) allCandles.push(JSON.parse(JSON.stringify(ptCurrentCandle)));
+
+  /* zoom/pan window */
+  var visibleCount = Math.max(8, Math.round(30 / PT_CHART.zoom));
+  visibleCount = Math.min(visibleCount, allCandles.length);
+  var startIdx = Math.max(0, allCandles.length - visibleCount - Math.round(PT_CHART.offsetX));
+  startIdx = Math.max(0, Math.min(startIdx, allCandles.length - visibleCount));
+  var visible = allCandles.slice(startIdx, startIdx + visibleCount);
+  if(visible.length < 2) visible = allCandles.slice(-8);
+
+  /* price range */
+  var allH = visible.map(function(c){return c.h;});
+  var allL = visible.map(function(c){return c.l;});
+  var pMax = Math.max.apply(null,allH);
+  var pMin = Math.min.apply(null,allL);
+  var pRng = pMax-pMin || pMax*0.01;
+  pMax += pRng*.08; pMin -= pRng*.06; pRng = pMax-pMin;
+
+  function toX(i){ return PAD_L + (i+.5)*(cW/visible.length); }
+  function toY(p){ return PAD_T + cH - ((p-pMin)/pRng)*cH; }
+
+  /* ── Dark grid ── */
+  ctx.strokeStyle='rgba(255,255,255,.04)'; ctx.lineWidth=1;
+  for(var gy=0;gy<5;gy++){
+    var yv=PAD_T+gy*(cH/4);
+    ctx.beginPath();ctx.moveTo(PAD_L,yv);ctx.lineTo(W-PAD_R,yv);ctx.stroke();
+  }
+  for(var gx=0;gx<6;gx++){
+    var xv=PAD_L+gx*(cW/5);
+    ctx.beginPath();ctx.moveTo(xv,PAD_T);ctx.lineTo(xv,PAD_T+cH);ctx.stroke();
+  }
+
+  /* ── Y-axis labels ── */
+  ctx.fillStyle='rgba(255,255,255,.25)';
+  ctx.font='9px "DM Mono",monospace';
+  ctx.textAlign='right';
+  for(var pi=0;pi<=4;pi++){
+    var pv=pMin+(pi/4)*pRng;
+    ctx.fillText(pv.toFixed(4),PAD_L-3,PAD_T+cH-(pi/4)*cH+3);
+  }
+
+  /* ── Volume bars ── */
+  var maxVol=Math.max.apply(null,visible.map(function(c){return c.v;}));
+  var volH=cH*.14;
+  var bW=Math.max(2.5, cW/visible.length-1.8);
+  visible.forEach(function(c,i){
+    var bull=c.c>=c.o;
+    var vh=(c.v/maxVol)*volH;
+    ctx.fillStyle=bull?'rgba(0,240,160,.15)':'rgba(255,61,96,.15)';
+    ctx.fillRect(toX(i)-bW/2, PAD_T+cH-vh, bW, vh);
+  });
+
+  /* ── Candles ── */
+  visible.forEach(function(c,i){
+    var isLast=(i===visible.length-1 && ptCurrentCandle);
+    var bull=c.c>=c.o;
+    var wick=bull?'rgba(0,240,160,.55)':'rgba(255,61,96,.55)';
+    var body2=bull
+      ?(isLast?'rgba(0,240,160,.96)':'rgba(0,240,160,.82)')
+      :(isLast?'rgba(255,61,96,.96)':'rgba(255,61,96,.8)');
+    var oY=toY(c.o),cY2=toY(c.c),hY=toY(c.h),lY=toY(c.l);
+    var btop=Math.min(oY,cY2), bh=Math.max(Math.abs(cY2-oY),1.8);
+    /* wick */
+    ctx.strokeStyle=wick; ctx.lineWidth=1.3;
+    ctx.beginPath(); ctx.moveTo(toX(i),hY); ctx.lineTo(toX(i),lY); ctx.stroke();
+    /* body */
+    ctx.fillStyle=body2;
+    if(isLast){ctx.shadowBlur=12;ctx.shadowColor=bull?'#00F0A0':'#FF3D60';}
+    ctx.fillRect(toX(i)-bW/2, btop, bW, bh);
+    ctx.shadowBlur=0;
+  });
+
+  /* ── MA7 ── */
+  ptDrawMA(ctx, a.ma7.slice(startIdx,startIdx+visibleCount), visible, toX, toY, '#FFA827', 1.6);
+  /* ── MA20 ── */
+  ptDrawMA(ctx, a.ma20.slice(startIdx,startIdx+visibleCount), visible, toX, toY, '#00EEFF', 1.2);
+
+  /* ── Current price dashed line ── */
+  var curP = a.price;
+  var cpY  = toY(curP);
+  if(cpY>=PAD_T && cpY<=PAD_T+cH){
+    ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(255,168,39,.45)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(PAD_L,cpY); ctx.lineTo(W-PAD_R,cpY); ctx.stroke();
+    ctx.setLineDash([]);
+    /* price tag */
+    ctx.fillStyle='#FFA827';
+    var tagW=48; ctx.fillRect(W-PAD_R-tagW,cpY-9,tagW,18);
+    ctx.fillStyle='#000'; ctx.font='bold 8px "DM Mono",monospace';
+    ctx.textAlign='center'; ctx.fillText(curP.toFixed(4),W-PAD_R-tagW/2,cpY+3);
+  }
+
+  /* ── Entry price line (during active trade) ── */
+  if(ptActiveTrade && ptActiveTrade.sym===sym){
+    var ep=ptActiveTrade.entry, epY=toY(ep);
+    if(epY>=PAD_T&&epY<=PAD_T+cH){
+      var edir=ptActiveTrade.dir;
+      var ec=edir==='UP'?'#00F0A0':'#FF3D60';
+      ctx.setLineDash([6,3]); ctx.strokeStyle=ec; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(PAD_L,epY); ctx.lineTo(W-PAD_R,epY); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle=ec; ctx.font='bold 9px "DM Mono",monospace';
+      ctx.textAlign='left'; ctx.globalAlpha=.85;
+      ctx.fillText('ENTRY '+ep.toFixed(4), PAD_L+4, epY-3);
+      ctx.globalAlpha=1;
+    }
+  }
+
+  /* ── X-axis timestamps ── */
+  ctx.fillStyle='rgba(255,255,255,.18)';
+  ctx.textAlign='center'; ctx.font='8px "DM Mono",monospace';
+  [0, Math.floor(visible.length/2), visible.length-1].forEach(function(i){
+    var now2=new Date(Date.now()-(visible.length-1-i)*PT_CANDLE_SECS*1000);
+    ctx.fillText(now2.getHours().toString().padStart(2,'0')+':'+
+      now2.getMinutes().toString().padStart(2,'0'), toX(i), PAD_T+cH+14);
+  });
+
+  /* ── OHLC display ── */
+  var last=visible[visible.length-1];
+  if(last){
+    var oel=$('pt-chart-ohlc');
+    if(oel) oel.textContent='O '+last.o.toFixed(4)+' H '+last.h.toFixed(4)+
+                            ' L '+last.l.toFixed(4)+' C '+last.c.toFixed(4);
+    var vel=$('pt-legend-vol');
+    if(vel) vel.textContent='Vol '+(last.v/1000).toFixed(1)+'K';
+  }
+}
+
+function ptDrawMA(ctx,ma,visible,toX,toY,color,lw){
+  ctx.strokeStyle=color; ctx.lineWidth=lw; ctx.globalAlpha=.72;
+  ctx.beginPath();
+  var started=false;
+  for(var i=0;i<ma.length&&i<visible.length;i++){
+    if(ma[i]==null)continue;
+    var x=toX(i),y=toY(ma[i]);
+    if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
+  }
+  if(started)ctx.stroke();
+  ctx.globalAlpha=1;
+}
+
+/* ─── Chart interaction: pan & zoom ─── */
+function ptBindChartEvents(){
+  var body=$('pt-chart-body');
+  if(!body)return;
+
+  /* Mouse wheel zoom */
+  body.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var delta=e.deltaY>0?-0.15:0.15;
+    PT_CHART.zoom=Math.max(0.3,Math.min(5,PT_CHART.zoom+delta));
+    ptDrawChart();
+  },{passive:false});
+
+  /* Mouse drag pan */
+  body.addEventListener('mousedown',function(e){
+    PT_CHART.dragging=true;
+    PT_CHART.dragStartX=e.clientX;
+    PT_CHART.dragStartOffset=PT_CHART.offsetX;
+  });
+  window.addEventListener('mousemove',function(e){
+    if(!PT_CHART.dragging)return;
+    var dx=e.clientX-PT_CHART.dragStartX;
+    var candlePx=$('pt-chart-body') ? ($('pt-chart-body').clientWidth-54)/Math.max(8,Math.round(30/PT_CHART.zoom)) : 8;
+    PT_CHART.offsetX=PT_CHART.dragStartOffset+dx/candlePx;
+    ptDrawChart();
+  });
+  window.addEventListener('mouseup',function(){PT_CHART.dragging=false;});
+
+  /* Touch pan */
+  var lastTouchX=0;
+  body.addEventListener('touchstart',function(e){
+    if(e.touches.length===1){lastTouchX=e.touches[0].clientX;}
+    if(e.touches.length===2){
+      PT_CHART.pinchDist=Math.hypot(
+        e.touches[0].clientX-e.touches[1].clientX,
+        e.touches[0].clientY-e.touches[1].clientY);
+      PT_CHART.pinchZoom=PT_CHART.zoom;
+    }
+  },{passive:true});
+  body.addEventListener('touchmove',function(e){
+    e.preventDefault();
+    if(e.touches.length===1){
+      var dx=e.touches[0].clientX-lastTouchX;
+      lastTouchX=e.touches[0].clientX;
+      var bw=$('pt-chart-body')?$('pt-chart-body').clientWidth-54:300;
+      var cpx=bw/Math.max(8,Math.round(30/PT_CHART.zoom));
+      PT_CHART.offsetX+=dx/cpx;
+      ptDrawChart();
+    }
+    if(e.touches.length===2){
+      var dist2=Math.hypot(
+        e.touches[0].clientX-e.touches[1].clientX,
+        e.touches[0].clientY-e.touches[1].clientY);
+      var ratio=dist2/PT_CHART.pinchDist;
+      PT_CHART.zoom=Math.max(0.3,Math.min(5,PT_CHART.pinchZoom*ratio));
+      ptDrawChart();
+    }
+  },{passive:false});
+  body.addEventListener('touchend',function(){ /* reset */ },{passive:true});
+
+  /* Hide chart hint after first interaction */
+  body.addEventListener('mousedown',function(){
+    var h=$('pt-chart-hint');if(h)h.style.opacity='0';
+  },{once:true});
+  body.addEventListener('touchstart',function(){
+    var h=$('pt-chart-hint');if(h)h.style.opacity='0';
+  },{once:true,passive:true});
+}
+
+/* ════════════════════════════════════════════════════════════════
+   WALLET BRIDGE
+════════════════════════════════════════════════════════════════ */
+function ptGetBal(){
+  if(window.S && typeof S.balance==='number') return S.balance;
+  var i=$('wc-bal-int'),d=$('wc-bal-dec');
+  return (i&&d)?parseFloat(i.textContent+d.textContent)||0:0;
+}
+function ptDeduct(amt,label){
+  if(window.S){ S.balance=Math.max(0,S.balance-amt); S.sessionEarned=(S.sessionEarned||0)-amt; }
+  if(window.addTx) addTx(label||'Trade Bet',amt,'debit');
+  if(window.updateWallet) updateWallet();
+  ptSyncBal();
+}
+function ptCredit(amt,label){
+  if(window.S){ S.balance+=amt; S.sessionEarned=(S.sessionEarned||0)+amt; }
+  if(window.addTx) addTx(label||'Trade Win',amt,'credit');
+  if(window.updateWallet) updateWallet();
+  ptSyncBal();
+}
+function ptSyncBal(){
+  var el=$('pt-hb-val');
+  if(el){
+    el.textContent=fmt(ptGetBal(),5);
+    el.style.animation='none';void el.offsetWidth;
+    el.style.animation='ptBalFlash .5s ease';
+  }
+}
+
+/* ── Floating +/- label animation ── */
+function ptFloatLabel(txt,color,anchorEl){
+  var el=document.createElement('div');
+  el.className='pt-float-win'; el.textContent=txt; el.style.color=color||'#00F0A0';
+  var r=(anchorEl||document.body).getBoundingClientRect();
+  el.style.left=(r.left+r.width/2-35)+'px';
+  el.style.top=(r.top+r.height*.3)+'px';
+  document.body.appendChild(el);
+  setTimeout(function(){el.remove();},1000);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TRADING ENGINE
+════════════════════════════════════════════════════════════════ */
+var PAYOUT_MULT  = 1.8;
+var TRADE_SECS   = 300;    /* 5 min */
+var EARLY_RATIO  = 0.5;    /* 50% refund on early exit */
+var RING_CIRCUM  = 301.6;  /* 2π×48 */
+
+var ptActiveTrade  = null;
+var ptCountdownInt = null;
+var ptHistory      = [];
+var ptStats        = {t:0,w:0,l:0,pnl:0};
+var ptCurrentSym   = 'PYO';
+
+/* Asset select */
+window.ptPickAsset = function(sym){
+  ptCurrentSym = sym;
+  PT_CHART.sym = sym;
+  PT_CHART.offsetX = 0;
+  document.querySelectorAll('.pt-asset-btn').forEach(function(b){b.classList.remove('pt-asset-active');});
+  var btn=$('pt-btn-'+sym); if(btn) btn.classList.add('pt-asset-active');
+  var pair=$('pt-chart-pair'); if(pair) pair.textContent=ASSETS[sym].label;
+  ptUpdatePriceBadge();
+  ptDrawChart();
+};
+
+/* Amount quick-set */
+window.ptQ      = function(v){ var i=$('pt-bet-input');if(i){i.value=v.toFixed(4);ptUpdatePayoutStrip();} };
+window.ptHalf   = function(){ var i=$('pt-bet-input');if(i){i.value=Math.max(0.0001,parseFloat(i.value||0)/2).toFixed(4);ptUpdatePayoutStrip();} };
+window.ptDouble = function(){ var i=$('pt-bet-input');if(i){i.value=Math.min(ptGetBal(),(parseFloat(i.value||0)*2||0.001)).toFixed(4);ptUpdatePayoutStrip();} };
+
+function ptGetBet(){
+  var i=$('pt-bet-input');
+  return Math.max(0, parseFloat((i&&i.value)||'0'));
+}
+
+function ptUpdatePayoutStrip(){
+  var bet=ptGetBet();
+  var sk=$('pt-ps-stake'),po=$('pt-ps-payout'),aw=$('pt-ap-win');
+  if(sk) sk.textContent=fmt(bet,4);
+  if(po) po.textContent=fmt(bet*PAYOUT_MULT,4);
+  if(aw) aw.textContent=fmt(bet*PAYOUT_MULT,4);
+  var ea=$('pt-early-amt');
+  if(ea) ea.textContent=fmt(bet*EARLY_RATIO,4);
+}
+
+function ptUpdatePriceBadge(){
+  var a=ASSETS[ptCurrentSym];
+  var pv=$('pt-price-val'), pc=$('pt-price-chg');
+  if(pv){
+    pv.textContent='$'+a.price.toFixed(4);
+    pv.style.color=a.price>=a.prev?'#00F0A0':'#FF3D60';
+    pv.style.textShadow=a.price>=a.prev?'0 0 12px rgba(0,240,160,.6)':'0 0 12px rgba(255,61,96,.6)';
+    setTimeout(function(){if(pv){pv.style.color='';pv.style.textShadow='';}},600);
+  }
+  if(pc){
+    var chg=(a.price-a.dayOpen)/a.dayOpen*100;
+    pc.textContent=(chg>=0?'+':'')+chg.toFixed(2)+'%';
+    pc.className='pt-price-chg '+(chg>=0?'up':'dn');
+  }
+}
+
+/* ── Place Trade ── */
+window.ptTrade = function(dir){
+  if(ptActiveTrade){ ptToast('A trade is already active!','warn'); return; }
+  var bet=ptGetBet();
+  if(bet<=0){ ptToast('Enter a valid trade amount.','warn'); return; }
+  var bal=ptGetBal();
+  if(bet>bal){ ptToast('Insufficient balance (need '+fmt(bet,4)+')','error'); return; }
+
+  var a=ASSETS[ptCurrentSym];
+  ptActiveTrade={
+    id:Date.now(), sym:ptCurrentSym, dir:dir,
+    bet:bet, entry:a.price,
+    end:Date.now()+TRADE_SECS*1000
+  };
+
+  ptDeduct(bet, 'Trade Bet: '+ptCurrentSym+' '+dir);
+
+  /* Show active panel */
+  $('pt-dir-row').style.display='none';
+  var ap=$('pt-active-panel');if(ap){ap.style.display='block';}
+
+  var dirBadge=$('pt-ap-dir');
+  if(dirBadge){
+    dirBadge.textContent=dir==='UP'?'▲ UP':'▼ DOWN';
+    dirBadge.className='pt-ap-direction '+(dir==='UP'?'up':'dn');
+  }
+  $('pt-ap-entry').textContent='$'+a.price.toFixed(4);
+  $('pt-ap-win').textContent=fmt(bet*PAYOUT_MULT,4);
+  $('pt-early-amt').textContent=fmt(bet*EARLY_RATIO,4);
+  $('pt-btn-up').disabled=true;
+  $('pt-btn-down').disabled=true;
+
+  ptStartCountdown();
+  ptToast(dir==='UP'?'🟢 UP trade placed!':'🔴 DOWN trade placed!','success');
+  if(window.SFX) SFX.play('click');
+};
+
+/* ── Countdown ── */
+function ptStartCountdown(){
+  if(ptCountdownInt) clearInterval(ptCountdownInt);
+  ptCountdownInt=setInterval(function(){
+    if(!ptActiveTrade){clearInterval(ptCountdownInt);return;}
+    var rem=Math.max(0,ptActiveTrade.end-Date.now());
+    var m=Math.floor(rem/60000);
+    var s=Math.floor((rem%60000)/1000);
+    /* Timer display */
+    var tv=$('pt-timer-val');
+    if(tv){
+      tv.textContent=m+':'+(s<10?'0':'')+s;
+      tv.style.color=rem<30000?'#FF3D60':rem<60000?'#FFA827':'';
+    }
+    /* Ring progress */
+    var ring=$('pt-ring');
+    if(ring){
+      var pct=rem/(TRADE_SECS*1000);
+      ring.style.strokeDashoffset=(1-pct)*RING_CIRCUM;
+      ring.style.stroke=rem<30000?'#FF3D60':rem<60000?'#FFA827':'#00EEFF';
+    }
+    /* Live position + PnL preview */
+    if(ptActiveTrade){
+      var cur=ASSETS[ptActiveTrade.sym].price;
+      var winning=(ptActiveTrade.dir==='UP' && cur>ptActiveTrade.entry)||
+                  (ptActiveTrade.dir==='DOWN'&& cur<ptActiveTrade.entry);
+      var posEl=$('pt-ap-pos'),curEl=$('pt-ap-cur');
+      if(curEl) curEl.textContent='$'+cur.toFixed(4);
+      if(posEl){
+        posEl.textContent=winning?'▲ Winning':'▼ Losing';
+        posEl.style.color=winning?'#00F0A0':'#FF3D60';
+      }
+    }
+    if(rem<=0){ clearInterval(ptCountdownInt); ptResolve(); }
+  },250);
+}
+
+/* ── Resolve ── */
+function ptResolve(){
+  if(!ptActiveTrade)return;
+  var tr=ptActiveTrade;
+  var a=ASSETS[tr.sym];
+  var exitP=a.price;
+  var won=(tr.dir==='UP'&&exitP>tr.entry)||(tr.dir==='DOWN'&&exitP<tr.entry);
+  var payout=won?tr.bet*PAYOUT_MULT:0;
+  var pnl=won?(payout-tr.bet):-tr.bet;
+
+  if(won) ptCredit(payout,'Trade Win: '+tr.sym+' '+tr.dir+' ×'+PAYOUT_MULT);
+
+  ptStats.t++; ptStats[won?'w':'l']++; ptStats.pnl+=pnl;
+
+  ptHistory.unshift({
+    id:tr.id,sym:tr.sym,dir:tr.dir,bet:tr.bet,
+    entry:tr.entry,exit:exitP,won:won,
+    payout:payout,pnl:pnl,ts:Date.now()
+  });
+  if(ptHistory.length>25)ptHistory.pop();
+
+  ptShowResult(won,pnl,tr.dir,tr.entry,exitP);
+  ptActiveTrade=null;
+  ptRenderHistory();
+  ptUpdateStats();
+  ptResetUI();
+}
+
+/* ── Early exit ── */
+window.ptEarlyExit=function(){
+  if(!ptActiveTrade)return;
+  clearInterval(ptCountdownInt);
+  var refund=ptActiveTrade.bet*EARLY_RATIO;
+  ptCredit(refund,'Trade Exit (Early): '+ptActiveTrade.sym);
+  ptStats.t++; ptStats.l++; ptStats.pnl-=(ptActiveTrade.bet-refund);
+  ptHistory.unshift({
+    id:ptActiveTrade.id,sym:ptActiveTrade.sym,dir:ptActiveTrade.dir,
+    bet:ptActiveTrade.bet,entry:ptActiveTrade.entry,
+    exit:ASSETS[ptActiveTrade.sym].price,
+    won:false,payout:refund,pnl:-(ptActiveTrade.bet-refund),
+    ts:Date.now(),early:true
+  });
+  if(ptHistory.length>25)ptHistory.pop();
+  ptActiveTrade=null;
+  ptToast('Exited early — '+fmt(refund,4)+' returned','info');
+  ptRenderHistory(); ptUpdateStats(); ptResetUI();
+};
+
+function ptResetUI(){
+  var ap=$('pt-active-panel');if(ap)ap.style.display='none';
+  $('pt-dir-row').style.display='grid';
+  $('pt-btn-up').disabled=false; $('pt-btn-down').disabled=false;
+  var tv=$('pt-timer-val');if(tv){tv.textContent='5:00';tv.style.color='';}
+  var ring=$('pt-ring');if(ring){ring.style.strokeDashoffset='301.6';ring.style.stroke='';}
+}
+
+/* ── Result overlay ── */
+function ptShowResult(won,pnl,dir,entryP,exitP){
+  var ov=document.createElement('div');
+  ov.className='pt-result-ov';
+  var emoji=won?(dir==='UP'?'🚀':'🎯'):(dir==='UP'?'📉':'📈');
+  var box=document.createElement('div');
+  box.className='pt-result-box '+(won?'win':'lose');
+  box.innerHTML='<div class="pt-res-emoji">'+emoji+'</div>'+
+    '<div class="pt-res-title" style="color:'+(won?'#00F0A0':'#FF3D60')+'">'+
+      (won?'CORRECT!':'WRONG!')+
+    '</div>'+
+    '<div class="pt-res-sub">'+(won?'+':'')+fmt(pnl,4)+(won?' won':' lost')+'</div>'+
+    '<div class="pt-res-detail">Entry $'+entryP.toFixed(4)+' → Exit $'+exitP.toFixed(4)+'</div>';
+  ov.appendChild(box);
+  document.body.appendChild(ov);
+  /* Auto-remove */
+  setTimeout(function(){
+    ov.style.transition='opacity .5s'; ov.style.opacity='0';
+    setTimeout(function(){ov.remove();},550);
+  },3200);
+  /* Particles */
+  if(won&&window.PARTICLES){
+    var cvs=$('pt-canvas');
+    if(cvs){var r=cvs.getBoundingClientRect();
+      PARTICLES.burst(r.left+r.width/2,r.top+r.height/2,
+        ['#00F0A0','#FFD84A','#00EEFF','#B855F7'],65);}
+  }
+  if(window.SFX) SFX.play(won?'win':'thud');
+  ptToast(won?'✅ '+dir+' CORRECT! '+fmt(pnl,4):'❌ '+dir+' wrong. '+fmt(pnl,4),
+    won?'success':'error');
+  /* Float label near chart */
+  var cv=$('pt-canvas');
+  if(cv){
+    var r2=cv.getBoundingClientRect();
+    ptFloatLabel((won?'+':'')+fmt(pnl,4),won?'#00F0A0':'#FF3D60',cv);
+  }
+}
+
+/* ── Render history ── */
+function ptRenderHistory(){
+  var list=$('pt-hc-list'), cnt=$('pt-hc-count');
+  if(!list)return;
+  if(cnt) cnt.textContent=ptHistory.length+' trade'+(ptHistory.length!==1?'s':'');
+  if(!ptHistory.length){
+    list.innerHTML='<div class="pt-hc-empty">No trades placed yet — be the first to trade!</div>';
+    return;
+  }
+  list.innerHTML=ptHistory.map(function(t){
+    var ea=t.early?' (early)':'';
+    return '<div class="pt-hr">'+
+      '<div class="pt-hr-badge '+(t.won?'w':'l')+'">'+(t.won?'W':'L')+'</div>'+
+      '<div class="pt-hr-info">'+
+        '<div class="pt-hr-sym">'+t.sym+ea+'</div>'+
+        '<div class="pt-hr-meta">'+
+          'E:$'+t.entry.toFixed(4)+' X:$'+t.exit.toFixed(4)+' · '+fmtTs(t.ts)+
+        '</div>'+
+      '</div>'+
+      '<div class="pt-hr-dir '+(t.dir==='UP'?'u':'d')+'">'+t.dir+'</div>'+
+      '<div class="pt-hr-pnl '+(t.won?'w':'l')+'">'+(t.won?'+':'')+fmt(t.pnl,4)+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+/* ── Stats ── */
+function ptUpdateStats(){
+  var wr=ptStats.t>0?Math.round(ptStats.w/ptStats.t*100):0;
+  var set=function(id,v){var e=$(id);if(e)e.textContent=v;};
+  set('pts-total',ptStats.t);
+  set('pts-wins',ptStats.w);
+  set('pts-losses',ptStats.l);
+  set('pts-wr',wr+'%');
+  var pEl=$('pts-pnl');
+  if(pEl){
+    pEl.textContent=(ptStats.pnl>=0?'+':'')+fmt(ptStats.pnl,4);
+    pEl.style.color=ptStats.pnl>=0?'#00F0A0':'#FF3D60';
+  }
+}
+
+/* ── Toast ── */
+function ptToast(msg,type){
+  if(window.toast){
+    toast(msg,type==='success'?'success':type==='error'?'error':type==='warn'?'warn':'info');
+    return;
+  }
+  var t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:82px;left:50%;transform:translateX(-50%);'+
+    'background:rgba(8,14,30,.95);border:1px solid rgba(255,255,255,.1);'+
+    'color:#fff;padding:9px 18px;border-radius:10px;font-size:13px;'+
+    'z-index:99999;pointer-events:none;white-space:nowrap;'+
+    'animation:ptSlideFade .3s ease';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},2800);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MAIN LOOP — 1-second price tick + chart redraw
+════════════════════════════════════════════════════════════════ */
+var ptLoopInterval=null;
+
+function ptMainTick(){
+  /* Always tick both assets for continuity */
+  ASSETS.PYO.prev=ASSETS.PYO.price;
+  ASSETS.VRT.prev=ASSETS.VRT.price;
+  ptCandleTick(ptCurrentSym);
+  ptSimTick(ptCurrentSym==='PYO'?'VRT':'PYO');
+  /* Update UI only if trade section is visible */
+  var ts=$('trade-section');
+  var visible=ts&&ts.style.display!=='none';
+  ptUpdatePriceBadge();
+  ptUpdatePayoutStrip();
+  ptSyncBal();
+  if(visible) ptDrawChart();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════════════════════ */
+function ptInit(){
+  /* Seed historical data */
+  ptSeedHistory('PYO');
+  ptSeedHistory('VRT');
+  ptCurrentCandle=null; ptTickSinceCandle=0;
+
+  /* Bind input */
+  var inp=$('pt-bet-input');
+  if(inp) inp.addEventListener('input',ptUpdatePayoutStrip);
+
+  /* Chart interactions */
+  ptBindChartEvents();
+
+  /* Inject balance flash keyframe once */
+  var s=document.createElement('style');
+  s.textContent='@keyframes ptBalFlash{0%{transform:scale(1)}40%{transform:scale(1.1);filter:brightness(1.35)}100%{transform:scale(1);filter:none}}';
+  document.head.appendChild(s);
+
+  /* Initial renders */
+  ptSyncBal();
+  ptUpdatePayoutStrip();
+  ptUpdatePriceBadge();
+  ptRenderHistory();
+  ptUpdateStats();
+
+  /* Initial chart draw with small delay so layout is done */
+  setTimeout(function(){
+    ptDrawChart();
+    /* Shrink hint after 4s */
+    setTimeout(function(){var h=$('pt-chart-hint');if(h)h.style.opacity='0';},4000);
+  },150);
+
+  /* Start live tick */
+  if(ptLoopInterval) clearInterval(ptLoopInterval);
+  ptLoopInterval=setInterval(ptMainTick,1000);
+
+  /* Resize redraw */
+  if(window.ResizeObserver){
+    var ro=new ResizeObserver(function(){ptDrawChart();});
+    var cb=$('pt-chart-body');
+    if(cb) ro.observe(cb);
+  }
+
+  /* Sync when trade tab is navigated to */
+  var _origBnav=window.bnavGo;
+  window.bnavGo=function(sid,bid){
+    if(_origBnav) _origBnav.apply(this,arguments);
+    if(sid==='trade-section'){
+      ptSyncBal();
+      ptUpdatePayoutStrip();
+      setTimeout(ptDrawChart,80);
+    }
+  };
+}
+
+/* Boot */
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',ptInit);
+}else{
+  setTimeout(ptInit,100);
+}
+
+})();
+</script>
 </body>
 </html>
