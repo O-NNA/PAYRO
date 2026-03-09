@@ -8291,6 +8291,16 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
             </div>
           </div>
 
+          <!-- Duration selector -->
+          <div class="pt-dur-row">
+            <div class="pt-dur-lbl">Trade Duration</div>
+            <div class="pt-dur-btns">
+              <button class="pt-dur-btn" id="pt-dur-1" onclick="ptSetDuration(1)">1 MIN<span class="pt-dur-mult">×1.5</span></button>
+              <button class="pt-dur-btn pt-dur-active" id="pt-dur-5" onclick="ptSetDuration(5)">5 MIN<span class="pt-dur-mult">×1.8</span></button>
+              <button class="pt-dur-btn" id="pt-dur-15" onclick="ptSetDuration(15)">15 MIN<span class="pt-dur-mult">×2.2</span></button>
+            </div>
+          </div>
+
           <!-- Payout preview -->
           <div class="pt-payout-strip">
             <div class="pt-ps-item">
@@ -8299,12 +8309,51 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
             </div>
             <div class="pt-ps-arrow">⟶</div>
             <div class="pt-ps-item">
-              <div class="pt-ps-lbl">Win Payout ×1.8</div>
+              <div class="pt-ps-lbl" id="pt-ps-mult-lbl">Win Payout ×1.8</div>
               <div class="pt-ps-val" id="pt-ps-payout" style="color:var(--pt-green)">$0.0018</div>
             </div>
             <div class="pt-ps-item">
               <div class="pt-ps-lbl">Duration</div>
-              <div class="pt-ps-val">5 min</div>
+              <div class="pt-ps-val" id="pt-ps-dur">5 min</div>
+            </div>
+          </div>
+
+          <!-- Stop Loss / Take Profit Panel -->
+          <div class="pt-sltp-row">
+            <button class="pt-sltp-toggle" id="pt-sltp-toggle" onclick="ptToggleSLTP()">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Stop Loss / Take Profit</span>
+              <svg class="pt-sltp-arrow" id="pt-sltp-arrow" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="pt-sltp-panel" id="pt-sltp-panel" style="display:none">
+              <div class="pt-sltp-grid">
+                <div class="pt-sltp-field">
+                  <div class="pt-sltp-label">
+                    <span style="color:var(--pt-red)">■</span> Stop Loss (SL)
+                  </div>
+                  <div class="pt-sltp-input-wrap">
+                    <span class="pt-sltp-sym">$</span>
+                    <input class="pt-sltp-input" id="pt-sl-input" type="number" min="0" step="0.0001" placeholder="0.00000" autocomplete="off">
+                    <button class="pt-sltp-clear" onclick="document.getElementById('pt-sl-input').value=''">×</button>
+                  </div>
+                  <div class="pt-sltp-hint">Auto-exit if price hits this level</div>
+                </div>
+                <div class="pt-sltp-field">
+                  <div class="pt-sltp-label">
+                    <span style="color:var(--pt-green)">■</span> Take Profit (TP)
+                  </div>
+                  <div class="pt-sltp-input-wrap">
+                    <span class="pt-sltp-sym">$</span>
+                    <input class="pt-sltp-input" id="pt-tp-input" type="number" min="0" step="0.0001" placeholder="0.00000" autocomplete="off">
+                    <button class="pt-sltp-clear" onclick="document.getElementById('pt-tp-input').value=''">×</button>
+                  </div>
+                  <div class="pt-sltp-hint">Auto-win if price hits this level</div>
+                </div>
+              </div>
+              <div class="pt-sltp-note">
+                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                SL/TP closes trade early. SL returns 50%; TP pays full ×1.8 payout.
+              </div>
             </div>
           </div>
 
@@ -8405,6 +8454,52 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
           <div class="pt-sb-chip">
             <div class="pt-sb-val" id="pts-pnl">$0.00</div>
             <div class="pt-sb-lbl">Net P&amp;L</div>
+          </div>
+        </div>
+
+        <!-- ═══ TRADING LEADERBOARD ═══ -->
+        <div class="pt-lb-card">
+          <div class="pt-hc-header">
+            <div class="pt-hc-title">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+              Top Traders — Session
+            </div>
+            <span class="pt-lb-live-badge"><span class="pt-live-ping" style="width:5px;height:5px;display:inline-block;border-radius:50%;background:var(--pt-green);box-shadow:0 0 6px var(--pt-green);animation:ptPing 1.8s ease-in-out infinite"></span>LIVE</span>
+          </div>
+          <div class="pt-lb-list" id="pt-lb-list">
+            <div class="pt-hc-empty">Be the first trader on the leaderboard!</div>
+          </div>
+        </div>
+
+        <!-- ═══ MARKET SENTIMENT ═══ -->
+        <div class="pt-sentiment-card">
+          <div class="pt-sent-title">Market Sentiment — <span id="pt-sent-sym">PYO</span></div>
+          <div class="pt-sent-bar-wrap">
+            <div class="pt-sent-bar">
+              <div class="pt-sent-up-fill" id="pt-sent-up-fill" style="width:55%"></div>
+            </div>
+            <div class="pt-sent-labels">
+              <span class="pt-sent-up-lbl" id="pt-sent-up-lbl">▲ 55% BULL</span>
+              <span class="pt-sent-dn-lbl" id="pt-sent-dn-lbl">45% BEAR ▼</span>
+            </div>
+          </div>
+          <div class="pt-vol-row">
+            <div class="pt-vol-item">
+              <div class="pt-vol-lbl">24h Volume</div>
+              <div class="pt-vol-val" id="pt-vol-24h">—</div>
+            </div>
+            <div class="pt-vol-item">
+              <div class="pt-vol-lbl">24h High</div>
+              <div class="pt-vol-val" id="pt-vol-high" style="color:var(--pt-green)">—</div>
+            </div>
+            <div class="pt-vol-item">
+              <div class="pt-vol-lbl">24h Low</div>
+              <div class="pt-vol-val" id="pt-vol-low" style="color:var(--pt-red)">—</div>
+            </div>
+            <div class="pt-vol-item">
+              <div class="pt-vol-lbl">Open</div>
+              <div class="pt-vol-val" id="pt-vol-open">—</div>
+            </div>
           </div>
         </div>
 
@@ -13334,7 +13429,7 @@ window.plinkoInit = plinkoInit;
   position:relative;
   height:clamp(180px,45vw,240px);
   cursor:crosshair;overflow:hidden;
-  touch-action:none;
+  touch-action:pan-y; /* allow vertical scroll to pass through to section */
 }
 .pt-canvas{
   position:absolute;inset:0;
@@ -13669,12 +13764,196 @@ window.plinkoInit = plinkoInit;
   .pt-btn-up,.pt-btn-down{padding:14px 8px;}
   .pt-dir-label{font-size:18px;}
 }
+
+/* ─── Duration selector ─── */
+.pt-dur-row{
+  padding:10px 14px 4px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.pt-dur-lbl{
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--pt-txt3);margin-bottom:8px;
+}
+.pt-dur-btns{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
+}
+.pt-dur-btn{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:10px 8px;border-radius:9px;
+  border:1.5px solid rgba(255,255,255,.07);
+  background:rgba(8,14,32,.8);
+  color:var(--pt-txt2);font-size:13px;font-weight:800;
+  letter-spacing:.06em;cursor:pointer;
+  transition:all .2s;font-family:'Rajdhani',sans-serif;
+}
+.pt-dur-btn:hover{
+  border-color:rgba(0,240,160,.3);color:var(--pt-txt);
+  box-shadow:0 0 14px rgba(0,240,160,.1);
+}
+.pt-dur-btn.pt-dur-active{
+  border-color:rgba(0,240,160,.5);
+  background:rgba(0,240,160,.08);
+  color:var(--pt-green);
+  box-shadow:0 0 18px rgba(0,240,160,.15),inset 0 0 12px rgba(0,240,160,.05);
+}
+.pt-dur-mult{
+  font-size:9px;font-weight:600;letter-spacing:.04em;
+  color:var(--pt-gold);font-family:'DM Mono',monospace;
+}
+
+/* ─── Stop Loss / Take Profit ─── */
+.pt-sltp-row{
+  padding:8px 14px 2px;
+}
+.pt-sltp-toggle{
+  display:flex;align-items:center;gap:7px;
+  width:100%;padding:8px 12px;border-radius:8px;
+  border:1px dashed rgba(255,255,255,.1);
+  background:rgba(255,255,255,.02);
+  color:var(--pt-txt3);font-size:11px;font-weight:600;letter-spacing:.04em;
+  cursor:pointer;transition:all .2s;
+  text-transform:uppercase;
+}
+.pt-sltp-toggle:hover{
+  border-color:rgba(0,240,160,.25);color:var(--pt-txt2);
+  background:rgba(0,240,160,.03);
+}
+.pt-sltp-arrow{transition:transform .25s;margin-left:auto;}
+.pt-sltp-arrow.open{transform:rotate(180deg);}
+.pt-sltp-panel{
+  margin-top:8px;padding:12px;
+  background:rgba(0,0,0,.3);border-radius:9px;
+  border:1px solid rgba(255,255,255,.06);
+}
+.pt-sltp-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;
+}
+.pt-sltp-field{}
+.pt-sltp-label{
+  font-size:10px;font-weight:700;color:var(--pt-txt3);
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;
+  display:flex;align-items:center;gap:5px;
+}
+.pt-sltp-input-wrap{
+  display:flex;align-items:center;gap:0;
+  border:1px solid rgba(255,255,255,.1);border-radius:7px;
+  background:rgba(8,14,32,.9);overflow:hidden;
+  transition:border-color .2s,box-shadow .2s;
+}
+.pt-sltp-input-wrap:focus-within{
+  border-color:rgba(0,240,160,.35);
+  box-shadow:0 0 0 2px rgba(0,240,160,.07);
+}
+.pt-sltp-sym{
+  padding:0 9px;font-size:11px;color:var(--pt-txt3);
+  border-right:1px solid rgba(255,255,255,.07);
+  height:34px;display:flex;align-items:center;flex-shrink:0;
+  font-family:'DM Mono',monospace;
+}
+.pt-sltp-input{
+  flex:1;padding:0 8px;height:34px;background:transparent;border:none;
+  outline:none;font-family:'DM Mono',monospace;font-size:12px;
+  color:var(--pt-txt);min-width:0;
+}
+.pt-sltp-input::placeholder{color:var(--pt-txt3);font-size:11px;}
+.pt-sltp-clear{
+  padding:0 8px;height:34px;background:transparent;border:none;
+  color:var(--pt-txt3);font-size:14px;cursor:pointer;
+  border-left:1px solid rgba(255,255,255,.07);flex-shrink:0;
+  transition:color .15s;
+}
+.pt-sltp-clear:hover{color:var(--pt-red);}
+.pt-sltp-hint{font-size:9px;color:var(--pt-txt3);margin-top:3px;letter-spacing:.02em;}
+.pt-sltp-note{
+  display:flex;align-items:flex-start;gap:5px;
+  font-size:10px;color:rgba(255,255,255,.3);line-height:1.5;
+  padding:8px 10px;background:rgba(255,255,255,.02);
+  border-radius:6px;border:1px dashed rgba(255,255,255,.06);
+}
+
+/* ─── Trading Leaderboard ─── */
+.pt-lb-card{
+  background:rgba(8,14,30,.92);
+  border:1px solid var(--pt-bdr);border-radius:var(--pt-r);overflow:hidden;
+}
+.pt-lb-live-badge{
+  display:flex;align-items:center;gap:5px;
+  font-size:9px;font-weight:800;letter-spacing:.14em;
+  color:var(--pt-green);text-transform:uppercase;
+}
+.pt-lb-row{
+  display:grid;grid-template-columns:28px 1fr 60px 68px;
+  align-items:center;gap:8px;
+  padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);
+  transition:background .15s;
+}
+.pt-lb-row:last-child{border-bottom:none;}
+.pt-lb-row:hover{background:rgba(255,255,255,.025);}
+.pt-lb-row.pt-lb-you{
+  background:rgba(0,240,160,.04);
+  border-left:2px solid rgba(0,240,160,.4);
+}
+.pt-lb-rank{
+  font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:800;
+  color:var(--pt-txt3);text-align:center;
+}
+.pt-lb-rank.gold{color:var(--pt-gold);text-shadow:0 0 10px rgba(255,168,39,.6);}
+.pt-lb-rank.silver{color:#C0C8D8;}
+.pt-lb-rank.bronze{color:#C8854A;}
+.pt-lb-name{font-size:12px;font-weight:600;color:var(--pt-txt);}
+.pt-lb-sym{font-size:10px;color:var(--pt-txt3);margin-top:1px;}
+.pt-lb-trades{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--pt-txt2);text-align:center;
+}
+.pt-lb-pnl{
+  font-family:'DM Mono',monospace;font-size:12px;font-weight:700;
+  text-align:right;
+}
+.pt-lb-pnl.pos{color:var(--pt-green);}
+.pt-lb-pnl.neg{color:var(--pt-red);}
+
+/* ─── Market Sentiment ─── */
+.pt-sentiment-card{
+  background:rgba(8,14,30,.92);
+  border:1px solid var(--pt-bdr);border-radius:var(--pt-r);
+  padding:14px;
+}
+.pt-sent-title{
+  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--pt-txt3);margin-bottom:12px;
+}
+.pt-sent-bar-wrap{margin-bottom:12px;}
+.pt-sent-bar{
+  height:8px;border-radius:99px;background:rgba(255,61,96,.25);
+  overflow:hidden;margin-bottom:6px;
+}
+.pt-sent-up-fill{
+  height:100%;border-radius:99px;
+  background:linear-gradient(90deg,rgba(0,240,160,.6),rgba(0,240,160,.9));
+  transition:width .8s cubic-bezier(.34,1.56,.64,1);
+}
+.pt-sent-labels{display:flex;justify-content:space-between;}
+.pt-sent-up-lbl{font-size:10px;font-weight:700;color:var(--pt-green);font-family:'DM Mono',monospace;}
+.pt-sent-dn-lbl{font-size:10px;font-weight:700;color:var(--pt-red);font-family:'DM Mono',monospace;}
+.pt-vol-row{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+  padding-top:10px;border-top:1px solid rgba(255,255,255,.05);
+}
+.pt-vol-item{text-align:center;}
+.pt-vol-lbl{font-size:8px;font-weight:700;color:var(--pt-txt3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;}
+.pt-vol-val{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--pt-txt);}
+
+/* Payout strip updated */
+#pt-ps-dur{transition:color .3s;}
+
 </style>
 
 <script>
 /* ════════════════════════════════════════════════════════════════
-   PAYRO PREDICTION TRADING SYSTEM  v1.0
-   Assets: PYO / VRT  |  Duration: 5 min  |  Payout: ×1.8
+   PAYRO PREDICTION TRADING SYSTEM  v2.0
+   Assets: PYO / VRT  |  Duration: 1/5/15 min  |  Payout: ×1.5/×1.8/×2.2
+   New: Duration Selector · Stop Loss · Take Profit · Trading Leaderboard
    Wallet: hooks into window.S.balance / addTx / updateWallet
 ════════════════════════════════════════════════════════════════ */
 (function(){
@@ -13972,8 +14251,10 @@ function ptBindChartEvents(){
   var body=$('pt-chart-body');
   if(!body)return;
 
-  /* Mouse wheel zoom */
+  /* Mouse wheel zoom — only intercept when Ctrl/Meta held; otherwise let
+     the wheel event bubble so the spa-section can scroll naturally.        */
   body.addEventListener('wheel',function(e){
+    if(!e.ctrlKey && !e.metaKey) return; /* ← pass-through to page scroll  */
     e.preventDefault();
     var delta=e.deltaY>0?-0.15:0.15;
     PT_CHART.zoom=Math.max(0.3,Math.min(5,PT_CHART.zoom+delta));
@@ -13995,10 +14276,10 @@ function ptBindChartEvents(){
   });
   window.addEventListener('mouseup',function(){PT_CHART.dragging=false;});
 
-  /* Touch pan */
-  var lastTouchX=0;
+  /* Touch pan — vertical scroll passes through; horizontal pan + pinch are intercepted */
+  var lastTouchX=0, lastTouchY=0;
   body.addEventListener('touchstart',function(e){
-    if(e.touches.length===1){lastTouchX=e.touches[0].clientX;}
+    if(e.touches.length===1){lastTouchX=e.touches[0].clientX; lastTouchY=e.touches[0].clientY;}
     if(e.touches.length===2){
       PT_CHART.pinchDist=Math.hypot(
         e.touches[0].clientX-e.touches[1].clientX,
@@ -14007,22 +14288,30 @@ function ptBindChartEvents(){
     }
   },{passive:true});
   body.addEventListener('touchmove',function(e){
-    e.preventDefault();
-    if(e.touches.length===1){
-      var dx=e.touches[0].clientX-lastTouchX;
-      lastTouchX=e.touches[0].clientX;
-      var bw=$('pt-chart-body')?$('pt-chart-body').clientWidth-54:300;
-      var cpx=bw/Math.max(8,Math.round(30/PT_CHART.zoom));
-      PT_CHART.offsetX+=dx/cpx;
-      ptDrawChart();
-    }
     if(e.touches.length===2){
+      e.preventDefault();
       var dist2=Math.hypot(
         e.touches[0].clientX-e.touches[1].clientX,
         e.touches[0].clientY-e.touches[1].clientY);
       var ratio=dist2/PT_CHART.pinchDist;
       PT_CHART.zoom=Math.max(0.3,Math.min(5,PT_CHART.pinchZoom*ratio));
       ptDrawChart();
+      return;
+    }
+    if(e.touches.length===1){
+      var dx=e.touches[0].clientX-lastTouchX;
+      var dy=e.touches[0].clientY-lastTouchY;
+      if(Math.abs(dx)>Math.abs(dy)){
+        /* Horizontal pan — intercept */
+        e.preventDefault();
+        var bw=$('pt-chart-body')?$('pt-chart-body').clientWidth-54:300;
+        var cpx=bw/Math.max(8,Math.round(30/PT_CHART.zoom));
+        PT_CHART.offsetX+=dx/cpx;
+        ptDrawChart();
+      }
+      /* Vertical movement: do NOT preventDefault — lets spa-section scroll */
+      lastTouchX=e.touches[0].clientX;
+      lastTouchY=e.touches[0].clientY;
     }
   },{passive:false});
   body.addEventListener('touchend',function(){ /* reset */ },{passive:true});
@@ -14080,15 +14369,135 @@ function ptFloatLabel(txt,color,anchorEl){
    TRADING ENGINE
 ════════════════════════════════════════════════════════════════ */
 var PAYOUT_MULT  = 1.8;
-var TRADE_SECS   = 300;    /* 5 min */
+var TRADE_SECS   = 300;    /* 5 min default */
 var EARLY_RATIO  = 0.5;    /* 50% refund on early exit */
 var RING_CIRCUM  = 301.6;  /* 2π×48 */
+
+/* ─── Duration Configs ─── */
+var PT_DURATIONS = {
+  1:  { secs:60,  mult:1.5, label:'1 min' },
+  5:  { secs:300, mult:1.8, label:'5 min' },
+  15: { secs:900, mult:2.2, label:'15 min' }
+};
+var ptSelectedDuration = 5;   /* default: 5 min */
+
+/* ─── SLTP state ─── */
+var ptSLTPOpen = false;
+
+/* ─── Leaderboard state ─── */
+var ptLeaderboard = []; /* Array of {name, pnl, trades, sym} */
+
+/* ─── Mock trader names for leaderboard ─── */
+var PT_FAKE_NAMES = [
+  'Apex_Trader','Kira_V','NeonWolf','QuantX','PrismFX',
+  'ArcLight','VX_Alpha','CryptoZen','StrikeK','Odin_FX',
+  'ShadowQ','EclipseT','TurboAce','NovaBull','ZetaEdge'
+];
 
 var ptActiveTrade  = null;
 var ptCountdownInt = null;
 var ptHistory      = [];
 var ptStats        = {t:0,w:0,l:0,pnl:0};
 var ptCurrentSym   = 'PYO';
+
+/* ─── Duration selector ─── */
+window.ptSetDuration = function(mins){
+  ptSelectedDuration = mins;
+  var cfg = PT_DURATIONS[mins];
+  PAYOUT_MULT = cfg.mult;
+  TRADE_SECS  = cfg.secs;
+  /* Update UI */
+  document.querySelectorAll('.pt-dur-btn').forEach(function(b){b.classList.remove('pt-dur-active');});
+  var db=$('pt-dur-'+mins);if(db)db.classList.add('pt-dur-active');
+  var dl=$('pt-ps-dur');if(dl)dl.textContent=cfg.label;
+  var ml=$('pt-ps-mult-lbl');if(ml)ml.textContent='Win Payout ×'+cfg.mult;
+  /* Update timer display */
+  var tv=$('pt-timer-val');
+  if(tv){var m=Math.floor(cfg.secs/60),s=cfg.secs%60;tv.textContent=m+':'+(s<10?'0':'')+s;}
+  ptUpdatePayoutStrip();
+};
+
+/* ─── SLTP toggle ─── */
+window.ptToggleSLTP = function(){
+  ptSLTPOpen = !ptSLTPOpen;
+  var panel=$('pt-sltp-panel'),arrow=$('pt-sltp-arrow');
+  if(panel) panel.style.display = ptSLTPOpen ? 'block' : 'none';
+  if(arrow) arrow.classList.toggle('open', ptSLTPOpen);
+};
+
+/* ─── Leaderboard helpers ─── */
+function ptSeedLeaderboard(){
+  ptLeaderboard = PT_FAKE_NAMES.slice(0,8).map(function(name,i){
+    var syms=['PYO','VRT'];
+    var pnl=(Math.random()>.45?1:-1)*(Math.random()*0.08+0.001);
+    return {
+      name:name,
+      pnl:parseFloat(pnl.toFixed(5)),
+      trades:Math.floor(Math.random()*12)+1,
+      sym:syms[Math.floor(Math.random()*2)]
+    };
+  });
+  /* Sort by PNL descending */
+  ptLeaderboard.sort(function(a,b){return b.pnl-a.pnl;});
+}
+
+function ptAddSelfToLeaderboard(){
+  /* Remove existing "You" entry */
+  ptLeaderboard = ptLeaderboard.filter(function(r){return !r.isYou;});
+  if(ptStats.t>0){
+    ptLeaderboard.push({
+      name:'You',pnl:ptStats.pnl,trades:ptStats.t,
+      sym:ptCurrentSym,isYou:true
+    });
+    ptLeaderboard.sort(function(a,b){return b.pnl-a.pnl;});
+    /* Keep top 10 */
+    if(ptLeaderboard.length>10) ptLeaderboard=ptLeaderboard.slice(0,10);
+  }
+}
+
+function ptRenderLeaderboard(){
+  var list=$('pt-lb-list');if(!list)return;
+  ptAddSelfToLeaderboard();
+  if(!ptLeaderboard.length){
+    list.innerHTML='<div class="pt-hc-empty">Be the first trader on the leaderboard!</div>';
+    return;
+  }
+  var rankLabels=['gold','silver','bronze'];
+  list.innerHTML=ptLeaderboard.map(function(r,i){
+    var rank=i+1;
+    var rc=rankLabels[i]||'';
+    return '<div class="pt-lb-row'+(r.isYou?' pt-lb-you':'')+'">'+
+      '<div class="pt-lb-rank '+rc+'">'+rank+'</div>'+
+      '<div><div class="pt-lb-name">'+(r.isYou?'⚡ You':r.name)+'</div>'+
+        '<div class="pt-lb-sym">'+r.sym+'</div></div>'+
+      '<div class="pt-lb-trades">'+r.trades+' trades</div>'+
+      '<div class="pt-lb-pnl '+(r.pnl>=0?'pos':'neg')+'">'+(r.pnl>=0?'+':'')+r.pnl.toFixed(4)+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+/* ─── Sentiment & Market info ─── */
+function ptUpdateSentiment(){
+  var sentEl=$('pt-sent-sym'),fill=$('pt-sent-up-fill');
+  var upL=$('pt-sent-up-lbl'),dnL=$('pt-sent-dn-lbl');
+  var a=ASSETS[ptCurrentSym];
+  /* Calculate sentiment from recent candles */
+  var candles=a.candles.slice(-20);
+  if(!candles.length)return;
+  var bulls=candles.filter(function(c){return c.c>=c.o;}).length;
+  var pct=Math.round(bulls/candles.length*100);
+  if(sentEl)sentEl.textContent=ptCurrentSym;
+  if(fill)fill.style.width=pct+'%';
+  if(upL)upL.textContent='▲ '+pct+'% BULL';
+  if(dnL)dnL.textContent=(100-pct)+'% BEAR ▼';
+  /* 24h stats */
+  var volEl=$('pt-vol-24h'),hiEl=$('pt-vol-high'),loEl=$('pt-vol-low'),opEl=$('pt-vol-open');
+  var totalVol=a.candles.reduce(function(s,c){return s+c.v;},0);
+  if(volEl)volEl.textContent=(totalVol/1000).toFixed(1)+'K';
+  if(hiEl)hiEl.textContent='$'+a.dayHigh.toFixed(4);
+  if(loEl)loEl.textContent='$'+a.dayLow.toFixed(4);
+  if(opEl)opEl.textContent='$'+a.dayOpen.toFixed(4);
+}
 
 /* Asset select */
 window.ptPickAsset = function(sym){
@@ -14099,6 +14508,7 @@ window.ptPickAsset = function(sym){
   var btn=$('pt-btn-'+sym); if(btn) btn.classList.add('pt-asset-active');
   var pair=$('pt-chart-pair'); if(pair) pair.textContent=ASSETS[sym].label;
   ptUpdatePriceBadge();
+  ptUpdateSentiment();
   ptDrawChart();
 };
 
@@ -14138,6 +14548,55 @@ function ptUpdatePriceBadge(){
   }
 }
 
+/* ─── SL/TP price check ─── */
+function ptCheckSLTP(){
+  if(!ptActiveTrade) return;
+  var t=ptActiveTrade;
+  var cur=ASSETS[t.sym].price;
+  var sl=parseFloat(($('pt-sl-input')&&$('pt-sl-input').value)||'0');
+  var tp=parseFloat(($('pt-tp-input')&&$('pt-tp-input').value)||'0');
+  if(!sl&&!tp) return;
+  /* Stop Loss hit */
+  if(sl>0){
+    var slHit=(t.dir==='UP'&&cur<=sl)||(t.dir==='DOWN'&&cur>=sl);
+    if(slHit){
+      clearInterval(ptCountdownInt);
+      var refund=t.bet*EARLY_RATIO;
+      ptCredit(refund,'Stop Loss: '+t.sym);
+      ptStats.t++;ptStats.l++;ptStats.pnl-=(t.bet-refund);
+      ptHistory.unshift({
+        id:t.id,sym:t.sym,dir:t.dir,bet:t.bet,entry:t.entry,
+        exit:cur,won:false,payout:refund,pnl:-(t.bet-refund),ts:Date.now(),sl:true
+      });
+      if(ptHistory.length>25)ptHistory.pop();
+      ptActiveTrade=null;
+      ptToast('🛑 Stop Loss hit — '+fmt(refund,4)+' returned','warn');
+      ptRenderHistory();ptUpdateStats();ptRenderLeaderboard();ptResetUI();
+      return;
+    }
+  }
+  /* Take Profit hit */
+  if(tp>0){
+    var tpHit=(t.dir==='UP'&&cur>=tp)||(t.dir==='DOWN'&&cur<=tp);
+    if(tpHit){
+      clearInterval(ptCountdownInt);
+      var win=t.bet*PAYOUT_MULT;
+      ptCredit(win,'Take Profit: '+t.sym);
+      ptStats.t++;ptStats.w++;ptStats.pnl+=(win-t.bet);
+      ptHistory.unshift({
+        id:t.id,sym:t.sym,dir:t.dir,bet:t.bet,entry:t.entry,
+        exit:cur,won:true,payout:win,pnl:(win-t.bet),ts:Date.now(),tp:true
+      });
+      if(ptHistory.length>25)ptHistory.pop();
+      ptActiveTrade=null;
+      ptToast('🎯 Take Profit hit! +'+fmt(win-t.bet,4),'success');
+      if(window.SFX)SFX.play('win');
+      ptRenderHistory();ptUpdateStats();ptRenderLeaderboard();ptResetUI();
+      return;
+    }
+  }
+}
+
 /* ── Place Trade ── */
 window.ptTrade = function(dir){
   if(ptActiveTrade){ ptToast('A trade is already active!','warn'); return; }
@@ -14147,6 +14606,9 @@ window.ptTrade = function(dir){
   if(bet>bal){ ptToast('Insufficient balance (need '+fmt(bet,4)+')','error'); return; }
 
   var a=ASSETS[ptCurrentSym];
+  var cfg=PT_DURATIONS[ptSelectedDuration]||PT_DURATIONS[5];
+  PAYOUT_MULT=cfg.mult; TRADE_SECS=cfg.secs;
+
   ptActiveTrade={
     id:Date.now(), sym:ptCurrentSym, dir:dir,
     bet:bet, entry:a.price,
@@ -14209,6 +14671,7 @@ function ptStartCountdown(){
       }
     }
     if(rem<=0){ clearInterval(ptCountdownInt); ptResolve(); }
+    else { ptCheckSLTP(); }  /* Check SL/TP every 250ms */
   },250);
 }
 
@@ -14237,6 +14700,7 @@ function ptResolve(){
   ptActiveTrade=null;
   ptRenderHistory();
   ptUpdateStats();
+  ptRenderLeaderboard();
   ptResetUI();
 }
 
@@ -14264,8 +14728,17 @@ function ptResetUI(){
   var ap=$('pt-active-panel');if(ap)ap.style.display='none';
   $('pt-dir-row').style.display='grid';
   $('pt-btn-up').disabled=false; $('pt-btn-down').disabled=false;
-  var tv=$('pt-timer-val');if(tv){tv.textContent='5:00';tv.style.color='';}
+  var tv=$('pt-timer-val');
+  if(tv){
+    var cfg=PT_DURATIONS[ptSelectedDuration]||PT_DURATIONS[5];
+    var m=Math.floor(cfg.secs/60),s=cfg.secs%60;
+    tv.textContent=m+':'+(s<10?'0':'')+s;
+    tv.style.color='';
+  }
   var ring=$('pt-ring');if(ring){ring.style.strokeDashoffset='301.6';ring.style.stroke='';}
+  /* Clear SLTP inputs */
+  var sl=$('pt-sl-input'),tp=$('pt-tp-input');
+  if(sl)sl.value='';if(tp)tp.value='';
 }
 
 /* ── Result overlay ── */
@@ -14380,7 +14853,13 @@ function ptMainTick(){
   ptUpdatePriceBadge();
   ptUpdatePayoutStrip();
   ptSyncBal();
-  if(visible) ptDrawChart();
+  if(visible){
+    ptDrawChart();
+    /* Update sentiment every 5 ticks */
+    if(window._ptSentTick===undefined)window._ptSentTick=0;
+    window._ptSentTick++;
+    if(window._ptSentTick%5===0) ptUpdateSentiment();
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -14404,12 +14883,17 @@ function ptInit(){
   s.textContent='@keyframes ptBalFlash{0%{transform:scale(1)}40%{transform:scale(1.1);filter:brightness(1.35)}100%{transform:scale(1);filter:none}}';
   document.head.appendChild(s);
 
+  /* Seed leaderboard */
+  ptSeedLeaderboard();
+
   /* Initial renders */
   ptSyncBal();
   ptUpdatePayoutStrip();
   ptUpdatePriceBadge();
   ptRenderHistory();
   ptUpdateStats();
+  ptRenderLeaderboard();
+  ptUpdateSentiment();
 
   /* Initial chart draw with small delay so layout is done */
   setTimeout(function(){
@@ -14436,6 +14920,7 @@ function ptInit(){
     if(sid==='trade-section'){
       ptSyncBal();
       ptUpdatePayoutStrip();
+      ptUpdateSentiment();
       setTimeout(ptDrawChart,80);
     }
   };
@@ -14450,5 +14935,147 @@ if(document.readyState==='loading'){
 
 })();
 </script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCROLL FIX v1.0 — fixes wheel/touch/keyboard/Chromebook scroll
+     without changing any page structure or existing features.
+════════════════════════════════════════════════════════════════ -->
+<style>
+/* 1. Scroll containers: GPU layer + momentum scroll */
+.spa-section {
+  -webkit-overflow-scrolling: touch !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior-y: contain;
+  will-change: scroll-position;
+  /* Kill the competing animations that re-trigger on every render
+     and cause the section to jump/reset during scroll             */
+  animation: none !important;
+  transform: none !important;
+}
+/* First-show fade-in toggled by JS class instead of CSS wildcard */
+.spa-section.sf-animate-in {
+  animation: sfFadeIn .22s cubic-bezier(.4,0,.2,1) both !important;
+}
+@keyframes sfFadeIn {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:none; }
+}
+/* 2. Allow pointer events to pass through .main to .spa-section */
+.main { pointer-events: none !important; }
+.main > * { pointer-events: auto !important; }
+/* 3. Chart: allow vertical touch scroll to pass through */
+.pt-chart-body { touch-action: pan-y !important; }
+/* 4. GPU compositing for all spa-sections */
+.spa-section {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* 5. Fixed overlays must never absorb wheel/pointer events */
+.bg-wrap, .bg-grid { pointer-events: none !important; }
+/* 6. Focusable sections for keyboard scrolling */
+.spa-section:focus { outline: none; }
+</style>
+
+<script>
+/* SCROLL FIX JS */
+(function(){
+  'use strict';
+
+  /* Helper: get the currently visible spa-section */
+  function activeSection(){
+    return (
+      document.querySelector('.spa-section[style*="display: block"]') ||
+      document.querySelector('.spa-section[style*="display:block"]')  ||
+      document.getElementById('home-section')
+    );
+  }
+
+  /* ── 1. Replace CSS-animation trigger with JS-class trigger so
+          the animation only fires once and never during scroll ── */
+  function triggerEntrance(id){
+    var el = id ? document.getElementById(id) : null;
+    if(!el) return;
+    el.classList.remove('sf-animate-in');
+    void el.offsetWidth; /* reflow */
+    el.classList.add('sf-animate-in');
+    /* Ensure scroll works immediately after display:block */
+    el.style.overflowY = 'auto';
+    el.style.webkitOverflowScrolling = 'touch';
+    if(!el.hasAttribute('tabindex')) el.setAttribute('tabindex','-1');
+  }
+
+  /* Patch bnavGo after all scripts have loaded */
+  window.addEventListener('load', function(){
+    var _prev = window.bnavGo;
+    if(typeof _prev === 'function'){
+      window.bnavGo = function(sectionId, btnId){
+        _prev.call(window, sectionId, btnId);
+        triggerEntrance(sectionId);
+      };
+    }
+    /* Initialise home section on first load */
+    triggerEntrance('home-section');
+  });
+
+  /* ── 2. Keyboard arrow / page scroll ── */
+  document.addEventListener('keydown', function(e){
+    var k = e.key;
+    if(!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End'].includes(k)) return;
+    var tag = (document.activeElement||{}).tagName||'';
+    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+    var sec = activeSection();
+    if(!sec) return;
+    e.preventDefault();
+    if(k==='Home'){ sec.scrollTop=0; return; }
+    if(k==='End') { sec.scrollTop=sec.scrollHeight; return; }
+    var page = k==='PageDown'||k==='PageUp';
+    var dir  = (k==='ArrowDown'||k==='PageDown') ? 1 : -1;
+    sec.scrollBy({ top: dir*(page ? sec.clientHeight*0.85 : 80), behavior:'smooth' });
+  }, {passive:false});
+
+  /* ── 3. Smooth-scroll wheel polyfill — fixes Chromebook / Windows
+          precision-trackpad jitter and deltaMode inconsistencies ── */
+  (function(){
+    var SPEED   = 1.35;
+    var pending = 0;
+    var ticking = false;
+
+    function pump(){
+      var sec = activeSection();
+      if(sec && Math.abs(pending) > 0.5){
+        sec.scrollTop += pending;
+        pending *= 0.68;           /* smooth deceleration */
+        requestAnimationFrame(pump);
+      } else {
+        pending = 0;
+        ticking = false;
+      }
+    }
+
+    document.addEventListener('wheel', function(e){
+      if(e.ctrlKey || e.metaKey) return; /* browser/chart zoom — don't intercept */
+      var sec = activeSection();
+      if(!sec) return;
+      var d = e.deltaY;
+      if(e.deltaMode===1) d *= 32;
+      if(e.deltaMode===2) d *= sec.clientHeight * 0.85;
+      pending += d * SPEED;
+      if(!ticking){ ticking=true; requestAnimationFrame(pump); }
+    }, {passive:true});
+  })();
+
+  /* ── 4. Ensure fixed overlays never block events ── */
+  document.addEventListener('DOMContentLoaded', function(){
+    ['.bg-wrap','.bg-grid'].forEach(function(s){
+      document.querySelectorAll(s).forEach(function(el){ el.style.pointerEvents='none'; });
+    });
+    triggerEntrance('home-section');
+  });
+
+})();
+</script>
+
 </body>
 </html>
