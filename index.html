@@ -1702,7 +1702,7 @@ html { scroll-behavior: smooth }
 
 /* ================================================================
    AFFILIATE DASHBOARD v6 — PREMIUM DARK GOLD UI
-   Clean link format: p-y-r-1.github.io/PAYRO/ref/XXXXX
+   Ref link format: p-y-r-1.github.io/PAYRO/?ref=XXXXX
 ================================================================ */
 
 /* ── Hero banner ── */
@@ -2634,7 +2634,7 @@ html { scroll-behavior: smooth }
 
       <!-- ═══════════════════════════════════════════════════════════
            PAYRO AFFILIATE DASHBOARD — TOP PRIORITY PLACEMENT
-           Clean referral links: p-y-r-1.github.io/PAYRO/ref/XXXXX
+           Referral links: p-y-r-1.github.io/PAYRO/?ref=XXXXX
       ═══════════════════════════════════════════════════════════════ -->
 
       <!-- ── Hero banner ── -->
@@ -2744,7 +2744,7 @@ html { scroll-behavior: smooth }
 
               <!-- Link display box — LARGE, prominent -->
               <div class="aff-link-display-box" id="aff-link-wrap">
-                <div class="aff-link-domain">p-y-r-1.github.io/PAYRO/ref/</div>
+                <div class="aff-link-domain">p-y-r-1.github.io/PAYRO/?ref=</div>
                 <div class="aff-link-code" id="aff-link-display">—————</div>
                 <button class="aff-link-copy-inline" id="aff-link-copy-mini" onclick="refCopyLink()" title="Copy full link">
                   <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
@@ -2755,7 +2755,7 @@ html { scroll-behavior: smooth }
               <!-- Full URL read-only text (selectable) -->
               <div class="aff-full-url-wrap">
                 <span class="aff-full-url-lbl">Full URL</span>
-                <span class="aff-full-url-text" id="aff-full-url-text">Press Generate to build your link</span>
+                <span class="aff-full-url-text" id="aff-full-url-text">Press Generate My Link to create your referral URL</span>
               </div>
 
               <!-- Optional campaign -->
@@ -2828,7 +2828,7 @@ html { scroll-behavior: smooth }
             <div class="aff-panel">
               <div class="aff-panel-hdr">How It Works</div>
               <div class="aff-panel-body">
-                <div class="aff-how-row"><div class="aff-how-num">1</div><div>Click <strong>Generate My Link</strong>. You get a clean URL: <code style="font-size:10px;color:var(--cyan);word-break:break-all">p-y-r-1.github.io/PAYRO/ref/XXXXX</code></div></div>
+                <div class="aff-how-row"><div class="aff-how-num">1</div><div>Click <strong>Generate My Link</strong>. You get a clean URL: <code style="font-size:10px;color:var(--cyan);word-break:break-all">p-y-r-1.github.io/PAYRO/?ref=XXXXX</code></div></div>
                 <div class="aff-how-row"><div class="aff-how-num">2</div><div>Share it anywhere. When someone opens that URL, their browser saves your 5-char code as <code style="font-size:10px;color:var(--gold)">Referrer_ID</code>.</div></div>
                 <div class="aff-how-row"><div class="aff-how-num">3</div><div>Every task they complete credits <strong style="color:var(--green)">10% commission</strong> directly to your balance — automatically.</div></div>
                 <div class="aff-how-row"><div class="aff-how-num">4</div><div>Grow referrals to unlock <strong style="color:var(--gold)">Silver (12%)</strong>, <strong style="color:var(--gold)">Gold (15%)</strong>, and <strong style="color:var(--gold)">Elite (20%)</strong> tiers.</div></div>
@@ -4398,7 +4398,7 @@ function completeDailyReward(){
 /* ================================================================
    AFFILIATE SYSTEM — Robust Referral Engine
    Domain: https://p-y-r-1.github.io
-   Link format: https://p-y-r-1.github.io/PAYRO/ref/XXXXX
+   Link format: https://p-y-r-1.github.io/PAYRO/?ref=XXXXX
    Commission: 10% of every referred user's task earnings
 ================================================================ */
 const REF = (function(){
@@ -4407,10 +4407,10 @@ const REF = (function(){
   /* ================================================================
      PAYRO AFFILIATE ENGINE v6
      Base URL  : https://p-y-r-1.github.io/PAYRO/
-     Ref path  : https://p-y-r-1.github.io/PAYRO/ref/XXXXX
-     Ref code  : exactly 5 chars A-Z0-9 — CLEAN PATH, zero query strings
-     Detection : window.location.pathname  /PAYRO/ref/XXXXX
-     Storage   : localStorage key 'Referrer_ID' (exact business requirement)
+     Ref URL   : https://p-y-r-1.github.io/PAYRO/?ref=XXXXX
+     Ref param : ?ref=XXXXX  (URLSearchParams — GitHub Pages compatible)
+     Detection : window.location.search  URLSearchParams('ref')
+     Storage   : localStorage key 'Referrer_ID'
   ================================================================ */
 
   const LS_KEY      = 'payro_affiliate_v6';
@@ -4485,7 +4485,7 @@ const REF = (function(){
     }
 
     /* Canonical affiliate link — always points to root */
-    state.myLink      = BASE_URL + 'ref/' + state.userId;
+    state.myLink      = BASE_URL + '?ref=' + state.userId;
     state.currentLink = state.myLink;
     state.totalEarned = state.totalCommission;
 
@@ -4499,33 +4499,35 @@ const REF = (function(){
   }
 
   /* ── Incoming referral detection ──────────────────────────────
-     Reads window.location.pathname for the clean path /PAYRO/ref/XXXXX
-     No query strings, no '?' symbols — pure clean URL routing.
-     Pattern: /PAYRO/ref/<5-char-code>
+     Reads window.location.search for ?ref=XXXXX
+     Uses URLSearchParams — fully compatible with GitHub Pages.
+     No server config needed. Works on any static host.
      Stores referrer code in localStorage as 'Referrer_ID'.
      Fires immediately on every page load.
   ──────────────────────────────────────────────────────────────── */
+
   /* ── 60-SECOND REFERRAL MISSION TIMER ──────────────────────────
      Core business rule: commission is credited ONLY after the
      referred user has been active on the page for 60 seconds.
-     Until then the reward is "pending" — shown via countdown UI.
+     GA4 event 'referral_success_verified' fires at mission end.
   ──────────────────────────────────────────────────────────────── */
   const MISSION_DURATION = 60; // seconds
 
   function detectIncoming(){
-    const pathname = window.location.pathname;
-    const match = pathname.match(/\/ref\/([A-Z0-9]{5})\/?$/i);
-    if(!match) return;
+    /* URLSearchParams — reads ?ref=XXXXX from the URL */
+    const params = new URLSearchParams(window.location.search);
+    const raw    = params.get('ref') || params.get('r') || '';
+    const refId  = raw.trim().toUpperCase();
 
-    const refId = match[1].toUpperCase();
-    if(!isValidCode(refId)) return;
-    if(refId === state.userId) return;
+    if(!isValidCode(refId)) return;       // not a valid 5-char A-Z0-9 code
+    if(refId === state.userId) return;    // cannot self-refer
 
+    /* Persist to localStorage immediately */
     try{ localStorage.setItem(LS_REF_BY, refId); }catch(e){}
     state.referredBy = refId;
     save();
 
-    /* Check if mission was already completed (e.g. page reload) */
+    /* Check if mission already completed on a previous visit */
     const missionKey = 'payro_mission_' + refId;
     const alreadyDone = localStorage.getItem(missionKey) === 'done';
     if(alreadyDone){
@@ -4533,7 +4535,7 @@ const REF = (function(){
       return;
     }
 
-    /* Start mission countdown */
+    /* Start 60-second activity mission */
     startMissionTimer(refId, MISSION_DURATION);
     logEvent('ref', `Referral mission started · Referrer: ${refId} · Duration: 60s`);
   }
@@ -4603,7 +4605,7 @@ const REF = (function(){
 
     /* ── GA4: referral_success_verified ──────────────────────────
        Fires ONLY after confirmed 60-second active session.
-       Parameters sent to GA4 dashboard for analysis.
+       Requirement: full 60s activity verified before event fires.
     ──────────────────────────────────────────────────────────────── */
     try{
       if(typeof gtag === 'function'){
@@ -4616,9 +4618,26 @@ const REF = (function(){
       }
     }catch(e){ /* gtag not loaded — fail silently */ }
 
+    /* ── Wallet credit — spring animation reward after 60s ────────
+       Credits a small welcome bonus to the new user's own balance.
+       Triggers the spring physics count-up animation automatically.
+    ──────────────────────────────────────────────────────────────── */
+    const WELCOME_BONUS = 0.00050; // $0.00050 welcome bonus for completing mission
+    if(window.S && typeof S.balance !== 'undefined'){
+      const prevBal = S.balance;
+      S.balance = parseFloat((S.balance + WELCOME_BONUS).toFixed(6));
+      S.sessionEarned = parseFloat((S.sessionEarned + WELCOME_BONUS).toFixed(6));
+      if(typeof save === 'function') save();
+      /* animateBalance + spawnFloatCoin are called by updateWallet() */
+      if(typeof updateWallet === 'function') updateWallet();
+      if(typeof addTx === 'function'){
+        addTx('Referral Welcome Bonus', WELCOME_BONUS, 'credit');
+      }
+    }
+
     showMissionComplete(refId);
-    logEvent('ref', `Mission complete — commission unlocked for referrer ${refId}`);
-    if(window.toast) toast('Mission complete! Referral reward unlocked.', 'success');
+    logEvent('ref', `Mission complete — commission + welcome bonus credited · Referrer: ${refId}`);
+    if(window.toast) toast('60s verified! Welcome bonus added to your wallet.', 'success');
   }
 
   function showMissionComplete(refId){
@@ -4681,15 +4700,16 @@ const REF = (function(){
        5. Optional campaign label stored internally — never pollutes the clean link
   ================================================================ */
   function generateLink(){
-    /* Step 1 — Build the canonical CLEAN URL (path-based, no query strings) */
+    /* Step 1 — Build the query-parameter URL  ?ref=XXXXX
+       Format: https://p-y-r-1.github.io/PAYRO/?ref=XXXXX
+       GitHub Pages serves index.html for this URL automatically. */
     const campaign = ((document.getElementById('aff-campaign')||{}).value||'')
                        .trim().replace(/\s+/g,'-').toLowerCase() || null;
 
-    /* Clean path: https://p-y-r-1.github.io/PAYRO/ref/XXXXX — zero '?' or '&' */
-    const url = BASE_URL + 'ref/' + state.userId;
+    const url = BASE_URL + '?ref=' + state.userId;
 
     /* Step 2 — Persist */
-    state.myLink      = BASE_URL + 'ref/' + state.userId; // canonical never changes
+    state.myLink      = BASE_URL + '?ref=' + state.userId; // canonical never changes
     state.currentLink = url;
     state.linkCount++;
 
@@ -4750,7 +4770,7 @@ const REF = (function(){
   function copyLink(){
     /* If user clicks Copy before Generate, auto-generate first */
     if(!state.currentLink){
-      state.currentLink = BASE_URL + 'ref/' + state.userId;
+      state.currentLink = BASE_URL + '?ref=' + state.userId;
       state.myLink      = state.currentLink;
       renderAffiliateLink(state.currentLink);
     }
@@ -4794,7 +4814,7 @@ const REF = (function(){
   // ── Social share ───────────────────────────────────────────────
   function share(platform){
     /* Always use the canonical clean link — never append query strings */
-    const url = state.myLink || (BASE_URL + 'ref/' + state.userId);
+    const url = state.myLink || (BASE_URL + '?ref=' + state.userId);
     if(!url){ if(window.toast) toast('Generate your link first','warn'); return; }
     const txt  = encodeURIComponent('🚀 Earn real crypto free on PAYRO — no deposit needed. Join via my link:');
     const enc  = encodeURIComponent(url);
@@ -4873,7 +4893,7 @@ const REF = (function(){
     set('partner-earned', '$'+state.totalCommission.toFixed(4));
 
     // Link display — always show the canonical full URL
-    const myUrl = BASE_URL + 'ref/' + state.userId;
+    const myUrl = BASE_URL + '?ref=' + state.userId;
     state.myLink      = myUrl;
     state.currentLink = state.currentLink || myUrl;
     renderAffiliateLink(state.currentLink);
