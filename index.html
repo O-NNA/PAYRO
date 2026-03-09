@@ -14937,53 +14937,79 @@ if(document.readyState==='loading'){
 </script>
 
 <!-- ════════════════════════════════════════════════════════════════
-     SCROLL FIX v1.0 — fixes wheel/touch/keyboard/Chromebook scroll
-     without changing any page structure or existing features.
+     SCROLL FIX v2.0
+     Targets the true root causes without fighting native scroll.
+     Architecture: .wrap(fixed) > .main(overflow:hidden) >
+                   .spa-section(position:absolute, overflow-y:auto)
+     Sections scroll internally — html/body intentionally don't scroll.
 ════════════════════════════════════════════════════════════════ -->
 <style>
-/* 1. Scroll containers: GPU layer + momentum scroll */
+/* ── 1. Each section is the real scroll container ─────────────── */
 .spa-section {
-  -webkit-overflow-scrolling: touch !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  overscroll-behavior-y: contain;
-  will-change: scroll-position;
-  /* Kill the competing animations that re-trigger on every render
-     and cause the section to jump/reset during scroll             */
-  animation: none !important;
-  transform: none !important;
+  overflow-y:   auto   !important;
+  overflow-x:   hidden !important;
+  -webkit-overflow-scrolling: touch !important;  /* iOS momentum     */
+  overscroll-behavior-y: contain;               /* stop bounce leak  */
+  scroll-behavior: smooth;
 }
-/* First-show fade-in toggled by JS class instead of CSS wildcard */
-.spa-section.sf-animate-in {
-  animation: sfFadeIn .22s cubic-bezier(.4,0,.2,1) both !important;
+
+/* ── 2. Kill the five competing CSS animations that re-trigger on
+        every render and reset/interrupt scroll mid-flight ──────── */
+.spa-section {
+  animation: none !important;   /* overrides spaFadeIn, spaSlideIn   */
+  transform:  none !important;  /* resets residual translateY offset  */
 }
-@keyframes sfFadeIn {
+/* First-show entrance: fired once via JS class, not wildcard CSS   */
+.spa-section.sfv2-enter {
+  animation: sfv2FadeIn .22s cubic-bezier(.4,0,.2,1) both !important;
+}
+@keyframes sfv2FadeIn {
   from { opacity:0; transform:translateY(6px); }
   to   { opacity:1; transform:none; }
 }
-/* 2. Allow pointer events to pass through .main to .spa-section */
-.main { pointer-events: none !important; }
-.main > * { pointer-events: auto !important; }
-/* 3. Chart: allow vertical touch scroll to pass through */
-.pt-chart-body { touch-action: pan-y !important; }
-/* 4. GPU compositing for all spa-sections */
+
+/* ── 3. GPU compositing: scroll happens on compositor thread ───── */
 .spa-section {
-  transform: translateZ(0);
+  will-change: scroll-position;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-/* 5. Fixed overlays must never absorb wheel/pointer events */
-.bg-wrap, .bg-grid { pointer-events: none !important; }
-/* 6. Focusable sections for keyboard scrolling */
-.spa-section:focus { outline: none; }
+
+/* ── 4. Fixed background layers must NEVER absorb pointer/wheel ── */
+.bg-wrap,
+.bg-grid {
+  pointer-events: none !important;
+}
+
+/* ── 5. Chart body: pan-y lets vertical touch-scroll pass through  */
+.pt-chart-body {
+  touch-action: pan-y !important;
+}
+
+/* ── 6. Keyboard-focusable sections (no visible ring) ─────────── */
+.spa-section:focus {
+  outline: none;
+}
+
+/* ── 7. Thin, GPU-composited scrollbar (Chromebook visibility) ─── */
+.spa-section::-webkit-scrollbar        { width: 4px; }
+.spa-section::-webkit-scrollbar-track  { background: transparent; }
+.spa-section::-webkit-scrollbar-thumb  {
+  background: rgba(245,166,35,.4);
+  border-radius: 99px;
+}
 </style>
 
 <script>
-/* SCROLL FIX JS */
+/* ════════════════════════════════════════════════════════════════
+   SCROLL FIX JS v2.0
+   Minimal: no rAF polyfill (would fight native scroll), no
+   double-handling, no pointer-events overrides on .main.
+════════════════════════════════════════════════════════════════ */
 (function(){
   'use strict';
 
-  /* Helper: get the currently visible spa-section */
+  /* ── Helper: active spa-section ── */
   function activeSection(){
     return (
       document.querySelector('.spa-section[style*="display: block"]') ||
@@ -14992,87 +15018,67 @@ if(document.readyState==='loading'){
     );
   }
 
-  /* ── 1. Replace CSS-animation trigger with JS-class trigger so
-          the animation only fires once and never during scroll ── */
-  function triggerEntrance(id){
+  /* ── Entrance animation via JS class (fired once per nav) ────── */
+  function sectionEntrance(id){
     var el = id ? document.getElementById(id) : null;
     if(!el) return;
-    el.classList.remove('sf-animate-in');
-    void el.offsetWidth; /* reflow */
-    el.classList.add('sf-animate-in');
-    /* Ensure scroll works immediately after display:block */
+    /* Guarantee scroll is enabled right after display:block */
     el.style.overflowY = 'auto';
     el.style.webkitOverflowScrolling = 'touch';
+    /* Make focusable for keyboard scroll */
     if(!el.hasAttribute('tabindex')) el.setAttribute('tabindex','-1');
+    /* Trigger one-shot fade-in */
+    el.classList.remove('sfv2-enter');
+    void el.offsetWidth;
+    el.classList.add('sfv2-enter');
   }
 
-  /* Patch bnavGo after all scripts have loaded */
+  /* ── Patch bnavGo: run after every other patch has stacked ───── */
   window.addEventListener('load', function(){
-    var _prev = window.bnavGo;
-    if(typeof _prev === 'function'){
-      window.bnavGo = function(sectionId, btnId){
-        _prev.call(window, sectionId, btnId);
-        triggerEntrance(sectionId);
-      };
-    }
-    /* Initialise home section on first load */
-    triggerEntrance('home-section');
+    var _chain = window.bnavGo;
+    window.bnavGo = function(sectionId, btnId){
+      if(typeof _chain === 'function') _chain.call(window, sectionId, btnId);
+      sectionEntrance(sectionId);
+    };
+    sectionEntrance('home-section');
   });
 
-  /* ── 2. Keyboard arrow / page scroll ── */
+  /* ── Keyboard: arrow / page / home / end ─────────────────────── */
   document.addEventListener('keydown', function(e){
     var k = e.key;
     if(!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End'].includes(k)) return;
-    var tag = (document.activeElement||{}).tagName||'';
-    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+    var tag = (document.activeElement || {}).tagName || '';
+    if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
     var sec = activeSection();
     if(!sec) return;
     e.preventDefault();
-    if(k==='Home'){ sec.scrollTop=0; return; }
-    if(k==='End') { sec.scrollTop=sec.scrollHeight; return; }
-    var page = k==='PageDown'||k==='PageUp';
-    var dir  = (k==='ArrowDown'||k==='PageDown') ? 1 : -1;
-    sec.scrollBy({ top: dir*(page ? sec.clientHeight*0.85 : 80), behavior:'smooth' });
-  }, {passive:false});
+    if(k === 'Home'){ sec.scrollTop = 0; return; }
+    if(k === 'End') { sec.scrollTop = sec.scrollHeight; return; }
+    var big = k === 'PageDown' || k === 'PageUp';
+    var dir = (k === 'ArrowDown' || k === 'PageDown') ? 1 : -1;
+    sec.scrollBy({ top: dir * (big ? sec.clientHeight * 0.85 : 80), behavior: 'smooth' });
+  }, { passive: false });
 
-  /* ── 3. Smooth-scroll wheel polyfill — fixes Chromebook / Windows
-          precision-trackpad jitter and deltaMode inconsistencies ── */
-  (function(){
-    var SPEED   = 1.35;
-    var pending = 0;
-    var ticking = false;
-
-    function pump(){
-      var sec = activeSection();
-      if(sec && Math.abs(pending) > 0.5){
-        sec.scrollTop += pending;
-        pending *= 0.68;           /* smooth deceleration */
-        requestAnimationFrame(pump);
-      } else {
-        pending = 0;
-        ticking = false;
-      }
+  /* ── DOMContentLoaded: initialise home section ───────────────── */
+  var _dcl = function(){
+    var home = document.getElementById('home-section');
+    if(home){
+      home.style.overflowY = 'auto';
+      home.style.webkitOverflowScrolling = 'touch';
+      if(!home.hasAttribute('tabindex')) home.setAttribute('tabindex','-1');
     }
-
-    document.addEventListener('wheel', function(e){
-      if(e.ctrlKey || e.metaKey) return; /* browser/chart zoom — don't intercept */
-      var sec = activeSection();
-      if(!sec) return;
-      var d = e.deltaY;
-      if(e.deltaMode===1) d *= 32;
-      if(e.deltaMode===2) d *= sec.clientHeight * 0.85;
-      pending += d * SPEED;
-      if(!ticking){ ticking=true; requestAnimationFrame(pump); }
-    }, {passive:true});
-  })();
-
-  /* ── 4. Ensure fixed overlays never block events ── */
-  document.addEventListener('DOMContentLoaded', function(){
-    ['.bg-wrap','.bg-grid'].forEach(function(s){
-      document.querySelectorAll(s).forEach(function(el){ el.style.pointerEvents='none'; });
+    /* Ensure fixed overlays don't absorb events */
+    ['bg-wrap','bg-grid'].forEach(function(cls){
+      document.querySelectorAll('.' + cls).forEach(function(el){
+        el.style.pointerEvents = 'none';
+      });
     });
-    triggerEntrance('home-section');
-  });
+  };
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', _dcl);
+  } else {
+    _dcl();
+  }
 
 })();
 </script>
