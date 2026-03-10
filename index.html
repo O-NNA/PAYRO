@@ -6390,199 +6390,29 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 <style id="header-clean-css">
 /* ══════════════════════════════════════════════════════════
    CLEAN HEADER — Remove balance widget + geo labels
+   Elements are hidden not deleted: JS can still write to them.
 ══════════════════════════════════════════════════════════ */
+
+/* Hide the green wallet pill in the top navbar */
 .wallet-pill                { display: none !important; }
+
+/* Hide the geo location pill */
 .geo-pill                   { display: none !important; }
+
+/* Hide the "LIVE BALANCE" card inside payro-hdr */
 .ph-bal-card,
 .phv2-bal-card              { display: none !important; }
+
+/* Hide the geo country inline label */
 .geo-country-inline         { display: none !important; }
 #geo-country-hdr            { display: none !important; }
+
+/* Keep phv2-sub but hide the dot separator since geo is gone */
 .phv2-dot-sep               { display: none !important; }
-.nav-right                  { gap: 6px; }
-</style>
 
-<style id="desktop-responsive-fix">
-/* ══════════════════════════════════════════════════════════════════
-   UNIVERSAL RESPONSIVE FIX — Mobile · Tablet · Chromebook · Desktop
-   Max-width centred layout · Pixel-perfect on all screen sizes
-   GPU-compositor-only animations — 244 Hz safe
-══════════════════════════════════════════════════════════════════ */
-
-/* ── 1. NAVBAR: inner max-width centering ── */
-.navbar {
-  padding: 0 !important;
-}
-.navbar-inner-wrap {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 clamp(14px, 3vw, 32px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: clamp(56px, 12vw, 64px);
-}
-
-/* ── 2. BALANCE HEADER: inner max-width ── */
-.payro-hdr-v2 {
-  max-width: 1440px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 100% !important;
-  box-sizing: border-box;
-}
-/* Wrap the entire payro-hdr width */
-#payro-hdr {
-  display: flex;
-  justify-content: center;
-}
-
-/* ── 3. ACTIVITY TICKER: full-width OK (marquee) ── */
-
-/* ── 4. SPA-SECTION CONTENT: max-width centred ── */
-.spa-section > * {
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-}
-/* Exception: full-bleed backgrounds should span full width */
-.vsh-hero,
-.vsh-pts-bar,
-.spa-section > .ad-break,
-.spa-section > .stake-top-banner {
-  max-width: 100% !important;
-}
-
-/* ── 5. VIDEO HUB — Desktop grid: 5-col on huge screens ── */
-@media (min-width: 1280px) {
-  .vsh-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 16px !important;
-  }
-  .vsh-main-card {
-    padding: 22px 24px 24px !important;
-  }
-  .vsh-hero {
-    border-radius: var(--r-lg);
-    margin-bottom: 16px;
-  }
-}
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .vsh-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 14px !important;
-  }
-}
-@media (min-width: 768px) and (max-width: 1023px) {
-  .vsh-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 13px !important;
-  }
-}
-
-/* ── 6. NAVBAR DESKTOP TIGHTENING ── */
-@media (min-width: 1025px) {
-  /* Keep logo + subtitle close together */
-  .nav-brand {
-    gap: 10px !important;
-  }
-  /* Tighten icon group — no sprawl */
-  .nav-right {
-    gap: 8px !important;
-    flex-wrap: nowrap !important;
-  }
-  /* Show geo pill on desktop */
-  .geo-pill {
-    display: flex !important;
-  }
-  /* Mute + theme btns — consistent size */
-  .nav-ibtn {
-    width: 36px !important;
-    height: 36px !important;
-  }
-  /* HBG hamburger always visible */
-  .hbg {
-    display: flex !important;
-  }
-  /* Ensure brand subtitle visible */
-  .brand-sub {
-    display: block !important;
-  }
-}
-
-/* ── 7. GENERAL SPA SECTION PADDING — no lateral stretch ── */
-@media (min-width: 1025px) {
-  .spa-section {
-    padding: clamp(16px, 2vw, 24px) clamp(24px, 3vw, 40px) 90px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-  }
-}
-
-/* ── 8. STAKE TOP BANNER — constrain on large screens ── */
-@media (min-width: 1025px) {
-  .stake-top-banner {
-    max-width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    border-radius: var(--r-md);
-  }
-}
-
-/* ── 9. PAYRO HEADER V2 — desktop layout ── */
-@media (min-width: 1025px) {
-  .payro-hdr-v2 {
-    padding: 14px clamp(24px, 3vw, 40px) !important;
-    gap: 18px !important;
-  }
-  .phv2-info {
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 18px !important;
-  }
-  .phv2-xp-row {
-    margin-top: 0 !important;
-  }
-}
-
-/* ── 10. BOTTOM NAV — centred content area ── */
-.bnav {
-  max-width: 100% !important; /* full width bar */
-}
-.bnav-inner, .bnav > div {
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-/* ── 11. VIDEO PLAYER MODAL — responsive ── */
-@media (min-width: 1025px) {
-  .vsh-player-box {
-    max-width: min(900px, 90vw) !important;
-    width: 90vw !important;
-  }
-}
-
-/* ── 12. AD RING NUMBER — MM:SS label sizing ── */
-.vsh-ar-num {
-  font-size: 13px !important;
-  letter-spacing: 1px !important;
-  font-family: var(--f-mono) !important;
-}
-
-/* ── 13. PREVENT HORIZONTAL OVERFLOW on ALL screens ── */
-body, .wrap, .main {
-  overflow-x: hidden !important;
-}
-.spa-section {
-  overflow-x: hidden !important;
-}
-
-/* ── 14. SMOOTH 244Hz perf: compositor-only for key elements ── */
-.vsh-card, .nav-ibtn, .hbg, .wallet-pill, .lsb-item {
-  will-change: transform !important;
-  transform: translateZ(0);
+/* Tighten navbar right side now that wallet pill is gone */
+.nav-right {
+  gap: 6px;
 }
 </style>
 </head>
@@ -6891,7 +6721,6 @@ body, .wrap, .main {
 
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation">
-    <div class="navbar-inner-wrap">
     <div class="nav-brand">
       <!-- P-Coin Logo replacing text brand -->
       <div class="nav-logo-pcoin" title="PAYRO">
@@ -6912,7 +6741,6 @@ body, .wrap, .main {
     </div>
     <div class="nav-right">
       <div class="geo-pill detecting" id="geo-pill" style="display:none"><span class="flag" id="geo-flag">🌐</span><span id="geo-country">Detecting...</span><span class="rate" id="geo-rate">—</span></div>
-      <button class="nav-ibtn" id="mute-btn" onclick="toggleMute()" title="Toggle Sound"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="mute-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></button>
       <button class="nav-ibtn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
       <span class="wallet-bal" id="nav-bal" style="display:none">$0.00</span>
       <div class="pcoin-nav-pill" id="pcoin-nav-pill" title="P Coin — $0.50 = 1000 P Coin">
@@ -6920,7 +6748,6 @@ body, .wrap, .main {
         <span id="pcoin-nav-val">0</span><span style="font-size:9px;opacity:.6">PC</span>
       </div>
       <button class="hbg" id="hbg" onclick="toggleDrawer()" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
     </div>
   </nav>
 
@@ -9279,22 +9106,27 @@ body, .wrap, .main {
               <svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               PREMIUM VIDEO HUB
             </div>
-            <div class="vsh-hero-title" id="vsh-hero-title">Watch &amp; Earn — Free Access</div>
-            <div class="vsh-hero-sub" id="vsh-hero-sub">Click any video → wait <strong>2 minutes</strong> → earn <strong style="color:var(--gold)">1,000 P-Coin</strong> per video instantly</div>
+            <div class="vsh-hero-title" id="vsh-hero-title">Unlock All Videos</div>
+            <div class="vsh-hero-sub" id="vsh-hero-sub">Watch &amp; earn P Coin on every video — <strong>$0.50 (1,000 P Coin)/month</strong> unlocks everything</div>
             <div class="vsh-perks">
-              <div class="vsh-perk"><span>🎬</span> 30 Curated Videos</div>
-              <div class="vsh-perk"><span>🪙</span> +1,000 PC per watch</div>
-              <div class="vsh-perk"><span>📺</span> HD / SD quality</div>
-              <div class="vsh-perk"><span>🔓</span> 100% Free Access</div>
+              <div class="vsh-perk"><span>🎯</span> +5 pts per video</div>
+              <div class="vsh-perk"><span>🚫</span> Skip all ads</div>
+              <div class="vsh-perk"><span>🎬</span> HD / SD quality</div>
+              <div class="vsh-perk"><span>🪙</span> Earn P Coin</div>
             </div>
           </div>
-          <!-- FREE ACCESS state -->
+          <!-- FREE state CTA -->
           <div class="vsh-hero-right" id="vsh-cta-wrap">
-            <div class="vsh-price-box" style="text-align:center;padding:18px 20px">
-              <div class="vsh-price-label" style="margin-bottom:6px">🎬 All Videos Free</div>
-              <div class="vsh-price-amount" style="font-size:28px;color:var(--green)">FREE</div>
-              <div class="vsh-price-sub" style="margin-top:6px">Watch 2 min → earn 1,000 PC</div>
+            <div class="vsh-price-box">
+              <div class="vsh-price-label">Monthly Plan</div>
+              <div class="vsh-price-amount">$0.50</div>
+              <div class="vsh-price-sub">= 1,000 P Coin · cancel anytime</div>
             </div>
+            <button class="vsh-subscribe-btn" onclick="vshOpenPayModal()">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Subscribe — $0.50 / 1,000 P Coin
+            </button>
+            <div class="vsh-already-sub">Already subscribed? <button onclick="vshRestoreSub()" style="color:var(--gold);background:none;border:none;cursor:pointer;font-size:11px;font-weight:600;text-decoration:underline">Restore</button></div>
           </div>
           <!-- SUBSCRIBED state -->
           <div class="vsh-hero-right" id="vsh-sub-active-wrap" style="display:none">
@@ -9492,13 +9324,13 @@ body, .wrap, .main {
     <div class="vsh-player-modal" id="vsh-player-modal" onclick="if(event.target===this)vshClosePlayer()">
       <div class="vsh-player-box" id="vsh-player-box">
         <!-- Ad Gate (non-subscribers) -->
-          <div class="vsh-ad-gate" id="vsh-ad-gate">
+        <div class="vsh-ad-gate" id="vsh-ad-gate">
           <div class="vsh-ad-ring">
             <svg width="84" height="84" viewBox="0 0 84 84"><circle class="vsh-ar-bg" cx="42" cy="42" r="36"/><circle class="vsh-ar-fill" id="vsh-ar-fill" cx="42" cy="42" r="36"/></svg>
-            <div class="vsh-ar-num" id="vsh-ar-num" style="font-size:13px;letter-spacing:1px">02:00</div>
+            <div class="vsh-ar-num" id="vsh-ar-num">5</div>
           </div>
-          <div class="vsh-ad-label">⏳ Ad tab opened — stay on this page</div>
-          <div class="vsh-ad-sub">Wait 2 minutes → earn <strong style="color:var(--gold)">1,000 P-Coin</strong> instantly</div>
+          <div class="vsh-ad-label">Watch a short ad to unlock</div>
+          <div class="vsh-ad-sub">Subscribe $0.50/mo to skip all ads forever</div>
           <div class="vsh-ad-slot">
             <div class="rgb-ad" style="height:64px;max-width:340px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> Video Pre-Roll <span class="ad-tag">AD</span></div></div>
           </div>
@@ -19185,7 +19017,7 @@ function v3BuildCard(v, idx) {
   var catColors = { Finance:'var(--gold)', Gaming:'var(--red)', Earning:'var(--green)', Tech:'var(--cyan)', Trading:'var(--violet)', Other:'var(--txt2)' };
   var todayKey  = new Date().toISOString().slice(0,10);
   var watched   = V3.watched[v.id + '_' + todayKey] || V3.watched[v.id];
-  var locked    = false; /* Payment lock removed — timer-based system */
+  var locked    = !V3.sub && v.access === 'premium';
 
   var card = document.createElement('div');
   card.className = 'vsh-card' + (watched ? ' vsh-card-watched' : '');
@@ -19254,7 +19086,11 @@ function v3UpdateCategoryFilters() {
 
 /* ════════════ PLAYER ════════════ */
 window.v3OpenPlayer = function(v) {
-  /* Payment lock removed — timer-based unlock for all videos */
+  if (!V3.sub && v.access === 'premium') {
+    vshOpenPayModal();
+    if(window.toast) toast('Subscribe $0.50/mo to watch premium content!','warn');
+    return;
+  }
   V3.currentVid = v;
 
   var modal   = document.getElementById('vsh-player-modal');
@@ -19277,75 +19113,43 @@ window.v3OpenPlayer = function(v) {
   document.body.style.overflow = 'hidden';
 
   if (V3.sub) {
-    /* Premium sub: instant play (legacy support) */
+    /* Premium: instant play */
     if (gate) gate.className = 'vsh-ad-gate done';
     if (iframe) iframe.src = v3EmbedUrl(v, quality);
     v3AwardPoints(v);
   } else {
-    /* Free: 120-second verification timer */
+    /* Free: 5-second ad countdown */
     if (gate) gate.className = 'vsh-ad-gate';
     v3RunAdTimer(v, iframe, quality);
   }
   if(window.SFX) SFX.play('click');
 };
 
-/* ── 120-second Verification Timer (localStorage-persisted) ── */
-var AD_DURATION  = 120; /* seconds */
-var AD_TIMER_KEY = 'payro_vid_timer';  /* {vidId, startAt} */
-var SPONSOR_LINK = 'https://www.effectivegatecpm.com/nggi65rdt?key=c362fb020f08cec743f70638e748b70f';
-
 function v3RunAdTimer(v, iframe, quality) {
+  var AD  = 5; var rem = AD;
   var fill = document.getElementById('vsh-ar-fill');
   var num  = document.getElementById('vsh-ar-num');
   var gate = document.getElementById('vsh-ad-gate');
   var circ = 226.2;
-
-  /* Check if a timer is already running for THIS video in localStorage */
-  var saved = null;
-  try { saved = JSON.parse(localStorage.getItem(AD_TIMER_KEY) || 'null'); } catch(e){}
-
-  var startAt;
-  if (saved && saved.vidId === v.id && saved.startAt) {
-    /* Resume from saved start time */
-    startAt = saved.startAt;
-  } else {
-    /* Brand-new watch session — open ad tab + save start time */
-    startAt = Date.now();
-    try { localStorage.setItem(AD_TIMER_KEY, JSON.stringify({ vidId: v.id, startAt: startAt })); } catch(e){}
-    /* Open sponsor tab */
-    if (window._armPopunder) window._armPopunder();
-    window.open(SPONSOR_LINK, '_blank');
-  }
-
+  if (num)  num.textContent = rem;
+  if (fill) fill.style.strokeDashoffset = circ;
   clearInterval(V3.adTimer);
-
-  function tick() {
-    var elapsed = Math.floor((Date.now() - startAt) / 1000);
-    var rem = Math.max(0, AD_DURATION - elapsed);
-
-    /* Format as MM:SS */
-    var mm = String(Math.floor(rem / 60)).padStart(2, '0');
-    var ss = String(rem % 60).padStart(2, '0');
-    if (num)  num.textContent = mm + ':' + ss;
-    var pct = 1 - (rem / AD_DURATION);
+  V3.adTimer = setInterval(function(){
+    rem--;
+    if (num)  num.textContent = rem;
+    var pct = 1 - (rem / AD);
     if (fill) fill.style.strokeDashoffset = circ * (1 - pct);
-
     if (rem <= 0) {
       clearInterval(V3.adTimer);
-      try { localStorage.removeItem(AD_TIMER_KEY); } catch(e){}
       if (gate) gate.className = 'vsh-ad-gate done';
       if (iframe) iframe.src = v3EmbedUrl(v, quality);
       v3AwardPoints(v);
     }
-  }
-
-  tick(); /* immediate first frame */
-  V3.adTimer = setInterval(tick, 1000);
+  }, 1000);
 }
 
 window.vshClosePlayer = function() {
   clearInterval(V3.adTimer);
-  try { localStorage.removeItem(AD_TIMER_KEY); } catch(e){}
   var modal  = document.getElementById('vsh-player-modal');
   var iframe = document.getElementById('vsh-iframe');
   var gate   = document.getElementById('vsh-ad-gate');
@@ -19368,7 +19172,7 @@ window.vshOpenExternal = function() {
   if (V3.currentVid) window.open(V3.currentVid.url, '_blank', 'noopener');
 };
 
-/* ════════════ POINTS — 1000 P-Coin reward per video ════════════ */
+/* ════════════ POINTS ════════════ */
 function v3AwardPoints(v) {
   var todayKey = new Date().toISOString().slice(0,10);
   var key = v.id + '_' + todayKey;
@@ -19378,13 +19182,11 @@ function v3AwardPoints(v) {
   V3.pts += (v.pts || 5);
   v3Save();
   v3UpdateHeroUI();
-  /* Credit 1000 P-Coins */
-  if (window.pcAdd) pcAdd(1000, 'Video Watch Reward', 'v-watch');
-  v3ShowPtsPopup('+1000 P-Coin earned! 🎬');
+  v3ShowPtsPopup('+' + (v.pts||5) + ' pts earned! 🎯');
   v3Render();
-  if(window.addTx) addTx('Video Watch Reward', 1000, 'credit');
+  if(window.addTx) addTx('Video Watch Reward', (v.pts||5)/1000, 'credit');
   if(window.updateWallet) updateWallet();
-  if(window.gtag) gtag('event','video_watch_reward',{ video_id:v.id, pcoins:1000 });
+  if(window.gtag) gtag('event','video_watch_reward',{ video_id:v.id, points:v.pts||5 });
 }
 
 function v3ShowPtsPopup(msg) {
@@ -19616,58 +19418,6 @@ document.addEventListener('keydown', function(e){
 
 /* ════════════ INIT ════════════ */
 v3Load();
-
-/* ── Inject 30 built-in videos (never stored in localStorage — always present) ── */
-(function() {
-  var BUILTIN = [
-    { id:'b01', ytId:'dQw4w9WgXcQ',  title:'How to Make Money Online in 2025',    cat:'Earning',  pts:5, access:'free', dur:'4:32' },
-    { id:'b02', ytId:'ZbZSe6N_BXs',  title:'Stock Market for Beginners',           cat:'Finance',  pts:5, access:'free', dur:'7:18' },
-    { id:'b03', ytId:'rE3j_RHkqJc',  title:'Top Crypto Coins to Watch This Month', cat:'Trading',  pts:5, access:'free', dur:'6:44' },
-    { id:'b04', ytId:'2lAe1cqCOXo',  title:'AI Tools That Pay You Real Money',     cat:'Tech',     pts:5, access:'free', dur:'5:10' },
-    { id:'b05', ytId:'o_nfdzGVe-4',  title:'Mobile Gaming Secrets Revealed',       cat:'Gaming',   pts:5, access:'free', dur:'8:55' },
-    { id:'b06', ytId:'GznmPACXBlI',  title:'Day Trading Strategies for 2025',      cat:'Trading',  pts:5, access:'free', dur:'9:02' },
-    { id:'b07', ytId:'pWDD3H9yQpQ',  title:'Passive Income Ideas That Actually Work', cat:'Earning', pts:5, access:'free', dur:'6:27' },
-    { id:'b08', ytId:'K4TOrB7at0Y',  title:'Bitcoin vs Ethereum — Full Breakdown', cat:'Finance',  pts:5, access:'free', dur:'10:14' },
-    { id:'b09', ytId:'W6NZfCO5SIk',  title:'JavaScript for Beginners 2025',        cat:'Tech',     pts:5, access:'free', dur:'12:36' },
-    { id:'b10', ytId:'MNxMhXAD9P4',  title:'Top 10 Earning Apps Right Now',        cat:'Earning',  pts:5, access:'free', dur:'5:48' },
-    { id:'b11', ytId:'nmXMgqjQzls',  title:'Forex Trading Basics Explained',       cat:'Trading',  pts:5, access:'free', dur:'8:19' },
-    { id:'b12', ytId:'jNQXAC9IVRw',  title:'Gaming Setup Guide — Budget Build',    cat:'Gaming',   pts:5, access:'free', dur:'7:35' },
-    { id:'b13', ytId:'GlZtnku6M68',  title:'How Compound Interest Makes You Rich', cat:'Finance',  pts:5, access:'free', dur:'4:58' },
-    { id:'b14', ytId:'XytfvpVOHis',  title:'ChatGPT Money-Making Methods 2025',   cat:'Tech',     pts:5, access:'free', dur:'6:11' },
-    { id:'b15', ytId:'PkZNo7MFNFg',  title:'Python Tutorial — Learn in 60 Minutes', cat:'Tech',   pts:5, access:'free', dur:'13:22' },
-    { id:'b16', ytId:'Unzc731iCUY',  title:'Top Freelancing Skills That Pay $$$',  cat:'Earning',  pts:5, access:'free', dur:'7:44' },
-    { id:'b17', ytId:'x3-SBwlf5eY',  title:'NFT Investing Guide for Beginners',    cat:'Trading',  pts:5, access:'free', dur:'9:30' },
-    { id:'b18', ytId:'QVb7QJQqkFw',  title:'Top 5 Games That Pay Real Cash',      cat:'Gaming',   pts:5, access:'free', dur:'5:21' },
-    { id:'b19', ytId:'n_Cn8eFo7u8',  title:'How to Save Money Fast — Proven Tips', cat:'Finance',  pts:5, access:'free', dur:'6:03' },
-    { id:'b20', ytId:'fEggseixfHE',  title:'Earn with Surveys — Which Ones Pay?', cat:'Earning',   pts:5, access:'free', dur:'4:47' },
-    { id:'b21', ytId:'hY7m5jjJ9mM',  title:'DeFi Explained — Earn Yield in 2025', cat:'Trading',  pts:5, access:'free', dur:'8:02' },
-    { id:'b22', ytId:'YxgD8BP5sBs',  title:'PC Gaming vs Console — 2025 Edition', cat:'Gaming',   pts:5, access:'free', dur:'9:14' },
-    { id:'b23', ytId:'y4gbFGFjFcA',  title:'How the Rich Invest Their Money',      cat:'Finance',  pts:5, access:'free', dur:'7:58' },
-    { id:'b24', ytId:'WxyLGM3KSPY',  title:'No-Code Tools to Build Apps & Earn',  cat:'Tech',     pts:5, access:'free', dur:'6:39' },
-    { id:'b25', ytId:'uG_EiEQIifk',  title:'Dropshipping Secrets — Real Results', cat:'Earning',  pts:5, access:'free', dur:'10:05' },
-    { id:'b26', ytId:'FsRifrmFsCw',  title:'Swing Trading — Entry & Exit Points',  cat:'Trading',  pts:5, access:'free', dur:'8:48' },
-    { id:'b27', ytId:'5qap5aO4i9A',  title:'Lo-Fi Hip Hop — Study & Earn Stream', cat:'Gaming',   pts:5, access:'free', dur:'60:00' },
-    { id:'b28', ytId:'KaRmee6NKTQ',  title:'Gold vs Crypto — Which is Better?',   cat:'Finance',  pts:5, access:'free', dur:'5:34' },
-    { id:'b29', ytId:'_uQrJ0TkZlc',  title:'Python Projects for Absolute Beginners', cat:'Tech',  pts:5, access:'free', dur:'14:17' },
-    { id:'b30', ytId:'Ks-_Mh1QhMc',  title:'Make Money While You Sleep (Guide)',   cat:'Earning',  pts:5, access:'free', dur:'7:29' }
-  ];
-
-  /* Remove any stale built-in videos from localStorage (they now live in code) */
-  V3.videos = V3.videos.filter(function(v){ return !/^b\d{2}$/.test(v.id); });
-
-  /* Prepend built-ins so they always appear first */
-  BUILTIN.forEach(function(b) {
-    var parsed = {
-      source:    'YouTube',
-      ytId:      b.ytId,
-      thumb:     'https://img.youtube.com/vi/' + b.ytId + '/hqdefault.jpg',
-      thumbFb:   'https://img.youtube.com/vi/' + b.ytId + '/mqdefault.jpg',
-      embedBase: 'https://www.youtube.com/embed/' + b.ytId,
-      duration:  b.dur
-    };
-    V3.videos.unshift(Object.assign({}, b, parsed, { url: 'https://www.youtube.com/watch?v=' + b.ytId }));
-  });
-})();
 
 function v3Init() {
   v3UpdateHeroUI();
