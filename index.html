@@ -6390,29 +6390,199 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 <style id="header-clean-css">
 /* ══════════════════════════════════════════════════════════
    CLEAN HEADER — Remove balance widget + geo labels
-   Elements are hidden not deleted: JS can still write to them.
 ══════════════════════════════════════════════════════════ */
-
-/* Hide the green wallet pill in the top navbar */
 .wallet-pill                { display: none !important; }
-
-/* Hide the geo location pill */
 .geo-pill                   { display: none !important; }
-
-/* Hide the "LIVE BALANCE" card inside payro-hdr */
 .ph-bal-card,
 .phv2-bal-card              { display: none !important; }
-
-/* Hide the geo country inline label */
 .geo-country-inline         { display: none !important; }
 #geo-country-hdr            { display: none !important; }
-
-/* Keep phv2-sub but hide the dot separator since geo is gone */
 .phv2-dot-sep               { display: none !important; }
+.nav-right                  { gap: 6px; }
+</style>
 
-/* Tighten navbar right side now that wallet pill is gone */
-.nav-right {
-  gap: 6px;
+<style id="desktop-responsive-fix">
+/* ══════════════════════════════════════════════════════════════════
+   UNIVERSAL RESPONSIVE FIX — Mobile · Tablet · Chromebook · Desktop
+   Max-width centred layout · Pixel-perfect on all screen sizes
+   GPU-compositor-only animations — 244 Hz safe
+══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. NAVBAR: inner max-width centering ── */
+.navbar {
+  padding: 0 !important;
+}
+.navbar-inner-wrap {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(14px, 3vw, 32px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: clamp(56px, 12vw, 64px);
+}
+
+/* ── 2. BALANCE HEADER: inner max-width ── */
+.payro-hdr-v2 {
+  max-width: 1440px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+/* Wrap the entire payro-hdr width */
+#payro-hdr {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── 3. ACTIVITY TICKER: full-width OK (marquee) ── */
+
+/* ── 4. SPA-SECTION CONTENT: max-width centred ── */
+.spa-section > * {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+/* Exception: full-bleed backgrounds should span full width */
+.vsh-hero,
+.vsh-pts-bar,
+.spa-section > .ad-break,
+.spa-section > .stake-top-banner {
+  max-width: 100% !important;
+}
+
+/* ── 5. VIDEO HUB — Desktop grid: 5-col on huge screens ── */
+@media (min-width: 1280px) {
+  .vsh-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 16px !important;
+  }
+  .vsh-main-card {
+    padding: 22px 24px 24px !important;
+  }
+  .vsh-hero {
+    border-radius: var(--r-lg);
+    margin-bottom: 16px;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .vsh-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 14px !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .vsh-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 13px !important;
+  }
+}
+
+/* ── 6. NAVBAR DESKTOP TIGHTENING ── */
+@media (min-width: 1025px) {
+  /* Keep logo + subtitle close together */
+  .nav-brand {
+    gap: 10px !important;
+  }
+  /* Tighten icon group — no sprawl */
+  .nav-right {
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+  /* Show geo pill on desktop */
+  .geo-pill {
+    display: flex !important;
+  }
+  /* Mute + theme btns — consistent size */
+  .nav-ibtn {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  /* HBG hamburger always visible */
+  .hbg {
+    display: flex !important;
+  }
+  /* Ensure brand subtitle visible */
+  .brand-sub {
+    display: block !important;
+  }
+}
+
+/* ── 7. GENERAL SPA SECTION PADDING — no lateral stretch ── */
+@media (min-width: 1025px) {
+  .spa-section {
+    padding: clamp(16px, 2vw, 24px) clamp(24px, 3vw, 40px) 90px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+}
+
+/* ── 8. STAKE TOP BANNER — constrain on large screens ── */
+@media (min-width: 1025px) {
+  .stake-top-banner {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    border-radius: var(--r-md);
+  }
+}
+
+/* ── 9. PAYRO HEADER V2 — desktop layout ── */
+@media (min-width: 1025px) {
+  .payro-hdr-v2 {
+    padding: 14px clamp(24px, 3vw, 40px) !important;
+    gap: 18px !important;
+  }
+  .phv2-info {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 18px !important;
+  }
+  .phv2-xp-row {
+    margin-top: 0 !important;
+  }
+}
+
+/* ── 10. BOTTOM NAV — centred content area ── */
+.bnav {
+  max-width: 100% !important; /* full width bar */
+}
+.bnav-inner, .bnav > div {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ── 11. VIDEO PLAYER MODAL — responsive ── */
+@media (min-width: 1025px) {
+  .vsh-player-box {
+    max-width: min(900px, 90vw) !important;
+    width: 90vw !important;
+  }
+}
+
+/* ── 12. AD RING NUMBER — MM:SS label sizing ── */
+.vsh-ar-num {
+  font-size: 13px !important;
+  letter-spacing: 1px !important;
+  font-family: var(--f-mono) !important;
+}
+
+/* ── 13. PREVENT HORIZONTAL OVERFLOW on ALL screens ── */
+body, .wrap, .main {
+  overflow-x: hidden !important;
+}
+.spa-section {
+  overflow-x: hidden !important;
+}
+
+/* ── 14. SMOOTH 244Hz perf: compositor-only for key elements ── */
+.vsh-card, .nav-ibtn, .hbg, .wallet-pill, .lsb-item {
+  will-change: transform !important;
+  transform: translateZ(0);
 }
 </style>
 </head>
@@ -6721,6 +6891,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation">
+    <div class="navbar-inner-wrap">
     <div class="nav-brand">
       <!-- P-Coin Logo replacing text brand -->
       <div class="nav-logo-pcoin" title="PAYRO">
@@ -6749,6 +6920,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         <span id="pcoin-nav-val">0</span><span style="font-size:9px;opacity:.6">PC</span>
       </div>
       <button class="hbg" id="hbg" onclick="toggleDrawer()" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
     </div>
   </nav>
 
