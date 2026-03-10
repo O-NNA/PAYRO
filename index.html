@@ -5989,6 +5989,51 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 }
 </style>
 
+<style id="pcoin-proof-css">
+/* ══ PROOF CARD STYLES ══ */
+.v3-proof-card {
+  background: var(--bg2); border: 1px solid var(--bdr2);
+  border-radius: var(--r-md); padding: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.v3-proof-card:hover { border-color: rgba(245,166,35,.25); box-shadow: 0 6px 24px rgba(0,0,0,.3); }
+.vpc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.vpc-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.vpc-name { font-size: 12px; font-weight: 700; color: var(--txt); }
+.vpc-reward { font-size: 11px; font-weight: 700; color: var(--gold); margin-top: 2px; }
+.vpc-badge {
+  margin-left: auto; font-size: 9px; font-weight: 800; padding: 2px 8px;
+  border-radius: 4px; letter-spacing: .08em; text-transform: uppercase;
+  background: rgba(245,166,35,.12); color: var(--gold); border: 1px solid rgba(245,166,35,.25);
+  flex-shrink: 0;
+}
+.vpc-desc { font-size: 11px; color: var(--txt3); line-height: 1.5; margin-bottom: 12px; }
+.vpc-upload-area {
+  border: 2px dashed rgba(255,255,255,.1); border-radius: var(--r-md);
+  padding: 20px; text-align: center; cursor: pointer;
+  background: rgba(255,255,255,.02);
+  transition: border-color .2s, background .2s;
+}
+.vpc-upload-area:hover { border-color: rgba(245,166,35,.4); background: rgba(245,166,35,.04); }
+.vpc-upload-icon { font-size: 24px; margin-bottom: 6px; }
+.vpc-upload-lbl { font-size: 12px; font-weight: 700; color: var(--txt2); margin-bottom: 3px; }
+.vpc-upload-sub { font-size: 10px; color: var(--txt3); }
+.vpc-preview { padding-top: 10px; }
+.vpc-submit-btn {
+  width: 100%; margin-top: 10px; padding: 10px; border-radius: var(--r-sm);
+  background: linear-gradient(135deg, var(--gold), #c2811a);
+  color: #000; font-weight: 700; font-size: 12px; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: all .2s;
+}
+.vpc-submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--gold-g); }
+.vpc-retry-btn {
+  width: 100%; margin-top: 6px; padding: 7px; border-radius: var(--r-sm);
+  background: transparent; border: 1px solid var(--bdr2);
+  color: var(--txt3); font-size: 11px; cursor: pointer; transition: all .2s;
+}
+.vpc-retry-btn:hover { border-color: rgba(255,255,255,.15); color: var(--txt2); }
+</style>
 <style id="header-clean-css">
 /* ══════════════════════════════════════════════════════════
    CLEAN HEADER — Remove balance widget + geo labels
@@ -6298,6 +6343,10 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       <button class="nav-ibtn" id="mute-btn" onclick="toggleMute()" title="Toggle Sound"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="mute-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></button>
       <button class="nav-ibtn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
       <span class="wallet-bal" id="nav-bal" style="display:none">$0.00</span>
+      <div class="pcoin-nav-pill" id="pcoin-nav-pill" title="P Coin — $0.50 = 1000 P Coin">
+        <svg width="14" height="14" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" fill="url(#pcGF)"/><text x="11" y="24" font-family="Arial Black,serif" font-weight="900" font-size="15" fill="#3d2200">P</text></svg>
+        <span id="pcoin-nav-val">0</span><span style="font-size:9px;opacity:.6">PC</span>
+      </div>
       <button class="hbg" id="hbg" onclick="toggleDrawer()" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -6342,7 +6391,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
     <div class="ph-bal-card phv2-bal-card">
       <div class="ph-bal-lbl"><span class="ph-bal-lbl-dot"></span> LIVE BALANCE</div>
       <div class="ph-bal-val" id="ph-bal-val">$0.00</div>
-      <div class="ph-bal-fiat" id="ph-bal-fiat-hdr">≈ ₹0.00 INR</div>
+      <div class="ph-bal-fiat" id="ph-bal-fiat-hdr" style="color:var(--gold);font-weight:700">🪙 0 P Coin</div>
     </div>
   </div>
 
@@ -6939,7 +6988,99 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 
       </div><!-- /v3-task-grid -->
 
-    </section>
+      <!-- ═══ PHOTO PROOF OFFER WALL ═══ -->
+      <div style="margin-top:18px;padding:0 0 14px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:32px;height:32px;border-radius:10px;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.25);display:flex;align-items:center;justify-content:center;color:var(--gold)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <div>
+            <div style="font-family:var(--f-display);font-size:14px;font-weight:700">Submit Proof for Bonus Rewards</div>
+            <div style="font-size:11px;color:var(--txt3)">Upload screenshot proof — earn $5 to $50 per approved referral task</div>
+          </div>
+        </div>
+        <!-- Proof submission cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
+          <!-- App Download Proof -->
+          <div class="v3-proof-card" id="proof-card-app">
+            <div class="vpc-header">
+              <div class="vpc-icon" style="background:rgba(0,212,255,.1);color:var(--cyan)">📱</div>
+              <div>
+                <div class="vpc-name">App Install Proof</div>
+                <div class="vpc-reward">+$5.00 to +$25.00</div>
+              </div>
+              <span class="vpc-badge">HIGH</span>
+            </div>
+            <div class="vpc-desc">Download a partner app, take a screenshot, and submit for instant reward.</div>
+            <div class="vpc-upload-area" id="vpc-upload-app" onclick="document.getElementById('vpc-file-app').click()">
+              <div class="vpc-upload-icon">📸</div>
+              <div class="vpc-upload-lbl">Tap to open gallery</div>
+              <div class="vpc-upload-sub">JPG / PNG / Screenshot</div>
+              <input type="file" id="vpc-file-app" accept="image/*" style="display:none" onchange="vpcHandleUpload(this,'app')">
+            </div>
+            <div class="vpc-preview" id="vpc-preview-app" style="display:none">
+              <img id="vpc-img-app" src="" alt="proof" style="width:100%;border-radius:8px;max-height:180px;object-fit:cover">
+              <button class="vpc-submit-btn" onclick="vpcSubmitProof('app')">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Submit for Review
+              </button>
+              <button class="vpc-retry-btn" onclick="vpcRetry('app')">Retake</button>
+            </div>
+          </div>
+          <!-- Survey Proof -->
+          <div class="v3-proof-card" id="proof-card-survey">
+            <div class="vpc-header">
+              <div class="vpc-icon" style="background:rgba(139,92,246,.1);color:var(--violet)">📋</div>
+              <div>
+                <div class="vpc-name">Survey Completed Proof</div>
+                <div class="vpc-reward">+$2.00 to +$15.00</div>
+              </div>
+              <span class="vpc-badge" style="background:rgba(139,92,246,.15);color:var(--violet);border-color:rgba(139,92,246,.3)">MED</span>
+            </div>
+            <div class="vpc-desc">Complete a partner survey and screenshot the thank-you page.</div>
+            <div class="vpc-upload-area" id="vpc-upload-survey" onclick="document.getElementById('vpc-file-survey').click()">
+              <div class="vpc-upload-icon">📸</div>
+              <div class="vpc-upload-lbl">Tap to open gallery</div>
+              <div class="vpc-upload-sub">JPG / PNG / Screenshot</div>
+              <input type="file" id="vpc-file-survey" accept="image/*" style="display:none" onchange="vpcHandleUpload(this,'survey')">
+            </div>
+            <div class="vpc-preview" id="vpc-preview-survey" style="display:none">
+              <img id="vpc-img-survey" src="" alt="proof" style="width:100%;border-radius:8px;max-height:180px;object-fit:cover">
+              <button class="vpc-submit-btn" onclick="vpcSubmitProof('survey')">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Submit for Review
+              </button>
+              <button class="vpc-retry-btn" onclick="vpcRetry('survey')">Retake</button>
+            </div>
+          </div>
+          <!-- Referral Proof -->
+          <div class="v3-proof-card" id="proof-card-ref">
+            <div class="vpc-header">
+              <div class="vpc-icon" style="background:rgba(34,197,94,.1);color:var(--green)">👥</div>
+              <div>
+                <div class="vpc-name">Referral Registration Proof</div>
+                <div class="vpc-reward">+$10.00 to +$50.00</div>
+              </div>
+              <span class="vpc-badge" style="background:rgba(34,197,94,.15);color:var(--green);border-color:rgba(34,197,94,.3)">TOP</span>
+            </div>
+            <div class="vpc-desc">Submit screenshot showing friend joined using your referral link.</div>
+            <div class="vpc-upload-area" id="vpc-upload-ref" onclick="document.getElementById('vpc-file-ref').click()">
+              <div class="vpc-upload-icon">📸</div>
+              <div class="vpc-upload-lbl">Tap to open gallery</div>
+              <div class="vpc-upload-sub">JPG / PNG / Screenshot</div>
+              <input type="file" id="vpc-file-ref" accept="image/*" style="display:none" onchange="vpcHandleUpload(this,'ref')">
+            </div>
+            <div class="vpc-preview" id="vpc-preview-ref" style="display:none">
+              <img id="vpc-img-ref" src="" alt="proof" style="width:100%;border-radius:8px;max-height:180px;object-fit:cover">
+              <button class="vpc-submit-btn" onclick="vpcSubmitProof('ref')">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Submit for Review
+              </button>
+              <button class="vpc-retry-btn" onclick="vpcRetry('ref')">Retake</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!-- AD BREAK 4 — between tasks and promo -->
     <div style="display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start">
@@ -7294,7 +7435,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
           <div class="wc-bal-main" id="w-big-bal">
             <span class="wc-bal-currency">$</span><span class="wc-bal-int" id="wc-bal-int">0</span><span class="wc-bal-dec" id="wc-bal-dec">.00000</span>
           </div>
-          <div class="wc-bal-fiat" id="wc-bal-fiat">≈ ₹0.00 INR</div>
+          <div class="wc-bal-fiat" id="wc-bal-fiat" style="color:var(--gold);font-weight:700">🪙 0 P Coin</div>
         </div>
 
         <div class="wc-stats-row">
@@ -8585,24 +8726,24 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
               PREMIUM VIDEO HUB
             </div>
             <div class="vsh-hero-title" id="vsh-hero-title">Unlock All Videos</div>
-            <div class="vsh-hero-sub" id="vsh-hero-sub">Watch &amp; earn points on every video — <strong>₹50/month</strong> unlocks everything</div>
+            <div class="vsh-hero-sub" id="vsh-hero-sub">Watch &amp; earn P Coin on every video — <strong>$0.50 (1,000 P Coin)/month</strong> unlocks everything</div>
             <div class="vsh-perks">
               <div class="vsh-perk"><span>🎯</span> +5 pts per video</div>
               <div class="vsh-perk"><span>🚫</span> Skip all ads</div>
-              <div class="vsh-perk"><span>🎬</span> HD quality select</div>
-              <div class="vsh-perk"><span>📱</span> All devices</div>
+              <div class="vsh-perk"><span>🎬</span> HD / SD quality</div>
+              <div class="vsh-perk"><span>🪙</span> Earn P Coin</div>
             </div>
           </div>
           <!-- FREE state CTA -->
           <div class="vsh-hero-right" id="vsh-cta-wrap">
             <div class="vsh-price-box">
               <div class="vsh-price-label">Monthly Plan</div>
-              <div class="vsh-price-amount">₹50</div>
-              <div class="vsh-price-sub">per month · cancel anytime</div>
+              <div class="vsh-price-amount">$0.50</div>
+              <div class="vsh-price-sub">= 1,000 P Coin · cancel anytime</div>
             </div>
             <button class="vsh-subscribe-btn" onclick="vshOpenPayModal()">
               <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              Subscribe Now — ₹50
+              Subscribe — $0.50 / 1,000 P Coin
             </button>
             <div class="vsh-already-sub">Already subscribed? <button onclick="vshRestoreSub()" style="color:var(--gold);background:none;border:none;cursor:pointer;font-size:11px;font-weight:600;text-decoration:underline">Restore</button></div>
           </div>
@@ -8740,43 +8881,44 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
             <div class="vsh-plan-icon">▶</div>
             <div class="vsh-plan-info">
               <div class="vsh-plan-name">Video Hub Premium</div>
-              <div class="vsh-plan-features">✓ All videos · ✓ Skip ads · ✓ HD select · ✓ +5 pts/video</div>
+              <div class="vsh-plan-features">✓ All videos · ✓ Skip ads · ✓ HD/SD select · ✓ +5 pts/video</div>
             </div>
-            <div class="vsh-plan-price">₹50<span>/mo</span></div>
+            <div class="vsh-plan-price">$0.50<span>/mo · 1,000 PC</span></div>
           </div>
           <div class="vsh-pay-methods">
             <div class="vsh-pay-method-label">Payment Method</div>
             <div class="vsh-pay-method-grid">
-              <button class="vsh-method-btn active" id="vsh-method-upi" onclick="vshSelectMethod('upi')"><span>📱</span><span>UPI</span></button>
-              <button class="vsh-method-btn" id="vsh-method-card" onclick="vshSelectMethod('card')"><span>💳</span><span>Card</span></button>
-              <button class="vsh-method-btn" id="vsh-method-wallet" onclick="vshSelectMethod('wallet')"><span>🏦</span><span>Wallet</span></button>
+              <button class="vsh-method-btn active" id="vsh-method-upi" onclick="vshSelectMethod('upi')"><span>💳</span><span>Card</span></button>
+              <button class="vsh-method-btn" id="vsh-method-card" onclick="vshSelectMethod('card')"><span>₿</span><span>Crypto</span></button>
+              <button class="vsh-method-btn" id="vsh-method-wallet" onclick="vshSelectMethod('wallet')">
+                <svg width="14" height="14" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="14" fill="url(#pcGF)"/><text x="11" y="23" font-family="Arial Black,serif" font-weight="900" font-size="12" fill="#3d2200">P</text></svg>
+                <span>P Coin</span>
+              </button>
             </div>
           </div>
           <div class="vsh-input-panel" id="vsh-panel-upi">
-            <label class="vsh-field-label">UPI ID</label>
-            <input class="vsh-field-input" id="vsh-upi-id" placeholder="yourname@upi" type="text">
-            <div class="vsh-upi-hint">Scan QR or enter UPI ID · ₹50 charged monthly</div>
+            <label class="vsh-field-label">Card Number</label>
+            <input class="vsh-field-input" id="vsh-upi-id" placeholder="1234 5678 9012 3456" type="text">
+            <div class="vsh-upi-hint" style="color:var(--txt3)">Billed $0.50/month · Cancel anytime</div>
           </div>
           <div class="vsh-input-panel" id="vsh-panel-card" style="display:none">
-            <label class="vsh-field-label">Card Number</label>
-            <input class="vsh-field-input" id="vsh-card-num" placeholder="1234 5678 9012 3456" maxlength="19" type="text" oninput="vshFormatCard(this)">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-              <div><label class="vsh-field-label">Expiry</label><input class="vsh-field-input" placeholder="MM/YY" maxlength="5" type="text"></div>
-              <div><label class="vsh-field-label">CVV</label><input class="vsh-field-input" placeholder="•••" maxlength="3" type="password"></div>
-            </div>
+            <label class="vsh-field-label">Crypto Wallet Address</label>
+            <input class="vsh-field-input" id="vsh-card-num" placeholder="Enter USDT / USDC TRC20 address" type="text">
+            <div style="font-size:10px;color:var(--txt3);margin-top:6px">Send $0.50 USDT/USDC to the shown address</div>
           </div>
           <div class="vsh-input-panel" id="vsh-panel-wallet" style="display:none">
-            <div class="vsh-wallet-opts">
-              <button class="vsh-wallet-opt" onclick="vshPickWallet(this)"><span>🟦</span><span>Paytm</span></button>
-              <button class="vsh-wallet-opt" onclick="vshPickWallet(this)"><span>💜</span><span>PhonePe</span></button>
-              <button class="vsh-wallet-opt" onclick="vshPickWallet(this)"><span>🔵</span><span>GPay</span></button>
+            <div style="text-align:center;padding:16px 0">
+              <div style="font-size:32px;margin-bottom:8px">🪙</div>
+              <div style="font-size:14px;font-weight:700;color:var(--gold)">1,000 P Coin = $0.50</div>
+              <div style="font-size:11px;color:var(--txt3);margin-top:4px">Deducted from your current P Coin balance</div>
+              <div style="margin-top:10px;font-size:12px;color:var(--txt2)">Your balance: <strong id="vsh-pcoin-balance" style="color:var(--gold)">0 P Coin</strong></div>
             </div>
           </div>
         </div>
         <div class="vsh-pay-footer">
           <div class="vsh-pay-secure">🔒 256-bit SSL · Auto-renews monthly · Cancel anytime</div>
           <button class="vsh-pay-confirm-btn" id="vsh-pay-confirm-btn" onclick="vshProcessPayment()">
-            <span id="vsh-pay-btn-text">Pay ₹50 &amp; Activate</span>
+            <span id="vsh-pay-btn-text">Pay $0.50 &amp; Activate Premium</span>
             <div class="vsh-pay-spinner" id="vsh-pay-spinner" style="display:none"></div>
           </button>
         </div>
@@ -8793,7 +8935,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
             <div class="vsh-ar-num" id="vsh-ar-num">5</div>
           </div>
           <div class="vsh-ad-label">Watch a short ad to unlock</div>
-          <div class="vsh-ad-sub">Subscribe ₹50/mo to skip all ads forever</div>
+          <div class="vsh-ad-sub">Subscribe $0.50/mo to skip all ads forever</div>
           <div class="vsh-ad-slot">
             <div class="rgb-ad" style="height:64px;max-width:340px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> Video Pre-Roll <span class="ad-tag">AD</span></div></div>
           </div>
@@ -9143,7 +9285,12 @@ function updateWallet(){
   $('hub-bal')&&($('hub-bal').textContent=f(b));
   /* Premium wallet display */
   const fiatEl = document.getElementById('wc-bal-fiat');
-  if(fiatEl) fiatEl.textContent = '\u2248 \u20b9' + (b * 83.5).toFixed(2) + ' INR';
+  if(fiatEl) fiatEl.textContent = '🪙 ' + Math.floor(b * 2000).toLocaleString() + ' P Coin';
+  const hdrFiat = document.getElementById('ph-bal-fiat-hdr');
+  if(hdrFiat) hdrFiat.textContent = '🪙 ' + Math.floor(b * 2000).toLocaleString() + ' P Coin';
+  /* Update nav P Coin pill */
+  const pcNavEl = document.getElementById('pcoin-nav-val');
+  if(pcNavEl) pcNavEl.textContent = b > 0 ? (Math.floor(b * 2000) >= 1000 ? (Math.floor(b * 2000)/1000).toFixed(1) + 'K' : Math.floor(b * 2000)) : '0';
   const todayEl = document.getElementById('wc-today');
   if(todayEl) todayEl.textContent = '+$' + S.sessionEarned.toFixed(4);
   const commEl = document.getElementById('wc-commission');
@@ -17752,16 +17899,50 @@ if(document.readyState==='loading'){
 }
 .vs-card.vs-card-new { animation: vsCardPop .45s var(--spring) both; }
 
-/* Responsive modal */
-@media (max-width: 600px) {
-  .vs-modal { padding: 0; align-items: flex-end; }
-  .vs-modal-box {
-    max-width: 100%; border-radius: var(--r-xl) var(--r-xl) 0 0;
-    max-height: 92dvh;
-  }
-  .vs-add-form { flex-direction: column; }
-  .vs-add-btn { width: 100%; justify-content: center; }
+/* ── HD/SD Quality Badge ── */
+.vs-quality-badge {
+  position: absolute; bottom: 8px; left: 8px;
+  background: rgba(34,197,94,.85);
+  color: #fff; font-size: 9px; font-weight: 800;
+  letter-spacing: .08em; padding: 2px 7px; border-radius: 4px;
+  cursor: pointer; transition: all .2s;
+  text-transform: uppercase; z-index: 3;
 }
+.vs-quality-badge:hover { transform: scale(1.1); }
+/* Watch / Play button */
+.vs-watch-btn {
+  width: 100%; margin-top: 8px; padding: 8px 0;
+  border-radius: var(--r-sm); border: none; cursor: pointer;
+  background: linear-gradient(135deg, rgba(34,197,94,.15), rgba(34,197,94,.05));
+  border: 1px solid rgba(34,197,94,.3);
+  color: var(--green); font-size: 11px; font-weight: 700;
+  letter-spacing: .06em; display: flex; align-items: center;
+  justify-content: center; gap: 6px;
+  transition: all .2s var(--ease);
+}
+.vs-watch-btn:hover {
+  background: rgba(34,197,94,.2);
+  box-shadow: 0 4px 14px rgba(34,197,94,.25);
+  transform: translateY(-1px);
+}
+/* P Coin reward pill on card */
+.vs-pcoin-reward {
+  font-size: 10px; font-weight: 700; color: var(--gold);
+  background: rgba(245,166,35,.1); border-radius: 99px;
+  padding: 2px 8px; border: 1px solid rgba(245,166,35,.2);
+  display: flex; align-items: center; gap: 3px;
+  white-space: nowrap;
+}
+/* P Coin nav pill */
+.pcoin-nav-pill {
+  display: flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 99px;
+  background: rgba(245,166,35,.1); border: 1px solid rgba(245,166,35,.25);
+  font-family: var(--f-mono); font-size: 11px; font-weight: 700;
+  color: var(--gold); cursor: pointer;
+  transition: all .2s; white-space: nowrap;
+}
+.pcoin-nav-pill:hover { background: rgba(245,166,35,.18); }
 </style>
 
 <script id="video-hub-js">
@@ -17897,15 +18078,21 @@ if(document.readyState==='loading'){
         + '</div>'
         + (v.vip ? '<div class="vs-vip-badge">VIP</div>' : '')
         + '<div class="vs-source-badge" style="background:rgba(0,0,0,.72);color:rgba(255,255,255,.8)">'+v.source+'</div>'
+        + '<div class="vs-quality-badge" onclick="event.stopPropagation();vsToggleQuality(\''+v.id+'\')" id="vsq-'+v.id+'" title="Toggle HD/SD">'+((v.quality||'HD'))+'</div>'
       + '</div>'
       + '<div class="vs-card-body">'
         + '<div class="vs-card-title">'+vsEsc(v.title)+'</div>'
         + '<div class="vs-card-meta">'
           + '<span class="vs-card-source" style="color:'+sourceColor+'">'+v.source+'</span>'
+          + '<span class="vs-pcoin-reward">🪙 +10 PC</span>'
           + '<span class="vs-card-remove" onclick="event.stopPropagation();vsRemoveVideo(\''+v.id+'\')" title="Remove">'
             + '<svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>'
           + '</span>'
         + '</div>'
+        + '<button class="vs-watch-btn" onclick="event.stopPropagation();vsOpenVideo(\''+v.id+'\')">'
+          + '<svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+          + 'Play / Watch'
+        + '</button>'
       + '</div>';
     return el;
   }
@@ -17968,6 +18155,23 @@ if(document.readyState==='loading'){
 
     if(window.toast) toast('▶ Video added!', 'success');
     if(window.SFX) SFX.play('ding');
+  };
+
+  /* ── HD/SD Quality Toggle ── */
+  window.vsToggleQuality = function(id) {
+    for(var i=0;i<VS.videos.length;i++){
+      if(VS.videos[i].id===id){
+        VS.videos[i].quality = (VS.videos[i].quality||'HD') === 'HD' ? 'SD' : 'HD';
+        var badge = document.getElementById('vsq-'+id);
+        if(badge){
+          badge.textContent = VS.videos[i].quality;
+          badge.style.background = VS.videos[i].quality === 'HD' ? 'rgba(34,197,94,.85)' : 'rgba(245,166,35,.85)';
+        }
+        vsSave();
+        if(window.toast) toast('Quality set to ' + VS.videos[i].quality, 'info');
+        break;
+      }
+    }
   };
 
   /* ── Remove video ── */
@@ -18116,7 +18320,7 @@ if(document.readyState==='loading'){
      1. Admin adds videos permanently via hidden panel (triple-tap nav logo)
      2. All videos stored in localStorage key payro_admin_videos
      3. Users see system videos, cannot add/remove them
-     4. Subscription ₹50/mo → skip ads, HD select, +5 pts per watch
+     4. Subscription $0.50/mo → skip ads, HD select, +5 pts per watch
      5. Points tracked per video per day, displayed live
      6. HD quality selector changes iframe param in real-time
      7. Filter by category · watched badges · lock overlays
@@ -18276,7 +18480,7 @@ function v3BuildCard(v, idx) {
       + '<div class="vsh-cat-badge">' + (v.cat||'Video') + '</div>'
       + (v.duration ? '<div class="vsh-dur-badge">' + v.duration + '</div>' : '')
       + (watched ? '<div class="vsh-watched-badge">✓ Watched</div>' : '')
-      + (locked ? '<div class="vsh-lock-ov"><div class="vsh-lock-ov-icon">🔒</div><div class="vsh-lock-ov-txt">Premium Only</div><div class="vsh-lock-ov-sub">₹50/mo</div></div>' : '')
+      + (locked ? '<div class="vsh-lock-ov"><div class="vsh-lock-ov-icon">🔒</div><div class="vsh-lock-ov-txt">Premium Only</div><div class="vsh-lock-ov-sub">$0.50/mo</div></div>' : '')
     + '</div>'
     + '<div class="vsh-card-body">'
       + '<div class="vsh-card-title">' + (v.title || v3TitleFromUrl(v.url)) + '</div>'
@@ -18318,7 +18522,7 @@ function v3UpdateCategoryFilters() {
 window.v3OpenPlayer = function(v) {
   if (!V3.sub && v.access === 'premium') {
     vshOpenPayModal();
-    if(window.toast) toast('Subscribe ₹50/mo to watch premium content!','warn');
+    if(window.toast) toast('Subscribe $0.50/mo to watch premium content!','warn');
     return;
   }
   V3.currentVid = v;
@@ -18455,7 +18659,7 @@ function v3UpdateHeroUI() {
     if (tog) tog.checked = true;
   } else {
     if (heroTitle) heroTitle.textContent = 'Unlock All Videos';
-    if (heroSub)   heroSub.innerHTML = 'Watch &amp; earn points on every video — <strong>₹50/month</strong> unlocks everything';
+    if (heroSub)   heroSub.innerHTML = 'Watch &amp; earn points on every video — <strong>$0.50/month</strong> unlocks everything';
     if (ctaWrap)   ctaWrap.style.display = '';
     if (activeWrap) activeWrap.style.display = 'none';
     if (ptsBar)    ptsBar.style.display = 'none';
@@ -18519,8 +18723,8 @@ window.vshProcessPayment = function() {
     if (spin) spin.style.display = 'none';
     if(window.toast) toast('🎉 Premium Activated! Earn points on every video!','success');
     if(window.SFX) SFX.play('ding');
-    if(window.addTx) addTx('Premium Subscription ₹50','50','debit');
-    if(window.gtag) gtag('event','subscription_purchase',{plan:'video_premium',amount:50,currency:'INR'});
+    if(window.addTx) addTx('Premium Subscription $0.50','0.50','debit');
+    if(window.gtag) gtag('event','subscription_purchase',{plan:'video_premium',amount:0.50,currency:'USD'});
     setTimeout(function(){ v3ShowPtsPopup('⭐ Premium Active!'); }, 400);
   }, 1800);
 };
@@ -18670,6 +18874,2049 @@ window.V3 = V3;
 })();
 </script>
 
+<!-- ══════════════════════════════════════════
+     PHOTO PROOF + P COIN SYSTEM EXTENSIONS
+══════════════════════════════════════════ -->
+<script>
+/* ── Photo Proof Upload System ── */
+window.vpcHandleUpload = function(input, type) {
+  var file = input.files && input.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    if(window.toast) toast('Please select an image file','warn');
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var imgEl = document.getElementById('vpc-img-' + type);
+    var preview = document.getElementById('vpc-preview-' + type);
+    var uploadArea = document.getElementById('vpc-upload-' + type);
+    if (imgEl) imgEl.src = e.target.result;
+    if (preview) preview.style.display = '';
+    if (uploadArea) uploadArea.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+};
+
+window.vpcRetry = function(type) {
+  var preview = document.getElementById('vpc-preview-' + type);
+  var uploadArea = document.getElementById('vpc-upload-' + type);
+  var fileInput = document.getElementById('vpc-file-' + type);
+  if (preview) preview.style.display = 'none';
+  if (uploadArea) uploadArea.style.display = '';
+  if (fileInput) fileInput.value = '';
+};
+
+var _vpcSubmitted = {};
+window.vpcSubmitProof = function(type) {
+  if (_vpcSubmitted[type]) {
+    if(window.toast) toast('Already submitted — awaiting review','info'); return;
+  }
+  _vpcSubmitted[type] = true;
+  /* Simulate review: random reward $5-$50 after 2s */
+  var rewards = {app: [5,25], survey: [2,15], ref: [10,50]};
+  var range = rewards[type] || [5,25];
+  var reward = (range[0] + Math.random() * (range[1] - range[0])).toFixed(2);
+  var card = document.getElementById('proof-card-' + type);
+  if(window.toast) toast('📤 Proof submitted! Reviewing...','info');
+  setTimeout(function() {
+    if(window.S && typeof window.S.balance !== 'undefined'){
+      window.S.balance += parseFloat(reward);
+      window.S.sessionEarned += parseFloat(reward);
+      if(window.addTx) addTx('Proof Reward: '+type, parseFloat(reward), 'credit');
+      if(window.updateWallet) updateWallet();
+      if(window.SFX) SFX.play('win');
+    }
+    if(window.toast) toast('✅ Proof approved! +$' + reward + ' credited','success');
+    if (card) {
+      card.style.border = '1px solid rgba(34,197,94,.4)';
+      card.style.background = 'rgba(34,197,94,.04)';
+      var btn = card.querySelector('.vpc-submit-btn');
+      if(btn) { btn.textContent = '✅ Approved — +$' + reward; btn.disabled = true; btn.style.opacity = '.6'; }
+    }
+    /* Also award P Coin */
+    var pCoins = Math.floor(parseFloat(reward) * 2000);
+    if(window.toast) setTimeout(function(){ toast('🪙 +' + pCoins.toLocaleString() + ' P Coin earned!','success'); }, 800);
+  }, 2000 + Math.random() * 1500);
+};
+
+/* ── P Coin System ── */
+(function(){
+  var PCOIN_RATE = 2000; // 1 USD = 2000 P Coin ($0.50 = 1000 P Coin)
+  
+  /* Show P Coin value in wallet section */
+  function updatePCoinDisplay() {
+    var bal = (window.S && window.S.balance) ? window.S.balance : 0;
+    var coins = Math.floor(bal * PCOIN_RATE);
+    var fmt = coins >= 1000000 ? (coins/1000000).toFixed(2) + 'M' :
+              coins >= 1000 ? (coins/1000).toFixed(1) + 'K' : coins;
+    
+    var navEl = document.getElementById('pcoin-nav-val');
+    if(navEl) navEl.textContent = fmt;
+    
+    var hdrEl = document.getElementById('ph-bal-fiat-hdr');
+    if(hdrEl) hdrEl.textContent = '🪙 ' + coins.toLocaleString() + ' P Coin';
+    
+    var wcEl = document.getElementById('wc-bal-fiat');
+    if(wcEl) wcEl.textContent = '🪙 ' + coins.toLocaleString() + ' P Coin';
+  }
+  
+  /* Hook into updateWallet */
+  var _origUpdate = window.updateWallet;
+  window.updateWallet = function() {
+    if(_origUpdate) _origUpdate.apply(this, arguments);
+    updatePCoinDisplay();
+  };
+  
+  /* Initial display */
+  setTimeout(updatePCoinDisplay, 500);
+  setInterval(updatePCoinDisplay, 1000);
+  
+  /* P Coin info popup when nav pill clicked */
+  var pill = document.getElementById('pcoin-nav-pill');
+  if(pill) {
+    pill.addEventListener('click', function(){
+      var bal = (window.S && window.S.balance) ? window.S.balance : 0;
+      var coins = Math.floor(bal * PCOIN_RATE);
+      if(window.toast) toast('🪙 ' + coins.toLocaleString() + ' P Coin — Rate: $0.50 = 1,000 PC', 'info');
+    });
+  }
+})();
+
+/* ── Update vsh payment modal to use P Coin ── */
+(function(){
+  var origProcess = window.vshProcessPayment;
+  window.vshProcessPayment = function() {
+    /* Check if using P Coin */
+    var method = (window.V3 && window.V3.payMethod) ? window.V3.payMethod : '';
+    /* Deduct from balance if P Coin method */
+    if(method === 'pcoin') {
+      var cost = 0.5; /* $0.50 = 1000 P Coin */
+      if(window.S && window.S.balance < cost) {
+        if(window.toast) toast('Insufficient balance. Need $0.50 (1,000 P Coin)','error');
+        return;
+      }
+    }
+    if(origProcess) origProcess.apply(this, arguments);
+  };
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAYRO MASTER UPGRADE — P COIN SYSTEM v2 + VIDEO HUB + FAUCET FIX
+     Rate: 200 P Coin = ₹0.5  |  Faucet: every 5 min  |  Spin: uses coins
+═══════════════════════════════════════════════════════════════════ -->
+<style id="pcoin-v2-css">
+/* ═══════════════════════════════════════
+   P COIN PANEL — floating live tracker
+═══════════════════════════════════════ */
+#pc-live-panel {
+  position: fixed;
+  bottom: 90px; right: 12px;
+  z-index: 8000;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  pointer-events: none;
+}
+.pc-float-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(10,13,26,.92);
+  border: 1px solid rgba(245,166,35,.35);
+  border-radius: 99px;
+  padding: 6px 14px;
+  backdrop-filter: blur(12px);
+  pointer-events: all;
+  box-shadow: 0 4px 20px rgba(245,166,35,.18);
+  cursor: default;
+}
+.pc-float-icon { font-size: 16px; line-height:1; }
+.pc-float-val  { font-family: var(--f-mono,'DM Mono',monospace); font-size: 13px; font-weight: 700; color: var(--gold,#f5a623); line-height:1; }
+.pc-float-lbl  { font-size: 9px; color: rgba(255,255,255,.4); letter-spacing:.06em; text-transform:uppercase; }
+.pc-faucet-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(10,13,26,.92);
+  border: 1px solid rgba(0,212,255,.3);
+  border-radius: 99px; padding: 5px 12px;
+  pointer-events: all;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 4px 16px rgba(0,212,255,.12);
+}
+.pc-faucet-badge:hover { border-color: rgba(0,212,255,.6); box-shadow: 0 6px 24px rgba(0,212,255,.22); }
+.pc-faucet-badge.ready { border-color: rgba(34,197,94,.5); box-shadow: 0 4px 18px rgba(34,197,94,.22); animation: pcFaucetGlow 2s ease-in-out infinite; }
+@keyframes pcFaucetGlow {
+  0%,100%{ box-shadow:0 4px 18px rgba(34,197,94,.22); }
+  50%{ box-shadow:0 6px 28px rgba(34,197,94,.5), 0 0 0 3px rgba(34,197,94,.08); }
+}
+.pc-faucet-dot { width:7px; height:7px; border-radius:50%; background:var(--cyan,#00d4ff); box-shadow:0 0 8px var(--cyan,#00d4ff); flex-shrink:0; }
+.pc-faucet-dot.ready { background:var(--green,#22c55e); box-shadow:0 0 8px var(--green,#22c55e); animation:pcDotPulse 1.2s ease-in-out infinite; }
+@keyframes pcDotPulse{ 0%,100%{opacity:1} 50%{opacity:.35} }
+.pc-faucet-txt { font-size:11px; font-weight:700; color:rgba(255,255,255,.75); white-space:nowrap; }
+.pc-faucet-timer{ font-family:var(--f-mono,'DM Mono',monospace); font-size:10px; color:rgba(0,212,255,.9); }
+/* Coin burst float */
+@keyframes pcCoinFloat {
+  0%  { opacity:0; transform:translateY(0) scale(.6); }
+  15% { opacity:1; transform:translateY(-8px) scale(1.1); }
+  80% { opacity:1; transform:translateY(-32px) scale(1); }
+  100%{ opacity:0; transform:translateY(-50px) scale(.9); }
+}
+.pc-coin-float {
+  position:fixed; pointer-events:none; z-index:9999;
+  font-family:var(--f-mono,'DM Mono',monospace);
+  font-size:13px; font-weight:800; color:var(--gold,#f5a623);
+  text-shadow:0 0 10px rgba(245,166,35,.7);
+  animation:pcCoinFloat 1.2s ease forwards;
+}
+
+/* ═══════════════════════════════════════
+   VIDEO HUB — ADD VIDEO PANEL
+═══════════════════════════════════════ */
+#pc-video-panel {
+  margin: 14px 0;
+  border-radius: 18px;
+  background: rgba(14,19,34,.85);
+  border: 1px solid rgba(245,166,35,.18);
+  overflow: hidden;
+}
+.pcv-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px 12px;
+  background: linear-gradient(135deg,rgba(245,166,35,.08),rgba(0,212,255,.04));
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.pcv-title-row { display:flex; align-items:center; gap:10px; }
+.pcv-icon { width:34px; height:34px; border-radius:10px; background:rgba(245,166,35,.12); border:1px solid rgba(245,166,35,.25); display:flex; align-items:center; justify-content:center; color:var(--gold,#f5a623); font-size:17px; }
+.pcv-title { font-family:var(--f-display,'Rajdhani',sans-serif); font-size:15px; font-weight:700; color:#fff; }
+.pcv-sub { font-size:10px; color:rgba(255,255,255,.4); margin-top:1px; }
+.pcv-count-pill { font-size:10px; font-weight:700; background:rgba(34,197,94,.1); color:var(--green,#22c55e); border:1px solid rgba(34,197,94,.2); border-radius:99px; padding:3px 10px; white-space:nowrap; }
+
+.pcv-add-row {
+  display:flex; gap:8px; padding:14px 18px 12px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.pcv-url-wrap {
+  flex:1; display:flex; align-items:center;
+  background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.09);
+  border-radius:12px; overflow:hidden; transition:border-color .2s,box-shadow .2s;
+}
+.pcv-url-wrap:focus-within { border-color:rgba(245,166,35,.4); box-shadow:0 0 0 3px rgba(245,166,35,.08); }
+.pcv-url-prefix { padding:0 12px; font-size:17px; opacity:.5; flex-shrink:0; }
+.pcv-url-input {
+  flex:1; padding:11px 0; background:transparent; border:none; outline:none;
+  font-size:13px; color:#fff; font-family:var(--f-body,'DM Sans',sans-serif);
+  min-width:0;
+}
+.pcv-url-input::placeholder { color:rgba(255,255,255,.28); }
+.pcv-add-btn {
+  padding:11px 20px; border-radius:12px; border:none; cursor:pointer;
+  background:linear-gradient(135deg,var(--gold,#f5a623),#c2811a);
+  color:#000; font-weight:800; font-size:13px; letter-spacing:.04em;
+  display:flex; align-items:center; gap:7px; flex-shrink:0;
+  transition:all .2s var(--spring,cubic-bezier(.34,1.56,.64,1));
+  box-shadow:0 4px 16px rgba(245,166,35,.3);
+}
+.pcv-add-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(245,166,35,.45); }
+.pcv-add-btn:active { transform:scale(.96); }
+
+/* Quality selector row */
+.pcv-opts-row {
+  display:flex; align-items:center; gap:10px; padding:0 18px 12px; flex-wrap:wrap;
+}
+.pcv-quality-label { font-size:11px; color:rgba(255,255,255,.4); font-weight:600; }
+.pcv-quality-btn {
+  padding:4px 12px; border-radius:99px; border:1.5px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04); color:rgba(255,255,255,.6);
+  font-size:11px; font-weight:700; cursor:pointer; transition:all .18s;
+}
+.pcv-quality-btn.active, .pcv-quality-btn:hover {
+  border-color:var(--gold,#f5a623); color:var(--gold,#f5a623);
+  background:rgba(245,166,35,.08);
+}
+
+/* Video grid */
+.pcv-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px; padding:14px 18px 18px;
+}
+@media(max-width:560px){ .pcv-grid{grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px 14px;} }
+@media(max-width:360px){ .pcv-grid{grid-template-columns:1fr;} }
+
+/* Video card */
+.pcv-card {
+  border-radius:14px; overflow:hidden;
+  background:rgba(20,24,40,.9);
+  border:1px solid rgba(255,255,255,.07);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), border-color .2s, box-shadow .25s;
+  cursor:pointer; position:relative;
+  will-change:transform;
+}
+.pcv-card:hover {
+  transform:translateY(-5px) scale(1.015);
+  border-color:rgba(245,166,35,.35);
+  box-shadow:0 14px 40px rgba(0,0,0,.55), 0 0 0 1px rgba(245,166,35,.12);
+}
+.pcv-card:active { transform:scale(.97); transition-duration:.1s; }
+
+/* Thumbnail */
+.pcv-thumb {
+  position:relative; width:100%; padding-top:56.25%;
+  background:linear-gradient(135deg,rgba(20,24,40,1),rgba(10,13,26,1));
+  overflow:hidden;
+}
+.pcv-thumb img {
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  transition:transform .4s ease, filter .3s;
+}
+.pcv-card:hover .pcv-thumb img { transform:scale(1.07); filter:brightness(1.08); }
+.pcv-thumb-ph {
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:5px;
+  color:rgba(255,255,255,.2); font-size:11px; font-weight:600;
+}
+.pcv-thumb-ph svg { opacity:.35; }
+
+/* Play overlay */
+.pcv-play-ov {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.22); opacity:0; transition:opacity .22s;
+}
+.pcv-card:hover .pcv-play-ov { opacity:1; }
+.pcv-play-circle {
+  width:50px; height:50px; border-radius:50%;
+  background:rgba(245,166,35,.9); box-shadow:0 0 28px rgba(245,166,35,.6);
+  display:flex; align-items:center; justify-content:center; color:#000;
+  transform:scale(.8); transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.pcv-card:hover .pcv-play-circle { transform:scale(1); }
+
+/* Badges on thumb */
+.pcv-src-badge {
+  position:absolute; top:7px; right:7px;
+  background:rgba(0,0,0,.75); color:rgba(255,255,255,.85);
+  font-size:8px; font-weight:800; letter-spacing:.08em; padding:2px 7px;
+  border-radius:4px; text-transform:uppercase;
+}
+.pcv-quality-badge {
+  position:absolute; bottom:7px; left:7px;
+  font-size:8px; font-weight:800; letter-spacing:.08em; padding:2px 7px;
+  border-radius:4px; text-transform:uppercase; cursor:pointer;
+  transition:all .2s;
+}
+.pcv-quality-badge.hd  { background:rgba(34,197,94,.85); color:#fff; }
+.pcv-quality-badge.sd  { background:rgba(245,166,35,.8); color:#000; }
+.pcv-quality-badge:hover { transform:scale(1.1); }
+
+/* Card body */
+.pcv-body { padding:10px 12px 12px; }
+.pcv-card-title {
+  font-size:12px; font-weight:600; color:#fff; line-height:1.35; margin-bottom:7px;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.pcv-meta { display:flex; align-items:center; justify-content:space-between; gap:6px; }
+.pcv-source { font-size:10px; font-weight:700; letter-spacing:.03em; }
+.pcv-pc-reward {
+  font-size:9px; font-weight:800; color:var(--gold,#f5a623);
+  background:rgba(245,166,35,.1); border:1px solid rgba(245,166,35,.2);
+  border-radius:99px; padding:2px 8px; white-space:nowrap; flex-shrink:0;
+}
+.pcv-del-btn {
+  width:20px; height:20px; border-radius:5px; flex-shrink:0; opacity:0;
+  background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.2);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--red,#ef4444); cursor:pointer; transition:all .2s;
+}
+.pcv-card:hover .pcv-del-btn { opacity:1; }
+.pcv-del-btn:hover { background:rgba(239,68,68,.22); }
+.pcv-watch-btn {
+  width:100%; margin-top:8px; padding:8px; border-radius:8px; border:none; cursor:pointer;
+  background:linear-gradient(135deg,rgba(245,166,35,.14),rgba(245,166,35,.06));
+  border:1px solid rgba(245,166,35,.28); color:var(--gold,#f5a623);
+  font-size:11px; font-weight:700; letter-spacing:.05em;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:all .2s;
+}
+.pcv-watch-btn:hover { background:rgba(245,166,35,.2); box-shadow:0 4px 14px rgba(245,166,35,.22); transform:translateY(-1px); }
+
+/* Empty state */
+.pcv-empty {
+  grid-column:1/-1; text-align:center; padding:40px 20px; color:rgba(255,255,255,.25);
+}
+.pcv-empty-icon { font-size:36px; margin-bottom:8px; opacity:.5; }
+.pcv-empty-title { font-family:var(--f-display,'Rajdhani',sans-serif); font-size:14px; font-weight:700; margin-bottom:4px; color:rgba(255,255,255,.4); }
+.pcv-empty-sub { font-size:11px; line-height:1.5; }
+
+/* Video modal */
+#pcv-modal {
+  display:none; position:fixed; inset:0; z-index:9600;
+  align-items:center; justify-content:center;
+  background:rgba(2,4,14,.94); backdrop-filter:blur(16px); padding:12px;
+}
+#pcv-modal.open { display:flex; }
+.pcv-modal-box {
+  width:100%; max-width:900px; max-height:calc(100dvh - 24px);
+  background:rgba(10,13,26,.98); border:1px solid rgba(245,166,35,.2);
+  border-radius:20px; overflow:hidden; display:flex; flex-direction:column;
+  box-shadow:0 32px 80px rgba(0,0,0,.8), 0 0 0 1px rgba(245,166,35,.08);
+  animation:pcvModalIn .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pcvModalIn{ from{transform:scale(.88) translateY(24px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+.pcv-modal-hdr {
+  display:flex; align-items:center; gap:10px; padding:12px 16px 11px;
+  background:rgba(245,166,35,.04); border-bottom:1px solid rgba(255,255,255,.06);
+  flex-shrink:0;
+}
+.pcv-modal-title { flex:1; font-size:13px; font-weight:700; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pcv-modal-quality {
+  padding:5px 12px; border-radius:99px; border:1.5px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05); color:rgba(255,255,255,.7);
+  font-size:10px; font-weight:700; cursor:pointer; transition:all .18s;
+  white-space:nowrap;
+}
+.pcv-modal-quality:hover { border-color:rgba(245,166,35,.4); color:var(--gold,#f5a623); }
+.pcv-modal-newtab {
+  padding:5px 12px; border-radius:99px; border:1.5px solid rgba(34,197,94,.25);
+  background:rgba(34,197,94,.07); color:var(--green,#22c55e);
+  font-size:10px; font-weight:700; cursor:pointer; transition:all .18s; text-decoration:none;
+  display:flex; align-items:center; gap:5px; white-space:nowrap;
+}
+.pcv-modal-newtab:hover { background:rgba(34,197,94,.15); }
+.pcv-modal-close {
+  width:28px; height:28px; border-radius:8px; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.05);
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,.5); cursor:pointer; transition:all .2s; font-size:13px;
+}
+.pcv-modal-close:hover { border-color:rgba(239,68,68,.4); color:var(--red,#ef4444); }
+.pcv-iframe-wrap {
+  flex-shrink:0; position:relative; width:100%; padding-top:56.25%; background:#000;
+}
+.pcv-iframe-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+.pcv-modal-footer {
+  padding:10px 16px; border-top:1px solid rgba(255,255,255,.05);
+  display:flex; align-items:center; gap:10px; flex-shrink:0; flex-wrap:wrap;
+}
+.pcv-modal-pc-earn {
+  display:flex; align-items:center; gap:6px;
+  font-size:11px; font-weight:700; color:var(--gold,#f5a623);
+}
+.pcv-modal-src { font-size:10px; color:rgba(255,255,255,.3); font-family:var(--f-mono,'DM Mono',monospace); flex:1; text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+@media(max-width:560px){
+  #pcv-modal { padding:0; align-items:flex-end; }
+  .pcv-modal-box { max-width:100%; border-radius:20px 20px 0 0; max-height:92dvh; }
+}
+
+/* ═══ SPIN COIN COST BADGE ═══ */
+.pcv-spin-cost {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:3px 10px; border-radius:99px;
+  background:rgba(245,166,35,.1); border:1px solid rgba(245,166,35,.22);
+  font-size:10px; font-weight:800; color:var(--gold,#f5a623);
+  margin-left:6px; vertical-align:middle;
+}
+.spin-coin-indicator {
+  text-align:center; margin:6px 0 10px;
+  font-size:11px; color:rgba(255,255,255,.5);
+}
+.spin-coin-indicator strong { color:var(--gold,#f5a623); }
+</style>
+
+<script id="pcoin-v2-js">
+/* ════════════════════════════════════════════════════════════
+   PAYRO P COIN MASTER SYSTEM v2
+   Rate: 200 P Coin = ₹0.5  |  $1 ≈ 400 P Coin (at ₹83/USD)
+   Faucet: +20 P Coin every 5 minutes (auto + manual)
+   Spin: costs 50 P Coin per spin
+════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ── Constants ── */
+var PC_PER_RUPEE_HALF = 200;     // 200 PC = ₹0.5
+var PC_FAUCET_AMOUNT  = 20;      // coins per faucet drop
+var PC_FAUCET_SECS    = 300;     // 5 minutes
+var PC_SPIN_COST      = 50;      // coins per spin
+var PC_VIDEO_REWARD   = 10;      // coins per video watched
+var PC_STORAGE_KEY    = 'payro_pcoin_v2';
+var PC_VIDEOS_KEY     = 'payro_videos_v2';
+
+/* ── State ── */
+var PC = {
+  coins: 0,
+  faucetNextAt: 0,   // timestamp when next faucet is available
+  videosSeen: {},    // track which videos gave rewards
+  videos: []         // user-added videos
+};
+
+/* ── Persistence ── */
+function pcSave() {
+  try { localStorage.setItem(PC_STORAGE_KEY, JSON.stringify({
+    coins: PC.coins,
+    faucetNextAt: PC.faucetNextAt,
+    videosSeen: PC.videosSeen
+  })); } catch(e){}
+}
+function pcLoad() {
+  try {
+    var d = JSON.parse(localStorage.getItem(PC_STORAGE_KEY) || '{}');
+    if(d.coins !== undefined)      PC.coins       = d.coins;
+    if(d.faucetNextAt !== undefined) PC.faucetNextAt = d.faucetNextAt;
+    if(d.videosSeen)               PC.videosSeen  = d.videosSeen;
+  } catch(e){}
+  // Load videos
+  try {
+    var vids = JSON.parse(localStorage.getItem(PC_VIDEOS_KEY) || '[]');
+    if(Array.isArray(vids)) PC.videos = vids;
+  } catch(e){}
+}
+function pcSaveVideos() {
+  try { localStorage.setItem(PC_VIDEOS_KEY, JSON.stringify(PC.videos)); } catch(e){}
+}
+
+/* ── Coin helpers ── */
+function pcAdd(amount, label, anchor) {
+  PC.coins += amount;
+  pcSave();
+  pcUpdateUI();
+  pcFloatCoin('+' + amount + ' PC', anchor);
+  if(window.toast) toast('🪙 +' + amount + ' P Coin' + (label ? ' — ' + label : ''), 'success');
+}
+function pcSpend(amount) {
+  if(PC.coins < amount) return false;
+  PC.coins -= amount;
+  pcSave();
+  pcUpdateUI();
+  return true;
+}
+
+/* ── Rupee conversion ── */
+function pcToRupee(coins) {
+  // 200 PC = ₹0.5 → 1 PC = ₹0.0025
+  return (coins * 0.0025).toFixed(3);
+}
+
+/* ── Float coin animation ── */
+function pcFloatCoin(text, anchorEl) {
+  var el = document.createElement('div');
+  el.className = 'pc-coin-float';
+  el.textContent = text;
+  var rect = anchorEl ? anchorEl.getBoundingClientRect() :
+    { left: window.innerWidth - 120, top: window.innerHeight - 180, width: 80 };
+  el.style.left = (rect.left + rect.width * 0.3 + Math.random() * 40) + 'px';
+  el.style.top  = Math.max(60, rect.top - 10) + 'px';
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, 1300);
+}
+
+/* ── Update all UI display elements ── */
+function pcUpdateUI() {
+  var coins   = Math.floor(PC.coins);
+  var rupee   = pcToRupee(coins);
+  var dispLg  = coins >= 1000000 ? (coins/1000000).toFixed(1)+'M' :
+                coins >= 1000    ? (coins/1000).toFixed(1)+'K'    : coins;
+
+  /* Floating panel */
+  var valEl = document.getElementById('pc-panel-val');
+  if(valEl) valEl.textContent = coins.toLocaleString();
+  var rupEl = document.getElementById('pc-panel-rupee');
+  if(rupEl) rupEl.textContent = '₹' + rupee;
+
+  /* Navbar pill */
+  var navEl = document.getElementById('pcoin-nav-val');
+  if(navEl) navEl.textContent = dispLg;
+
+  /* Header fiat */
+  var hdrEl = document.getElementById('ph-bal-fiat-hdr');
+  if(hdrEl) hdrEl.textContent = '🪙 ' + coins.toLocaleString() + ' P Coin';
+
+  /* Wallet fiat */
+  var wcEl = document.getElementById('wc-bal-fiat');
+  if(wcEl) wcEl.textContent = '🪙 ' + coins.toLocaleString() + ' P Coin · ₹' + rupee;
+
+  /* Modal balance */
+  var mEl = document.getElementById('vsh-pcoin-balance');
+  if(mEl) mEl.textContent = coins.toLocaleString() + ' P Coin';
+
+  /* Video count */
+  var vcEl = document.getElementById('pcv-count');
+  if(vcEl) vcEl.textContent = PC.videos.length;
+
+  /* Spin cost display */
+  var sdEl = document.getElementById('pc-spin-cost-display');
+  if(sdEl) sdEl.textContent = 'Costs ' + PC_SPIN_COST + ' PC — Balance: ' + coins.toLocaleString() + ' PC';
+}
+
+/* ════════════════════════════
+   FAUCET TIMER — 5 min
+════════════════════════════ */
+var _pcFaucetRaf;
+function pcFaucetTick() {
+  var now = Date.now();
+  var dot  = document.getElementById('pc-faucet-dot');
+  var txt  = document.getElementById('pc-faucet-txt');
+  var timer= document.getElementById('pc-faucet-timer');
+  var badge= document.getElementById('pc-faucet-badge');
+
+  if(now >= PC.faucetNextAt) {
+    /* Ready */
+    if(dot)  { dot.className = 'pc-faucet-dot ready'; }
+    if(txt)  txt.textContent = 'Claim Faucet';
+    if(timer)timer.textContent = '+' + PC_FAUCET_AMOUNT + ' PC ready!';
+    if(badge)badge.className = 'pc-faucet-badge ready';
+  } else {
+    /* Counting down */
+    var rem = Math.ceil((PC.faucetNextAt - now) / 1000);
+    var m   = Math.floor(rem / 60);
+    var s   = rem % 60;
+    var cd  = (m < 10 ? '0':'')+m+':'+(s<10?'0':'')+s;
+    if(dot)  { dot.className = 'pc-faucet-dot'; }
+    if(txt)  txt.textContent = 'Next faucet';
+    if(timer)timer.textContent = cd;
+    if(badge)badge.className = 'pc-faucet-badge';
+  }
+  _pcFaucetRaf = setTimeout(pcFaucetTick, 1000);
+}
+
+window.pcClaimFaucet = function() {
+  var now = Date.now();
+  if(now < PC.faucetNextAt) return; /* Not ready */
+  PC.faucetNextAt = now + PC_FAUCET_SECS * 1000;
+  pcAdd(PC_FAUCET_AMOUNT, 'Faucet Drop', document.getElementById('pc-faucet-badge'));
+  pcSave();
+  if(window.SFX) SFX.play('ding');
+  /* Also credit small USD balance */
+  if(window.S) {
+    var usd = parseFloat((PC_FAUCET_AMOUNT * 0.0025 / 83).toFixed(6)); // ₹0.05 ÷ 83 = USD
+    window.S.balance = (window.S.balance || 0) + usd;
+    window.S.sessionEarned = (window.S.sessionEarned || 0) + usd;
+    if(window.addTx) addTx('P Coin Faucet', usd, 'credit');
+    if(window.updateWallet) updateWallet();
+  }
+};
+
+/* ════════════════════════════
+   SPIN — costs PC
+════════════════════════════ */
+/* Hook into spin button */
+var _origDoSpin = window.doSpin;
+window.doSpin = function() {
+  if(PC.coins < PC_SPIN_COST) {
+    if(window.toast) toast('🪙 Need ' + PC_SPIN_COST + ' P Coin to spin! Claim faucet first.', 'warn');
+    return;
+  }
+  if(!pcSpend(PC_SPIN_COST)) return;
+  pcUpdateUI();
+  if(window.toast) toast('🎰 -' + PC_SPIN_COST + ' P Coin spent on spin!', 'info');
+  if(_origDoSpin) _origDoSpin.apply(this, arguments);
+};
+
+/* On spin win, also reward P Coin */
+var _origAddTx = window.addTx;
+window.addTx = function(label, amt, type) {
+  if(_origAddTx) _origAddTx.apply(this, arguments);
+  /* Give coin bonus on credit transactions */
+  if(type === 'credit' && parseFloat(amt) > 0) {
+    var bonus = Math.floor(parseFloat(amt) * 400); // rough USD→PC bonus
+    if(bonus > 0) {
+      PC.coins += bonus;
+      pcSave();
+      pcUpdateUI();
+    }
+  }
+};
+
+/* ════════════════════════════
+   VIDEO HUB ENGINE
+════════════════════════════ */
+var _pcvQuality = 'HD'; // default quality
+
+/* URL parser */
+function pcvParseYT(url) {
+  var m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/))([A-Za-z0-9_\-]{11})/);
+  return m ? m[1] : null;
+}
+function pcvParseVimeo(url) {
+  var m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  return m ? m[1] : null;
+}
+function pcvAnalyze(url) {
+  var ytId = pcvParseYT(url);
+  if(ytId) {
+    return {
+      source:'YouTube', color:'#ef4444',
+      embedUrl:'https://www.youtube.com/embed/'+ytId+'?autoplay=1&rel=0',
+      thumb:'https://img.youtube.com/vi/'+ytId+'/maxresdefault.jpg',
+      thumbFb:'https://img.youtube.com/vi/'+ytId+'/hqdefault.jpg',
+      title:'YouTube Video', ytId:ytId
+    };
+  }
+  var vmId = pcvParseVimeo(url);
+  if(vmId) {
+    return {
+      source:'Vimeo', color:'#1ab7ea',
+      embedUrl:'https://player.vimeo.com/video/'+vmId+'?autoplay=1',
+      thumb:'', title:'Vimeo Video', vimeoId:vmId
+    };
+  }
+  if(/\.(mp4|webm|ogg|mkv|mov)(\?|$)/i.test(url)) {
+    return { source:'Direct', color:'#22c55e', embedUrl:url, thumb:'', title:'Video File', direct:true };
+  }
+  return { source:'Web', color:'#8b5cf6', embedUrl:url, thumb:'', title:'Video' };
+}
+function pcvEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* Build card element */
+function pcvBuildCard(v) {
+  var el = document.createElement('div');
+  el.className = 'pcv-card';
+  el.id = 'pcvcard-' + v.id;
+  var hasThumb = v.thumb && v.thumb.length > 0;
+  var thumbHtml = hasThumb
+    ? '<img src="'+v.thumb+'" alt="" loading="lazy" onerror="this.onerror=null;this.src=\''+(v.thumbFb||'')+'\';">'
+    : '<div class="pcv-thumb-ph"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>'+v.source+'</span></div>';
+  var qualClass = (v.quality||'HD').toLowerCase();
+  el.innerHTML =
+    '<div class="pcv-thumb">'
+    + thumbHtml
+    + '<div class="pcv-play-ov"><div class="pcv-play-circle"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>'
+    + '<div class="pcv-src-badge">'+v.source+'</div>'
+    + '<div class="pcv-quality-badge '+qualClass+'" id="pcvq-'+v.id+'" onclick="event.stopPropagation();pcvToggleQ(\''+v.id+'\')">'+(v.quality||'HD')+'</div>'
+    + '</div>'
+    + '<div class="pcv-body">'
+    + '<div class="pcv-card-title" id="pcvt-'+v.id+'">'+pcvEsc(v.title)+'</div>'
+    + '<div class="pcv-meta">'
+    + '<span class="pcv-source" style="color:'+v.color+'">'+v.source+'</span>'
+    + '<span class="pcv-pc-reward">🪙 +'+PC_VIDEO_REWARD+' PC</span>'
+    + '<span class="pcv-del-btn" onclick="event.stopPropagation();pcvDelete(\''+v.id+'\')" title="Remove"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>'
+    + '</div>'
+    + '<button class="pcv-watch-btn" onclick="event.stopPropagation();pcvOpenVideo(\''+v.id+'\')"><svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>▶ Play / Watch</button>'
+    + '</div>';
+
+  el.addEventListener('click', function(){ pcvOpenVideo(v.id); });
+  return el;
+}
+
+/* Render grid */
+function pcvRender() {
+  var grid  = document.getElementById('pcv-grid');
+  var empty = document.getElementById('pcv-empty');
+  if(!grid) return;
+  /* Remove old cards */
+  Array.from(grid.querySelectorAll('.pcv-card')).forEach(function(c){ c.remove(); });
+  if(PC.videos.length === 0) {
+    if(empty) empty.style.display = '';
+  } else {
+    if(empty) empty.style.display = 'none';
+    PC.videos.forEach(function(v){ grid.prepend(pcvBuildCard(v)); });
+  }
+  /* Update count */
+  var cnt = document.getElementById('pcv-count');
+  if(cnt) cnt.textContent = PC.videos.length;
+}
+
+/* Add video */
+window.pcvAddVideo = function() {
+  var inp = document.getElementById('pcv-url-inp');
+  if(!inp) return;
+  var url = (inp.value||'').trim();
+  if(!url) { if(window.toast) toast('Paste a YouTube / Vimeo / video URL', 'warn'); return; }
+  if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  var info = pcvAnalyze(url);
+  var vid = {
+    id: 'pcv_' + Date.now(),
+    url: url,
+    title: info.title,
+    thumb: info.thumb || '',
+    thumbFb: info.thumbFb || '',
+    source: info.source,
+    color: info.color,
+    embedUrl: info.embedUrl,
+    quality: _pcvQuality,
+    direct: info.direct || false,
+    ytId: info.ytId || '',
+    vimeoId: info.vimeoId || ''
+  };
+  PC.videos.unshift(vid);
+  pcSaveVideos();
+  pcvRender();
+  inp.value = '';
+  if(window.toast) toast('✅ Video added permanently!', 'success');
+  if(window.SFX) SFX.play('ding');
+  /* Fetch Vimeo thumb + title async */
+  if(info.vimeoId) {
+    fetch('https://vimeo.com/api/v2/video/' + info.vimeoId + '.json')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d && d[0]) {
+          for(var i=0;i<PC.videos.length;i++){
+            if(PC.videos[i].id===vid.id){
+              if(d[0].thumbnail_large) PC.videos[i].thumb = d[0].thumbnail_large;
+              if(d[0].title)           PC.videos[i].title = d[0].title;
+              break;
+            }
+          }
+          pcSaveVideos(); pcvRender();
+        }
+      }).catch(function(){});
+  }
+};
+
+/* Delete video */
+window.pcvDelete = function(id) {
+  PC.videos = PC.videos.filter(function(v){ return v.id !== id; });
+  pcSaveVideos(); pcvRender();
+  if(window.toast) toast('Video removed', 'info');
+};
+
+/* Toggle quality */
+window.pcvToggleQ = function(id) {
+  for(var i=0;i<PC.videos.length;i++){
+    if(PC.videos[i].id===id){
+      PC.videos[i].quality = (PC.videos[i].quality||'HD') === 'HD' ? 'SD' : 'HD';
+      var badge = document.getElementById('pcvq-'+id);
+      if(badge){
+        badge.textContent = PC.videos[i].quality;
+        badge.className = 'pcv-quality-badge ' + PC.videos[i].quality.toLowerCase();
+      }
+      pcSaveVideos();
+      if(window.toast) toast('Quality: ' + PC.videos[i].quality, 'info');
+      break;
+    }
+  }
+};
+
+/* Set default quality */
+window.pcvSetQuality = function(q, btn) {
+  _pcvQuality = q;
+  document.querySelectorAll('.pcv-quality-btn').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+};
+
+/* Open video modal */
+window.pcvOpenVideo = function(id) {
+  var vid = null;
+  for(var i=0;i<PC.videos.length;i++){ if(PC.videos[i].id===id){ vid=PC.videos[i]; break; } }
+  if(!vid) return;
+
+  var modal = document.getElementById('pcv-modal');
+  var title = document.getElementById('pcv-modal-title');
+  var iframe = document.getElementById('pcv-modal-iframe');
+  var newtab = document.getElementById('pcv-modal-newtab');
+  var srcEl  = document.getElementById('pcv-modal-src');
+  var qualEl = document.getElementById('pcv-modal-quality');
+
+  if(title)  title.textContent = vid.title;
+  if(iframe) iframe.src = vid.embedUrl;
+  if(newtab) newtab.href = vid.url;
+  if(srcEl)  srcEl.textContent = vid.url;
+  if(qualEl) qualEl.textContent = '🎬 ' + (vid.quality||'HD');
+  if(modal)  { modal.classList.add('open'); document.body.style.overflow='hidden'; }
+
+  /* Award P Coins for watching */
+  if(!PC.videosSeen[id]) {
+    PC.videosSeen[id] = true;
+    setTimeout(function(){
+      pcAdd(PC_VIDEO_REWARD, 'Video Watched', document.getElementById('pcv-modal-title'));
+    }, 2000);
+  }
+};
+
+window.pcvCloseModal = function() {
+  var modal = document.getElementById('pcv-modal');
+  var iframe = document.getElementById('pcv-modal-iframe');
+  if(iframe) iframe.src = '';
+  if(modal)  { modal.classList.remove('open'); document.body.style.overflow=''; }
+};
+
+/* Quality toggle inside modal */
+window.pcvToggleModalQuality = function() {
+  var el = document.getElementById('pcv-modal-quality');
+  var iframe = document.getElementById('pcv-modal-iframe');
+  if(!iframe) return;
+  var src = iframe.src || '';
+  /* YouTube quality hint via vq param */
+  if(/youtube\.com\/embed/.test(src)) {
+    if(src.indexOf('vq=hd720') !== -1) {
+      iframe.src = src.replace('vq=hd720','vq=medium');
+      if(el) el.textContent = '📺 SD';
+    } else if(src.indexOf('vq=medium') !== -1) {
+      iframe.src = src.replace('vq=medium','vq=hd720');
+      if(el) el.textContent = '🎬 HD';
+    } else {
+      iframe.src = src + '&vq=hd720';
+      if(el) el.textContent = '🎬 HD';
+    }
+  }
+};
+
+/* ════════════════════════════
+   BUILD PANELS (injected into DOM)
+════════════════════════════ */
+function pcvBuildVideoPanel() {
+  /* Inject into video-section */
+  var section = document.getElementById('video-section');
+  if(!section) return;
+
+  /* Remove any old panel */
+  var old = document.getElementById('pc-video-panel');
+  if(old) old.remove();
+
+  var panel = document.createElement('div');
+  panel.id = 'pc-video-panel';
+  panel.innerHTML =
+    '<div class="pcv-header">'
+    + '<div class="pcv-title-row">'
+    + '<div class="pcv-icon">🎬</div>'
+    + '<div><div class="pcv-title">Add Your Videos</div><div class="pcv-sub">Paste any YouTube / Vimeo / direct link — permanent across refreshes</div></div>'
+    + '</div>'
+    + '<div class="pcv-count-pill"><span id="pcv-count">0</span> Saved</div>'
+    + '</div>'
+    /* URL input row */
+    + '<div class="pcv-add-row">'
+    + '<div class="pcv-url-wrap"><span class="pcv-url-prefix">🔗</span><input class="pcv-url-input" id="pcv-url-inp" type="url" placeholder="Paste YouTube, Vimeo, or direct video URL…" onkeydown="if(event.key===\'Enter\')pcvAddVideo()"></div>'
+    + '<button class="pcv-add-btn" onclick="pcvAddVideo()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Video</button>'
+    + '</div>'
+    /* Quality opts */
+    + '<div class="pcv-opts-row">'
+    + '<span class="pcv-quality-label">Default Quality:</span>'
+    + '<button class="pcv-quality-btn active" onclick="pcvSetQuality(\'HD\',this)">🎬 HD</button>'
+    + '<button class="pcv-quality-btn" onclick="pcvSetQuality(\'SD\',this)">📺 SD</button>'
+    + '</div>'
+    /* Grid */
+    + '<div class="pcv-grid" id="pcv-grid">'
+    + '<div class="pcv-empty" id="pcv-empty"><div class="pcv-empty-icon">🎬</div><div class="pcv-empty-title">No Videos Yet</div><div class="pcv-empty-sub">Add your first video link above.<br>Thumbnails auto-generate. Permanent across refreshes.</div></div>'
+    + '</div>';
+
+  /* Insert before the VSH hero or at top of section */
+  var hero = section.querySelector('.vsh-hero');
+  if(hero) section.insertBefore(panel, hero.nextSibling);
+  else     section.insertBefore(panel, section.firstChild);
+
+  /* Render existing videos */
+  pcvRender();
+}
+
+function pcvBuildModal() {
+  if(document.getElementById('pcv-modal')) return;
+  var m = document.createElement('div');
+  m.id = 'pcv-modal';
+  m.setAttribute('onclick', 'if(event.target===this)pcvCloseModal()');
+  m.innerHTML =
+    '<div class="pcv-modal-box">'
+    + '<div class="pcv-modal-hdr">'
+    + '<div style="font-size:16px;flex-shrink:0">🎬</div>'
+    + '<div class="pcv-modal-title" id="pcv-modal-title">Loading…</div>'
+    + '<button class="pcv-modal-quality" id="pcv-modal-quality" onclick="pcvToggleModalQuality()">🎬 HD</button>'
+    + '<a class="pcv-modal-newtab" id="pcv-modal-newtab" href="#" target="_blank" rel="noopener">'
+    + '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>New Tab</a>'
+    + '<button class="pcv-modal-close" onclick="pcvCloseModal()">✕</button>'
+    + '</div>'
+    + '<div class="pcv-iframe-wrap"><iframe id="pcv-modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe></div>'
+    + '<div class="pcv-modal-footer">'
+    + '<div class="pcv-modal-pc-earn">🪙 +'+PC_VIDEO_REWARD+' P Coin earned for watching</div>'
+    + '<div class="pcv-modal-src" id="pcv-modal-src"></div>'
+    + '</div>'
+    + '</div>';
+  document.body.appendChild(m);
+}
+
+function pcvBuildFloatingPanel() {
+  if(document.getElementById('pc-live-panel')) return;
+  var panel = document.createElement('div');
+  panel.id = 'pc-live-panel';
+  panel.innerHTML =
+    /* Coin balance badge */
+    '<div class="pc-float-badge" title="200 P Coin = ₹0.5">'
+    + '<span class="pc-float-icon">🪙</span>'
+    + '<div><div class="pc-float-val" id="pc-panel-val">0</div><div class="pc-float-lbl">P Coin</div></div>'
+    + '<div style="width:1px;height:24px;background:rgba(255,255,255,.08);margin:0 4px"></div>'
+    + '<div style="text-align:right"><div class="pc-float-val" id="pc-panel-rupee" style="font-size:11px;color:rgba(255,255,255,.55)">₹0.000</div><div class="pc-float-lbl">Value</div></div>'
+    + '</div>'
+    /* Faucet badge */
+    + '<div class="pc-faucet-badge ready" id="pc-faucet-badge" onclick="pcClaimFaucet()">'
+    + '<div class="pc-faucet-dot ready" id="pc-faucet-dot"></div>'
+    + '<div><div class="pc-faucet-txt" id="pc-faucet-txt">Claim Faucet</div><div class="pc-faucet-timer" id="pc-faucet-timer">+'+PC_FAUCET_AMOUNT+' PC ready!</div></div>'
+    + '</div>';
+  document.body.appendChild(panel);
+}
+
+function pcvInjectSpinCostHint() {
+  /* Find the spin button area and add coin cost indicator */
+  var spinBtn = document.getElementById('spin-btn');
+  if(!spinBtn) return;
+  var existing = document.getElementById('pc-spin-cost-display');
+  if(existing) return;
+  var hint = document.createElement('div');
+  hint.className = 'spin-coin-indicator';
+  hint.innerHTML = '🪙 <strong id="pc-spin-cost-display">Costs '+PC_SPIN_COST+' PC per spin</strong>';
+  spinBtn.parentNode && spinBtn.parentNode.insertBefore(hint, spinBtn);
+}
+
+/* ════════════════════════════
+   KEYBOARD
+════════════════════════════ */
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') pcvCloseModal();
+});
+
+/* ════════════════════════════
+   INIT
+════════════════════════════ */
+function pcInit() {
+  pcLoad();
+  pcvBuildFloatingPanel();
+  pcvBuildVideoPanel();
+  pcvBuildModal();
+  pcUpdateUI();
+  pcFaucetTick();
+  /* Inject spin cost hint after short delay (wait for DOM) */
+  setTimeout(pcvInjectSpinCostHint, 800);
+
+  /* Auto-drip: check every second if faucet is ready and user is active */
+  var _autoLastClaim = 0;
+  setInterval(function(){
+    /* Auto-claim only if tab is visible and 5 min passed */
+    if(document.visibilityState !== 'hidden' && Date.now() >= PC.faucetNextAt && Date.now() - _autoLastClaim > PC_FAUCET_SECS * 1000) {
+      _autoLastClaim = Date.now();
+      /* Don't auto-claim silently — just make badge pulse to prompt */
+    }
+    pcUpdateUI();
+  }, 1000);
+
+  /* Expose globally */
+  window.PC = PC;
+  window.pcAdd = pcAdd;
+  window.pcSpend = pcSpend;
+  window.pcvRender = pcvRender;
+}
+
+if(document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', pcInit);
+} else {
+  setTimeout(pcInit, 300);
+}
+
+})(); // end IIFE
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAYRO RIGHT-SIDE FIXED SPIN WHEEL  v3.0
+     Fixed tab on right edge → click → smooth modal with:
+       • 5-min video watch timer → unlocks spin
+       • Wheel segments: 100 / 200 / 300 P Coins
+       • Instant wallet reflection (1-second)
+       • Permanent tracking in localStorage
+       • Gambling app sign-up bonus (+150 PC)
+       • Full history log, per-session stats
+═══════════════════════════════════════════════════════════════════ -->
+<style id="rsw-css">
+/* ─── Root tokens (inherits from page; fallbacks included) ─── */
+:root{
+  --rsw-gold:#f5a623; --rsw-gold2:#ffd060;
+  --rsw-cyan:#00d4ff; --rsw-green:#22c55e;
+  --rsw-red:#ef4444;  --rsw-violet:#8b5cf6;
+  --rsw-bg0:rgba(4,6,18,.97); --rsw-bg1:rgba(10,13,26,.98);
+  --rsw-bg2:rgba(14,18,32,.95); --rsw-bg3:rgba(20,25,42,.92);
+  --rsw-bdr:rgba(255,255,255,.07); --rsw-bdr2:rgba(255,255,255,.12);
+  --rsw-r:14px; --rsw-ease:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ─── Fixed tab trigger ─── */
+#rsw-tab {
+  position: fixed;
+  right: 0; top: 50%; transform: translateY(-50%);
+  z-index: 9100;
+  display: flex; flex-direction: column; align-items: center;
+  background: linear-gradient(180deg,#1a1f38,#0e1322);
+  border: 1px solid rgba(245,166,35,.25);
+  border-right: none;
+  border-radius: 14px 0 0 14px;
+  padding: 14px 8px 12px;
+  gap: 6px; cursor: pointer;
+  box-shadow: -4px 0 28px rgba(245,166,35,.14), -1px 0 0 rgba(245,166,35,.1);
+  transition: box-shadow .25s, background .25s, transform .25s var(--rsw-ease);
+  user-select: none; -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+#rsw-tab:hover {
+  background: linear-gradient(180deg,#1e2445,#111828);
+  box-shadow: -6px 0 36px rgba(245,166,35,.28), -1px 0 0 rgba(245,166,35,.2);
+  transform: translateY(-50%) translateX(-3px);
+}
+.rsw-tab-wheel {
+  width: 36px; height: 36px; position: relative;
+  animation: rswTabSpin 12s linear infinite;
+}
+@keyframes rswTabSpin { to { transform: rotate(360deg); } }
+.rsw-tab-pulse {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--rsw-gold); box-shadow: 0 0 8px var(--rsw-gold);
+  animation: rswPulse 1.6s ease-in-out infinite;
+}
+@keyframes rswPulse{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+.rsw-tab-lbl {
+  writing-mode: vertical-rl; font-size: 9px; font-weight: 800;
+  letter-spacing: .14em; color: rgba(255,255,255,.55);
+  text-transform: uppercase; line-height: 1;
+}
+/* Coin count badge on tab */
+#rsw-tab-coinbadge {
+  background: rgba(245,166,35,.15); border: 1px solid rgba(245,166,35,.3);
+  border-radius: 99px; padding: 2px 6px;
+  font-size: 8px; font-weight: 800; color: var(--rsw-gold);
+  font-family: monospace; white-space: nowrap;
+  min-width: 28px; text-align: center;
+}
+/* Notification dot */
+#rsw-notif-dot {
+  position: absolute; top: 6px; right: 5px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--rsw-green); border: 1.5px solid #0e1322;
+  box-shadow: 0 0 8px var(--rsw-green);
+  animation: rswPulse 1.2s ease-in-out infinite;
+  display: none;
+}
+#rsw-tab.spin-ready #rsw-notif-dot { display: block; }
+
+/* ─── Overlay ─── */
+#rsw-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9190;
+  background: rgba(2,4,14,.72); backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: rswFadeIn .25s ease;
+}
+@keyframes rswFadeIn { from{opacity:0} to{opacity:1} }
+#rsw-overlay.open { display: block; }
+
+/* ─── Main panel ─── */
+#rsw-panel {
+  position: fixed; right: 0; top: 0; bottom: 0; z-index: 9200;
+  width: min(380px, 100vw);
+  background: var(--rsw-bg0);
+  border-left: 1px solid rgba(245,166,35,.18);
+  display: flex; flex-direction: column;
+  transform: translateX(110%);
+  transition: transform .38s cubic-bezier(.32,.82,.36,1);
+  will-change: transform;
+  overflow: hidden;
+}
+#rsw-panel.open { transform: translateX(0); }
+
+/* Panel header */
+.rsw-ph {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 18px 14px;
+  background: linear-gradient(135deg,rgba(245,166,35,.07),rgba(139,92,246,.04));
+  border-bottom: 1px solid var(--rsw-bdr);
+}
+.rsw-ph-icon { font-size: 22px; flex-shrink: 0; }
+.rsw-ph-title { font-size: 17px; font-weight: 800; color: #fff; font-family: 'Rajdhani',sans-serif; letter-spacing: .04em; }
+.rsw-ph-sub { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 1px; }
+.rsw-close-btn {
+  margin-left: auto; width: 30px; height: 30px; flex-shrink: 0;
+  border-radius: 8px; border: 1px solid var(--rsw-bdr2);
+  background: rgba(255,255,255,.05); display: flex; align-items: center;
+  justify-content: center; color: rgba(255,255,255,.5);
+  cursor: pointer; transition: all .2s; font-size: 14px;
+}
+.rsw-close-btn:hover { border-color: rgba(239,68,68,.4); color: var(--rsw-red); background: rgba(239,68,68,.08); }
+
+/* Scrollable body */
+.rsw-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0 0 20px; overscroll-behavior: contain; }
+.rsw-body::-webkit-scrollbar { width: 3px; }
+.rsw-body::-webkit-scrollbar-track { background: transparent; }
+.rsw-body::-webkit-scrollbar-thumb { background: rgba(245,166,35,.3); border-radius: 99px; }
+
+/* ── Section blocks ── */
+.rsw-section { padding: 16px 18px 0; }
+.rsw-section-title {
+  font-size: 11px; font-weight: 800; letter-spacing: .1em; color: rgba(255,255,255,.35);
+  text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 7px;
+}
+.rsw-section-title::after { content:''; flex:1; height:1px; background:var(--rsw-bdr); }
+
+/* ── Coin wallet card ── */
+.rsw-wallet {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin-bottom: 14px;
+}
+.rsw-wallet-stat {
+  background: var(--rsw-bg2); border: 1px solid var(--rsw-bdr);
+  border-radius: 10px; padding: 10px 12px;
+  transition: border-color .2s;
+}
+.rsw-wallet-stat:hover { border-color: rgba(245,166,35,.22); }
+.rsw-ws-lbl { font-size: 9px; font-weight: 700; letter-spacing: .06em; color: rgba(255,255,255,.35); text-transform: uppercase; margin-bottom: 4px; }
+.rsw-ws-val { font-size: 16px; font-weight: 800; font-family: 'DM Mono',monospace; color: var(--rsw-gold); line-height: 1; }
+.rsw-ws-sub { font-size: 9px; color: rgba(255,255,255,.3); margin-top: 2px; }
+
+/* ── Video task cards ── */
+.rsw-video-card {
+  background: var(--rsw-bg2); border: 1px solid var(--rsw-bdr);
+  border-radius: 12px; overflow: hidden; margin-bottom: 8px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.rsw-video-card:hover { border-color: rgba(0,212,255,.22); box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+.rsw-vc-head {
+  display: flex; align-items: center; gap: 10px; padding: 11px 13px 9px;
+  border-bottom: 1px solid var(--rsw-bdr);
+}
+.rsw-vc-thumb {
+  width: 44px; height: 30px; border-radius: 6px; overflow: hidden; flex-shrink: 0;
+  background: var(--rsw-bg3); position: relative;
+}
+.rsw-vc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.rsw-vc-thumb-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.25); font-size: 13px; }
+.rsw-vc-meta { flex: 1; min-width: 0; }
+.rsw-vc-title { font-size: 11px; font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 2px; }
+.rsw-vc-reward { font-size: 9px; font-weight: 800; color: var(--rsw-gold); background: rgba(245,166,35,.1); border: 1px solid rgba(245,166,35,.2); border-radius: 99px; padding: 1px 7px; display: inline-block; }
+.rsw-vc-body { padding: 10px 13px 11px; }
+
+/* Timer bar */
+.rsw-timer-wrap { margin-bottom: 10px; }
+.rsw-timer-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+.rsw-timer-lbl { font-size: 10px; color: rgba(255,255,255,.4); font-weight: 600; }
+.rsw-timer-cd {
+  font-family: 'DM Mono',monospace; font-size: 12px; font-weight: 800; color: var(--rsw-cyan);
+  background: rgba(0,212,255,.08); border: 1px solid rgba(0,212,255,.18);
+  border-radius: 6px; padding: 2px 8px;
+}
+.rsw-timer-cd.done { color: var(--rsw-green); background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.25); }
+.rsw-timer-track {
+  width: 100%; height: 5px; background: rgba(255,255,255,.07); border-radius: 99px; overflow: hidden;
+}
+.rsw-timer-fill {
+  height: 100%; border-radius: 99px; width: 0%;
+  background: linear-gradient(90deg,var(--rsw-cyan),var(--rsw-green));
+  transition: width .9s linear;
+  box-shadow: 0 0 6px var(--rsw-cyan);
+}
+.rsw-timer-fill.done { background: var(--rsw-green); box-shadow: 0 0 8px var(--rsw-green); }
+
+/* Action buttons */
+.rsw-watch-btn {
+  width: 100%; padding: 9px; border-radius: 9px; border: none; cursor: pointer;
+  background: linear-gradient(135deg,rgba(0,212,255,.15),rgba(0,212,255,.07));
+  border: 1px solid rgba(0,212,255,.3); color: var(--rsw-cyan);
+  font-size: 12px; font-weight: 800; letter-spacing: .04em;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: all .2s; margin-bottom: 6px;
+}
+.rsw-watch-btn:hover:not(:disabled) { background: rgba(0,212,255,.22); box-shadow: 0 4px 16px rgba(0,212,255,.22); transform: translateY(-1px); }
+.rsw-watch-btn:disabled { opacity: .35; pointer-events: none; }
+.rsw-watch-btn.watching { border-color: rgba(245,166,35,.4); color: var(--rsw-gold); background: rgba(245,166,35,.08); }
+
+/* ── Wheel container ── */
+.rsw-wheel-block {
+  background: var(--rsw-bg2); border: 1px solid var(--rsw-bdr); border-radius: 14px;
+  padding: 16px; margin-bottom: 12px; overflow: hidden;
+}
+.rsw-wheel-inner { position: relative; display: flex; align-items: center; justify-content: center; }
+.rsw-wheel-pointer {
+  position: absolute; top: -8px; left: 50%; transform: translateX(-50%); z-index: 4;
+  width: 0; height: 0;
+  border-left: 9px solid transparent; border-right: 9px solid transparent;
+  border-top: 22px solid var(--rsw-gold);
+  filter: drop-shadow(0 0 6px var(--rsw-gold));
+}
+canvas#rsw-canvas { border-radius: 50%; display: block; max-width: 100%; }
+
+/* Segments legend */
+.rsw-seg-legend {
+  display: flex; justify-content: center; gap: 10px; margin-top: 10px; flex-wrap: wrap;
+}
+.rsw-seg-dot {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; color: rgba(255,255,255,.65);
+}
+.rsw-seg-dot-color { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* Spin button */
+#rsw-spin-btn {
+  width: 100%; padding: 13px; border-radius: 11px; border: none; cursor: pointer;
+  font-size: 14px; font-weight: 800; letter-spacing: .06em; margin-top: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  background: linear-gradient(135deg,var(--rsw-gold),#c2811a);
+  color: #000; box-shadow: 0 6px 22px rgba(245,166,35,.35);
+  transition: all .25s var(--rsw-ease);
+  position: relative; overflow: hidden;
+}
+#rsw-spin-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg,rgba(255,255,255,.22),transparent);
+  pointer-events: none;
+}
+#rsw-spin-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(245,166,35,.5); }
+#rsw-spin-btn:active:not(:disabled) { transform: scale(.97); transition-duration: .1s; }
+#rsw-spin-btn:disabled { opacity: .35; pointer-events: none; box-shadow: none; }
+#rsw-spin-btn.locked { background: linear-gradient(135deg,#2a2e48,#1a1e35); color: rgba(255,255,255,.4); box-shadow: none; }
+.rsw-spin-lock-hint { font-size: 10px; color: rgba(255,255,255,.3); text-align: center; margin-top: 6px; }
+
+/* Result flash */
+#rsw-result {
+  display: none; text-align: center; padding: 12px;
+  border-radius: 12px; margin-top: 10px;
+  background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2);
+  animation: rswResultPop .4s var(--rsw-ease);
+}
+@keyframes rswResultPop { from{transform:scale(.85);opacity:0} to{transform:scale(1);opacity:1} }
+.rsw-result-amt { font-size: 28px; font-weight: 800; font-family: 'Rajdhani',sans-serif; color: var(--rsw-gold); line-height: 1; }
+.rsw-result-lbl { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 4px; }
+
+/* ── Bonus / Sign-up card ── */
+.rsw-bonus-card {
+  background: linear-gradient(135deg,rgba(139,92,246,.1),rgba(245,166,35,.06));
+  border: 1px solid rgba(139,92,246,.25); border-radius: 12px;
+  padding: 14px; margin-bottom: 12px; position: relative; overflow: hidden;
+}
+.rsw-bonus-card::before {
+  content: ''; position: absolute; top: -30px; right: -20px;
+  width: 80px; height: 80px; border-radius: 50%;
+  background: radial-gradient(circle,rgba(139,92,246,.3),transparent 70%);
+  pointer-events: none;
+}
+.rsw-bonus-title { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 4px; display: flex; align-items: center; gap: 7px; }
+.rsw-bonus-sub { font-size: 11px; color: rgba(255,255,255,.45); line-height: 1.5; margin-bottom: 10px; }
+.rsw-bonus-reward { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.rsw-bonus-pill {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.25);
+  border-radius: 99px; padding: 3px 10px;
+  font-size: 10px; font-weight: 800; color: var(--rsw-green); white-space: nowrap;
+}
+.rsw-bonus-btn {
+  width: 100%; padding: 10px; border-radius: 9px; border: none; cursor: pointer;
+  background: linear-gradient(135deg,rgba(139,92,246,.85),rgba(109,40,217,.7));
+  color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .04em;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all .2s; box-shadow: 0 4px 16px rgba(139,92,246,.28);
+}
+.rsw-bonus-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(139,92,246,.4); }
+.rsw-bonus-btn:disabled { opacity: .4; pointer-events: none; }
+.rsw-bonus-claimed { display: none; text-align: center; font-size: 11px; font-weight: 700; color: var(--rsw-green); padding: 4px 0; }
+
+/* ── History log ── */
+.rsw-history { max-height: 180px; overflow-y: auto; }
+.rsw-history::-webkit-scrollbar { width: 2px; }
+.rsw-history::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 99px; }
+.rsw-hist-row {
+  display: flex; align-items: center; gap: 9px; padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04); font-size: 11px;
+}
+.rsw-hist-row:last-child { border-bottom: none; }
+.rsw-hist-icon { width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.rsw-hist-label { flex: 1; color: rgba(255,255,255,.65); }
+.rsw-hist-time { font-size: 9px; color: rgba(255,255,255,.25); white-space: nowrap; }
+.rsw-hist-coins { font-weight: 800; color: var(--rsw-gold); white-space: nowrap; }
+.rsw-hist-empty { text-align: center; color: rgba(255,255,255,.2); font-size: 11px; padding: 16px 0; }
+
+/* ── Stats row ── */
+.rsw-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; margin-bottom: 6px; }
+.rsw-stat-box {
+  background: var(--rsw-bg3); border: 1px solid var(--rsw-bdr);
+  border-radius: 9px; padding: 8px; text-align: center;
+}
+.rsw-stat-val { font-size: 15px; font-weight: 800; color: #fff; font-family: 'DM Mono',monospace; line-height: 1; }
+.rsw-stat-lbl { font-size: 8px; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .07em; margin-top: 3px; }
+
+/* ── Confetti burst ── */
+.rsw-confetti-piece {
+  position: fixed; width: 7px; height: 10px; z-index: 9999; pointer-events: none;
+  border-radius: 2px; animation: rswConfettiFall 1.4s ease-in forwards;
+  will-change: transform;
+}
+@keyframes rswConfettiFall {
+  0%   { opacity:1; transform: translateY(0) rotate(0deg); }
+  100% { opacity:0; transform: translateY(160px) rotate(540deg); }
+}
+
+/* ── Mobile tweaks ── */
+@media (max-width: 420px) {
+  #rsw-panel { width: 100vw; }
+  #rsw-tab { top: auto; bottom: 110px; transform: none; border-radius: 14px 0 0 14px; }
+  #rsw-tab:hover { transform: translateX(-3px); }
+}
+@media (max-width: 360px) {
+  .rsw-wallet { grid-template-columns: 1fr; }
+  .rsw-stats { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<!-- ─── HTML: Fixed Tab Trigger ─── -->
+<div id="rsw-tab" onclick="rswOpen()" title="Spin Wheel — Earn P Coins" role="button" aria-label="Open Spin Wheel">
+  <div id="rsw-notif-dot"></div>
+  <svg class="rsw-tab-wheel" viewBox="0 0 40 40" fill="none">
+    <!-- Wheel slices -->
+    <path d="M20 20 L20 2 A18 18 0 0 1 35.56 11 Z" fill="#f5a623" opacity=".9"/>
+    <path d="M20 20 L35.56 11 A18 18 0 0 1 35.56 29 Z" fill="#22c55e" opacity=".85"/>
+    <path d="M20 20 L35.56 29 A18 18 0 0 1 20 38 Z" fill="#00d4ff" opacity=".9"/>
+    <path d="M20 20 L20 38 A18 18 0 0 1 4.44 29 Z" fill="#8b5cf6" opacity=".85"/>
+    <path d="M20 20 L4.44 29 A18 18 0 0 1 4.44 11 Z" fill="#ef4444" opacity=".9"/>
+    <path d="M20 20 L4.44 11 A18 18 0 0 1 20 2 Z" fill="#f5a623" opacity=".85"/>
+    <circle cx="20" cy="20" r="6" fill="#0e1322" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+    <circle cx="20" cy="20" r="3" fill="#f5a623"/>
+  </svg>
+  <div class="rsw-tab-pulse"></div>
+  <div class="rsw-tab-lbl">SPIN</div>
+  <div id="rsw-tab-coinbadge">0 PC</div>
+</div>
+
+<!-- ─── Overlay ─── -->
+<div id="rsw-overlay" onclick="rswClose()"></div>
+
+<!-- ─── Main Panel ─── -->
+<div id="rsw-panel" role="dialog" aria-modal="true" aria-label="Spin Wheel">
+
+  <!-- Header -->
+  <div class="rsw-ph">
+    <div class="rsw-ph-icon">🎡</div>
+    <div>
+      <div class="rsw-ph-title">Fortune Wheel</div>
+      <div class="rsw-ph-sub">Watch video → Spin → Earn P Coins instantly</div>
+    </div>
+    <button class="rsw-close-btn" onclick="rswClose()" aria-label="Close">✕</button>
+  </div>
+
+  <!-- Scrollable body -->
+  <div class="rsw-body" id="rsw-body">
+
+    <!-- Wallet stats -->
+    <div class="rsw-section">
+      <div class="rsw-wallet">
+        <div class="rsw-wallet-stat">
+          <div class="rsw-ws-lbl">P Coins Earned</div>
+          <div class="rsw-ws-val" id="rsw-total-coins">0</div>
+          <div class="rsw-ws-sub">from wheel</div>
+        </div>
+        <div class="rsw-wallet-stat">
+          <div class="rsw-ws-lbl">Total Spins</div>
+          <div class="rsw-ws-val" id="rsw-total-spins">0</div>
+          <div class="rsw-ws-sub">lifetime</div>
+        </div>
+        <div class="rsw-wallet-stat">
+          <div class="rsw-ws-lbl">Points</div>
+          <div class="rsw-ws-val" id="rsw-points">0</div>
+          <div class="rsw-ws-sub">1 per spin</div>
+        </div>
+        <div class="rsw-wallet-stat">
+          <div class="rsw-ws-lbl">Videos Watched</div>
+          <div class="rsw-ws-val" id="rsw-vids-watched">0</div>
+          <div class="rsw-ws-sub">for spins</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video watch task -->
+    <div class="rsw-section">
+      <div class="rsw-section-title">📺 Watch to Unlock Spin</div>
+
+      <div class="rsw-video-card" id="rsw-vc-main">
+        <div class="rsw-vc-head">
+          <div class="rsw-vc-thumb">
+            <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="rsw-vc-thumb-ph" style="display:none">▶</div>
+          </div>
+          <div class="rsw-vc-meta">
+            <div class="rsw-vc-title" id="rsw-vid-title">Sponsored Video — Watch to Spin</div>
+            <span class="rsw-vc-reward">🪙 Unlocks 1 free spin</span>
+          </div>
+        </div>
+        <div class="rsw-vc-body">
+          <!-- Timer -->
+          <div class="rsw-timer-wrap">
+            <div class="rsw-timer-row">
+              <span class="rsw-timer-lbl" id="rsw-timer-lbl">Watch 5:00 to unlock spin</span>
+              <span class="rsw-timer-cd" id="rsw-timer-cd">5:00</span>
+            </div>
+            <div class="rsw-timer-track">
+              <div class="rsw-timer-fill" id="rsw-timer-fill"></div>
+            </div>
+          </div>
+          <button class="rsw-watch-btn" id="rsw-watch-btn" onclick="rswStartWatch()">
+            <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Watch Video (5 min timer)
+          </button>
+          <div id="rsw-watch-status" style="font-size:10px;color:rgba(255,255,255,.35);text-align:center;min-height:14px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wheel -->
+    <div class="rsw-section">
+      <div class="rsw-section-title">🎡 Spin the Wheel</div>
+      <div class="rsw-wheel-block">
+        <div class="rsw-wheel-inner" id="rsw-wheel-inner">
+          <div class="rsw-wheel-pointer"></div>
+          <canvas id="rsw-canvas" width="280" height="280"></canvas>
+        </div>
+        <div class="rsw-seg-legend" id="rsw-legend"></div>
+        <div id="rsw-result">
+          <div class="rsw-result-amt" id="rsw-result-amt">+200 🪙</div>
+          <div class="rsw-result-lbl" id="rsw-result-lbl">P Coins added to wallet!</div>
+        </div>
+        <button id="rsw-spin-btn" class="locked" onclick="rswDoSpin()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" id="rsw-spin-icon">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+          </svg>
+          <span id="rsw-spin-btn-txt">Watch video to unlock spin</span>
+        </button>
+        <div class="rsw-spin-lock-hint" id="rsw-lock-hint">🔒 Complete 5-min video watch to unlock</div>
+      </div>
+    </div>
+
+    <!-- Gambling / Sign-up bonus -->
+    <div class="rsw-section">
+      <div class="rsw-section-title">🎰 Bonus — Visit & Sign Up</div>
+      <div class="rsw-bonus-card" id="rsw-bonus-card">
+        <div class="rsw-bonus-title">
+          <span>🃏</span> Gambling App Sign-Up Bonus
+        </div>
+        <div class="rsw-bonus-sub">Visit our partner gambling app, sign up, and earn extra P Coins + bonus spin token instantly. Timer still runs!</div>
+        <div class="rsw-bonus-reward">
+          <div class="rsw-bonus-pill">🪙 +150 PC instant</div>
+          <div class="rsw-bonus-pill" style="border-color:rgba(245,166,35,.3);color:var(--rsw-gold);background:rgba(245,166,35,.08)">🎰 +1 Extra Spin</div>
+        </div>
+        <button class="rsw-bonus-btn" id="rsw-bonus-btn" onclick="rswClaimBonus()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Visit Partner App & Earn Bonus
+        </button>
+        <div class="rsw-bonus-claimed" id="rsw-bonus-claimed">✅ Bonus claimed! +150 PC & +1 Spin added to wallet.</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="rsw-stats">
+        <div class="rsw-stat-box">
+          <div class="rsw-stat-val" id="rsw-stat-today">0</div>
+          <div class="rsw-stat-lbl">Today</div>
+        </div>
+        <div class="rsw-stat-box">
+          <div class="rsw-stat-val" id="rsw-stat-streak">0</div>
+          <div class="rsw-stat-lbl">Day Streak</div>
+        </div>
+        <div class="rsw-stat-box">
+          <div class="rsw-stat-val" id="rsw-stat-bonus">0</div>
+          <div class="rsw-stat-lbl">Bonus Claims</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="rsw-section">
+      <div class="rsw-section-title">📋 Activity History</div>
+      <div class="rsw-history" id="rsw-history">
+        <div class="rsw-hist-empty" id="rsw-hist-empty">No activity yet. Watch a video and spin!</div>
+      </div>
+    </div>
+
+    <div style="height:30px"></div>
+  </div><!-- /rsw-body -->
+</div><!-- /rsw-panel -->
+
+<script id="rsw-engine">
+/* ═══════════════════════════════════════════════════════════════════
+   PAYRO RIGHT-SIDE SPIN WHEEL ENGINE v3.0
+   Pure Vanilla JS — no dependencies
+═══════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ── Storage key ── */
+var RSW_KEY = 'payro_rsw_v3';
+
+/* ── Wheel segments: P Coin amounts ── */
+var RSW_SEGS = [
+  { label:'100 🪙', coins:100, color:'#f5a623', prob:.40, emoji:'🟡' },
+  { label:'200 🪙', coins:200, color:'#22c55e', prob:.25, emoji:'🟢' },
+  { label:'300 🪙', coins:300, color:'#00d4ff', prob:.12, emoji:'🔵' },
+  { label:'100 🪙', coins:100, color:'#8b5cf6', prob:.40, emoji:'🟣' },
+  { label:'50 🪙',  coins:50,  color:'#ef4444', prob:.50, emoji:'🔴' },
+  { label:'200 🪙', coins:200, color:'#f5a623', prob:.25, emoji:'🟡' },
+  { label:'150 🪙', coins:150, color:'#00d4ff', prob:.30, emoji:'🔵' },
+  { label:'300 🪙', coins:300, color:'#22c55e', prob:.12, emoji:'🟢' },
+];
+
+/* ── State ── */
+var RSW = {
+  totalCoins:   0,
+  totalSpins:   0,
+  points:       0,
+  vidsWatched:  0,
+  bonusClaims:  0,
+  spinsAvail:   0,   // earned spins waiting to be used
+  history:      [],  // [{type,coins,label,ts}]
+  lastDayStr:   '',
+  dayStreak:    0,
+  todayCoins:   0,
+  bonusClaimed: false, // once per session
+};
+
+var _rswWatchActive  = false;
+var _rswWatchEnd     = 0;       // timestamp when timer completes
+var _rswWatchTid     = null;
+var _rswSpinRunning  = false;
+var _rswAngle        = 0;
+var _rswRAF          = null;
+
+/* ── Persistence ── */
+function rswSave() {
+  try { localStorage.setItem(RSW_KEY, JSON.stringify(RSW)); } catch(e){}
+}
+function rswLoad() {
+  try {
+    var d = JSON.parse(localStorage.getItem(RSW_KEY) || '{}');
+    if(d.totalCoins  !== undefined) RSW.totalCoins  = d.totalCoins;
+    if(d.totalSpins  !== undefined) RSW.totalSpins  = d.totalSpins;
+    if(d.points      !== undefined) RSW.points      = d.points;
+    if(d.vidsWatched !== undefined) RSW.vidsWatched = d.vidsWatched;
+    if(d.bonusClaims !== undefined) RSW.bonusClaims = d.bonusClaims;
+    if(d.spinsAvail  !== undefined) RSW.spinsAvail  = d.spinsAvail;
+    if(d.history     && Array.isArray(d.history)) RSW.history = d.history.slice(-50);
+    if(d.lastDayStr  !== undefined) RSW.lastDayStr  = d.lastDayStr;
+    if(d.dayStreak   !== undefined) RSW.dayStreak   = d.dayStreak;
+    if(d.todayCoins  !== undefined) RSW.todayCoins  = d.todayCoins;
+    // Day streak check
+    var today = new Date().toDateString();
+    if(RSW.lastDayStr !== today) {
+      if(RSW.lastDayStr === new Date(Date.now()-86400000).toDateString()) {
+        RSW.dayStreak++;
+      } else if(RSW.lastDayStr !== '') {
+        RSW.dayStreak = 1;
+      }
+      RSW.lastDayStr = today;
+      RSW.todayCoins = 0; // reset daily counter
+    }
+  } catch(e){}
+}
+
+/* ── Helpers ── */
+function _rswEl(id){ return document.getElementById(id); }
+function _rswFmt(ts) {
+  var d = new Date(ts), h = d.getHours(), m = d.getMinutes();
+  return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+}
+
+/* ── Draw wheel on canvas ── */
+function rswDrawWheel(angle) {
+  var cvs = _rswEl('rsw-canvas');
+  if(!cvs) return;
+  var ctx = cvs.getContext('2d', { alpha: false });
+  var cx = cvs.width/2, cy = cvs.height/2, r = cvs.width/2 - 6;
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+
+  /* Shadow */
+  ctx.beginPath(); ctx.arc(cx+3,cy+5,r,0,Math.PI*2);
+  ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fill();
+
+  /* Outer glow ring */
+  var grd = ctx.createRadialGradient(cx,cy,r-6,cx,cy,r+4);
+  grd.addColorStop(0,'rgba(245,166,35,.55)');
+  grd.addColorStop(1,'rgba(245,166,35,0)');
+  ctx.beginPath(); ctx.arc(cx,cy,r+3,0,Math.PI*2);
+  ctx.fillStyle = grd; ctx.fill();
+
+  /* Segments */
+  var arc = Math.PI*2 / RSW_SEGS.length;
+  RSW_SEGS.forEach(function(seg, i) {
+    var a = angle + i * arc;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,a,a+arc); ctx.closePath();
+    var sg = ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+    sg.addColorStop(0, seg.color+'ee'); sg.addColorStop(1, seg.color+'77');
+    ctx.fillStyle = sg; ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,.35)'; ctx.lineWidth = 1.5; ctx.stroke();
+    /* Label */
+    ctx.save();
+    ctx.translate(cx, cy); ctx.rotate(a + arc/2);
+    ctx.textAlign = 'right';
+    ctx.font = 'bold 11px Rajdhani,DM Sans,sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,.95)';
+    ctx.shadowColor = 'rgba(0,0,0,.9)'; ctx.shadowBlur = 5;
+    ctx.fillText(seg.label, r - 10, 4);
+    ctx.restore();
+  });
+
+  /* Center hub */
+  var hub = ctx.createRadialGradient(cx,cy,0,cx,cy,24);
+  hub.addColorStop(0,'#ffd060'); hub.addColorStop(.5,'#f5a623'); hub.addColorStop(1,'#9e6010');
+  ctx.beginPath(); ctx.arc(cx,cy,22,0,Math.PI*2);
+  ctx.fillStyle = hub; ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,.3)'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,9,0,Math.PI*2);
+  ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fill();
+
+  /* Tick marks */
+  RSW_SEGS.forEach(function(_,i){
+    var a = angle + i * arc;
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(a);
+    ctx.beginPath(); ctx.moveTo(r-2,0); ctx.lineTo(r+1,0);
+    ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=2; ctx.stroke();
+    ctx.restore();
+  });
+}
+
+/* ── Build legend ── */
+function rswBuildLegend() {
+  var el = _rswEl('rsw-legend'); if(!el) return;
+  var uniq = {};
+  RSW_SEGS.forEach(function(s){ uniq[s.label] = s.color; });
+  el.innerHTML = Object.keys(uniq).map(function(k){
+    return '<div class="rsw-seg-dot"><div class="rsw-seg-dot-color" style="background:'+uniq[k]+'"></div>'+k+'</div>';
+  }).join('');
+}
+
+/* ── Update all UI ── */
+function rswUpdateUI() {
+  var tc = _rswEl('rsw-total-coins');  if(tc) tc.textContent = RSW.totalCoins.toLocaleString();
+  var ts = _rswEl('rsw-total-spins');  if(ts) ts.textContent = RSW.totalSpins;
+  var pt = _rswEl('rsw-points');       if(pt) pt.textContent = RSW.points;
+  var vw = _rswEl('rsw-vids-watched'); if(vw) vw.textContent = RSW.vidsWatched;
+  var st = _rswEl('rsw-stat-today');   if(st) st.textContent = RSW.todayCoins;
+  var ss = _rswEl('rsw-stat-streak');  if(ss) ss.textContent = RSW.dayStreak;
+  var sb = _rswEl('rsw-stat-bonus');   if(sb) sb.textContent = RSW.bonusClaims;
+
+  /* Tab badge */
+  var badge = _rswEl('rsw-tab-coinbadge');
+  if(badge) badge.textContent = RSW.totalCoins >= 1000
+    ? (RSW.totalCoins/1000).toFixed(1)+'K PC'
+    : RSW.totalCoins + ' PC';
+
+  /* Spin button state */
+  var btn  = _rswEl('rsw-spin-btn');
+  var txt  = _rswEl('rsw-spin-btn-txt');
+  var hint = _rswEl('rsw-lock-hint');
+  var tab  = _rswEl('rsw-tab');
+
+  if(RSW.spinsAvail > 0 && !_rswSpinRunning) {
+    if(btn)  { btn.disabled = false; btn.className = ''; }
+    if(txt)  txt.textContent = '🎡 Spin Now! (' + RSW.spinsAvail + ' spin' + (RSW.spinsAvail>1?'s':'')+' available)';
+    if(hint) hint.textContent = '🎰 ' + RSW.spinsAvail + ' spin' + (RSW.spinsAvail>1?'s':'')+' ready!';
+    if(hint) hint.style.color = 'var(--rsw-gold)';
+    if(tab)  tab.classList.add('spin-ready');
+  } else if(_rswSpinRunning) {
+    if(btn)  { btn.disabled = true; btn.className = ''; }
+    if(txt)  txt.textContent = 'Spinning…';
+    if(tab)  tab.classList.remove('spin-ready');
+  } else {
+    if(btn)  { btn.disabled = true; btn.className = 'locked'; }
+    if(txt)  txt.textContent = 'Watch video to unlock spin';
+    if(hint) hint.textContent = '🔒 Complete 5-min video watch to unlock';
+    if(hint) hint.style.color = '';
+    if(tab)  tab.classList.remove('spin-ready');
+  }
+}
+
+/* ── History ── */
+function rswAddHistory(type, coins, label) {
+  RSW.history.unshift({ type:type, coins:coins, label:label, ts:Date.now() });
+  if(RSW.history.length > 50) RSW.history = RSW.history.slice(0,50);
+  rswRenderHistory();
+}
+function rswRenderHistory() {
+  var el = _rswEl('rsw-history'); if(!el) return;
+  var emp = _rswEl('rsw-hist-empty');
+  if(RSW.history.length === 0) {
+    if(emp) emp.style.display = '';
+    return;
+  }
+  if(emp) emp.style.display = 'none';
+  var icons = { spin:'🎡', video:'📺', bonus:'🎰', faucet:'💧' };
+  var colors = { spin:'rgba(245,166,35,.12)', video:'rgba(0,212,255,.1)', bonus:'rgba(139,92,246,.12)', faucet:'rgba(34,197,94,.1)' };
+  /* Remove old rows */
+  Array.from(el.querySelectorAll('.rsw-hist-row')).forEach(function(r){ r.remove(); });
+  RSW.history.slice(0,20).forEach(function(h){
+    var row = document.createElement('div');
+    row.className = 'rsw-hist-row';
+    row.innerHTML =
+      '<div class="rsw-hist-icon" style="background:'+(colors[h.type]||'rgba(255,255,255,.06)') +'">'+(icons[h.type]||'🎯')+'</div>'
+      + '<div class="rsw-hist-label">'+h.label+'</div>'
+      + '<div class="rsw-hist-time">'+_rswFmt(h.ts)+'</div>'
+      + '<div class="rsw-hist-coins">+'+h.coins+' 🪙</div>';
+    el.appendChild(row);
+  });
+}
+
+/* ── Confetti burst ── */
+function rswConfetti(x, y) {
+  var colors = ['#f5a623','#ffd060','#22c55e','#00d4ff','#8b5cf6','#ef4444'];
+  for(var i=0; i<22; i++) {
+    var el = document.createElement('div');
+    el.className = 'rsw-confetti-piece';
+    el.style.cssText = [
+      'left:'+(x - 20 + Math.random()*40)+'px',
+      'top:'+(y - 10)+'px',
+      'background:'+colors[Math.floor(Math.random()*colors.length)],
+      'animation-duration:'+(1.1+Math.random()*.6)+'s',
+      'animation-delay:'+Math.random()*.12+'s',
+      'transform:rotate('+Math.random()*360+'deg)',
+      'width:'+(5+Math.random()*5)+'px',
+      'height:'+(7+Math.random()*6)+'px',
+    ].join(';');
+    document.body.appendChild(el);
+    setTimeout(function(){ el.remove(); }, 2000);
+  }
+}
+
+/* ── Credit coins (integrates with global PC system) ── */
+function rswCreditCoins(amount, label, type) {
+  RSW.totalCoins += amount;
+  RSW.todayCoins += amount;
+  rswSave();
+
+  /* Integrate with pcAdd if available */
+  if(window.pcAdd) {
+    window.pcAdd(amount, label, _rswEl('rsw-canvas'));
+  } else if(window.PC) {
+    window.PC.coins += amount;
+    if(window.pcUpdateUI) window.pcUpdateUI();
+    else if(window.pcSave) window.pcSave();
+  }
+
+  /* Also reflect in USD balance (rough conversion) */
+  if(window.S && window.updateWallet) {
+    var usd = parseFloat((amount * 0.0025 / 83 * 0.5).toFixed(6));
+    window.S.balance = (window.S.balance||0) + usd;
+    window.S.sessionEarned = (window.S.sessionEarned||0) + usd;
+    if(window.addTx) window.addTx('Spin Wheel: '+label, usd, 'credit');
+    window.updateWallet();
+  }
+
+  rswAddHistory(type||'spin', amount, label);
+  rswUpdateUI();
+}
+
+/* ════════════════════════════════════════
+   VIDEO WATCH TIMER
+════════════════════════════════════════ */
+var RSW_TIMER_SECS = 300; // 5 minutes
+
+window.rswStartWatch = function() {
+  if(_rswWatchActive) return; /* Already running */
+
+  _rswWatchActive = true;
+  _rswWatchEnd = Date.now() + RSW_TIMER_SECS * 1000;
+
+  /* Open sponsor/video link */
+  var url = (typeof SPONSOR_URL !== 'undefined' && SPONSOR_URL)
+    ? SPONSOR_URL
+    : 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+  if(window._armPopunder) window._armPopunder();
+  window.open(url, '_blank');
+
+  var btn  = _rswEl('rsw-watch-btn');
+  var stat = _rswEl('rsw-watch-status');
+  if(btn)  { btn.textContent = '⏱ Timer running — keep this tab open…'; btn.className = 'rsw-watch-btn watching'; btn.disabled = true; }
+  if(stat) stat.textContent = 'Video opened in new tab. Timer starts now!';
+
+  _rswWatchTid = setInterval(rswTimerTick, 500);
+  rswTimerTick();
+};
+
+function rswTimerTick() {
+  var now = Date.now();
+  var rem = Math.max(0, Math.ceil((_rswWatchEnd - now) / 1000));
+  var pct = ((RSW_TIMER_SECS - rem) / RSW_TIMER_SECS) * 100;
+
+  var m = Math.floor(rem/60), s = rem%60;
+  var cd  = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+
+  var fill = _rswEl('rsw-timer-fill');
+  var cdEl = _rswEl('rsw-timer-cd');
+  var lblEl= _rswEl('rsw-timer-lbl');
+  var stat = _rswEl('rsw-watch-status');
+
+  if(fill) fill.style.width = pct + '%';
+  if(cdEl) cdEl.textContent = rem > 0 ? cd : '✓ Done!';
+
+  if(rem > 0) {
+    if(lblEl) lblEl.textContent = 'Timer running — ' + cd + ' remaining';
+    if(stat) stat.textContent = '⏱ Stay on tab. ' + cd + ' left to unlock spin.';
+  } else {
+    /* Timer complete! */
+    clearInterval(_rswWatchTid);
+    _rswWatchActive = false;
+    if(fill) fill.classList.add('done');
+    if(cdEl) cdEl.classList.add('done');
+    if(lblEl) lblEl.textContent = '✅ Watch complete — spin unlocked!';
+    if(stat) { stat.textContent = '🎉 Spin unlocked! Click Spin button below.'; stat.style.color = 'var(--rsw-green)'; }
+
+    var btn = _rswEl('rsw-watch-btn');
+    if(btn) { btn.textContent = '✅ Video watched! Spin is unlocked'; btn.disabled = false; btn.className = 'rsw-watch-btn'; btn.style.borderColor='rgba(34,197,94,.4)'; btn.style.color='var(--rsw-green)'; }
+
+    RSW.vidsWatched++;
+    RSW.spinsAvail++;
+    rswSave();
+    rswUpdateUI();
+
+    /* Toast notification */
+    if(window.toast) toast('🎡 Spin unlocked! You watched the full video!', 'success');
+    if(window.SFX) SFX.play('ding');
+
+    /* Auto-open panel if closed */
+    rswOpen();
+  }
+}
+
+/* ════════════════════════════════════════
+   SPIN ENGINE
+════════════════════════════════════════ */
+window.rswDoSpin = function() {
+  if(RSW.spinsAvail < 1 || _rswSpinRunning) return;
+  RSW.spinsAvail--;
+  _rswSpinRunning = true;
+  rswUpdateUI();
+
+  /* Hide previous result */
+  var res = _rswEl('rsw-result'); if(res) res.style.display = 'none';
+
+  /* Weighted RNG */
+  var totalProb = RSW_SEGS.reduce(function(s,sg){ return s+sg.prob; }, 0);
+  var roll = Math.random() * totalProb, cum = 0, idx = 0;
+  for(var i=0; i<RSW_SEGS.length; i++) {
+    cum += RSW_SEGS[i].prob;
+    if(roll <= cum) { idx = i; break; }
+  }
+
+  /* Spin animation */
+  var arc    = Math.PI*2 / RSW_SEGS.length;
+  var extra  = 5 + Math.floor(Math.random()*4);
+  var target = Math.PI*2*extra + (Math.PI*2 - idx*arc - arc/2);
+  var startA = _rswAngle;
+  var dur    = 4000 + Math.random()*800;
+  var startT = null;
+
+  if(window.SFX) SFX.play('click');
+
+  function easeOut(t){ return 1 - Math.pow(1-t, 4.5); }
+  function frame(ts){
+    if(!startT) startT = ts;
+    var t   = Math.min((ts-startT)/dur, 1);
+    var cur = startA + target * easeOut(t);
+    _rswAngle = cur;
+    rswDrawWheel(cur);
+    if(t < 1) {
+      _rswRAF = requestAnimationFrame(frame);
+    } else {
+      _rswSpinRunning = false;
+      rswOnSpinComplete(idx);
+    }
+  }
+  requestAnimationFrame(frame);
+};
+
+function rswOnSpinComplete(idx) {
+  var seg = RSW_SEGS[idx];
+
+  /* Record spin */
+  RSW.totalSpins++;
+  RSW.points++;
+
+  /* Credit coins */
+  rswCreditCoins(seg.coins, 'Wheel Spin: '+seg.label, 'spin');
+
+  /* Show result */
+  var res = _rswEl('rsw-result');
+  var amt = _rswEl('rsw-result-amt');
+  var lbl = _rswEl('rsw-result-lbl');
+  if(res) res.style.display = 'block';
+  if(amt) { amt.textContent = '+' + seg.coins + ' P Coins!'; amt.style.color = seg.color; }
+  if(lbl) lbl.textContent  = '🎉 Added to wallet instantly!';
+
+  /* Confetti */
+  var cvs = _rswEl('rsw-canvas');
+  if(cvs) {
+    var r = cvs.getBoundingClientRect();
+    rswConfetti(r.left + r.width/2, r.top + r.height/2);
+  }
+  if(window.SFX) SFX.play('win');
+  if(window.toast) toast('🎡 ' + seg.label + ' — +' + seg.coins + ' P Coins added!', 'success');
+  if(window.PARTICLES && window.PARTICLES.burst) {
+    var cv = _rswEl('rsw-canvas');
+    if(cv){ var b=cv.getBoundingClientRect(); window.PARTICLES.burst(b.left+b.width/2, b.top+b.height/2, ['#f5a623','#ffd060','#22c55e'],40); }
+  }
+
+  rswSave();
+  rswUpdateUI();
+}
+
+/* ════════════════════════════════════════
+   SIGN-UP BONUS
+════════════════════════════════════════ */
+window.rswClaimBonus = function() {
+  var btn = _rswEl('rsw-bonus-btn');
+  var clm = _rswEl('rsw-bonus-claimed');
+
+  /* Open gambling partner */
+  var partnerUrl = (typeof SPONSOR_URL !== 'undefined' && SPONSOR_URL)
+    ? SPONSOR_URL
+    : 'https://www.effectivegatecpm.com/nggi65rdt?key=c362fb020f08cec743f70638e748b70f';
+  if(window._armPopunder) window._armPopunder();
+  window.open(partnerUrl, '_blank');
+
+  /* Credit bonus */
+  rswCreditCoins(150, 'Sign-Up Bonus', 'bonus');
+  RSW.spinsAvail++;     // bonus extra spin
+  RSW.bonusClaims++;
+  rswSave();
+
+  if(btn) btn.style.display = 'none';
+  if(clm) clm.style.display = 'block';
+
+  if(window.toast) toast('🎰 Sign-up bonus! +150 PC + 1 extra spin credited!', 'success');
+  if(window.SFX) SFX.play('ding');
+
+  rswUpdateUI();
+};
+
+/* ════════════════════════════════════════
+   PANEL OPEN / CLOSE
+════════════════════════════════════════ */
+window.rswOpen = function() {
+  var panel = _rswEl('rsw-panel');
+  var ov    = _rswEl('rsw-overlay');
+  if(panel) panel.classList.add('open');
+  if(ov)    ov.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  rswDrawWheel(_rswAngle);
+};
+window.rswClose = function() {
+  var panel = _rswEl('rsw-panel');
+  var ov    = _rswEl('rsw-overlay');
+  if(panel) panel.classList.remove('open');
+  if(ov)    ov.classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+/* Keyboard escape */
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') rswClose(); });
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+function rswInit() {
+  rswLoad();
+  rswBuildLegend();
+  rswDrawWheel(_rswAngle);
+  rswUpdateUI();
+  rswRenderHistory();
+
+  /* Live 1-second sync loop */
+  setInterval(function(){
+    rswUpdateUI();
+    if(_rswWatchActive) rswTimerTick();
+  }, 1000);
+
+  /* Expose */
+  window.RSW = RSW;
+}
+
+if(document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', rswInit);
+} else {
+  setTimeout(rswInit, 400);
+}
+
+})(); // end RSW IIFE
+</script>
+
 </body>
 </html>
-     
