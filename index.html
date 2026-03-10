@@ -16,7 +16,7 @@
     cookie_flags: 'SameSite=None;Secure'
   });
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PAYRO — Global Capital Platform</title>
 <!-- SPONSOR AD SCRIPT -->
 <script type='text/javascript' src='https://pl28874426.effectivegatecpm.com/1f/81/29/1f8129a5e1425dd72a6354c5ecff9d54.js'></script>
@@ -767,7 +767,7 @@ input,select{font-family:var(--f-body)}
 .mi-lbl{font-size:10px;color:var(--txt3);letter-spacing:.07em;text-transform:uppercase;margin-top:2px}
 /* Grid: uses aspect-ratio but constrained by container */
 .mines-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;padding:18px;background:var(--bg1);border:1px solid var(--bdr2);border-radius:var(--r-lg);width:100%;box-sizing:border-box}
-.mc{aspect-ratio:1;border-radius:var(--r-md);border:1px solid var(--bdr2);background:linear-gradient(135deg,var(--bg3),var(--bg4));display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .22s var(--ease);position:relative;overflow:hidden;min-width:0;min-height:0}
+.mc{aspect-ratio:1;border-radius:var(--r-md);border:1px solid var(--bdr2);background:linear-gradient(135deg,var(--bg3),var(--bg4));display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .22s var(--ease);position:relative;overflow:hidden;min-width:0;min-height:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .mc:hover:not(.revealed):not(.locked){border-color:var(--gold);background:linear-gradient(135deg,var(--bg4),#1e2540);transform:scale(1.06) translateY(-2px);box-shadow:0 6px 20px var(--gold-g),inset 0 1px 0 rgba(255,255,255,.08)}
 .mc.locked{cursor:default;opacity:.6}
 @keyframes gemReveal{0%{transform:scale(0.4) rotateY(90deg);opacity:0}60%{transform:scale(1.18) rotateY(-8deg);opacity:1}80%{transform:scale(0.92)}100%{transform:scale(1) rotateY(0deg)}}
@@ -1347,7 +1347,7 @@ input,select{font-family:var(--f-body)}
 /* ── 600px: standard phone ── */
 @media(max-width:600px){
   /* Core layout */
-  .main{padding:12px 10px;gap:14px}
+  .main{gap:14px}
   .navbar{padding:0 12px}
   /* Balance pill hides text */
   .wallet-pill .wallet-bal{display:none}
@@ -6741,6 +6741,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
     </div>
     <div class="nav-right">
       <div class="geo-pill detecting" id="geo-pill" style="display:none"><span class="flag" id="geo-flag">🌐</span><span id="geo-country">Detecting...</span><span class="rate" id="geo-rate">—</span></div>
+      <button class="nav-ibtn" id="mute-btn" onclick="toggleMute()" title="Toggle Sound"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="mute-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></button>
       <button class="nav-ibtn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
       <span class="wallet-bal" id="nav-bal" style="display:none">$0.00</span>
       <div class="pcoin-nav-pill" id="pcoin-nav-pill" title="P Coin — $0.50 = 1000 P Coin">
@@ -7462,7 +7463,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       </div>
 
     <!-- AD BREAK 4 — between tasks and promo -->
-    <div style="display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start">
+    <div class="ad-break-pair" style="display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start">
       <div class="rgb-ad" style="height:250px"><div class="rgb-ad-inner" style="flex-direction:column;gap:6px;font-size:12px"><span class="ad-tag">AD</span><div style="font-size:24px;opacity:.2">⬛</div><span>300 × 250</span><span style="font-size:10px;color:var(--txt3)">Rectangle Ad Slot</span><span class="ad-tag">AD</span></div></div>
       <div style="display:flex;flex-direction:column;gap:14px">
         <div class="rgb-ad" style="height:116px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Slot 4 <span class="ad-tag">AD</span></div></div>
@@ -7533,8 +7534,8 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Ad Slot 6 <span class="ad-tag">AD</span></div></div>
     </div>
 
-    <!-- ── SECTION: LEADERBOARD ── -->
-    <section class="card" id="sec-leaderboard" style="padding:24px;scroll-margin-top:80px" aria-label="Leaderboard">
+    <!-- ── SECTION: LEADERBOARD (tasks view) ── -->
+    <section class="card" id="sec-leaderboard-tasks" style="padding:24px;scroll-margin-top:80px" aria-label="Leaderboard">
       <div class="sh">
         <div class="sh-l">
           <div class="sh-ic si-gold"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
@@ -7651,62 +7652,6 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 
 
 
-<section class="card" id="sec-promo" style="scroll-margin-top:80px" aria-label="Access Code Vault">
-      <div style="padding:28px">
-        <div class="sh">
-          <div class="sh-l">
-            <div class="sh-ic si-violet"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
-            <div class="sh-title"><strong>Access Code Vault</strong><small>Exclusive codes — one use per code every 24 hours</small></div>
-          </div>
-        </div>
-        <div class="promo-eyebrow"><div class="promo-eyebrow-dot"></div>Ad-Verified Instant Rewards</div>
-        <div class="promo-layout">
-          <!-- LEFT -->
-          <div>
-            <div style="font-size:11px;font-weight:600;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Enter Your Promo Code</div>
-            <div class="promo-input-wrap" id="promo-input-wrap">
-              <div class="promo-icon-wrap">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-              </div>
-              <input class="promo-input" id="promo-input" type="text" maxlength="20" placeholder="e.g. VORTEX123" autocomplete="off" spellcheck="false" oninput="onPromoType()">
-              <div class="promo-clear-btn" id="promo-clear-btn" onclick="clearPromoInput()">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </div>
-            </div>
-            <div class="promo-status" id="promo-status">
-              <span class="ps-icon"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>
-              <span id="promo-status-txt">Enter a valid promo code above</span>
-            </div>
-            <!-- RGB ad slot below input -->
-            <div style="margin-top:16px">
-              <div class="rgb-ad" style="height:80px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Promo Section Ad Slot <span class="ad-tag">AD</span></div></div>
-            </div>
-            <div class="promo-ad-note">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg>
-              Clicking <strong>Redeem</strong> will open a short 8-second ad to verify your code. Reward is credited instantly after.
-            </div>
-            <button class="promo-redeem-btn" id="promo-redeem-btn" onclick="redeemPromo()">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-              Redeem Code (Opens Verification Ad)
-            </button>
-          </div>
-          <!-- RIGHT -->
-          <div class="promo-right-panel">
-            <div class="promo-reward-card">
-              <div class="prc-lbl">Reward Per Valid Code</div>
-              <div class="prc-amount" id="promo-reward-display">$0.05</div>
-              <div class="prc-sub">Credited instantly to your wallet</div>
-            </div>
-            <!-- 300×250 ad slot -->
-            <div class="rgb-ad" style="height:200px;width:100%"><div class="rgb-ad-inner" style="flex-direction:column;gap:6px;font-size:12px"><span class="ad-tag">AD</span><div style="font-size:20px;opacity:.2">⬛</div><span>300 × 200</span><span style="font-size:10px;color:var(--txt3)">Promo Rectangle Ad</span><span class="ad-tag">AD</span></div></div>
-            <div class="promo-history">
-              <div class="ph-title"><span>Redemption Log</span><span id="ph-count" style="color:var(--gold);font-family:var(--f-mono)">0 redeemed</span></div>
-              <div id="promo-history-list"><div class="ph-empty">No codes redeemed yet</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     </div><!-- /tp-tasks -->
 
@@ -9895,13 +9840,14 @@ const LB_NAMES=[
 const LB_BASE_AMT=[4.2212,3.8804,3.1245,2.9001,2.5432,1.8810,1.2345];
 function renderLeaderboard(){
   const list=$('leaderboard-list');if(!list)return;
+  const listTasks=$('leaderboard-list-tasks');
   const entries=[
     ...LB_NAMES.map((p,i)=>({...p,amt:LB_BASE_AMT[i]+(Math.random()*0.005)})),
     {name:'You',tag:'Your Account',amt:S.balance,isYou:true}
   ].sort((a,b)=>b.amt-a.amt);
   const rankCls=['rk-gold','rk-silver','rk-bronze'];
   const rankEmoji=['🥇','🥈','🥉'];
-  list.innerHTML=entries.map((e,i)=>{
+  const html=entries.map((e,i)=>{
     const cls=i<3?rankCls[i]:'rk-norm';
     const rank=i<3?rankEmoji[i]:`#${i+1}`;
     const youClass=e.isYou?' lb-you':'';
@@ -9911,6 +9857,8 @@ function renderLeaderboard(){
       <div class="lb-amt">$${e.amt.toFixed(4)}</div>
     </div>`;
   }).join('');
+  list.innerHTML=html;
+  if(listTasks) listTasks.innerHTML=html;
 }
 
 /* ── GEO / TIER Detection ── */
