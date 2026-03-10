@@ -8569,6 +8569,108 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       </div><!-- /pt-root -->
     </div><!-- /trade-section -->
 
+    <!-- ╔══════════════════════════════════════════════════════════╗
+         ║   SECTION 8 — VIDEO HUB                                 ║
+         ╚══════════════════════════════════════════════════════════╝ -->
+    <div class="spa-section" id="video-section" style="display:none">
+
+      <!-- VIP / Subscription toggle banner -->
+      <div class="vs-vip-bar">
+        <div class="vs-vip-info">
+          <div class="vs-vip-icon">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div>
+            <div class="vs-vip-title">VIP Access</div>
+            <div class="vs-vip-sub">VIP subscribers skip ads &amp; unlock all videos instantly</div>
+          </div>
+        </div>
+        <div class="vs-toggle-wrap">
+          <span class="vs-toggle-lbl" id="vs-vip-lbl">Free</span>
+          <label class="vs-toggle" title="Toggle VIP Mode">
+            <input type="checkbox" id="vs-vip-toggle" onchange="vsToggleVip(this.checked)">
+            <span class="vs-toggle-slider"></span>
+          </label>
+          <span class="vs-toggle-lbl" style="color:var(--gold)">VIP</span>
+        </div>
+      </div>
+
+      <!-- Main video card -->
+      <div class="tp-card tp-card-pad" style="margin-bottom:14px">
+        <div class="vs-hdr">
+          <div class="vs-hdr-icon">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div>
+            <div class="vs-hdr-title">Video Hub</div>
+            <div class="vs-hdr-sub">Paste any YouTube or Vimeo URL to add</div>
+          </div>
+          <div class="vs-live-badge">
+            <span class="vs-live-dot"></span>
+            <span id="vs-count-lbl">0 Videos</span>
+          </div>
+        </div>
+        <div class="vs-add-form">
+          <input class="vs-url-input" id="vs-url-input" type="url"
+            placeholder="Paste a YouTube, Vimeo, or direct video URL…"
+            onkeydown="if(event.key==='Enter')vsAddVideo()">
+          <button class="vs-add-btn" onclick="vsAddVideo()">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Video
+          </button>
+        </div>
+        <div class="vs-grid" id="vs-grid">
+          <div class="vs-empty" id="vs-empty" style="grid-column:1/-1">
+            <div class="vs-empty-icon">
+              <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="vs-empty-title">No Videos Yet</div>
+            <div class="vs-empty-sub">Paste a YouTube or Vimeo link above and hit <strong>Add Video</strong> to start your collection.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /video-section -->
+
+    <!-- VIDEO POPUP MODAL -->
+    <div class="vs-modal" id="vs-modal" onclick="vsModalOutsideClick(event)">
+      <div class="vs-modal-box" id="vs-modal-box">
+        <div class="vs-ad-gate" id="vs-ad-gate">
+          <div class="vs-ad-ring">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle class="vs-ar-bg" cx="45" cy="45" r="40"/>
+              <circle class="vs-ar-fill" id="vs-ar-fill" cx="45" cy="45" r="40"/>
+            </svg>
+            <div class="vs-ar-num" id="vs-ar-num">5</div>
+          </div>
+          <div class="vs-ad-title">Watch a short ad to unlock</div>
+          <div class="vs-ad-sub">VIP subscribers skip ads instantly. This 5-second ad supports free access.</div>
+          <div class="vs-ad-slot">
+            <div class="rgb-ad" style="height:72px;max-width:360px">
+              <div class="rgb-ad-inner"><span class="ad-tag">AD</span><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg> Video Pre-Roll Ad Slot <span class="ad-tag">AD</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="vs-modal-hdr">
+          <svg width="15" height="15" fill="none" stroke="var(--green)" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <div class="vs-modal-title" id="vs-modal-title">Playing Video</div>
+          <button class="vs-modal-close" onclick="vsCloseModal()">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="vs-iframe-wrap" id="vs-iframe-wrap">
+          <iframe id="vs-iframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+        </div>
+        <div class="vs-modal-footer">
+          <div class="vs-modal-src" id="vs-modal-src">—</div>
+          <button class="vs-open-external" onclick="vsOpenExternal()">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open Original
+          </button>
+        </div>
+      </div>
+    </div><!-- /vs-modal -->
+
   </main><!-- /main -->
   <!-- Footer ads — hidden in tab mode -->
   <div style="display:none" aria-hidden="true">
@@ -10302,6 +10404,14 @@ else init();
     <span class="bnav-lbl">Profile</span>
   </button>
 
+  <!-- Video Hub -->
+  <button class="bnav-item" id="bnav-video" onclick="bnavGo('video-section','bnav-video')" aria-label="Videos">
+    <div class="bnav-ic">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    </div>
+    <span class="bnav-lbl">Videos</span>
+  </button>
+
   <!-- Trade — Prediction Trading -->
   <button class="bnav-item bnav-trade-pulse" id="bnav-trade" onclick="bnavGo('trade-section','bnav-trade')" aria-label="Trade">
     <div class="bnav-ic" style="position:relative">
@@ -10332,7 +10442,8 @@ else init();
     'bnav-wallet':   'wallet-section',
     'bnav-referral': 'referral-section',
     'bnav-profile':  'profile-section',
-    'bnav-trade':    'trade-section'
+    'bnav-trade':    'trade-section',
+    'bnav-video':    'video-section'
   };
   var BTNS = Object.keys(TAB_MAP);
   var currentTab = 'home-section';
@@ -10467,7 +10578,7 @@ else init();
   /* Initial sync after page load */
   /* ── On load: ensure only home-section is visible ── */
   document.addEventListener('DOMContentLoaded', function(){
-    var ALL = ['home-section','tasks-section','games-section','wallet-section','referral-section','profile-section'];
+    var ALL = ['home-section','tasks-section','games-section','wallet-section','referral-section','profile-section','trade-section','video-section'];
     ALL.forEach(function(id){
       var el = document.getElementById(id);
       if(!el) return;
@@ -16127,6 +16238,748 @@ if(document.readyState==='loading'){
   .nf-body { padding: 20px 16px 18px; gap: 16px; }
 }
 </style>
+
+<style id="video-section-css">
+/* ════════════════════════════════════════════════════════════════
+   VIDEO SECTION — Dark/Green theme, responsive, animated
+════════════════════════════════════════════════════════════════ */
+
+/* ── VIP Toggle Banner ── */
+.vs-vip-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 12px 18px;
+  background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(0,212,255,.05));
+  border: 1px solid rgba(34,197,94,.2);
+  border-radius: var(--r-md);
+  margin-bottom: 16px;
+}
+.vs-vip-info { display: flex; align-items: center; gap: 10px; }
+.vs-vip-icon {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.25);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green);
+}
+.vs-vip-title {
+  font-family: var(--f-display); font-size: 14px; font-weight: 700;
+  letter-spacing: .04em; color: var(--txt);
+}
+.vs-vip-sub { font-size: 11px; color: var(--txt3); margin-top: 1px; }
+/* Toggle switch */
+.vs-toggle-wrap { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.vs-toggle-lbl { font-size: 11px; color: var(--txt3); font-weight: 600; }
+.vs-toggle {
+  position: relative; width: 46px; height: 26px; cursor: pointer;
+}
+.vs-toggle input { opacity: 0; width: 0; height: 0; }
+.vs-toggle-slider {
+  position: absolute; inset: 0;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 99px;
+  transition: all .3s var(--ease);
+}
+.vs-toggle-slider::before {
+  content: ''; position: absolute; width: 20px; height: 20px;
+  left: 2px; top: 2px; border-radius: 50%;
+  background: var(--txt3);
+  transition: transform .3s var(--spring), background .3s;
+}
+.vs-toggle input:checked + .vs-toggle-slider {
+  background: rgba(34,197,94,.2);
+  border-color: rgba(34,197,94,.4);
+  box-shadow: 0 0 14px rgba(34,197,94,.25);
+}
+.vs-toggle input:checked + .vs-toggle-slider::before {
+  transform: translateX(20px);
+  background: var(--green);
+}
+
+/* ── Section Header ── */
+.vs-hdr {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--bdr2);
+}
+.vs-hdr-icon {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green);
+}
+.vs-hdr-title {
+  font-family: var(--f-display); font-size: 16px; font-weight: 700;
+  letter-spacing: .04em; color: var(--txt);
+}
+.vs-hdr-sub { font-size: 11px; color: var(--txt3); margin-top: 1px; }
+.vs-live-badge {
+  margin-left: auto; display: flex; align-items: center; gap: 5px;
+  font-size: 9px; font-weight: 800; letter-spacing: .1em;
+  color: var(--green); text-transform: uppercase;
+}
+.vs-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 8px var(--green);
+  animation: nfPing 1.8s ease-in-out infinite;
+}
+
+/* ── Add Video Form ── */
+.vs-add-form {
+  display: flex; gap: 8px; margin-bottom: 20px; align-items: stretch;
+}
+.vs-url-input {
+  flex: 1; background: var(--bg3);
+  border: 1px solid var(--bdr2); border-radius: var(--r-md);
+  padding: 11px 14px; font-family: var(--f-body);
+  font-size: 13px; color: var(--txt);
+  transition: border-color .2s, box-shadow .2s;
+  outline: none;
+}
+.vs-url-input::placeholder { color: var(--txt3); }
+.vs-url-input:focus {
+  border-color: rgba(34,197,94,.4);
+  box-shadow: 0 0 0 3px rgba(34,197,94,.08);
+}
+.vs-add-btn {
+  padding: 11px 18px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--green), #16a34a);
+  color: #fff; font-family: var(--f-display);
+  font-size: 13px; font-weight: 700; letter-spacing: .05em;
+  border: none; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; gap: 7px;
+  transition: all .2s var(--ease);
+  box-shadow: 0 4px 16px rgba(34,197,94,.3);
+}
+.vs-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(34,197,94,.45);
+}
+.vs-add-btn:active { transform: scale(.96); }
+
+/* ── Video Grid ── */
+.vs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+@media (max-width: 600px) {
+  .vs-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+@media (max-width: 400px) {
+  .vs-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Video Card ── */
+.vs-card {
+  background: var(--bg2);
+  border: 1px solid var(--bdr2);
+  border-radius: var(--r-md);
+  overflow: hidden; cursor: pointer;
+  transition: transform .25s var(--spring),
+              border-color .25s, box-shadow .25s;
+  position: relative;
+  will-change: transform;
+}
+.vs-card:hover {
+  transform: translateY(-5px) scale(1.015);
+  border-color: rgba(34,197,94,.35);
+  box-shadow: 0 12px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(34,197,94,.15);
+}
+.vs-card:active { transform: scale(.97); transition-duration: .1s; }
+
+/* Thumbnail area */
+.vs-thumb {
+  position: relative;
+  width: 100%; padding-top: 56.25%; /* 16:9 */
+  background: var(--bg3);
+  overflow: hidden;
+}
+.vs-thumb img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .4s var(--ease), filter .3s;
+}
+.vs-card:hover .vs-thumb img {
+  transform: scale(1.06);
+  filter: brightness(1.1);
+}
+.vs-thumb-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6px;
+  background: linear-gradient(135deg, var(--bg3), var(--bg4));
+  color: var(--txt3);
+  font-size: 11px; font-weight: 600; letter-spacing: .05em;
+}
+
+/* Play overlay */
+.vs-play-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.28);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.vs-card:hover .vs-play-overlay { opacity: 1; }
+.vs-play-btn-circle {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(34,197,94,.88);
+  box-shadow: 0 0 28px rgba(34,197,94,.6);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  transform: scale(.8);
+  transition: transform .25s var(--spring);
+}
+.vs-card:hover .vs-play-btn-circle { transform: scale(1); }
+
+/* Duration badge */
+.vs-duration {
+  position: absolute; bottom: 8px; right: 8px;
+  background: rgba(0,0,0,.78);
+  color: #fff; font-family: var(--f-mono);
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 4px;
+  letter-spacing: .04em;
+}
+
+/* VIP badge on thumb */
+.vs-vip-badge {
+  position: absolute; top: 8px; left: 8px;
+  background: linear-gradient(135deg, #f5a623, #ffd060);
+  color: #000; font-size: 8px; font-weight: 800;
+  letter-spacing: .1em; padding: 3px 7px; border-radius: 4px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(245,166,35,.5);
+}
+
+/* Source badge */
+.vs-source-badge {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(0,0,0,.72);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.7); font-size: 9px; font-weight: 700;
+  letter-spacing: .08em; padding: 2px 7px; border-radius: 4px;
+}
+
+/* Card body */
+.vs-card-body { padding: 10px 12px 12px; }
+.vs-card-title {
+  font-size: 13px; font-weight: 600; color: var(--txt);
+  line-height: 1.35; margin-bottom: 6px;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.vs-card-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
+}
+.vs-card-source {
+  font-size: 10px; color: var(--green); font-weight: 600;
+  letter-spacing: .04em;
+}
+.vs-card-remove {
+  width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0;
+  background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--red); font-size: 10px; cursor: pointer;
+  transition: all .2s; opacity: 0;
+}
+.vs-card:hover .vs-card-remove { opacity: 1; }
+.vs-card-remove:hover { background: rgba(239,68,68,.2); transform: scale(1.1); }
+
+/* Empty state */
+.vs-empty {
+  text-align: center; padding: 48px 24px;
+  color: var(--txt3);
+}
+.vs-empty-icon {
+  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
+  background: rgba(34,197,94,.06);
+  border: 1px solid rgba(34,197,94,.12);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(34,197,94,.4);
+}
+.vs-empty-title { font-family: var(--f-display); font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.vs-empty-sub { font-size: 12px; line-height: 1.55; }
+
+/* ── Video Popup Modal ── */
+.vs-modal {
+  display: none; position: fixed; inset: 0; z-index: 9500;
+  align-items: center; justify-content: center;
+  background: rgba(2,4,14,.94);
+  backdrop-filter: blur(14px);
+  padding: 16px;
+}
+.vs-modal.vs-modal-open { display: flex; }
+
+/* Ad gate inside modal */
+.vs-ad-gate {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: rgba(5,7,15,.97);
+  border-radius: var(--r-xl);
+  gap: 18px; text-align: center; padding: 28px;
+}
+.vs-ad-gate.vs-ad-done { display: none; }
+.vs-ad-ring { position: relative; width: 90px; height: 90px; }
+.vs-ad-ring svg { transform: rotate(-90deg); }
+.vs-ar-bg { fill: none; stroke: var(--bg3); stroke-width: 8; }
+.vs-ar-fill {
+  fill: none; stroke: var(--green); stroke-width: 8;
+  stroke-linecap: round; stroke-dasharray: 251.3;
+  stroke-dashoffset: 251.3; filter: drop-shadow(0 0 5px var(--green));
+  transition: stroke-dashoffset .09s linear;
+}
+.vs-ar-num {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  font-family: var(--f-mono); font-size: 22px; font-weight: 700;
+  color: var(--green); text-shadow: 0 0 12px rgba(34,197,94,.5);
+}
+.vs-ad-title { font-family: var(--f-display); font-size: 18px; font-weight: 700; }
+.vs-ad-sub { font-size: 12px; color: var(--txt2); line-height: 1.6; }
+.vs-ad-slot {
+  width: 100%; max-width: 360px;
+  height: 72px;
+}
+
+.vs-modal-box {
+  position: relative; width: 100%; max-width: 860px;
+  background: var(--bg1); border: 1px solid var(--bdr);
+  border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(34,197,94,.08);
+  display: flex; flex-direction: column;
+  max-height: calc(100dvh - 32px);
+}
+
+/* Modal header */
+.vs-modal-hdr {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--bdr2);
+  background: rgba(34,197,94,.03);
+  flex-shrink: 0;
+}
+.vs-modal-title {
+  font-family: var(--f-display); font-size: 14px; font-weight: 700;
+  color: var(--txt); flex: 1; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+.vs-modal-close {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  border: 1px solid var(--bdr2); background: rgba(255,255,255,.04);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--txt2); cursor: pointer;
+  transition: all .2s;
+}
+.vs-modal-close:hover { border-color: rgba(239,68,68,.4); color: var(--red); }
+
+/* Iframe container */
+.vs-iframe-wrap {
+  position: relative; width: 100%; padding-top: 56.25%; /* 16:9 */
+  background: #000; flex-shrink: 0;
+}
+.vs-iframe-wrap iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; border: none;
+}
+.vs-iframe-wrap.vs-iframe-direct {
+  padding-top: 0;
+  min-height: min(480px, 56vw);
+}
+.vs-iframe-wrap.vs-iframe-direct iframe {
+  position: static;
+  width: 100%; height: 100%;
+  min-height: min(480px, 56vw);
+}
+
+/* Modal footer */
+.vs-modal-footer {
+  padding: 12px 18px; border-top: 1px solid var(--bdr2);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; flex-shrink: 0;
+}
+.vs-open-external {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--r-md);
+  border: 1px solid rgba(34,197,94,.25);
+  background: rgba(34,197,94,.07);
+  color: var(--green); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all .2s;
+}
+.vs-open-external:hover { background: rgba(34,197,94,.14); }
+.vs-modal-src {
+  font-size: 10px; color: var(--txt3); font-family: var(--f-mono);
+  max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ── Card add animation ── */
+@keyframes vsCardPop {
+  0%   { opacity: 0; transform: scale(.85) translateY(16px); }
+  70%  { transform: scale(1.03) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.vs-card.vs-card-new { animation: vsCardPop .45s var(--spring) both; }
+
+/* Responsive modal */
+@media (max-width: 600px) {
+  .vs-modal { padding: 0; align-items: flex-end; }
+  .vs-modal-box {
+    max-width: 100%; border-radius: var(--r-xl) var(--r-xl) 0 0;
+    max-height: 92dvh;
+  }
+  .vs-add-form { flex-direction: column; }
+  .vs-add-btn { width: 100%; justify-content: center; }
+}
+</style>
+
+<script id="video-hub-js">
+/* ════════════════════════════════════════════════════════════
+   VIDEO HUB ENGINE — YouTube auto-thumb, popup player, VIP
+════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+
+  /* ── State ── */
+  var VS = {
+    videos: [],       // [{id, url, title, thumb, source, embedUrl, vip}]
+    vip: false,       // VIP toggle
+    adTimer: null,
+    currentUrl: '',
+    currentTitle: ''
+  };
+
+  /* ── Persist/restore from localStorage ── */
+  function vsSave() {
+    try { localStorage.setItem('payro_videos', JSON.stringify(VS.videos)); } catch(e){}
+  }
+  function vsLoad() {
+    try {
+      var d = JSON.parse(localStorage.getItem('payro_videos') || '[]');
+      if(Array.isArray(d)) VS.videos = d;
+    } catch(e){}
+  }
+
+  /* ── URL parsers ── */
+  function vsParseYouTube(url) {
+    var m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/))([A-Za-z0-9_\-]{11})/);
+    return m ? m[1] : null;
+  }
+  function vsParseVimeo(url) {
+    var m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    return m ? m[1] : null;
+  }
+
+  function vsAnalyze(url) {
+    var ytId = vsParseYouTube(url);
+    if (ytId) {
+      return {
+        source: 'YouTube',
+        embedUrl: 'https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0',
+        thumb: 'https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg',
+        thumbFallback: 'https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg',
+        title: 'YouTube Video'
+      };
+    }
+    var vmId = vsParseVimeo(url);
+    if (vmId) {
+      return {
+        source: 'Vimeo',
+        embedUrl: 'https://player.vimeo.com/video/' + vmId + '?autoplay=1',
+        thumb: null, // will load async from Vimeo oEmbed
+        vimeoId: vmId,
+        title: 'Vimeo Video'
+      };
+    }
+    /* Direct video file */
+    if (/\.(mp4|webm|ogg|mkv|mov)(\?|$)/i.test(url)) {
+      return {
+        source: 'Direct',
+        embedUrl: url,
+        thumb: null,
+        title: 'Video File',
+        direct: true
+      };
+    }
+    /* Generic iframe embed fallback */
+    return {
+      source: 'Web',
+      embedUrl: url,
+      thumb: null,
+      title: 'Video'
+    };
+  }
+
+  /* ── Fetch Vimeo thumbnail async ── */
+  function vsFetchVimeoThumb(vimeoId, cardId) {
+    var img = new Image();
+    /* Use Vimeo's oEmbed thumbnail pattern */
+    fetch('https://vimeo.com/api/v2/video/' + vimeoId + '.json')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d && d[0] && d[0].thumbnail_large) {
+          var card = document.getElementById('vscard-' + cardId);
+          if (card) {
+            var imgEl = card.querySelector('.vs-thumb-img');
+            var ph = card.querySelector('.vs-thumb-placeholder');
+            if (imgEl) { imgEl.src = d[0].thumbnail_large; imgEl.style.display='block'; if(ph) ph.style.display='none'; }
+          }
+          /* Update stored thumb */
+          for(var i=0;i<VS.videos.length;i++){
+            if(VS.videos[i].id===cardId){ VS.videos[i].thumb=d[0].thumbnail_large; break; }
+          }
+          vsSave();
+        }
+        if (d && d[0] && d[0].title) {
+          var card = document.getElementById('vscard-' + cardId);
+          if (card) {
+            var t = card.querySelector('.vs-card-title');
+            if(t) t.textContent = d[0].title;
+          }
+        }
+      }).catch(function(){});
+  }
+
+  /* ── Render a single card ── */
+  function vsBuildCard(v) {
+    var hasThumb = v.thumb && v.thumb.length > 0;
+    var sourceColor = v.source === 'YouTube' ? '#ef4444' : v.source === 'Vimeo' ? '#1ab7ea' : '#22c55e';
+
+    var thumbHtml = hasThumb
+      ? '<img class="vs-thumb-img" src="'+v.thumb+'" alt="" loading="lazy" onerror="this.onerror=null;this.src=\''+(v.thumbFallback||'')+'\';if(!this.src)this.style.display=\'none\'">'
+        + '<div class="vs-thumb-placeholder" style="display:none">'
+        + '<svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>'+v.source+'</span></div>'
+      : '<div class="vs-thumb-placeholder">'
+        + '<svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>'+v.source+'</span></div>';
+
+    var el = document.createElement('div');
+    el.className = 'vs-card vs-card-new';
+    el.id = 'vscard-' + v.id;
+    el.setAttribute('onclick', 'vsOpenVideo("'+v.id+'")');
+    el.innerHTML =
+      '<div class="vs-thumb">'
+        + thumbHtml
+        + '<div class="vs-play-overlay">'
+          + '<div class="vs-play-btn-circle">'
+            + '<svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+          + '</div>'
+        + '</div>'
+        + (v.vip ? '<div class="vs-vip-badge">VIP</div>' : '')
+        + '<div class="vs-source-badge" style="background:rgba(0,0,0,.72);color:rgba(255,255,255,.8)">'+v.source+'</div>'
+      + '</div>'
+      + '<div class="vs-card-body">'
+        + '<div class="vs-card-title">'+vsEsc(v.title)+'</div>'
+        + '<div class="vs-card-meta">'
+          + '<span class="vs-card-source" style="color:'+sourceColor+'">'+v.source+'</span>'
+          + '<span class="vs-card-remove" onclick="event.stopPropagation();vsRemoveVideo(\''+v.id+'\')" title="Remove">'
+            + '<svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+          + '</span>'
+        + '</div>'
+      + '</div>';
+    return el;
+  }
+
+  /* ── Render whole grid ── */
+  function vsRender() {
+    var grid = document.getElementById('vs-grid');
+    var empty = document.getElementById('vs-empty');
+    var countEl = document.getElementById('vs-count-lbl');
+    if (!grid) return;
+
+    /* Clear everything except empty state */
+    Array.from(grid.querySelectorAll('.vs-card')).forEach(function(c){ c.remove(); });
+
+    if (VS.videos.length === 0) {
+      if (empty) empty.style.display = '';
+    } else {
+      if (empty) empty.style.display = 'none';
+      VS.videos.forEach(function(v){
+        grid.appendChild(vsBuildCard(v));
+      });
+    }
+    if (countEl) countEl.textContent = VS.videos.length + (VS.videos.length === 1 ? ' Video' : ' Videos');
+  }
+
+  /* ── Add video ── */
+  window.vsAddVideo = function() {
+    var input = document.getElementById('vs-url-input');
+    if (!input) return;
+    var url = (input.value || '').trim();
+    if (!url) {
+      if(window.toast) toast('Paste a video URL first', 'warn');
+      return;
+    }
+    /* Validate basic URL */
+    if (!/^https?:\/\//i.test(url)) { url = 'https://' + url; }
+
+    var info = vsAnalyze(url);
+    var vid = {
+      id: 'v' + Date.now(),
+      url: url,
+      title: info.title,
+      thumb: info.thumb || '',
+      thumbFallback: info.thumbFallback || '',
+      source: info.source,
+      embedUrl: info.embedUrl,
+      direct: info.direct || false,
+      vip: false
+    };
+
+    VS.videos.unshift(vid);
+    vsSave();
+    vsRender();
+    input.value = '';
+
+    /* Async fetch Vimeo thumb */
+    if (info.source === 'Vimeo' && info.vimeoId) {
+      vsFetchVimeoThumb(info.vimeoId, vid.id);
+    }
+
+    if(window.toast) toast('▶ Video added!', 'success');
+    if(window.SFX) SFX.play('ding');
+  };
+
+  /* ── Remove video ── */
+  window.vsRemoveVideo = function(id) {
+    VS.videos = VS.videos.filter(function(v){ return v.id !== id; });
+    vsSave();
+    vsRender();
+    if(window.toast) toast('Video removed', 'info');
+  };
+
+  /* ── Open video popup ── */
+  window.vsOpenVideo = function(id) {
+    var v = VS.videos.find(function(x){ return x.id === id; });
+    if (!v) return;
+
+    var modal = document.getElementById('vs-modal');
+    var gate  = document.getElementById('vs-ad-gate');
+    var iframe = document.getElementById('vs-iframe');
+    var titleEl = document.getElementById('vs-modal-title');
+    var srcEl   = document.getElementById('vs-modal-src');
+    var wrap    = document.getElementById('vs-iframe-wrap');
+
+    if (!modal) return;
+
+    VS.currentUrl   = v.url;
+    VS.currentTitle = v.title;
+
+    if (titleEl) titleEl.textContent = v.title;
+    if (srcEl) srcEl.textContent = v.url.length > 55 ? v.url.slice(0,52)+'…' : v.url;
+
+    /* Set up iframe */
+    if (iframe) {
+      if (v.direct) {
+        if (wrap) { wrap.className = 'vs-iframe-wrap vs-iframe-direct'; }
+        iframe.src = '';
+        /* Use a video tag inside iframe via srcdoc for direct files */
+        iframe.srcdoc = '<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100dvh">'
+          + '<video src="'+vsEsc(v.url)+'" controls autoplay style="width:100%;max-height:100%;outline:none"></video>'
+          + '</body></html>';
+      } else {
+        if (wrap) { wrap.className = 'vs-iframe-wrap'; }
+        iframe.removeAttribute('srcdoc');
+        iframe.src = '';
+      }
+    }
+
+    /* Show modal */
+    modal.classList.add('vs-modal-open');
+    document.body.style.overflow = 'hidden';
+
+    if (VS.vip) {
+      /* VIP — skip ad, play immediately */
+      if (gate) gate.className = 'vs-ad-gate vs-ad-done';
+      if (iframe && !v.direct) iframe.src = v.embedUrl;
+    } else {
+      /* Free — show ad countdown */
+      if (gate) gate.className = 'vs-ad-gate';
+      vsRunAdTimer(v, iframe);
+    }
+
+    if(window.SFX) SFX.play('click');
+  };
+
+  /* ── Ad countdown timer ── */
+  function vsRunAdTimer(v, iframe) {
+    var AD_SECS = 5;
+    var remaining = AD_SECS;
+    var fillEl  = document.getElementById('vs-ar-fill');
+    var numEl   = document.getElementById('vs-ar-num');
+    var gate    = document.getElementById('vs-ad-gate');
+    var circumference = 2 * Math.PI * 40; /* r=40 */
+
+    if (numEl) numEl.textContent = remaining;
+    if (fillEl) fillEl.style.strokeDashoffset = circumference;
+
+    clearInterval(VS.adTimer);
+    VS.adTimer = setInterval(function(){
+      remaining--;
+      if (numEl) numEl.textContent = remaining;
+      var pct = 1 - (remaining / AD_SECS);
+      if (fillEl) fillEl.style.strokeDashoffset = circumference * (1 - pct);
+
+      if (remaining <= 0) {
+        clearInterval(VS.adTimer);
+        if (gate) gate.className = 'vs-ad-gate vs-ad-done';
+        if (iframe && !v.direct) iframe.src = v.embedUrl;
+      }
+    }, 1000);
+  }
+
+  /* ── Close modal ── */
+  window.vsCloseModal = function() {
+    var modal  = document.getElementById('vs-modal');
+    var iframe = document.getElementById('vs-iframe');
+    var gate   = document.getElementById('vs-ad-gate');
+    clearInterval(VS.adTimer);
+    if (modal) modal.classList.remove('vs-modal-open');
+    if (iframe) { iframe.src = ''; iframe.removeAttribute('srcdoc'); }
+    if (gate)  gate.className = 'vs-ad-gate';
+    document.body.style.overflow = '';
+  };
+
+  /* Click outside modal box to close */
+  window.vsModalOutsideClick = function(e) {
+    if (e.target && e.target.id === 'vs-modal') vsCloseModal();
+  };
+
+  /* Open in new tab */
+  window.vsOpenExternal = function() {
+    if (VS.currentUrl) window.open(VS.currentUrl, '_blank', 'noopener');
+  };
+
+  /* ── VIP toggle ── */
+  window.vsToggleVip = function(on) {
+    VS.vip = on;
+    var lbl = document.getElementById('vs-vip-lbl');
+    if (lbl) lbl.textContent = on ? 'VIP Active' : 'Free';
+    if (on && window.toast) toast('⭐ VIP Mode ON — ads skipped!', 'success');
+    else if (!on && window.toast) toast('VIP Mode off', 'info');
+  };
+
+  /* ── Escape HTML ── */
+  function vsEsc(s) {
+    var d = document.createElement('div'); d.textContent = s||''; return d.innerHTML;
+  }
+
+  /* ── Keyboard: Escape to close ── */
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      var m = document.getElementById('vs-modal');
+      if (m && m.classList.contains('vs-modal-open')) vsCloseModal();
+    }
+  });
+
+  /* ── Init ── */
+  vsLoad();
+  document.addEventListener('DOMContentLoaded', function(){ vsRender(); });
+  /* Also render immediately in case DOM is already ready */
+  if (document.readyState !== 'loading') vsRender();
+
+})();
+</script>
 
 </body>
 </html>
