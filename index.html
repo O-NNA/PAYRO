@@ -3194,12 +3194,8 @@ html { scroll-behavior: smooth }
 /* handled by JS — sections hidden on DOMContentLoaded */
 
 
-/* ── Hide left sidebar in tab mode (bnav handles navigation) ── */
-.lsb,.lsb-mob-ov{display:none!important}
 /* ── Hide stake top banner (vertical space wasted) ── */
 .stake-top-banner{display:none!important}
-/* ── Hide old drawer toggle from navbar (not needed) ── */
-.hbg{display:none!important}
 /* ── Make navbar more compact ── */
 .navbar{height:52px!important;padding:0 14px!important}
 /* ── Hide drw overlay and drawer ── */
@@ -3207,6 +3203,363 @@ html { scroll-behavior: smooth }
 /* ── Ensure geo-pill visible in compact navbar ── */
 .geo-pill{font-size:11px!important}
 
+/* ════════════════════════════════════════
+   UI UPGRADE PATCH — Sidebar + Cleanup
+════════════════════════════════════════ */
+
+/* 1. ENABLE HAMBURGER */
+.hbg{display:flex!important;flex-direction:column;gap:4px;width:36px;height:36px;align-items:center;justify-content:center;border-radius:8px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.18)!important;transition:all .2s ease!important}
+.hbg span{display:block!important;width:18px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s ease}
+.hbg.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hbg.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* 2. ENABLE LEFT SIDEBAR */
+.lsb{
+  display:flex!important;
+  flex-direction:column;
+  position:fixed;
+  top:0;left:0;
+  width:260px;
+  height:100%;
+  background:rgba(8,11,24,0.97);
+  backdrop-filter:blur(32px) saturate(1.8);
+  -webkit-backdrop-filter:blur(32px) saturate(1.8);
+  border-right:1px solid rgba(245,166,35,.12);
+  z-index:950;
+  overflow-y:auto;
+  overflow-x:hidden;
+  transform:translateX(-100%);
+  transition:transform .32s cubic-bezier(0.34,1.2,0.64,1), box-shadow .32s ease;
+  box-shadow:none;
+}
+.lsb.lsb-open{
+  transform:translateX(0)!important;
+  box-shadow:8px 0 60px rgba(0,0,0,.85),2px 0 0 rgba(245,166,35,.08)!important;
+}
+.lsb-mob-ov{
+  display:block!important;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  z-index:940;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .28s ease;
+}
+.lsb-mob-ov.open{opacity:1!important;pointer-events:all!important}
+
+/* 3. HIDE SMALL DUPLICATE BALANCES FROM NAVBAR */
+.pcoin-nav-pill{display:none!important}
+#nav-bal{display:none!important}
+
+/* 4. HIDE CROWDED STATS BOXES FROM HOME */
+.v3-stats-row{display:none!important}
+
+/* 5. HIDE BIG DAILY CALENDAR, SHOW COMPACT CARD */
+#daily-bonus-card{display:none!important}
+#compact-daily-bonus{display:block!important}
+
+/* 6. COMPACT DAILY BONUS CARD STYLES */
+.cdb-wrap{
+  margin-bottom:14px;
+  border-radius:var(--r-md);
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(245,166,35,.05));
+  border:1px solid rgba(139,92,246,.22);
+  box-shadow:0 4px 20px rgba(139,92,246,.1);
+}
+.cdb-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:14px 16px;
+}
+.cdb-left{display:flex;align-items:center;gap:12px;min-width:0}
+.cdb-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(139,92,246,.08));
+  border:1px solid rgba(139,92,246,.3);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--violet);flex-shrink:0;
+  box-shadow:0 0 14px rgba(139,92,246,.2);
+}
+.cdb-label{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;margin-bottom:2px}
+.cdb-day{font-family:var(--f-display);font-size:19px;font-weight:700;color:var(--txt);line-height:1.1}
+.cdb-sub{font-size:10px;color:var(--gold);margin-top:1px;font-weight:600}
+.cdb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.cdb-timer-lbl{font-size:10px;color:var(--txt3);font-family:var(--f-mono);text-align:right}
+.cdb-btn{
+  padding:9px 18px;
+  border-radius:var(--r-sm);
+  background:linear-gradient(135deg,#7c3aed,#4c1d95);
+  color:#fff;font-size:12px;font-weight:700;
+  letter-spacing:.05em;border:none;cursor:pointer;
+  box-shadow:0 4px 14px rgba(139,92,246,.4);
+  transition:all .2s var(--ease);
+  white-space:nowrap;
+}
+.cdb-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(139,92,246,.55)}
+.cdb-btn:disabled{opacity:.4;pointer-events:none}
+.cdb-progress{height:3px;background:rgba(255,255,255,.05)}
+.cdb-progress-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--gold));border-radius:99px;transition:width .4s ease}
+
+/* 7. TASKS 2-COLUMN GRID OVERRIDE */
+.task-grid{grid-template-columns:1fr 1fr!important}
+@media(max-width:480px){.task-grid{grid-template-columns:1fr!important}}
+.v3-task-grid{grid-template-columns:1fr 1fr!important}
+@media(max-width:480px){.v3-task-grid{grid-template-columns:1fr!important}}
+
+/* 8. SIDEBAR DAILY BONUS ITEM PULSE */
+.lsb-item-daily{animation:lsbDailyPulse 3s ease-in-out infinite}
+@keyframes lsbDailyPulse{0%,100%{box-shadow:-2px 0 0 transparent}50%{box-shadow:-2px 0 12px rgba(139,92,246,.4)}}
+
+/* 9. ENSURE MIDDLE CONTENT SCROLLS PROPERLY */
+.spa-section{overflow-y:auto!important;overflow-x:hidden!important}
+
+/* 10. FIXED LAYOUT SHELL */
+.wrap{position:fixed!important;inset:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;z-index:1!important}
+.main{flex:1!important;overflow:hidden!important;min-height:0!important}
+
+/* ═══════════════════════════════════════════
+   UI v2 — FLOATING WIDGET REMOVAL
+═══════════════════════════════════════════ */
+#rsw-tab        { display:none !important; }
+#pc-live-panel  { display:none !important; pointer-events:none !important; }
+
+/* ═══════════════════════════════════════════
+   NEW: SPIN WHEEL SECTION
+═══════════════════════════════════════════ */
+#spin-wheel-section{
+  display:none;padding:0;
+  background:var(--bg);
+  position:relative;overflow-y:auto;overflow-x:hidden;
+}
+.sw-bg-layer{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.sw-bg-layer::before{content:'';position:absolute;width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-60%);background:radial-gradient(circle,rgba(0,212,255,.13) 0%,rgba(139,92,246,.07) 40%,transparent 70%);animation:swAtmos 8s ease-in-out infinite alternate}
+.sw-bg-layer::after{content:'';position:absolute;width:400px;height:400px;bottom:-100px;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(245,166,35,.09) 0%,transparent 65%);animation:swAtmos 6s ease-in-out infinite alternate-reverse}
+@keyframes swAtmos{from{opacity:.6;transform:translate(-50%,-60%) scale(1)}to{opacity:1;transform:translate(-50%,-55%) scale(1.15)}}
+.sw-grid-overlay{position:absolute;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(0,212,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.022) 1px,transparent 1px);background-size:40px 40px}
+.sw-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:16px 16px 110px;min-height:100%}
+.sw-back-btn{align-self:flex-start;display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--r-sm);background:rgba(255,255,255,.04);border:1px solid var(--bdr2);font-size:12px;font-weight:600;color:var(--txt2);transition:all .2s;cursor:pointer;margin-bottom:14px}
+.sw-back-btn:hover{background:rgba(255,255,255,.08);color:var(--txt)}
+.sw-title-row{text-align:center;margin-bottom:12px}
+.sw-eyebrow{font-size:9px;font-weight:800;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase;margin-bottom:6px;text-shadow:0 0 12px rgba(0,212,255,.6)}
+.sw-title{font-family:var(--f-display);font-size:clamp(22px,5vw,30px);font-weight:700;letter-spacing:.04em;background:linear-gradient(135deg,var(--gold),var(--gold2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 16px rgba(245,166,35,.4))}
+.sw-sub{font-size:12px;color:var(--txt3);margin-top:4px}
+.sw-spins-badge{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 20px;border-radius:99px;background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.22);font-size:13px;font-weight:700;color:var(--gold);box-shadow:0 0 20px rgba(245,166,35,.1)}
+.sw-spins-badge span{font-family:var(--f-mono);font-size:20px;color:var(--gold2);line-height:1}
+
+/* Wheel stage */
+.sw-wheel-stage{position:relative;width:clamp(260px,72vw,360px);height:clamp(260px,72vw,360px);margin:8px auto 20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sw-ring-outer{position:absolute;inset:-18px;border-radius:50%;background:conic-gradient(var(--cyan) 0deg,var(--gold) 60deg,var(--violet) 120deg,var(--green) 180deg,var(--red) 240deg,var(--cyan) 300deg,var(--cyan) 360deg);animation:swRingRotate 8s linear infinite;opacity:.5;filter:blur(8px);will-change:transform}
+@keyframes swRingRotate{to{transform:rotate(360deg)}}
+.sw-ring-glow{position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.22) 0%,rgba(245,166,35,.1) 50%,transparent 70%);animation:swGlowPulse 3s ease-in-out infinite}
+@keyframes swGlowPulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+.sw-ring-ticks{position:absolute;inset:-3px;border-radius:50%;border:1.5px solid rgba(0,212,255,.2);box-shadow:0 0 22px rgba(0,212,255,.18),inset 0 0 22px rgba(0,212,255,.06)}
+.sw-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:22px solid var(--gold);filter:drop-shadow(0 0 10px var(--gold));z-index:10;animation:swPointerBob 2s ease-in-out infinite}
+@keyframes swPointerBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-4px)}}
+.sw-canvas-wrap{position:relative;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px rgba(0,212,255,.3),0 0 30px rgba(0,212,255,.2),0 0 70px rgba(245,166,35,.12),0 0 0 7px rgba(255,255,255,.04),0 24px 70px rgba(0,0,0,.75);z-index:2}
+#sw-mirror-canvas{display:block;border-radius:50%;width:clamp(240px,68vw,340px);height:clamp(240px,68vw,340px)}
+
+/* Watch video card */
+.sw-watch-card{width:100%;max-width:400px;border-radius:var(--r-md);background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.16);padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(0,212,255,.07)}
+.sw-watch-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,rgba(0,212,255,.18),rgba(0,212,255,.04));border:1px solid rgba(0,212,255,.22);display:flex;align-items:center;justify-content:center;color:var(--cyan);flex-shrink:0}
+.sw-watch-info{flex:1;min-width:0}
+.sw-watch-lbl{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-bottom:2px}
+.sw-watch-title{font-size:13px;font-weight:700;color:var(--txt)}
+.sw-watch-sub{font-size:11px;color:var(--txt3);margin-top:1px}
+.sw-watch-btn{padding:9px 16px;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--cyan),#006688);color:#000;font-size:12px;font-weight:800;letter-spacing:.04em;border:none;cursor:pointer;flex-shrink:0;box-shadow:0 4px 16px rgba(0,212,255,.3);transition:all .2s;white-space:nowrap}
+.sw-watch-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,212,255,.48)}
+
+/* THE BIG SPIN BUTTON */
+.sw-spin-btn-wrap{width:100%;max-width:360px;margin-bottom:14px;position:relative}
+#sw-spin-btn{width:100%;padding:18px 24px;border-radius:var(--r-lg);position:relative;overflow:hidden;font-family:var(--f-display);font-size:clamp(20px,5vw,26px);font-weight:700;letter-spacing:.06em;color:#000;border:none;cursor:pointer;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 50%,#e09000 100%);box-shadow:0 0 0 1px rgba(245,166,35,.5),0 0 20px rgba(245,166,35,.4),0 0 50px rgba(245,166,35,.2),0 8px 32px rgba(0,0,0,.4);transition:all .25s var(--ease);text-shadow:0 1px 0 rgba(255,255,255,.35);animation:swBtnPulse 2.5s ease-in-out infinite}
+@keyframes swBtnPulse{0%,100%{box-shadow:0 0 0 1px rgba(245,166,35,.5),0 0 20px rgba(245,166,35,.4),0 0 50px rgba(245,166,35,.2),0 8px 32px rgba(0,0,0,.4)}50%{box-shadow:0 0 0 2px rgba(245,166,35,.7),0 0 36px rgba(245,166,35,.65),0 0 80px rgba(245,166,35,.3),0 12px 40px rgba(0,0,0,.5)}}
+#sw-spin-btn::before{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:swBtnSheen 3s ease-in-out infinite}
+@keyframes swBtnSheen{0%{left:-100%}40%,100%{left:150%}}
+#sw-spin-btn:hover:not(:disabled){transform:translateY(-3px) scale(1.02);box-shadow:0 0 0 2px rgba(245,166,35,.8),0 0 42px rgba(245,166,35,.7),0 0 90px rgba(245,166,35,.35),0 14px 50px rgba(0,0,0,.6)}
+#sw-spin-btn:active:not(:disabled){transform:scale(.98)}
+#sw-spin-btn:disabled{background:linear-gradient(135deg,rgba(245,166,35,.15),rgba(245,166,35,.08));color:rgba(255,255,255,.25);box-shadow:none;animation:none;cursor:not-allowed}
+
+/* Result flash */
+.sw-result-flash{display:none;text-align:center;padding:14px 20px;border-radius:var(--r-md);background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.22);margin-bottom:12px;width:100%;max-width:360px;animation:swResultIn .4s var(--spring) both}
+@keyframes swResultIn{from{opacity:0;transform:scale(.85) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.sw-result-amt{font-family:var(--f-display);font-size:28px;font-weight:700;color:var(--green);text-shadow:0 0 18px rgba(34,197,94,.5)}
+.sw-result-lbl{font-size:12px;color:var(--txt3);margin-top:2px}
+
+/* Wheel stats row */
+.sw-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:400px;margin-bottom:14px}
+.sw-stat{text-align:center;padding:10px 8px;background:rgba(255,255,255,.03);border:1px solid var(--bdr2);border-radius:var(--r-md)}
+.sw-stat-val{font-family:var(--f-mono);font-size:16px;font-weight:700;color:var(--gold)}
+.sw-stat-lbl{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+/* ═══════════════════════════════════════════
+   NEW: DEDICATED FAUCET SECTION
+═══════════════════════════════════════════ */
+#faucet-section{display:none;padding:0;min-height:100%;overflow-y:auto;overflow-x:hidden}
+.fs-inner{padding:16px 16px 110px;display:flex;flex-direction:column;align-items:center}
+.fs-back-btn{align-self:flex-start;margin-bottom:16px;display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--r-sm);background:rgba(255,255,255,.04);border:1px solid var(--bdr2);font-size:12px;font-weight:600;color:var(--txt2);transition:all .2s;cursor:pointer}
+.fs-back-btn:hover{background:rgba(255,255,255,.08);color:var(--txt)}
+.fs-hero{width:100%;max-width:440px;text-align:center;margin-bottom:20px}
+.fs-hero-icon{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.18),rgba(0,212,255,.04));border:1.5px solid rgba(0,212,255,.28);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:28px;box-shadow:0 0 32px rgba(0,212,255,.2),0 0 60px rgba(0,212,255,.08);animation:fsPulse 3s ease-in-out infinite}
+@keyframes fsPulse{0%,100%{box-shadow:0 0 32px rgba(0,212,255,.2)}50%{box-shadow:0 0 52px rgba(0,212,255,.45),0 0 80px rgba(0,212,255,.12)}}
+.fs-hero-title{font-family:var(--f-display);font-size:26px;font-weight:700;letter-spacing:.04em;background:linear-gradient(90deg,var(--cyan),#00ffcc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fs-hero-sub{font-size:13px;color:var(--txt2);margin-top:4px}
+.fs-card{width:100%;max-width:440px;border-radius:var(--r-lg);background:var(--glass);border:1px solid rgba(0,212,255,.14);overflow:hidden;box-shadow:0 0 40px rgba(0,212,255,.07),var(--card-sh)}
+
+/* ═══════════════════════════════════════════════════════
+   GLOBAL VIDEO HUB — Public Submit Bar + Watch & Earn
+═══════════════════════════════════════════════════════ */
+.gvh-submit-bar{
+  margin:0 14px 14px;
+  border-radius:var(--r-md);
+  background:rgba(0,212,255,.04);
+  border:1px solid rgba(0,212,255,.18);
+  padding:12px 14px;
+  box-shadow:0 4px 20px rgba(0,212,255,.06);
+}
+.gvh-submit-inner{
+  display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;
+}
+.gvh-submit-icon{
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cyan);flex-shrink:0;
+}
+.gvh-submit-fields{
+  flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;
+}
+.gvh-url-input,.gvh-title-input{
+  width:100%;background:var(--bg3);border:1px solid var(--bdr2);border-radius:7px;
+  padding:8px 12px;font-size:12px;color:var(--txt);outline:none;
+  transition:border-color .2s;
+}
+.gvh-url-input:focus,.gvh-title-input:focus{
+  border-color:rgba(0,212,255,.4);
+  box-shadow:0 0 0 3px rgba(0,212,255,.06);
+}
+.gvh-add-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:10px 18px;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,var(--cyan),#006688);
+  color:#000;font-size:12px;font-weight:800;letter-spacing:.04em;
+  border:none;cursor:pointer;flex-shrink:0;
+  box-shadow:0 4px 16px rgba(0,212,255,.3);
+  transition:all .2s var(--ease);
+}
+.gvh-add-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,212,255,.48)}
+.gvh-submit-status{
+  font-size:11px;margin-top:6px;min-height:14px;
+  color:var(--txt3);transition:color .2s;
+}
+.gvh-submit-status.ok{color:var(--green)}
+.gvh-submit-status.err{color:#ef4444}
+
+/* Watch & Earn 30s progress bar — injected into player footer */
+.gvh-watch-bar{
+  position:relative;
+  height:28px;
+  background:rgba(0,0,0,.3);
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;
+  overflow:hidden;
+}
+.gvh-watch-fill{
+  position:absolute;left:0;top:0;bottom:0;width:0%;
+  background:linear-gradient(90deg,rgba(0,212,255,.3),rgba(34,197,94,.35));
+  transition:width .5s linear;
+}
+.gvh-watch-lbl{
+  position:relative;z-index:1;
+  padding:0 12px;
+  font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--txt2);
+  white-space:nowrap;
+}
+.gvh-watch-earn{
+  position:relative;z-index:1;
+  margin-left:auto;padding-right:12px;
+  font-size:10px;color:var(--cyan);font-weight:700;
+}
+
+/* Reward popup */
+.gvh-reward-overlay{
+  position:fixed;inset:0;z-index:20000;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  animation:gvhFadeIn .3s ease both;
+}
+@keyframes gvhFadeIn{from{opacity:0}to{opacity:1}}
+.gvh-reward-box{
+  background:var(--bg2);
+  border:1px solid rgba(34,197,94,.3);
+  border-radius:20px;
+  padding:28px 24px;
+  text-align:center;
+  max-width:300px;width:90%;
+  box-shadow:0 0 60px rgba(34,197,94,.2);
+  animation:gvhBounce .5s var(--spring) both;
+}
+@keyframes gvhBounce{from{transform:scale(.7) translateY(30px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.gvh-reward-anim{font-size:48px;margin-bottom:10px;animation:gvhSpin 1s ease both}
+@keyframes gvhSpin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+.gvh-reward-title{
+  font-family:var(--f-display);font-size:26px;font-weight:700;
+  color:var(--green);text-shadow:0 0 20px rgba(34,197,94,.5);
+  margin-bottom:6px;
+}
+.gvh-reward-sub{font-size:12px;color:var(--txt2);margin-bottom:16px}
+.gvh-reward-close{
+  padding:10px 24px;border-radius:var(--r-md);
+  background:linear-gradient(135deg,var(--green),#166534);
+  color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TRADING — Larger pulsing UP / DOWN buttons
+═══════════════════════════════════════════════════════ */
+.pt-btn-up,.pt-btn-down{
+  padding:22px 10px !important;
+  border-radius:14px !important;
+  font-size:15px !important;
+}
+.pt-dir-label{font-size:26px !important;font-weight:900 !important;}
+.pt-dir-sub{font-size:11px !important}
+.pt-btn-up:not(:disabled){
+  animation:ptPulseUp 2s ease-in-out infinite !important;
+}
+.pt-btn-down:not(:disabled){
+  animation:ptPulseDown 2s ease-in-out infinite !important;
+}
+@keyframes ptPulseUp{
+  0%,100%{box-shadow:0 6px 28px rgba(0,200,122,.4),0 0 50px rgba(0,240,160,.1)}
+  50%{box-shadow:0 10px 40px rgba(0,200,122,.7),0 0 70px rgba(0,240,160,.25),0 0 0 4px rgba(0,200,122,.15)}
+}
+@keyframes ptPulseDown{
+  0%,100%{box-shadow:0 6px 28px rgba(229,34,72,.4),0 0 50px rgba(255,61,96,.1)}
+  50%{box-shadow:0 10px 40px rgba(229,34,72,.7),0 0 70px rgba(255,61,96,.25),0 0 0 4px rgba(229,34,72,.15)}
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPIN WHEEL — Standalone full-screen canvas (no mirror)
+═══════════════════════════════════════════════════════ */
+#sw-canvas{
+  display:block;
+  border-radius:50%;
+  width:clamp(260px,74vw,380px);
+  height:clamp(260px,74vw,380px);
+  box-shadow:
+    0 0 0 4px rgba(0,212,255,.25),
+    0 0 30px rgba(0,212,255,.2),
+    0 0 80px rgba(245,166,35,.15),
+    0 0 0 8px rgba(255,255,255,.04),
+    0 28px 80px rgba(0,0,0,.8);
+  position:relative;z-index:2;
+}
 
 /* ── OFFERWALL NETWORK GRID ─────────────────────────────────── */
 .ow-header{
@@ -6141,12 +6494,19 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 
   <!-- ─ Games ─ -->
   <div class="lsb-sec">Games</div>
-  <div class="lsb-item" onclick="bnavGo('home-section','bnav-home');closeLsb()" tabindex="0" role="button" aria-label="Lucky Spin">
+  <div class="lsb-item" onclick="goSpinSection();closeLsb()" tabindex="0" role="button" aria-label="Lucky Spin">
     <div class="lsb-ic" style="color:var(--gold)">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
     </div>
     Lucky Spin Wheel
     <span class="lsb-badge hot">Live</span>
+  </div>
+  <div class="lsb-item" onclick="goSpinSection();closeLsb()" tabindex="0" role="button" aria-label="Reward Spin">
+    <div class="lsb-ic" style="color:var(--cyan)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    </div>
+    Reward Spin (Watch)
+    <span class="lsb-badge" style="background:rgba(0,212,255,.1);color:var(--cyan);border-color:rgba(0,212,255,.2)">+Spins</span>
   </div>
   <div class="lsb-item" onclick="switchGameTab('mines');scrollToId('sec-games-hub');closeLsb()" tabindex="0" role="button" aria-label="Mines">
     <div class="lsb-ic" style="color:var(--red)">
@@ -6174,12 +6534,19 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
     Code Vault
     <span class="lsb-badge new-b">New</span>
   </div>
-  <div class="lsb-item" onclick="bnavGo('tasks-section','bnav-tasks');closeLsb()" tabindex="0" role="button" aria-label="Faucet">
+  <div class="lsb-item" onclick="goFaucetSection();closeLsb()" tabindex="0" role="button" aria-label="Faucet">
     <div class="lsb-ic" style="color:var(--cyan)">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg>
     </div>
-    Faucet Protocol
+    Claim Faucet
     <span class="lsb-badge live">Live</span>
+  </div>
+  <div class="lsb-item lsb-item-daily" onclick="claimDailyBonus();closeLsb()" tabindex="0" role="button" aria-label="Daily Bonus">
+    <div class="lsb-ic" style="color:var(--violet)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </div>
+    Daily Bonus
+    <span class="lsb-badge" style="background:rgba(139,92,246,.12);color:var(--violet);border-color:rgba(139,92,246,.2)" id="lsb-daily-badge">Claim</span>
   </div>
 
   <div class="lsb-divider"></div>
@@ -6541,8 +6908,8 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         </div>
       </div>
 
-      <!-- DAILY BONUS CALENDAR -->
-      <div class="tp-card tp-card-pad" style="margin-bottom:14px" id="daily-bonus-card">
+      <!-- DAILY BONUS CALENDAR (hidden, logic preserved) -->
+      <div class="tp-card tp-card-pad" style="margin-bottom:14px;display:none" id="daily-bonus-card">
         <div class="tp-sec-hdr" style="margin-bottom:12px">
           <div class="tp-sec-icon" style="background:rgba(139,92,246,.12);color:var(--violet)">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -6560,6 +6927,31 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
             <span>Streak Multiplier: <strong id="dbc-multiplier" style="color:var(--gold)">1.0x</strong></span>
           </div>
           <div class="dbc-next-info">Next claim in: <span id="dbc-timer" style="font-family:var(--f-mono);color:var(--cyan)">—</span></div>
+        </div>
+      </div>
+
+      <!-- ═══ COMPACT DAILY REWARD CARD ═══ -->
+      <div id="compact-daily-bonus" style="margin-bottom:14px">
+        <div class="cdb-wrap">
+          <div class="cdb-inner">
+            <div class="cdb-left">
+              <div class="cdb-icon">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div>
+                <div class="cdb-label">Daily Reward</div>
+                <div class="cdb-day" id="cdb-day-display">Day 1</div>
+                <div class="cdb-sub" id="cdb-streak-display">🔥 Streak: 1x Multiplier</div>
+              </div>
+            </div>
+            <div class="cdb-right">
+              <div class="cdb-timer-lbl" id="cdb-next-timer" style="display:none">Next in <span id="cdb-countdown-val" style="color:var(--cyan);font-weight:700">—</span></div>
+              <button class="cdb-btn" id="cdb-claim-btn-compact" onclick="claimDailyBonus()">
+                🎁 Claim
+              </button>
+            </div>
+          </div>
+          <div class="cdb-progress"><div class="cdb-progress-fill" id="cdb-progress-fill" style="width:0%"></div></div>
         </div>
       </div>
 
@@ -8789,6 +9181,20 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       </div>
 
       <!-- ══ MAIN VIDEO GRID ══ -->
+      <!-- ── GLOBAL VIDEO HUB — Any user can add a video ── -->
+      <div style="padding:12px 14px 0;margin-bottom:4px">
+        <div style="background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.14);border-radius:12px;padding:14px 16px;">
+          <div style="font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--cyan);text-transform:uppercase;margin-bottom:8px">🌐 Global Video Hub — Share a Video with All Users</div>
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <input class="gvh-url-input" id="gvh-url-input" type="url" placeholder="Paste YouTube or Vimeo URL…" style="flex:1;min-width:0">
+            <button class="gvh-add-btn" id="gvh-add-btn" onclick="gvhSubmitVideo()">Add</button>
+          </div>
+          <input class="gvh-title-input" id="gvh-title-input" type="text" placeholder="Optional: custom title" style="width:100%;margin-bottom:8px">
+          <div class="gvh-submit-status" id="gvh-submit-status"></div>
+          <div style="font-size:10px;color:var(--txt3);margin-top:4px">Videos added here appear for <strong style="color:var(--cyan)">ALL users</strong> instantly · Earn <strong style="color:var(--gold)">+15 PC</strong> after 30s watch · Thumbnails auto-fetched</div>
+        </div>
+      </div>
+
       <div class="vsh-main-card">
         <div class="vsh-grid" id="vsh-main-grid">
           <!-- Cards injected by JS -->
@@ -8968,6 +9374,12 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
           <iframe id="vsh-iframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture; fullscreen"></iframe>
         </div>
         <!-- Player footer -->
+        <!-- Watch & Earn 30s bar -->
+        <div class="gvh-watch-bar" id="gvh-watch-bar">
+          <div class="gvh-watch-fill" id="gvh-watch-fill" style="width:0%"></div>
+          <div class="gvh-watch-lbl" id="gvh-watch-lbl">⏱ Watch 30s to earn pts</div>
+          <div class="gvh-watch-earn" id="gvh-watch-earn">+5 pts</div>
+        </div>
         <div class="vsh-player-ftr">
           <div class="vsh-player-src" id="vsh-player-src">—</div>
           <div style="display:flex;gap:8px">
@@ -9024,6 +9436,154 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         </div>
       </div>
     </div><!-- /vs-modal -->
+
+    <!-- ╔═══════════════════════════════════════════════════════╗
+         ║  SPIN WHEEL SECTION — Casino / Cyberpunk             ║
+         ╚═══════════════════════════════════════════════════════╝ -->
+    <div class="spa-section" id="spin-wheel-section" style="display:none">
+      <div class="sw-bg-layer"></div>
+      <div class="sw-grid-overlay"></div>
+      <div class="sw-inner">
+
+        <!-- Back button -->
+        <button class="sw-back-btn" onclick="bnavGo('home-section','bnav-home')">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Back to Home
+        </button>
+
+        <!-- Title -->
+        <div class="sw-title-row">
+          <div class="sw-eyebrow">⚡ Live Fortune Wheel</div>
+          <div class="sw-title">LUCKY SPIN</div>
+          <div class="sw-sub">Watch a video · Unlock a spin · Win P Coins instantly</div>
+        </div>
+
+        <!-- Spins available -->
+        <div class="sw-spins-badge">
+          🎰 Spins Available: <span id="sw-spins-avail">0</span>
+        </div>
+
+        <!-- THE WHEEL STAGE -->
+        <div class="sw-wheel-stage">
+          <div class="sw-ring-outer"></div>
+          <div class="sw-ring-glow"></div>
+          <div class="sw-ring-ticks"></div>
+          <div class="sw-pointer"></div>
+          <div class="sw-canvas-wrap">
+            <canvas id="sw-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Result flash -->
+        <div class="sw-result-flash" id="sw-result-flash">
+          <div class="sw-result-amt" id="sw-result-amt">+200 🪙</div>
+          <div class="sw-result-lbl">P Coins added to wallet!</div>
+        </div>
+
+        <!-- THE BIG SPIN BUTTON -->
+        <div class="sw-spin-btn-wrap">
+          <button id="sw-spin-btn" disabled onclick="swDoSpin()">
+            🎰 &nbsp;SPIN THE WHEEL
+          </button>
+        </div>
+
+        <!-- Watch Video card -->
+        <div class="sw-watch-card">
+          <div class="sw-watch-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg>
+          </div>
+          <div class="sw-watch-info">
+            <div class="sw-watch-lbl">Unlock a Spin</div>
+            <div class="sw-watch-title">Watch 5-min video</div>
+            <div class="sw-watch-sub" id="sw-watch-status-txt">Complete video to earn 1 spin token</div>
+          </div>
+          <button class="sw-watch-btn" id="sw-watch-btn-main" onclick="swWatchVideo()">Watch ▶</button>
+        </div>
+
+        <!-- Stats row -->
+        <div class="sw-stats-row">
+          <div class="sw-stat">
+            <div class="sw-stat-val" id="sw-stat-coins">0</div>
+            <div class="sw-stat-lbl">PC Earned</div>
+          </div>
+          <div class="sw-stat">
+            <div class="sw-stat-val" id="sw-stat-spins">0</div>
+            <div class="sw-stat-lbl">Total Spins</div>
+          </div>
+          <div class="sw-stat">
+            <div class="sw-stat-val" id="sw-stat-vids">0</div>
+            <div class="sw-stat-lbl">Videos</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /spin-wheel-section -->
+
+    <!-- ╔═══════════════════════════════════════════════════════╗
+         ║  DEDICATED FAUCET SECTION                            ║
+         ╚═══════════════════════════════════════════════════════╝ -->
+    <div class="spa-section" id="faucet-section" style="display:none">
+      <div class="fs-inner">
+
+        <!-- Back button -->
+        <button class="fs-back-btn" onclick="bnavGo('home-section','bnav-home')">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Back to Home
+        </button>
+
+        <!-- Hero -->
+        <div class="fs-hero">
+          <div class="fs-hero-icon">💧</div>
+          <div class="fs-hero-title">Liquidity Faucet</div>
+          <div class="fs-hero-sub">Claim free P-Coins every 5 minutes — no catch, 100% free</div>
+        </div>
+
+        <!-- Embed the existing nf faucet card directly -->
+        <div class="fs-card nf-body" style="padding:24px;text-align:center">
+
+          <!-- Coin -->
+          <div class="nf-coin-wrap" style="margin-bottom:10px">
+            <div class="nf-coin" style="width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.22),rgba(245,166,35,.04));border:1.5px solid rgba(245,166,35,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:32px;box-shadow:0 0 30px rgba(245,166,35,.2)">🪙</div>
+            <div class="nf-reward-range" style="font-family:var(--f-display);font-size:22px;font-weight:700;color:var(--gold)">0.50 – 2.00 <span style="font-size:14px;color:var(--txt3)">PYO</span></div>
+            <div class="nf-reward-sub" style="font-size:11px;color:var(--txt3);margin-top:2px">per claim · every 5 minutes</div>
+          </div>
+
+          <!-- Timer display (mirrors the real timer elements in tasks section) -->
+          <div style="background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);padding:16px;margin-bottom:14px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-bottom:6px" id="fs-timer-lbl">Next claim in</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:4px;font-family:var(--f-mono);font-size:34px;font-weight:700;color:var(--cyan);line-height:1;text-shadow:0 0 16px rgba(0,212,255,.4)">
+              <span id="fs-timer-mm">05</span><span style="animation:ldPulse 1s ease-in-out infinite">:</span><span id="fs-timer-ss">00</span>
+            </div>
+            <div style="height:4px;background:var(--bg4);border-radius:99px;margin-top:10px;overflow:hidden">
+              <div id="fs-timer-bar" style="height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:99px;width:0%;transition:width .5s linear"></div>
+            </div>
+          </div>
+
+          <!-- CLAIM BUTTON -->
+          <button style="width:100%;padding:16px;border-radius:var(--r-md);background:linear-gradient(135deg,var(--cyan),#006688);color:#000;font-family:var(--f-display);font-size:18px;font-weight:700;letter-spacing:.04em;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(0,212,255,.35);transition:all .2s;margin-bottom:14px" id="fs-claim-btn" onclick="claimFaucet()" disabled>
+            🪙 &nbsp;Claim Now
+          </button>
+
+          <!-- Stats -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:4px">
+            <div style="text-align:center;padding:10px 6px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md)">
+              <div style="font-family:var(--f-mono);font-size:15px;font-weight:700;color:var(--gold)" id="fs-stat-claims">0</div>
+              <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Today</div>
+            </div>
+            <div style="text-align:center;padding:10px 6px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md)">
+              <div style="font-family:var(--f-mono);font-size:15px;font-weight:700;color:var(--green)" id="fs-stat-total">0.00</div>
+              <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Total</div>
+            </div>
+            <div style="text-align:center;padding:10px 6px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md)">
+              <div style="font-family:var(--f-mono);font-size:15px;font-weight:700;color:var(--cyan)" id="fs-stat-rate">$0.002</div>
+              <div style="font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Per Claim</div>
+            </div>
+          </div>
+
+        </div><!-- /fs-card -->
+
+      </div>
+    </div><!-- /faucet-section -->
 
   </main><!-- /main -->
   <!-- Footer ads — hidden in tab mode -->
@@ -10937,7 +11497,7 @@ else init();
   /* Initial sync after page load */
   /* ── On load: ensure only home-section is visible ── */
   document.addEventListener('DOMContentLoaded', function(){
-    var ALL = ['home-section','tasks-section','games-section','wallet-section','referral-section','profile-section','trade-section','video-section'];
+    var ALL = ['home-section','tasks-section','games-section','wallet-section','referral-section','profile-section','trade-section','video-section','spin-wheel-section','faucet-section'];
     ALL.forEach(function(id){
       var el = document.getElementById(id);
       if(!el) return;
@@ -14214,6 +14774,19 @@ window.plinkoInit = plinkoInit;
 .pt-dir-label{font-size:22px;font-weight:900;letter-spacing:.1em;}
 .pt-dir-sub{font-size:10px;opacity:.7;letter-spacing:.04em;}
 
+/* ── PULSING GLOW on UP / DOWN buttons ── */
+.pt-btn-up{ animation: ptUpPulse 2s ease-in-out infinite; }
+.pt-btn-down{ animation: ptDownPulse 2s ease-in-out infinite; }
+@keyframes ptUpPulse{
+  0%,100%{ box-shadow:0 6px 28px rgba(0,200,122,.4),0 0 50px rgba(0,240,160,.1); }
+  50%{ box-shadow:0 8px 40px rgba(0,200,122,.72),0 0 80px rgba(0,240,160,.28),0 0 0 4px rgba(0,200,122,.18); }
+}
+@keyframes ptDownPulse{
+  0%,100%{ box-shadow:0 6px 28px rgba(229,34,72,.4),0 0 50px rgba(255,61,96,.1); }
+  50%{ box-shadow:0 8px 40px rgba(229,34,72,.72),0 0 80px rgba(255,61,96,.28),0 0 0 4px rgba(229,34,72,.18); }
+}
+.pt-btn-up:disabled,.pt-btn-down:disabled{ animation:none; }
+
 /* ─── Active trade panel ─── */
 .pt-active-panel{
   background:rgba(0,0,0,.32);
@@ -15101,7 +15674,12 @@ function ptSyncBal(){
     el.style.animation='none';void el.offsetWidth;
     el.style.animation='ptBalFlash .5s ease';
   }
-  /* Also sync nav-bal (hidden, but JS may check it) */
+  /* ── Sync HEADER balance (ph-bal-val) instantly ── */
+  var phVal  = document.getElementById('ph-bal-val');
+  var phFiat = document.getElementById('ph-bal-fiat-hdr');
+  if(phVal){ phVal.textContent='$'+bal.toFixed(5); phVal.style.animation='none';void phVal.offsetWidth;phVal.style.animation='ptBalFlash .4s ease'; }
+  /* Also sync wc elements for full wallet consistency */
+  if(window.syncBalanceDisplays) syncBalanceDisplays();
   var nb=document.getElementById('nav-bal');
   if(nb) nb.textContent='$'+bal.toFixed(2);
 }
@@ -20915,8 +21493,677 @@ if(document.readyState === 'loading') {
   setTimeout(rswInit, 400);
 }
 
-})(); // end RSW IIFE
+/* ── COMPACT DAILY BONUS CARD — sync with existing claimDailyBonus state ── */
+(function(){
+  function syncCDB(){
+    var dayEl     = document.getElementById('cdb-day-display');
+    var streakEl  = document.getElementById('cdb-streak-display');
+    var btnEl     = document.getElementById('cdb-claim-btn-compact');
+    var timerEl   = document.getElementById('cdb-next-timer');
+    var cdVal     = document.getElementById('cdb-countdown-val');
+    var progEl    = document.getElementById('cdb-progress-fill');
+    var lsbBadge  = document.getElementById('lsb-daily-badge');
+
+    /* Pull state from existing dbc elements (populated by original JS) */
+    var dbcMultEl = document.getElementById('dbc-multiplier');
+    var dbcTimer  = document.getElementById('dbc-timer');
+    var dbcBtn    = document.getElementById('dbc-claim-btn');
+
+    /* Day counter — count claimed dots */
+    var dots = document.querySelectorAll('.dbc-day.dbc-claimed,.dbc-d.dbc-d-claimed,.dbc-dot.claimed');
+    var dayNum = Math.max(1, dots.length || 1);
+    if(dayEl) dayEl.textContent = 'Day ' + dayNum;
+
+    /* Streak multiplier */
+    var mult = dbcMultEl ? dbcMultEl.textContent : '1.0x';
+    if(streakEl) streakEl.textContent = '🔥 Streak: ' + mult + ' Multiplier';
+
+    /* Cooldown timer */
+    var timerTxt = dbcTimer ? dbcTimer.textContent.trim() : '';
+    var hasCooldown = timerTxt && timerTxt !== '—' && timerTxt.length > 1;
+
+    if(hasCooldown){
+      if(btnEl){ btnEl.disabled = true; btnEl.textContent = '⏳ Claimed'; }
+      if(timerEl){ timerEl.style.display = 'block'; }
+      if(cdVal){ cdVal.textContent = timerTxt; }
+      if(lsbBadge){ lsbBadge.textContent = timerTxt; }
+      /* Progress fill based on timer (rough: 24h cycle) */
+      if(progEl){
+        var parts = timerTxt.split(':');
+        var secs  = parts.length >= 3
+          ? (+parts[0])*3600 + (+parts[1])*60 + (+parts[2])
+          : (+parts[0])*60 + (+parts[1]||0);
+        var pct = Math.max(0, Math.min(100, 100 - (secs / 86400 * 100)));
+        progEl.style.width = pct + '%';
+      }
+    } else {
+      if(btnEl){ btnEl.disabled = false; btnEl.textContent = '🎁 Claim'; }
+      if(timerEl){ timerEl.style.display = 'none'; }
+      if(lsbBadge){ lsbBadge.textContent = 'Claim'; }
+      if(progEl) progEl.style.width = '0%';
+    }
+
+    /* Sidebar balance sync */
+    var lsbBalEl = document.getElementById('lsb-bal-val');
+    var mainBal  = document.getElementById('ph-bal-val');
+    if(lsbBalEl && mainBal) lsbBalEl.textContent = mainBal.textContent;
+  }
+
+  /* Run immediately and every 5s */
+  setTimeout(syncCDB, 1200);
+  setInterval(syncCDB, 5000);
+
+  /* Also run after any claim attempt */
+  var origClaim = window.claimDailyBonus;
+  if(typeof origClaim === 'function'){
+    window.claimDailyBonus = function(){
+      origClaim.apply(this, arguments);
+      setTimeout(syncCDB, 800);
+    };
+  }
+})();
 </script>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   PAYRO UI v3 — MASTER UPGRADE PATCH
+   1. Global Video Hub (JSONBin shared DB + thumbnails + Watch&Earn)
+   2. Floating widget final kill
+   3. Standalone casino spin wheel canvas
+   4. Trading UP/DOWN pulse + instant balance sync
+   5. Sidebar auto-close
+════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════════════
+   1. GLOBAL VIDEO HUB — JSONBin.io shared storage
+   Free public bin — all users read/write same list
+═══════════════════════════════════════════════ */
+var GVH_BIN_ID  = 'payro_gvh_v1';   // localStorage cache key
+var GVH_POLL_MS = 30000;             // refresh from cloud every 30s
+var _gvhPollerActive = false;
+var _gvhWatchTimer   = null;
+var _gvhWatchSec     = 0;
+var _gvhWatchTarget  = 30;
+var _gvhWatchVid     = null;
+
+/* ─────────────────────────────────────────────────────────────
+   🌐 GLOBAL VIDEO STORAGE — JSONBin.io (free)
+   HOW TO ACTIVATE (2 minutes, 100% free):
+     1. Go to https://jsonbin.io  →  Sign Up Free
+     2. Click "Create Bin" → paste  []  → Save
+     3. Copy the BIN ID from the URL bar
+     4. Go to API Keys → copy your Master Key
+     5. Paste both below and save this file
+   Until configured: videos save locally per device only.
+──────────────────────────────────────────────────────────────- */
+var GVH_JSONBIN_KEY = '';   // ← Your Master Key e.g. '$2a$10$abc...'
+var GVH_JSONBIN_BIN = '';   // ← Your BIN ID     e.g. '6700abcdef123'
+
+/* ── Storage: JSONBin when keys set, localStorage as fallback/cache ── */
+async function gvhLoad(){
+  // Try JSONBin first
+  if(GVH_JSONBIN_KEY && GVH_JSONBIN_BIN){
+    try{
+      var r = await fetch('https://api.jsonbin.io/v3/b/'+GVH_JSONBIN_BIN+'/latest',{
+        headers:{'X-Master-Key':GVH_JSONBIN_KEY,'X-Bin-Meta':'false'},
+        cache:'no-store'
+      });
+      var d = await r.json();
+      var arr = Array.isArray(d) ? d : (Array.isArray((d||{}).record) ? d.record : null);
+      if(arr){ try{ localStorage.setItem(GVH_BIN_ID, JSON.stringify(arr)); }catch(e){} return arr; }
+    }catch(e){}
+  }
+  // localStorage fallback
+  try{ var d2=JSON.parse(localStorage.getItem(GVH_BIN_ID)||'[]'); return Array.isArray(d2)?d2:[]; }catch(e){ return []; }
+}
+async function gvhSave(videos){
+  // Always write to localStorage immediately
+  try{ localStorage.setItem(GVH_BIN_ID, JSON.stringify(videos)); }catch(e){}
+  // Then push to JSONBin if configured
+  if(GVH_JSONBIN_KEY && GVH_JSONBIN_BIN){
+    try{
+      await fetch('https://api.jsonbin.io/v3/b/'+GVH_JSONBIN_BIN,{
+        method:'PUT',
+        headers:{'Content-Type':'application/json','X-Master-Key':GVH_JSONBIN_KEY},
+        body:JSON.stringify(videos)
+      });
+    }catch(e){}
+  }
+}
+
+/* ── Thumbnail helper ── */
+function gvhThumb(url){
+  var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if(yt) return 'https://img.youtube.com/vi/'+yt[1]+'/hqdefault.jpg';
+  return '';
+}
+function gvhYtId(url){
+  var m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function gvhEmbedUrl(url){
+  var ytId = gvhYtId(url);
+  if(ytId) return 'https://www.youtube.com/embed/'+ytId+'?autoplay=1&rel=0&modestbranding=1';
+  var vi = url.match(/vimeo\.com\/(\d+)/);
+  if(vi)   return 'https://player.vimeo.com/video/'+vi[1]+'?autoplay=1';
+  return url;
+}
+
+/* ── Submit a new video (any user) ── */
+window.gvhSubmitVideo = async function(){
+  var urlEl   = document.getElementById('gvh-url-input');
+  var titleEl = document.getElementById('gvh-title-input');
+  var status  = document.getElementById('gvh-submit-status');
+  var btn     = document.getElementById('gvh-add-btn');
+  var url     = (urlEl ? urlEl.value.trim() : '');
+  if(!url){ _gvhStatus('Paste a YouTube or Vimeo link first','err'); return; }
+  if(!/^https?:\/\//i.test(url)) url = 'https://'+url;
+
+  btn && (btn.disabled = true);
+  _gvhStatus('Saving globally…','');
+
+  var videos = await gvhLoad();
+  var ytId   = gvhYtId(url);
+  var title  = (titleEl ? titleEl.value.trim() : '') || (ytId ? '' : url.split('/').pop().split('?')[0]) || 'Video';
+
+  // Deduplicate by URL
+  if(videos.find(function(v){ return v.url === url; })){
+    _gvhStatus('This video is already in the global list!','err');
+    btn && (btn.disabled = false);
+    return;
+  }
+
+  var vid = {
+    id:      'gvh_'+Date.now(),
+    url:     url,
+    title:   title,
+    thumb:   gvhThumb(url),
+    ytId:    ytId||null,
+    pts:     5,
+    addedAt: Date.now()
+  };
+
+  // If YouTube: try to get title from noembed API
+  if(ytId){
+    try{
+      var r = await fetch('https://noembed.com/embed?url='+encodeURIComponent(url));
+      var d = await r.json();
+      if(d && d.title) vid.title = d.title;
+    }catch(e){}
+  }
+
+  videos.unshift(vid);
+  if(videos.length > 200) videos = videos.slice(0,200); // cap at 200 global videos
+  await gvhSave(videos);
+
+  // Also push into the local V3 videos so it shows immediately without re-render delay
+  if(window.V3){
+    V3.videos.unshift({
+      id:vid.id, url:vid.url, title:vid.title, cat:'Video',
+      pts:vid.pts, access:'free', source: ytId?'YouTube':'Direct',
+      thumb:vid.thumb, thumbFb:vid.thumb, embedBase:gvhEmbedUrl(vid.url), addedAt:vid.addedAt
+    });
+    if(window.v3Render) v3Render();
+  }
+
+  _gvhStatus('✅ Added globally! All users can now see this video.','ok');
+  if(urlEl)   urlEl.value   = '';
+  if(titleEl) titleEl.value = '';
+  btn && (btn.disabled = false);
+  if(window.toast) toast('🎬 Video added to global hub!','success');
+};
+
+function _gvhStatus(msg, cls){
+  var el = document.getElementById('gvh-submit-status');
+  if(!el) return;
+  el.textContent = msg;
+  el.className = 'gvh-submit-status ' + (cls||'');
+}
+
+/* ── Poll cloud every 30s and inject new videos ── */
+async function gvhPoll(){
+  if(!_gvhPollerActive) return;
+  var cloudVideos = await gvhLoad();
+  if(cloudVideos.length === 0){ setTimeout(gvhPoll, GVH_POLL_MS); return; }
+
+  if(window.V3){
+    // Merge: add cloud videos not already in V3.videos
+    var existing = new Set(V3.videos.map(function(v){ return v.id; }));
+    var merged = false;
+    cloudVideos.forEach(function(cv){
+      if(!existing.has(cv.id)){
+        V3.videos.unshift({
+          id:cv.id, url:cv.url, title:cv.title||'Video', cat:'Video',
+          pts:cv.pts||5, access:'free', source: cv.ytId?'YouTube':'Direct',
+          thumb:cv.thumb||'', thumbFb:cv.thumb||'', embedBase:gvhEmbedUrl(cv.url), addedAt:cv.addedAt
+        });
+        merged = true;
+      }
+    });
+    if(merged && window.v3Render) v3Render();
+  }
+  setTimeout(gvhPoll, GVH_POLL_MS);
+}
+
+/* Start polling when video section opens */
+function gvhStartPoll(){
+  if(_gvhPollerActive) return;
+  _gvhPollerActive = true;
+  gvhPoll();
+}
+
+/* Patch bnavGo to trigger poll when entering video section */
+setTimeout(function(){
+  var _origBG = window.bnavGo;
+  window.bnavGo = function(sectionId, btnId){
+    if(_origBG) _origBG.apply(this, arguments);
+    if(sectionId === 'video-section') gvhStartPoll();
+  };
+}, 1500);
+
+/* ── WATCH & EARN 30s timer ── */
+/* Hooked into v3OpenPlayer */
+var _origV3Open = null;
+setTimeout(function(){
+  _origV3Open = window.v3OpenPlayer;
+  window.v3OpenPlayer = function(v){
+    if(_origV3Open) _origV3Open.apply(this, arguments);
+    gvhStartWatchTimer(v);
+  };
+  var _origV3Close = window.vshClosePlayer;
+  window.vshClosePlayer = function(){
+    if(_origV3Close) _origV3Close.apply(this, arguments);
+    gvhStopWatchTimer();
+  };
+}, 1200);
+
+function gvhStartWatchTimer(v){
+  gvhStopWatchTimer();
+  _gvhWatchSec = 0;
+  _gvhWatchVid = v;
+  _gvhWatchTarget = 30;
+  var earnEl  = document.getElementById('gvh-watch-earn');
+  var lbl     = document.getElementById('gvh-watch-lbl');
+  var fill    = document.getElementById('gvh-watch-fill');
+  if(earnEl) earnEl.textContent = '+'+(v.pts||5)+' pts';
+  if(fill)   fill.style.width   = '0%';
+  if(lbl)    lbl.textContent    = '⏱ Watch 30s to earn pts';
+  _gvhWatchTimer = setInterval(function(){
+    _gvhWatchSec++;
+    var pct = Math.min(100, (_gvhWatchSec / _gvhWatchTarget) * 100);
+    if(fill)   fill.style.width = pct + '%';
+    var rem   = Math.max(0, _gvhWatchTarget - _gvhWatchSec);
+    if(lbl)    lbl.textContent  = rem > 0 ? '⏱ '+rem+'s remaining to earn' : '✅ Reward earned!';
+    if(_gvhWatchSec >= _gvhWatchTarget){
+      clearInterval(_gvhWatchTimer);
+      _gvhWatchTimer = null;
+      gvhAwardWatch(_gvhWatchVid);
+    }
+  }, 1000);
+}
+
+function gvhStopWatchTimer(){
+  if(_gvhWatchTimer){ clearInterval(_gvhWatchTimer); _gvhWatchTimer = null; }
+  _gvhWatchSec = 0;
+}
+
+function gvhAwardWatch(v){
+  var pts = (v && v.pts) || 5;
+  // Award P Coin via existing pcAdd if available
+  if(window.pcAdd) pcAdd(pts * 10, 'Watch & Earn (30s)');
+  // Award to balance
+  if(window.addTx) addTx('Watch & Earn', pts/1000, 'credit');
+  if(window.updateWallet) updateWallet();
+  // Show reward popup
+  var overlay = document.getElementById('gvh-reward-overlay');
+  var amtEl   = document.getElementById('gvh-reward-amt');
+  if(amtEl)   amtEl.textContent = pts;
+  if(overlay) overlay.style.display = 'flex';
+  if(window.toast) toast('🎬 +'+pts+' pts for watching 30s!','success');
+}
+
+/* ═══════════════════════════════════════════════
+   2. NUCLEAR KILL — floaters gone for good
+   RSW tab + PC panel hidden via CSS already.
+   This JS also prevents pcvBuildFloatingPanel
+   from re-creating them after page load.
+═══════════════════════════════════════════════ */
+var _origPcvBuild = window.pcvBuildFloatingPanel;
+window.pcvBuildFloatingPanel = function(){
+  // Do nothing — floating panel disabled
+};
+setTimeout(function(){
+  var t = document.getElementById('rsw-tab');
+  if(t) t.style.setProperty('display','none','important');
+  var p = document.getElementById('pc-live-panel');
+  if(p) p.style.setProperty('display','none','important');
+}, 500);
+
+/* ═══════════════════════════════════════════════
+   3. STANDALONE CASINO SPIN WHEEL CANVAS
+   Draws its own wheel — independent of RSW engine.
+   RSW engine still runs for the sidebar panel.
+═══════════════════════════════════════════════ */
+var SW = {
+  segs: [
+    { label:'100 🪙', coins:100,  color:'#f5a623' },
+    { label:'200 🪙', coins:200,  color:'#22c55e' },
+    { label:'300 🪙', coins:300,  color:'#00d4ff' },
+    { label:'50 🪙',  coins:50,   color:'#ef4444' },
+    { label:'150 🪙', coins:150,  color:'#8b5cf6' },
+    { label:'500 🪙', coins:500,  color:'#f5a623' },
+    { label:'100 🪙', coins:100,  color:'#22c55e' },
+    { label:'250 🪙', coins:250,  color:'#00d4ff' }
+  ],
+  angle:     0,
+  velocity:  0,
+  spinning:  false,
+  spinsAvail:0,
+  totalCoins:0,
+  totalSpins:0,
+  vidsWatched:0,
+  RAF:       null
+};
+
+var _swInitDone = false;
+
+window.swInitCanvas = function(){
+  if(_swInitDone) return;
+  _swInitDone = true;
+  swDrawWheel(SW.angle);
+  swSyncUI();
+};
+
+function swDrawWheel(angle){
+  var cvs = document.getElementById('sw-canvas');
+  if(!cvs) return;
+  var size = cvs.clientWidth || 300;
+  cvs.width = size; cvs.height = size;
+  var ctx  = cvs.getContext('2d');
+  var cx   = size/2, cy = size/2, r = size/2 - 4;
+  var n    = SW.segs.length;
+  var arc  = (2*Math.PI)/n;
+
+  ctx.clearRect(0,0,size,size);
+
+  SW.segs.forEach(function(seg, i){
+    var start = angle + i*arc;
+    var end   = start + arc;
+
+    // Segment fill
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,start,end);
+    ctx.closePath();
+    ctx.fillStyle = seg.color;
+    ctx.fill();
+
+    // Neon stroke between segments
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,start,end);
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(0,0,0,.35)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Glow rim
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,start,end);
+    ctx.strokeStyle = 'rgba(255,255,255,.12)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Label
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(start + arc/2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = 'rgba(0,0,0,.7)';
+    ctx.shadowBlur  = 4;
+    ctx.font = 'bold '+ Math.round(size*0.048) +'px "DM Sans",sans-serif';
+    ctx.fillText(seg.label, r - size*0.04, size*0.018);
+    ctx.restore();
+  });
+
+  // Center hub — dark circle with gold ring
+  var hubR = size*0.085;
+  var grad = ctx.createRadialGradient(cx,cy,0,cx,cy,hubR);
+  grad.addColorStop(0,'#1a1f38');
+  grad.addColorStop(1,'#0e1322');
+  ctx.beginPath();
+  ctx.arc(cx,cy,hubR,0,2*Math.PI);
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.strokeStyle = '#f5a623';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Gold dot centre
+  ctx.beginPath();
+  ctx.arc(cx,cy,size*0.022,0,2*Math.PI);
+  ctx.fillStyle = '#f5a623';
+  ctx.fill();
+
+  // Outer neon rim glow
+  ctx.beginPath();
+  ctx.arc(cx,cy,r,0,2*Math.PI);
+  ctx.strokeStyle = 'rgba(0,212,255,.35)';
+  ctx.lineWidth = 3;
+  ctx.shadowColor = 'rgba(0,212,255,.8)';
+  ctx.shadowBlur  = 12;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+function swSpinFrame(){
+  if(!SW.spinning) return;
+  SW.angle    += SW.velocity;
+  SW.velocity *= 0.985; // deceleration
+  swDrawWheel(SW.angle);
+
+  // Stop when very slow
+  if(SW.velocity < 0.002){
+    SW.spinning = false;
+    SW.velocity = 0;
+    // Determine winning segment
+    var normalized = ((SW.angle % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+    // Pointer is at top (angle = 0 + correction for rotation direction)
+    var ptr = (2*Math.PI - normalized) % (2*Math.PI);
+    var n   = SW.segs.length;
+    var arc = (2*Math.PI)/n;
+    var idx = Math.floor(ptr/arc) % n;
+    var won = SW.segs[idx];
+
+    SW.totalCoins += won.coins;
+    SW.totalSpins += 1;
+
+    // Save to RSW state if available
+    if(window.RSW){ RSW.totalCoins = (RSW.totalCoins||0)+won.coins; RSW.totalSpins=(RSW.totalSpins||0)+1; }
+    if(window.pcAdd) pcAdd(won.coins, '🎰 Spin Win!');
+    if(window.toast) toast('🎉 You won '+won.label+'!','success');
+
+    // Show result flash
+    var flash = document.getElementById('sw-result-flash');
+    var amt   = document.getElementById('sw-result-amt');
+    var lbl   = document.getElementById('sw-result-lbl');
+    if(amt)   amt.textContent = '+'+won.label;
+    if(lbl)   lbl.textContent = 'P Coins added to wallet!';
+    if(flash){ flash.style.display='block'; setTimeout(function(){ flash.style.display='none'; },4500); }
+
+    swSyncUI();
+    // Re-enable button
+    var btn = document.getElementById('sw-spin-btn');
+    if(btn) btn.disabled = (SW.spinsAvail < 1);
+    return;
+  }
+  SW.RAF = requestAnimationFrame(swSpinFrame);
+}
+
+window.swDoSpin = function(){
+  if(SW.spinning) return;
+  if(SW.spinsAvail < 1){
+    if(window.toast) toast('Watch a video first to earn a spin!','warn');
+    return;
+  }
+  SW.spinsAvail--;
+  if(window.RSW) RSW.spinsAvail = Math.max(0,(RSW.spinsAvail||0)-1);
+  SW.spinning  = true;
+  SW.velocity  = 0.25 + Math.random()*0.2; // random strong spin
+  var btn = document.getElementById('sw-spin-btn');
+  if(btn) btn.disabled = true;
+  if(SW.RAF) cancelAnimationFrame(SW.RAF);
+  swSpinFrame();
+  swSyncUI();
+};
+
+window.swWatchVideo = function(){
+  // Delegate to RSW watch flow
+  if(window.rswStartWatch) rswStartWatch();
+  // Optimistically give 1 spin after 5s for UX (RSW engine also handles real unlock)
+  setTimeout(function(){
+    SW.spinsAvail = Math.max(SW.spinsAvail, window.RSW ? (RSW.spinsAvail||0) : 1);
+    swSyncUI();
+  }, 5500);
+};
+
+function swSyncUI(){
+  // Sync spins available from RSW state
+  if(window.RSW) SW.spinsAvail = Math.max(SW.spinsAvail, RSW.spinsAvail||0);
+  var spinsEl = document.getElementById('sw-spins-avail');
+  var coinsEl = document.getElementById('sw-stat-coins');
+  var spinsStEl= document.getElementById('sw-stat-spins');
+  var vidsEl  = document.getElementById('sw-stat-vids');
+  if(spinsEl) spinsEl.textContent = SW.spinsAvail;
+  if(coinsEl) coinsEl.textContent = SW.totalCoins + (window.RSW ? (RSW.totalCoins||0) : 0);
+  if(spinsStEl)spinsStEl.textContent= SW.totalSpins;
+  if(vidsEl)  vidsEl.textContent  = window.RSW ? (RSW.vidsWatched||0) : 0;
+  var btn = document.getElementById('sw-spin-btn');
+  if(btn && !SW.spinning) btn.disabled = (SW.spinsAvail < 1);
+  var lbl = document.getElementById('sw-watch-status-txt');
+  if(lbl) lbl.textContent = SW.spinsAvail > 0 ? SW.spinsAvail+' spin(s) ready — click SPIN!' : 'Watch 5-min video to earn a spin';
+}
+
+// Sync RSW spins every second when spin section is open
+setInterval(function(){
+  var sec = document.getElementById('spin-wheel-section');
+  if(sec && sec.style.display !== 'none') swSyncUI();
+}, 1000);
+
+/* ═══════════════════════════════════════════════
+   4. TRADING — instant balance sync to header/wallet
+═══════════════════════════════════════════════ */
+setTimeout(function(){
+  var _origPtCredit = window.ptCredit;
+  if(typeof _origPtCredit === 'function'){
+    window.ptCredit = function(amt, label){
+      _origPtCredit.apply(this, arguments);
+      // Immediately sync header balance
+      var bal = window.S && typeof S.balance==='number' ? S.balance : 0;
+      // ph-bal-val
+      var phVal  = document.getElementById('ph-bal-val');
+      var phFiat = document.getElementById('ph-bal-fiat-hdr');
+      if(phVal)  phVal.textContent  = '$'+bal.toFixed(5);
+      if(phFiat) phFiat.textContent = '≈ ₹'+(bal*83.5).toFixed(3);
+      // wc-bal for wallet section
+      var intEl = document.getElementById('wc-bal-int');
+      var decEl = document.getElementById('wc-bal-dec');
+      if(intEl || decEl){
+        var s=bal.toFixed(5), dot=s.indexOf('.');
+        if(intEl) intEl.textContent = s.slice(0,dot);
+        if(decEl) decEl.textContent = s.slice(dot);
+      }
+      // Flash animation on header balance
+      if(phVal){ phVal.style.animation='none'; void phVal.offsetWidth; phVal.style.animation='v3SlideRight .4s ease both'; }
+    };
+  }
+}, 900);
+
+/* ═══════════════════════════════════════════════
+   5. SECTION ROUTER — goSpinSection / goFaucetSection
+   Uses existing bnavGo system cleanly
+═══════════════════════════════════════════════ */
+function _bnavGoCustom(sectionId, btnId){
+  if(window.bnavGo) window.bnavGo(sectionId, btnId);
+}
+
+window.goSpinSection = function(){
+  closeLsb && closeLsb(); // auto-close sidebar
+  _bnavGoCustom('spin-wheel-section','bnav-games');
+  // Init canvas after section becomes visible
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      swInitCanvas();
+      swSyncUI();
+    });
+  });
+};
+
+window.goFaucetSection = function(){
+  closeLsb && closeLsb();
+  _bnavGoCustom('faucet-section','bnav-tasks');
+  fsSyncTimer && fsSyncTimer();
+};
+
+/* Ensure all lsb-items auto-close sidebar */
+setTimeout(function(){
+  document.querySelectorAll('.lsb-item').forEach(function(item){
+    var existing = item.getAttribute('onclick') || '';
+    if(existing.indexOf('closeLsb') === -1){
+      var orig = item.onclick;
+      item.onclick = function(e){
+        if(window.closeLsb) closeLsb();
+        if(orig) orig.call(this, e);
+      };
+    }
+  });
+}, 800);
+
+/* ═══════════════════════════════════════════════
+   FAUCET SECTION TIMER MIRROR (carry-over from v2)
+═══════════════════════════════════════════════ */
+window.fsSyncTimer = function(){ _fsSyncLoop(); };
+
+function _fsSyncLoop(){
+  function _sync(srcId, dstId){ var s=document.getElementById(srcId),d=document.getElementById(dstId); if(s&&d) d.textContent=s.textContent; }
+  function _syncStyle(srcId,dstId,prop){ var s=document.getElementById(srcId),d=document.getElementById(dstId); if(s&&d) d.style[prop]=s.style[prop]; }
+  _sync('nf-td-mm','fs-timer-mm'); _sync('nf-td-ss','fs-timer-ss');
+  _sync('nf-timer-label','fs-timer-lbl'); _syncStyle('nf-timer-bar','fs-timer-bar','width');
+  _sync('nf-stat-claimed','fs-stat-claims'); _sync('nf-stat-total','fs-stat-total'); _sync('faucet-rate','fs-stat-rate');
+  var srcBtn = document.getElementById('faucet-main-btn');
+  var dstBtn = document.getElementById('fs-claim-btn');
+  var mm = document.getElementById('nf-td-mm'), ss = document.getElementById('nf-td-ss');
+  if(srcBtn&&dstBtn){
+    dstBtn.disabled = srcBtn.disabled;
+    dstBtn.innerHTML = srcBtn.disabled ? '⏳ '+(mm?mm.textContent:'')+'&nbsp;:&nbsp;'+(ss?ss.textContent:'')+'&hellip;' : '🪙&nbsp; Claim Now';
+  }
+  var fs = document.getElementById('faucet-section');
+  if(fs && fs.style.display !== 'none') setTimeout(_fsSyncLoop, 500);
+}
+
+var _origFC = window.claimFaucet;
+if(typeof _origFC === 'function'){
+  window.claimFaucet = function(){
+    _origFC.apply(this, arguments);
+    setTimeout(_fsSyncLoop, 600);
+  };
+}
+
+})(); /* end master upgrade IIFE */
+</script>
+
+<!-- GVH Watch & Earn Reward Overlay -->
+<div class="gvh-reward-overlay" id="gvh-reward-overlay" style="display:none" onclick="this.style.display='none'">
+  <div class="gvh-reward-box">
+    <div class="gvh-reward-anim">🎬</div>
+    <div class="gvh-reward-title">30s Reward!</div>
+    <div class="gvh-reward-sub">+<span id="gvh-reward-amt">5</span> pts added to your account</div>
+    <button class="gvh-reward-close" onclick="document.getElementById('gvh-reward-overlay').style.display='none'">Awesome!</button>
+  </div>
+</div>
 
 </body>
 </html>
