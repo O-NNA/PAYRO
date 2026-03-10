@@ -6417,6 +6417,15 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 </style>
 </head>
 <body>
+<!-- ══ SPLASH SCREEN ══ -->
+<div id="payro-splash" aria-hidden="true">
+  <div class="spl-inner">
+    <svg class="spl-coin" viewBox="0 0 36 36" fill="none" width="64" height="64"><defs><radialGradient id="splG" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#ffd060"/><stop offset="50%" stop-color="#f5a623"/><stop offset="100%" stop-color="#c2811a"/></radialGradient></defs><circle cx="18" cy="18" r="17" fill="url(#splG)"/><ellipse cx="12" cy="11" rx="5" ry="3" fill="rgba(255,255,255,.22)" transform="rotate(-30 12 11)"/><text x="10.5" y="24" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#3d2200" opacity="0.85">P</text></svg>
+    <div class="spl-name">PAYRO</div>
+    <div class="spl-sub">Loading your wallet…</div>
+    <div class="spl-bar"><div class="spl-bar-fill"></div></div>
+  </div>
+</div>
 
 <!-- SHARED SVG DEFS for P-Coin gradient (single reference, zero duplication) -->
 <svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
@@ -6436,6 +6445,31 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 
 <!-- MOBILE SIDEBAR OVERLAY -->
 <div class="lsb-mob-ov" id="lsb-mob-ov" onclick="closeLsb()"></div>
+
+<!-- ══ ACTIVITY MARQUEE TICKER ══ -->
+<div class="act-ticker" id="act-ticker" aria-live="polite" aria-label="Live activity feed">
+  <div class="act-ticker-badge">
+    <div class="act-ticker-dot"></div>
+    LIVE
+  </div>
+  <div class="act-ticker-track" id="act-ticker-track">
+    <div class="act-ticker-inner" id="act-ticker-inner">
+      <!-- Items injected by JS -->
+      <span class="act-tick-item">🌏 Raj_K just earned <strong>+150 PC</strong> from Daily Spin</span>
+      <span class="act-tick-sep">·</span>
+      <span class="act-tick-item">🇮🇳 Priya_J claimed <strong>+20 PC</strong> Faucet Drop</span>
+      <span class="act-tick-sep">·</span>
+      <span class="act-tick-item">🎰 Lucas_B won <strong>+300 PC</strong> on Fortune Wheel</span>
+      <span class="act-tick-sep">·</span>
+      <span class="act-tick-item">🇧🇷 Sara88 completed tasks and earned <strong>+5 pts</strong></span>
+      <span class="act-tick-sep">·</span>
+      <span class="act-tick-item">🌏 Karan_V just earned <strong>+200 PC</strong> from Wheel Spin</span>
+      <span class="act-tick-sep">·</span>
+      <span class="act-tick-item">🇵🇭 Max_T joined PAYRO · Welcome bonus applied!</span>
+      <span class="act-tick-sep">·</span>
+    </div>
+  </div>
+</div>
 
 <!-- ============================================================
      LEFT SIDEBAR NAVIGATION — Sleek fixed panel
@@ -6754,11 +6788,11 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         <span class="phv2-xp-label" id="phv2-xp-lbl">0 / 100 XP</span>
       </div>
     </div>
-    <!-- Balance Card -->
+    <!-- Balance Card — P-Coin primary -->
     <div class="ph-bal-card phv2-bal-card">
-      <div class="ph-bal-lbl"><span class="ph-bal-lbl-dot"></span> LIVE BALANCE</div>
-      <div class="ph-bal-val" id="ph-bal-val">$0.00</div>
-      <div class="ph-bal-fiat" id="ph-bal-fiat-hdr" style="color:var(--gold);font-weight:700">🪙 0 P Coin</div>
+      <div class="ph-bal-lbl"><span class="ph-bal-lbl-dot"></span> P-COIN BALANCE</div>
+      <div class="ph-bal-val" id="ph-bal-val" style="font-size:15px;letter-spacing:-.01em">0 PC</div>
+      <div class="ph-bal-fiat" id="ph-bal-fiat-hdr" style="color:var(--gold);font-weight:700">≈ ₹0.00</div>
     </div>
   </div>
 
@@ -6877,24 +6911,34 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
          ╚═══════════════════════════════════════════════════════╝ -->
     <div class="spa-section" id="home-section">
 
-      <!-- ═══ ANIMATED BALANCE HERO CARD ═══ -->
-      <div class="v3-balance-hero tp-card" style="margin:0 0 14px">
+      <!-- ═══ P-COIN BALANCE HERO ═══ -->
+      <div class="v3-balance-hero tp-card" style="margin:0 0 14px" id="pcoin-hero-card">
         <div class="v3-bh-mesh"></div>
         <div class="v3-bh-grid"></div>
         <div class="v3-bh-inner">
           <div class="v3-bh-eyebrow">
             <div class="v3-bh-live"></div>
-            Live Earnings Dashboard
+            P-Coin Wallet · 1000 PC = ₹5
           </div>
-          <div class="v3-bh-amount" id="v3-bh-amount">$0.00000</div>
-          <div class="v3-bh-sub">
-            Total wallet balance
-            <span class="v3-bh-trend">↑ Active</span>
+          <!-- P-Coin big number -->
+          <div style="display:flex;align-items:flex-end;gap:10px;margin:4px 0 2px">
+            <div class="pch-coin-icon">
+              <svg viewBox="0 0 36 36" fill="none" width="38" height="38"><defs><radialGradient id="pchG" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#ffd060"/><stop offset="50%" stop-color="#f5a623"/><stop offset="100%" stop-color="#c2811a"/></radialGradient></defs><circle cx="18" cy="18" r="17" fill="url(#pchG)"/><ellipse cx="13" cy="12" rx="5" ry="3" fill="rgba(255,255,255,.2)" transform="rotate(-30 13 12)"/><text x="10.5" y="24" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#3d2200" opacity="0.85">P</text></svg>
+            </div>
+            <div>
+              <div class="pch-amount" id="pch-amount">0</div>
+              <div class="pch-unit">P Coins</div>
+            </div>
+            <div class="pch-inr-badge" id="pch-inr-badge">≈ ₹0.00</div>
+          </div>
+          <div class="v3-bh-sub" style="margin-top:4px">
+            Your total P-Coin balance
+            <span class="v3-bh-trend" id="pch-trend">↑ Active</span>
           </div>
           <div class="v3-bh-actions">
-            <button class="v3-bh-btn v3-bh-btn-primary" onclick="claimFaucet()">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
-              Claim Faucet
+            <button class="v3-bh-btn v3-bh-btn-primary" onclick="goSpinSection();closeLsb()">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              Lucky Spin
             </button>
             <button class="v3-bh-btn v3-bh-btn-secondary" onclick="bnavGo('tasks-section','bnav-tasks')">
               <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
@@ -6955,50 +6999,17 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         </div>
       </div>
 
-      <!-- ENHANCED STATS ROW -->
-      <div class="v3-stats-row">
-        <div class="v3-stat-card">
-          <div class="v3-stat-val" id="qs-bal">$0.00</div>
-          <div class="v3-stat-lbl">Balance</div>
-        </div>
-        <div class="v3-stat-card accent-gold">
-          <div class="v3-stat-val" id="qs-streak">0d</div>
-          <div class="v3-stat-lbl">Streak</div>
-        </div>
-        <div class="v3-stat-card accent-cyan">
-          <div class="v3-stat-val" id="qs-txcount">0</div>
-          <div class="v3-stat-lbl">Transactions</div>
-        </div>
+      <!-- ENHANCED STATS ROW — hidden, JS still updates IDs -->
+      <div class="v3-stats-row" style="display:none!important">
+        <div class="v3-stat-card"><div class="v3-stat-val" id="qs-bal">$0.00</div><div class="v3-stat-lbl">Balance</div></div>
+        <div class="v3-stat-card accent-gold"><div class="v3-stat-val" id="qs-streak">0d</div><div class="v3-stat-lbl">Streak</div></div>
+        <div class="v3-stat-card accent-cyan"><div class="v3-stat-val" id="qs-txcount">0</div><div class="v3-stat-lbl">Transactions</div></div>
       </div>
 
-      <!-- FAUCET QUICK CLAIM — Enhanced -->
-      <div class="tp-card" style="margin-bottom:14px">
-        <div class="faucet-enhanced-header">
-          <div class="feh-left">
-            <div class="feh-icon-wrap">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg>
-              <div class="feh-pulse-ring"></div>
-            </div>
-            <div>
-              <div class="feh-title">Liquidity Faucet</div>
-              <div class="feh-reward-range">Reward: <span class="feh-range-val">$0.0001 – $0.002</span></div>
-            </div>
-          </div>
-          <div class="feh-right">
-            <div class="feh-cd-badge" id="feh-cd-badge">
-              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span id="faucet-cd-home">Ready</span>
-            </div>
-            <button class="feh-claim-btn" id="faucet-btn-home" onclick="claimFaucet()">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
-              Claim
-            </button>
-          </div>
-        </div>
-        <div class="feh-captcha-strip">
-          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Anti-bot protection active · Verified claims only
-        </div>
+      <!-- FAUCET QUICK CLAIM — hidden stubs so JS still works -->
+      <div style="display:none!important">
+        <span id="faucet-cd-home">Ready</span>
+        <button id="faucet-btn-home" onclick="claimFaucet()">Claim</button>
       </div>
 
       <!-- Lucky Spin removed — stubs preserved for JS safety -->
@@ -7006,35 +7017,12 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       <span id="watch-btn" style="display:none"></span>
       <span id="spin-btn"  style="display:none"></span>
 
-      <!-- LIVE ACTIVITY FEED — v3 -->
-      <div class="tp-card tp-card-pad">
-        <div class="v3-sec-hdr">
-          <div class="v3-sec-hdr-icon" style="background:rgba(139,92,246,.12);color:var(--violet)">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <div class="v3-sec-hdr-text">
-            <div class="v3-sec-hdr-title">Live Activity</div>
-            <div class="v3-sec-hdr-sub">Your latest earnings &amp; events</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;font-size:.62rem;color:var(--green);font-weight:700;">
-            <div class="v3-bh-live"></div> LIVE
-          </div>
-        </div>
+      <!-- ACTIVITY FEED — hidden stubs, preserved for JS -->
+      <div style="display:none" aria-hidden="true">
         <div class="v3-activity-feed" id="home-activity-feed">
-          <div class="v3-act-row">
-            <div class="v3-act-icon" style="background:rgba(255,255,255,.05)">🌊</div>
-            <div class="v3-act-body">
-              <div class="v3-act-msg">No activity yet — start earning!</div>
-              <div class="v3-act-time">now</div>
-            </div>
-            <div class="v3-act-amt pos">—</div>
-          </div>
+          <div class="v3-act-row"><div class="v3-act-icon">🌊</div><div class="v3-act-body"><div class="v3-act-msg">No activity yet</div><div class="v3-act-time">now</div></div><div class="v3-act-amt pos">—</div></div>
         </div>
-        <!-- Live simulated community feed -->
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06)">
-          <div style="font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;font-weight:700;">Community Activity</div>
-          <div id="v3-community-feed" style="display:flex;flex-direction:column;gap:0"></div>
-        </div>
+        <div id="v3-community-feed"></div>
       </div>
 
       <!-- Hidden spin elements (keep for JS) -->
@@ -7823,11 +7811,13 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         </div>
 
         <div class="wc-balance-area">
-          <div class="wc-bal-label">Total Earnings</div>
-          <div class="wc-bal-main" id="w-big-bal">
-            <span class="wc-bal-currency">$</span><span class="wc-bal-int" id="wc-bal-int">0</span><span class="wc-bal-dec" id="wc-bal-dec">.00000</span>
+          <div class="wc-bal-label">P-Coin Balance</div>
+          <div class="wc-bal-main" id="w-big-bal" style="align-items:baseline;gap:8px">
+            <span class="wc-bal-currency" style="font-size:22px">🪙</span><span class="wc-bal-int" id="wc-bal-int" style="font-size:clamp(42px,10vw,58px)">0</span><span class="wc-bal-dec" id="wc-bal-dec" style="font-size:16px;opacity:.6"> PC</span>
           </div>
-          <div class="wc-bal-fiat" id="wc-bal-fiat" style="color:var(--gold);font-weight:700">🪙 0 P Coin</div>
+          <div class="wc-bal-fiat" id="wc-bal-fiat" style="color:var(--gold);font-weight:700">≈ ₹<span id="wc-inr-val">0.000</span> · 1000 PC = ₹5</div>
+          <!-- hidden USD stub so old JS doesn't throw -->
+          <span id="wc-bal-usd" style="display:none">$0.00</span>
         </div>
 
         <div class="wc-stats-row">
@@ -11550,17 +11540,16 @@ s0.parentNode.insertBefore(s1,s0);
   var hbgBtn = document.getElementById('hbg');
   if(hbgBtn){
     var _origToggle = window.toggleDrawer;
+    // Toggle sidebar on ALL screen sizes (desktop + mobile)
     window.toggleDrawer = function(){
-      if(window.innerWidth < DESKTOP){
-        /* On mobile: toggle left sidebar instead of right drawer */
-        toggleLsb();
-        /* Keep existing hbg animation */
-        hbgBtn.classList.toggle('open');
-      } else {
-        /* On desktop: fall back to original if defined */
-        if(typeof _origToggle === 'function') _origToggle();
-      }
+      toggleLsb();
+      hbgBtn.classList.toggle('open');
     };
+    // Add touchstart so it works on Chromebook touchscreens too
+    hbgBtn.addEventListener('touchstart', function(e){
+      e.preventDefault();
+      toggleDrawer();
+    }, {passive:false});
   }
 
   /* Keyboard: Escape closes sidebar */
@@ -19969,8 +19958,8 @@ function pcSpend(amount) {
 
 /* ── Rupee conversion ── */
 function pcToRupee(coins) {
-  // 200 PC = ₹0.5 → 1 PC = ₹0.0025
-  return (coins * 0.0025).toFixed(3);
+  // 1000 PC = ₹5 → 1 PC = ₹0.005
+  return (coins * 0.005).toFixed(2);
 }
 
 /* ── Float coin animation ── */
@@ -22153,6 +22142,468 @@ if(typeof _origFC === 'function'){
 }
 
 })(); /* end master upgrade IIFE */
+</script>
+
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAYRO v4 — MASTER CSS: Splash · P-Coin Hero · Marquee ·
+                            Desktop Scale · Performance
+═══════════════════════════════════════════════════════════════ -->
+<style id="v4-master-css">
+
+/* ──────────────────────── SPLASH SCREEN ──────────────────────── */
+#payro-splash{
+  position:fixed;inset:0;z-index:99999;
+  background:#080b18;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .5s ease,visibility .5s ease;
+  will-change:opacity;
+}
+#payro-splash.spl-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.spl-inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.spl-coin{
+  animation:splCoinBob 1.4s ease-in-out infinite alternate;
+  filter:drop-shadow(0 0 24px rgba(245,166,35,.7));
+}
+@keyframes splCoinBob{from{transform:scale(1) translateY(0)}to{transform:scale(1.07) translateY(-5px)}}
+.spl-name{
+  font-family:'Rajdhani','DM Sans',system-ui,sans-serif;
+  font-size:32px;font-weight:800;letter-spacing:.22em;
+  background:linear-gradient(90deg,#f5a623,#ffd060,#f5a623);
+  background-size:200% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:splNameShine 2s linear infinite;
+}
+@keyframes splNameShine{0%{background-position:0% 0}100%{background-position:200% 0}}
+.spl-sub{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase}
+.spl-bar{width:160px;height:3px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;margin-top:6px}
+.spl-bar-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#f5a623,#ffd060);border-radius:99px;
+  animation:splBarFill 1.4s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes splBarFill{0%{width:0%}60%{width:70%}100%{width:100%}}
+
+/* ──────────────────────── ACTIVITY MARQUEE TICKER ──────────────────────── */
+.act-ticker{
+  position:fixed;
+  left:0;right:0;
+  height:24px;
+  background:rgba(8,11,24,.97);
+  border-bottom:1px solid rgba(245,166,35,.13);
+  display:flex;align-items:center;
+  z-index:801;
+  overflow:hidden;
+  contain:layout paint;
+  will-change:transform;
+  transform:translateZ(0);
+  /* sits just under the header */
+  top:var(--hdr-h,58px);
+}
+.act-ticker-badge{
+  display:flex;align-items:center;gap:5px;padding:0 10px;flex-shrink:0;
+  font-size:8px;font-weight:900;letter-spacing:.15em;color:#22c55e;
+  text-transform:uppercase;border-right:1px solid rgba(255,255,255,.06);height:100%;
+  white-space:nowrap;
+}
+.act-ticker-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:#22c55e;box-shadow:0 0 6px #22c55e;
+  flex-shrink:0;
+  animation:tdotPulse 1.4s ease-in-out infinite;
+}
+@keyframes tdotPulse{0%,100%{opacity:1}50%{opacity:.25}}
+.act-ticker-track{flex:1;overflow:hidden;height:100%;position:relative}
+.act-ticker-inner{
+  display:inline-flex;align-items:center;
+  white-space:nowrap;height:100%;
+  animation:tickScroll 42s linear infinite;
+  will-change:transform;
+  transform:translateZ(0);
+}
+@keyframes tickScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.act-tick-item{
+  display:inline-flex;align-items:center;
+  font-size:11px;color:rgba(255,255,255,.5);
+  padding:0 18px;white-space:nowrap;
+}
+.act-tick-item strong{color:#f5a623;margin:0 2px;font-weight:700}
+.act-tick-sep{color:rgba(255,255,255,.12);padding:0 4px;font-size:9px}
+
+/* Push all content below ticker */
+.main{padding-top:24px !important}
+
+/* ──────────────────────── P-COIN HERO CARD ──────────────────────── */
+.pch-coin-icon{
+  animation:pchBob 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 16px rgba(245,166,35,.55));
+  flex-shrink:0;
+}
+@keyframes pchBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.pch-amount{
+  font-family:'Rajdhani','DM Sans',system-ui,sans-serif;
+  font-size:clamp(38px,9vw,56px);font-weight:800;
+  line-height:1;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#ffd060 0%,#f5a623 50%,#c2811a 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 2px 10px rgba(245,166,35,.35));
+  transition:filter .3s ease;
+}
+.pch-amount.pch-bump{filter:drop-shadow(0 0 20px rgba(245,166,35,.9)) brightness(1.15);animation:pchBump .4s ease both}
+@keyframes pchBump{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+.pch-unit{font-size:11px;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:3px}
+.pch-inr-badge{
+  margin-left:auto;align-self:flex-end;margin-bottom:4px;
+  padding:4px 12px;border-radius:99px;
+  background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.22);
+  font-size:13px;font-weight:700;color:#22c55e;
+  font-family:'DM Mono','Courier New',monospace;
+  transition:all .3s ease;
+}
+
+/* ──────────────────────── LOGO TEXT CLEANUP ──────────────────────── */
+.ph-name{
+  font-family:'Rajdhani','DM Sans',system-ui,sans-serif !important;
+  font-size:18px !important;font-weight:800 !important;letter-spacing:.14em !important;
+  background:linear-gradient(90deg,#f5a623,#ffd060) !important;
+  -webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+}
+/* Hide any subtitle text under the logo that's not needed */
+.phv2-sub .phv2-today-earn{display:none !important}
+
+/* ──────────────────────── REMOVE ALL USD $0.00 REFERENCES ──────────────────────── */
+.v3-bh-amount{display:none !important}
+#drw-wallet-badge2{display:none !important}
+.phv2-today-earn{display:none !important}
+.wc-stat-val[id="wc-today"]{font-size:0 !important;color:transparent !important}
+/* Stats row uses PC now — clear old $ text */
+#qs-bal{font-size:0;line-height:0}
+
+/* ──────────────────────── SIDEBAR DESKTOP FIX ──────────────────────── */
+/* Always off-screen on ALL devices, toggled via .lsb-open */
+.lsb{
+  transform:translateX(-110%) !important;
+  z-index:9200 !important;
+  transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s ease !important;
+}
+.lsb.lsb-open{
+  transform:translateX(0) !important;
+  box-shadow:8px 0 60px rgba(0,0,0,.85) !important;
+}
+.lsb-mob-ov{
+  z-index:9100 !important;
+  display:block !important;
+}
+/* Touch/click targets large enough on desktop */
+.lsb-item{min-height:44px;cursor:pointer}
+#hbg{cursor:pointer;touch-action:manipulation;min-width:44px;min-height:44px}
+
+/* ──────────────────────── DESKTOP/CHROMEBOOK SCALE ──────────────────────── */
+@media(min-width:1100px){
+  body::before{
+    content:'';position:fixed;inset:0;background:#030507;z-index:-1;
+  }
+  .wrap{
+    max-width:480px;
+    margin:0 auto;
+    left:50%;right:auto;
+    transform:translateX(-50%);
+    position:fixed;
+    box-shadow:0 0 120px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.04);
+  }
+  .payro-hdr-v2,.act-ticker,.bnav,.bnav-wrap{
+    max-width:480px !important;
+    left:50% !important;right:auto !important;
+    transform:translateX(-50%) !important;
+    width:480px !important;
+  }
+  #payro-splash{max-width:480px;left:50%;right:auto;transform:translateX(-50%)}
+  .lsb{top:0 !important}
+  /* Drawers and modals also center */
+  #drw,#drw-ov{max-width:480px;margin:0 auto;left:50%;right:auto;transform:translateX(-50%)}
+}
+
+/* ──────────────────────── 144Hz / PERFORMANCE OPTIMIZATIONS ──────────────────────── */
+/* GPU compositing for all animated elements */
+.v3-balance-hero,.tp-card,.spa-section,.bnav,.payro-hdr-v2,
+.lsb,.vsh-card,.task-card,.gm-card,
+.sw-wheel-stage,canvas,
+#sw-canvas,#rsw-canvas{
+  will-change:transform;
+  transform:translateZ(0);
+  backface-visibility:hidden;
+}
+/* Smooth native scroll on sections */
+.spa-section,.main{
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  overscroll-behavior:contain;
+}
+/* Remove layout thrash sources */
+.v3-bh-mesh,.v3-bh-grid{contain:strict}
+/* Reduce paint layers on static elements */
+.wc-stats-row,.pt-dir-row,.lsb-footer{
+  contain:layout style;
+}
+/* Passive-friendly transitions — 60fps minimum */
+*{-webkit-tap-highlight-color:transparent}
+
+/* ──────────────────────── FAUCET HIDDEN CLEANUP ──────────────────────── */
+#sec-faucet{display:none !important}
+.feh-captcha-strip{display:none !important}
+/* Keep DOM IDs alive in hidden container */
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAYRO v4 — MASTER JS: Splash · P-Coin Sync · Marquee ·
+                           Desktop sidebar · RAF opt
+═══════════════════════════════════════════════════════════════ -->
+<script id="v4-master-js">
+(function(){
+'use strict';
+
+/* ══════════════════════════════════════════
+   1. SPLASH SCREEN — dismiss after load
+══════════════════════════════════════════ */
+var _splashDone = false;
+function dismissSplash(){
+  if(_splashDone) return;
+  _splashDone = true;
+  var s = document.getElementById('payro-splash');
+  if(!s) return;
+  s.classList.add('spl-hidden');
+  setTimeout(function(){ s.remove(); }, 600);
+}
+if(document.readyState === 'complete'){
+  setTimeout(dismissSplash, 900);
+} else {
+  window.addEventListener('load', function(){ setTimeout(dismissSplash, 700); }, {once:true});
+}
+setTimeout(dismissSplash, 3500); // hard failsafe
+
+/* ══════════════════════════════════════════
+   2. P-COIN RATE FIX + UNIVERSAL SYNC
+   1000 PC = ₹5  →  1 PC = ₹0.005
+══════════════════════════════════════════ */
+var PC_INR = 0.005; // ₹ per coin
+
+function coins2inr(c){
+  var r = c * PC_INR;
+  return r >= 1000 ? (r/1000).toFixed(1)+'K' :
+         r >= 100  ? r.toFixed(0) :
+         r >= 10   ? r.toFixed(1) : r.toFixed(2);
+}
+
+// Override the existing pcToRupee if defined
+if(typeof window.pcToRupee === 'function'){
+  window.pcToRupee = function(c){ return coins2inr(c); };
+}
+
+function v4SyncAll(){
+  var coins = (window.PC && typeof PC.coins === 'number') ? Math.max(0, Math.floor(PC.coins)) : 0;
+  var inrStr = '₹' + coins2inr(coins);
+
+  /* Home hero */
+  var amtEl = document.getElementById('pch-amount');
+  if(amtEl && amtEl.textContent !== coins.toLocaleString('en-IN')){
+    amtEl.textContent = coins.toLocaleString('en-IN');
+    amtEl.classList.remove('pch-bump');
+    void amtEl.offsetWidth; // reflow trick for CSS anim restart
+    amtEl.classList.add('pch-bump');
+  }
+  var inrBadge = document.getElementById('pch-inr-badge');
+  if(inrBadge) inrBadge.textContent = '≈ ' + inrStr;
+
+  /* Header balance card */
+  var phVal = document.getElementById('ph-bal-val');
+  if(phVal) phVal.textContent = coins.toLocaleString('en-IN') + ' PC';
+  var phFiat = document.getElementById('ph-bal-fiat-hdr');
+  if(phFiat) phFiat.textContent = '≈ ' + inrStr;
+
+  /* Wallet section */
+  var wcInt = document.getElementById('wc-bal-int');
+  var wcDec = document.getElementById('wc-bal-dec');
+  if(wcInt) wcInt.textContent = coins.toLocaleString('en-IN');
+  if(wcDec) wcDec.textContent = ' PC';
+  var wcInr = document.getElementById('wc-inr-val');
+  if(wcInr) wcInr.textContent = coins2inr(coins);
+  var wcFiat = document.getElementById('wc-bal-fiat');
+  if(wcFiat) wcFiat.innerHTML = '≈ ' + inrStr + ' &nbsp;·&nbsp; 1000 PC = ₹5';
+
+  /* Video hub balance */
+  var vshEl = document.getElementById('vsh-pcoin-balance');
+  if(vshEl) vshEl.textContent = coins.toLocaleString('en-IN') + ' P Coin';
+
+  /* Sidebar balance if exists */
+  var lsbEl = document.getElementById('lsb-bal-val');
+  if(lsbEl) lsbEl.textContent = coins.toLocaleString('en-IN') + ' PC';
+
+  /* Today earn stat — show in PC not USD */
+  var todayEl = document.getElementById('wc-today');
+  if(todayEl && todayEl.textContent.startsWith('$')){
+    // leave it — not worth replacing (session-only stat)
+  }
+}
+
+/* RAF loop — runs every frame but only paints when coins changed */
+var _lastCoins = -1;
+function v4RafLoop(){
+  var coins = (window.PC && typeof PC.coins === 'number') ? Math.floor(PC.coins) : 0;
+  if(coins !== _lastCoins){
+    _lastCoins = coins;
+    v4SyncAll();
+  }
+  requestAnimationFrame(v4RafLoop);
+}
+requestAnimationFrame(v4RafLoop);
+
+/* Patch pcUpdateUI to also run v4SyncAll */
+var _patchInterval = setInterval(function(){
+  if(window.pcUpdateUI){
+    clearInterval(_patchInterval);
+    var _orig = window.pcUpdateUI;
+    window.pcUpdateUI = function(){
+      _orig.apply(this, arguments);
+      v4SyncAll();
+    };
+  }
+}, 200);
+
+/* Patch pcAdd for instant sync */
+var _pcAddPatchInterval = setInterval(function(){
+  if(window.pcAdd && !window.pcAdd._v4patched){
+    clearInterval(_pcAddPatchInterval);
+    var _origAdd = window.pcAdd;
+    window.pcAdd = function(amount, label, anchor){
+      var ret = _origAdd.apply(this, arguments);
+      v4SyncAll();
+      return ret;
+    };
+    window.pcAdd._v4patched = true;
+  }
+}, 200);
+
+/* ══════════════════════════════════════════
+   3. MARQUEE TICKER — live activity feed
+══════════════════════════════════════════ */
+var TICK_NAMES  = ['Raj_K','Sara88','Priya_J','Lucas_B','Karan_V','Max_T','Ana_L','Dev_R','Mei_X','Aisha_S','Tom_W','Zara_K'];
+var TICK_FLAGS  = ['🇮🇳','🌏','🇺🇸','🇧🇷','🇵🇭','🇵🇰','🇬🇧','🇳🇬','🇲🇾','🇯🇵','🇩🇪','🇫🇷'];
+var TICK_TMPLS  = [
+  function(n){ return n+' earned <strong>+'+(Math.floor(Math.random()*4+1)*50)+' PC</strong> from Spin'; },
+  function(n){ return n+' completed a task · <strong>+5 pts</strong>'; },
+  function(n){ return n+' won <strong>+'+(Math.floor(Math.random()*5+1)*100)+' PC</strong> on Wheel'; },
+  function(n){ return n+' referred a friend · <strong>+50 PC</strong> bonus'; },
+  function(n){ return n+' is on a <strong>'+(Math.floor(Math.random()*12+2)+'-day streak')+'</strong> 🔥'; },
+  function(n){ return n+' watched a video · <strong>+5 pts</strong> earned'; },
+  function(n){ return n+' just joined PAYRO — Welcome bonus!'; }
+];
+
+function tickGenHTML(){
+  var flag = TICK_FLAGS[Math.floor(Math.random()*TICK_FLAGS.length)];
+  var name = TICK_NAMES[Math.floor(Math.random()*TICK_NAMES.length)];
+  return flag + ' ' + TICK_TMPLS[Math.floor(Math.random()*TICK_TMPLS.length)](name);
+}
+
+function tickAppend(html){
+  var inner = document.getElementById('act-ticker-inner');
+  if(!inner) return;
+  // Append to both halves for seamless looping
+  [0,1].forEach(function(){
+    var sep = document.createElement('span');
+    sep.className = 'act-tick-sep'; sep.textContent = '·';
+    var item = document.createElement('span');
+    item.className = 'act-tick-item'; item.innerHTML = html;
+    inner.appendChild(sep); inner.appendChild(item);
+  });
+  // Trim to 60 nodes max
+  while(inner.children.length > 60) inner.removeChild(inner.firstChild);
+}
+
+// Pipe real user actions into ticker
+var _origAddToHomeFeed = window.addToHomeFeed;
+window.addToHomeFeed = function(icon, msg, amt, color){
+  if(_origAddToHomeFeed) _origAddToHomeFeed.apply(this, arguments);
+  tickAppend((icon||'🪙') + ' ' + (msg||'') + (amt ? ' <strong>' + amt + '</strong>' : ''));
+};
+
+// Override community feed → goes to ticker too
+setTimeout(function(){
+  window.addCommunityRow = function(){ tickAppend(tickGenHTML()); };
+}, 400);
+
+// Periodic simulated activity
+setTimeout(function(){
+  (function loop(){
+    tickAppend(tickGenHTML());
+    setTimeout(loop, 5000 + Math.random()*4000);
+  })();
+}, 2500);
+
+/* ══════════════════════════════════════════
+   4. SIDEBAR — desktop + touchstart fix
+══════════════════════════════════════════ */
+setTimeout(function(){
+  var hbg = document.getElementById('hbg');
+  if(!hbg || hbg._v4fixed) return;
+  hbg._v4fixed = true;
+
+  // Ensure pointer events work on Chromebook
+  hbg.style.pointerEvents = 'all';
+  hbg.style.cursor = 'pointer';
+  hbg.style.touchAction = 'manipulation';
+
+  // Add touchstart listener for Chromebook touchscreen
+  hbg.addEventListener('touchstart', function(e){
+    e.preventDefault();
+    if(window.toggleDrawer) toggleDrawer();
+  }, {passive:false});
+
+  // Make sure lsb sidebar works on ALL screen widths
+  var _origToggle = window.toggleDrawer;
+  window.toggleDrawer = function(){
+    if(window.toggleLsb) {
+      toggleLsb();
+      hbg.classList.toggle('open');
+    } else if(_origToggle) {
+      _origToggle.apply(this, arguments);
+    }
+  };
+
+  // Also wire lsb-items with touchstart for Chromebook
+  document.querySelectorAll('.lsb-item').forEach(function(item){
+    if(item._v4ts) return;
+    item._v4ts = true;
+    item.addEventListener('touchstart', function(e){
+      // Let natural click fire; just ensure closeLsb works
+    }, {passive:true});
+  });
+}, 800);
+
+/* ══════════════════════════════════════════
+   5. PASSIVE SCROLL / RAF-SAFE LISTENERS
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function(){
+  // Make all scroll and touch listeners passive for 144Hz smoothness
+  var passiveEls = document.querySelectorAll('.spa-section,.main,.wc-txlist,.aff-activity-feed');
+  passiveEls.forEach(function(el){
+    el.addEventListener('scroll',    function(){}, {passive:true});
+    el.addEventListener('touchmove', function(){}, {passive:true});
+    el.addEventListener('wheel',     function(){}, {passive:true});
+  });
+  // Run initial sync
+  setTimeout(v4SyncAll, 500);
+  setTimeout(v4SyncAll, 1500);
+}, {once:true});
+
+/* Fail-safe: sync on visibility change (back to tab) */
+document.addEventListener('visibilitychange', function(){
+  if(!document.hidden) v4SyncAll();
+});
+
+})();
 </script>
 
 <!-- GVH Watch & Earn Reward Overlay -->
