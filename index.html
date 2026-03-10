@@ -9107,27 +9107,22 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
               <svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               PREMIUM VIDEO HUB
             </div>
-            <div class="vsh-hero-title" id="vsh-hero-title">Unlock All Videos</div>
-            <div class="vsh-hero-sub" id="vsh-hero-sub">Watch &amp; earn P Coin on every video — <strong>$0.50 (1,000 P Coin)/month</strong> unlocks everything</div>
+            <div class="vsh-hero-title" id="vsh-hero-title">Watch &amp; Earn — Free Access</div>
+            <div class="vsh-hero-sub" id="vsh-hero-sub">Click any video → wait <strong>2 minutes</strong> → earn <strong style="color:var(--gold)">1,000 P-Coin</strong> per video instantly</div>
             <div class="vsh-perks">
-              <div class="vsh-perk"><span>🎯</span> +5 pts per video</div>
-              <div class="vsh-perk"><span>🚫</span> Skip all ads</div>
-              <div class="vsh-perk"><span>🎬</span> HD / SD quality</div>
-              <div class="vsh-perk"><span>🪙</span> Earn P Coin</div>
+              <div class="vsh-perk"><span>🎬</span> 30 Curated Videos</div>
+              <div class="vsh-perk"><span>🪙</span> +1,000 PC per watch</div>
+              <div class="vsh-perk"><span>📺</span> HD / SD quality</div>
+              <div class="vsh-perk"><span>🔓</span> 100% Free Access</div>
             </div>
           </div>
-          <!-- FREE state CTA -->
+          <!-- FREE ACCESS state -->
           <div class="vsh-hero-right" id="vsh-cta-wrap">
-            <div class="vsh-price-box">
-              <div class="vsh-price-label">Monthly Plan</div>
-              <div class="vsh-price-amount">$0.50</div>
-              <div class="vsh-price-sub">= 1,000 P Coin · cancel anytime</div>
+            <div class="vsh-price-box" style="text-align:center;padding:18px 20px">
+              <div class="vsh-price-label" style="margin-bottom:6px">🎬 All Videos Free</div>
+              <div class="vsh-price-amount" style="font-size:28px;color:var(--green)">FREE</div>
+              <div class="vsh-price-sub" style="margin-top:6px">Watch 2 min → earn 1,000 PC</div>
             </div>
-            <button class="vsh-subscribe-btn" onclick="vshOpenPayModal()">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              Subscribe — $0.50 / 1,000 P Coin
-            </button>
-            <div class="vsh-already-sub">Already subscribed? <button onclick="vshRestoreSub()" style="color:var(--gold);background:none;border:none;cursor:pointer;font-size:11px;font-weight:600;text-decoration:underline">Restore</button></div>
           </div>
           <!-- SUBSCRIBED state -->
           <div class="vsh-hero-right" id="vsh-sub-active-wrap" style="display:none">
@@ -9325,13 +9320,13 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
     <div class="vsh-player-modal" id="vsh-player-modal" onclick="if(event.target===this)vshClosePlayer()">
       <div class="vsh-player-box" id="vsh-player-box">
         <!-- Ad Gate (non-subscribers) -->
-        <div class="vsh-ad-gate" id="vsh-ad-gate">
+          <div class="vsh-ad-gate" id="vsh-ad-gate">
           <div class="vsh-ad-ring">
             <svg width="84" height="84" viewBox="0 0 84 84"><circle class="vsh-ar-bg" cx="42" cy="42" r="36"/><circle class="vsh-ar-fill" id="vsh-ar-fill" cx="42" cy="42" r="36"/></svg>
-            <div class="vsh-ar-num" id="vsh-ar-num">5</div>
+            <div class="vsh-ar-num" id="vsh-ar-num" style="font-size:13px;letter-spacing:1px">02:00</div>
           </div>
-          <div class="vsh-ad-label">Watch a short ad to unlock</div>
-          <div class="vsh-ad-sub">Subscribe $0.50/mo to skip all ads forever</div>
+          <div class="vsh-ad-label">⏳ Ad tab opened — stay on this page</div>
+          <div class="vsh-ad-sub">Wait 2 minutes → earn <strong style="color:var(--gold)">1,000 P-Coin</strong> instantly</div>
           <div class="vsh-ad-slot">
             <div class="rgb-ad" style="height:64px;max-width:340px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> Video Pre-Roll <span class="ad-tag">AD</span></div></div>
           </div>
@@ -19018,7 +19013,7 @@ function v3BuildCard(v, idx) {
   var catColors = { Finance:'var(--gold)', Gaming:'var(--red)', Earning:'var(--green)', Tech:'var(--cyan)', Trading:'var(--violet)', Other:'var(--txt2)' };
   var todayKey  = new Date().toISOString().slice(0,10);
   var watched   = V3.watched[v.id + '_' + todayKey] || V3.watched[v.id];
-  var locked    = !V3.sub && v.access === 'premium';
+  var locked    = false; /* Payment lock removed — timer-based system */
 
   var card = document.createElement('div');
   card.className = 'vsh-card' + (watched ? ' vsh-card-watched' : '');
@@ -19087,11 +19082,7 @@ function v3UpdateCategoryFilters() {
 
 /* ════════════ PLAYER ════════════ */
 window.v3OpenPlayer = function(v) {
-  if (!V3.sub && v.access === 'premium') {
-    vshOpenPayModal();
-    if(window.toast) toast('Subscribe $0.50/mo to watch premium content!','warn');
-    return;
-  }
+  /* Payment lock removed — timer-based unlock for all videos */
   V3.currentVid = v;
 
   var modal   = document.getElementById('vsh-player-modal');
@@ -19114,43 +19105,75 @@ window.v3OpenPlayer = function(v) {
   document.body.style.overflow = 'hidden';
 
   if (V3.sub) {
-    /* Premium: instant play */
+    /* Premium sub: instant play (legacy support) */
     if (gate) gate.className = 'vsh-ad-gate done';
     if (iframe) iframe.src = v3EmbedUrl(v, quality);
     v3AwardPoints(v);
   } else {
-    /* Free: 5-second ad countdown */
+    /* Free: 120-second verification timer */
     if (gate) gate.className = 'vsh-ad-gate';
     v3RunAdTimer(v, iframe, quality);
   }
   if(window.SFX) SFX.play('click');
 };
 
+/* ── 120-second Verification Timer (localStorage-persisted) ── */
+var AD_DURATION  = 120; /* seconds */
+var AD_TIMER_KEY = 'payro_vid_timer';  /* {vidId, startAt} */
+var SPONSOR_LINK = 'https://www.effectivegatecpm.com/nggi65rdt?key=c362fb020f08cec743f70638e748b70f';
+
 function v3RunAdTimer(v, iframe, quality) {
-  var AD  = 5; var rem = AD;
   var fill = document.getElementById('vsh-ar-fill');
   var num  = document.getElementById('vsh-ar-num');
   var gate = document.getElementById('vsh-ad-gate');
   var circ = 226.2;
-  if (num)  num.textContent = rem;
-  if (fill) fill.style.strokeDashoffset = circ;
+
+  /* Check if a timer is already running for THIS video in localStorage */
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(AD_TIMER_KEY) || 'null'); } catch(e){}
+
+  var startAt;
+  if (saved && saved.vidId === v.id && saved.startAt) {
+    /* Resume from saved start time */
+    startAt = saved.startAt;
+  } else {
+    /* Brand-new watch session — open ad tab + save start time */
+    startAt = Date.now();
+    try { localStorage.setItem(AD_TIMER_KEY, JSON.stringify({ vidId: v.id, startAt: startAt })); } catch(e){}
+    /* Open sponsor tab */
+    if (window._armPopunder) window._armPopunder();
+    window.open(SPONSOR_LINK, '_blank');
+  }
+
   clearInterval(V3.adTimer);
-  V3.adTimer = setInterval(function(){
-    rem--;
-    if (num)  num.textContent = rem;
-    var pct = 1 - (rem / AD);
+
+  function tick() {
+    var elapsed = Math.floor((Date.now() - startAt) / 1000);
+    var rem = Math.max(0, AD_DURATION - elapsed);
+
+    /* Format as MM:SS */
+    var mm = String(Math.floor(rem / 60)).padStart(2, '0');
+    var ss = String(rem % 60).padStart(2, '0');
+    if (num)  num.textContent = mm + ':' + ss;
+    var pct = 1 - (rem / AD_DURATION);
     if (fill) fill.style.strokeDashoffset = circ * (1 - pct);
+
     if (rem <= 0) {
       clearInterval(V3.adTimer);
+      try { localStorage.removeItem(AD_TIMER_KEY); } catch(e){}
       if (gate) gate.className = 'vsh-ad-gate done';
       if (iframe) iframe.src = v3EmbedUrl(v, quality);
       v3AwardPoints(v);
     }
-  }, 1000);
+  }
+
+  tick(); /* immediate first frame */
+  V3.adTimer = setInterval(tick, 1000);
 }
 
 window.vshClosePlayer = function() {
   clearInterval(V3.adTimer);
+  try { localStorage.removeItem(AD_TIMER_KEY); } catch(e){}
   var modal  = document.getElementById('vsh-player-modal');
   var iframe = document.getElementById('vsh-iframe');
   var gate   = document.getElementById('vsh-ad-gate');
@@ -19173,7 +19196,7 @@ window.vshOpenExternal = function() {
   if (V3.currentVid) window.open(V3.currentVid.url, '_blank', 'noopener');
 };
 
-/* ════════════ POINTS ════════════ */
+/* ════════════ POINTS — 1000 P-Coin reward per video ════════════ */
 function v3AwardPoints(v) {
   var todayKey = new Date().toISOString().slice(0,10);
   var key = v.id + '_' + todayKey;
@@ -19183,11 +19206,13 @@ function v3AwardPoints(v) {
   V3.pts += (v.pts || 5);
   v3Save();
   v3UpdateHeroUI();
-  v3ShowPtsPopup('+' + (v.pts||5) + ' pts earned! 🎯');
+  /* Credit 1000 P-Coins */
+  if (window.pcAdd) pcAdd(1000, 'Video Watch Reward', 'v-watch');
+  v3ShowPtsPopup('+1000 P-Coin earned! 🎬');
   v3Render();
-  if(window.addTx) addTx('Video Watch Reward', (v.pts||5)/1000, 'credit');
+  if(window.addTx) addTx('Video Watch Reward', 1000, 'credit');
   if(window.updateWallet) updateWallet();
-  if(window.gtag) gtag('event','video_watch_reward',{ video_id:v.id, points:v.pts||5 });
+  if(window.gtag) gtag('event','video_watch_reward',{ video_id:v.id, pcoins:1000 });
 }
 
 function v3ShowPtsPopup(msg) {
@@ -19419,6 +19444,58 @@ document.addEventListener('keydown', function(e){
 
 /* ════════════ INIT ════════════ */
 v3Load();
+
+/* ── Inject 30 built-in videos (never stored in localStorage — always present) ── */
+(function() {
+  var BUILTIN = [
+    { id:'b01', ytId:'dQw4w9WgXcQ',  title:'How to Make Money Online in 2025',    cat:'Earning',  pts:5, access:'free', dur:'4:32' },
+    { id:'b02', ytId:'ZbZSe6N_BXs',  title:'Stock Market for Beginners',           cat:'Finance',  pts:5, access:'free', dur:'7:18' },
+    { id:'b03', ytId:'rE3j_RHkqJc',  title:'Top Crypto Coins to Watch This Month', cat:'Trading',  pts:5, access:'free', dur:'6:44' },
+    { id:'b04', ytId:'2lAe1cqCOXo',  title:'AI Tools That Pay You Real Money',     cat:'Tech',     pts:5, access:'free', dur:'5:10' },
+    { id:'b05', ytId:'o_nfdzGVe-4',  title:'Mobile Gaming Secrets Revealed',       cat:'Gaming',   pts:5, access:'free', dur:'8:55' },
+    { id:'b06', ytId:'GznmPACXBlI',  title:'Day Trading Strategies for 2025',      cat:'Trading',  pts:5, access:'free', dur:'9:02' },
+    { id:'b07', ytId:'pWDD3H9yQpQ',  title:'Passive Income Ideas That Actually Work', cat:'Earning', pts:5, access:'free', dur:'6:27' },
+    { id:'b08', ytId:'K4TOrB7at0Y',  title:'Bitcoin vs Ethereum — Full Breakdown', cat:'Finance',  pts:5, access:'free', dur:'10:14' },
+    { id:'b09', ytId:'W6NZfCO5SIk',  title:'JavaScript for Beginners 2025',        cat:'Tech',     pts:5, access:'free', dur:'12:36' },
+    { id:'b10', ytId:'MNxMhXAD9P4',  title:'Top 10 Earning Apps Right Now',        cat:'Earning',  pts:5, access:'free', dur:'5:48' },
+    { id:'b11', ytId:'nmXMgqjQzls',  title:'Forex Trading Basics Explained',       cat:'Trading',  pts:5, access:'free', dur:'8:19' },
+    { id:'b12', ytId:'jNQXAC9IVRw',  title:'Gaming Setup Guide — Budget Build',    cat:'Gaming',   pts:5, access:'free', dur:'7:35' },
+    { id:'b13', ytId:'GlZtnku6M68',  title:'How Compound Interest Makes You Rich', cat:'Finance',  pts:5, access:'free', dur:'4:58' },
+    { id:'b14', ytId:'XytfvpVOHis',  title:'ChatGPT Money-Making Methods 2025',   cat:'Tech',     pts:5, access:'free', dur:'6:11' },
+    { id:'b15', ytId:'PkZNo7MFNFg',  title:'Python Tutorial — Learn in 60 Minutes', cat:'Tech',   pts:5, access:'free', dur:'13:22' },
+    { id:'b16', ytId:'Unzc731iCUY',  title:'Top Freelancing Skills That Pay $$$',  cat:'Earning',  pts:5, access:'free', dur:'7:44' },
+    { id:'b17', ytId:'x3-SBwlf5eY',  title:'NFT Investing Guide for Beginners',    cat:'Trading',  pts:5, access:'free', dur:'9:30' },
+    { id:'b18', ytId:'QVb7QJQqkFw',  title:'Top 5 Games That Pay Real Cash',      cat:'Gaming',   pts:5, access:'free', dur:'5:21' },
+    { id:'b19', ytId:'n_Cn8eFo7u8',  title:'How to Save Money Fast — Proven Tips', cat:'Finance',  pts:5, access:'free', dur:'6:03' },
+    { id:'b20', ytId:'fEggseixfHE',  title:'Earn with Surveys — Which Ones Pay?', cat:'Earning',   pts:5, access:'free', dur:'4:47' },
+    { id:'b21', ytId:'hY7m5jjJ9mM',  title:'DeFi Explained — Earn Yield in 2025', cat:'Trading',  pts:5, access:'free', dur:'8:02' },
+    { id:'b22', ytId:'YxgD8BP5sBs',  title:'PC Gaming vs Console — 2025 Edition', cat:'Gaming',   pts:5, access:'free', dur:'9:14' },
+    { id:'b23', ytId:'y4gbFGFjFcA',  title:'How the Rich Invest Their Money',      cat:'Finance',  pts:5, access:'free', dur:'7:58' },
+    { id:'b24', ytId:'WxyLGM3KSPY',  title:'No-Code Tools to Build Apps & Earn',  cat:'Tech',     pts:5, access:'free', dur:'6:39' },
+    { id:'b25', ytId:'uG_EiEQIifk',  title:'Dropshipping Secrets — Real Results', cat:'Earning',  pts:5, access:'free', dur:'10:05' },
+    { id:'b26', ytId:'FsRifrmFsCw',  title:'Swing Trading — Entry & Exit Points',  cat:'Trading',  pts:5, access:'free', dur:'8:48' },
+    { id:'b27', ytId:'5qap5aO4i9A',  title:'Lo-Fi Hip Hop — Study & Earn Stream', cat:'Gaming',   pts:5, access:'free', dur:'60:00' },
+    { id:'b28', ytId:'KaRmee6NKTQ',  title:'Gold vs Crypto — Which is Better?',   cat:'Finance',  pts:5, access:'free', dur:'5:34' },
+    { id:'b29', ytId:'_uQrJ0TkZlc',  title:'Python Projects for Absolute Beginners', cat:'Tech',  pts:5, access:'free', dur:'14:17' },
+    { id:'b30', ytId:'Ks-_Mh1QhMc',  title:'Make Money While You Sleep (Guide)',   cat:'Earning',  pts:5, access:'free', dur:'7:29' }
+  ];
+
+  /* Remove any stale built-in videos from localStorage (they now live in code) */
+  V3.videos = V3.videos.filter(function(v){ return !/^b\d{2}$/.test(v.id); });
+
+  /* Prepend built-ins so they always appear first */
+  BUILTIN.forEach(function(b) {
+    var parsed = {
+      source:    'YouTube',
+      ytId:      b.ytId,
+      thumb:     'https://img.youtube.com/vi/' + b.ytId + '/hqdefault.jpg',
+      thumbFb:   'https://img.youtube.com/vi/' + b.ytId + '/mqdefault.jpg',
+      embedBase: 'https://www.youtube.com/embed/' + b.ytId,
+      duration:  b.dur
+    };
+    V3.videos.unshift(Object.assign({}, b, parsed, { url: 'https://www.youtube.com/watch?v=' + b.ytId }));
+  });
+})();
 
 function v3Init() {
   v3UpdateHeroUI();
