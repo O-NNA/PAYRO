@@ -16,7 +16,7 @@
     cookie_flags: 'SameSite=None;Secure'
   });
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>PAYRO — Global Capital Platform</title>
 <!-- SPONSOR AD SCRIPT -->
 <script type='text/javascript' src='https://pl28874426.effectivegatecpm.com/1f/81/29/1f8129a5e1425dd72a6354c5ecff9d54.js'></script>
@@ -5988,6 +5988,35 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
   50%{opacity:.35;box-shadow:0 0 4px currentColor}
 }
 </style>
+
+<style id="header-clean-css">
+/* ══════════════════════════════════════════════════════════
+   CLEAN HEADER — Remove balance widget + geo labels
+   Elements are hidden not deleted: JS can still write to them.
+══════════════════════════════════════════════════════════ */
+
+/* Hide the green wallet pill in the top navbar */
+.wallet-pill                { display: none !important; }
+
+/* Hide the geo location pill */
+.geo-pill                   { display: none !important; }
+
+/* Hide the "LIVE BALANCE" card inside payro-hdr */
+.ph-bal-card,
+.phv2-bal-card              { display: none !important; }
+
+/* Hide the geo country inline label */
+.geo-country-inline         { display: none !important; }
+#geo-country-hdr            { display: none !important; }
+
+/* Keep phv2-sub but hide the dot separator since geo is gone */
+.phv2-dot-sep               { display: none !important; }
+
+/* Tighten navbar right side now that wallet pill is gone */
+.nav-right {
+  gap: 6px;
+}
+</style>
 </head>
 <body>
 
@@ -6265,19 +6294,10 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       <div><span class="brand-sub" style="font-size:10px;display:block">3D Gaming Ecosystem v4</span></div>
     </div>
     <div class="nav-right">
-      <div class="geo-pill detecting" id="geo-pill"><span class="flag" id="geo-flag">🌐</span><span id="geo-country">Detecting...</span><span class="rate" id="geo-rate">—</span></div>
+      <div class="geo-pill detecting" id="geo-pill" style="display:none"><span class="flag" id="geo-flag">🌐</span><span id="geo-country">Detecting...</span><span class="rate" id="geo-rate">—</span></div>
       <button class="nav-ibtn" id="mute-btn" onclick="toggleMute()" title="Toggle Sound"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="mute-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></button>
       <button class="nav-ibtn" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
-      <button class="wallet-pill" onclick="scrollToId('sec-wallet')">
-  <svg class="nav-pcoin pcoin-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="11" fill="url(#pcGF)"/>
-    <circle cx="12" cy="12" r="10.3" fill="none" stroke="rgba(180,110,0,0.55)" stroke-width="0.7"/>
-    <ellipse cx="8.5" cy="7.5" rx="3.5" ry="2" fill="rgba(255,255,255,0.28)" transform="rotate(-28 8.5 7.5)"/>
-    <text x="6.8" y="16.5" font-family="Arial Black,Arial" font-weight="900" font-size="11" fill="#3d2200" opacity="0.9">P</text>
-    <text x="7.1" y="16.2" font-family="Arial Black,Arial" font-weight="900" font-size="11" fill="#7a4400" opacity="0.5">P</text>
-  </svg>
-  <span class="wallet-bal" id="nav-bal">$0.00</span>
-</button>
+      <span class="wallet-bal" id="nav-bal" style="display:none">$0.00</span>
       <button class="hbg" id="hbg" onclick="toggleDrawer()" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -6309,8 +6329,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         <span class="phv2-rank-badge" id="phv2-rank">Newcomer</span>
       </div>
       <div class="phv2-sub">
-        <span class="geo-country-inline" id="geo-country-hdr">Global</span>
-        <span class="phv2-dot-sep">·</span>
+        <span class="geo-country-inline" id="geo-country-hdr" style="display:none"></span>
         <span class="phv2-today-earn" id="phv2-today">+$0.00 today</span>
       </div>
       <!-- XP Progress Bar -->
@@ -6541,28 +6560,10 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         </div>
       </div>
 
-      <!-- LUCKY SPIN QUICK ACCESS -->
-      <div class="tp-card" style="margin-bottom:14px">
-        <div style="padding:14px 18px">
-          <div class="tp-sec-hdr" style="margin-bottom:10px">
-            <div class="tp-sec-icon" style="background:rgba(245,166,35,.1);color:var(--gold)">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            </div>
-            <div>
-              <div class="tp-sec-title">Lucky Spin</div>
-              <div class="tp-sec-sub">Tokens: <span id="qs-tokens">0/3</span></div>
-            </div>
-          </div>
-          <div style="display:flex;gap:10px">
-            <button class="watch-btn" id="watch-btn" onclick="watchAd()" style="flex:1;font-size:12px;padding:10px">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg> Watch Ad → Earn Token
-            </button>
-            <button class="spin-btn" id="spin-btn" onclick="doSpin()" style="padding:10px 16px;border-radius:var(--r-md);background:linear-gradient(135deg,var(--gold),#c27a0a);color:#000;font-weight:700;font-size:12px">
-              SPIN
-            </button>
-          </div>
-        </div>
-      </div>
+      <!-- Lucky Spin removed — stubs preserved for JS safety -->
+      <span id="qs-tokens" style="display:none">0/3</span>
+      <span id="watch-btn" style="display:none"></span>
+      <span id="spin-btn"  style="display:none"></span>
 
       <!-- LIVE ACTIVITY FEED — v3 -->
       <div class="tp-card tp-card-pad">
@@ -7036,50 +7037,95 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
     </div>
 
     <!-- ── SECTION: FAUCET ── -->
-    <section class="card" id="sec-faucet" style="padding:26px;scroll-margin-top:80px" aria-label="Faucet">
-      <div class="sh">
-        <div class="sh-l">
-          <div class="sh-ic si-cyan"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg></div>
-          <div class="sh-title"><strong>Liquidity Faucet Protocol</strong><small>Ad-verified claims — cooldown resets every 5 min</small></div>
+    <!-- ══════════════════════════════════════════════════════
+         FREE FAUCET — 5-minute cooldown, clean modern UI
+    ═══════════════════════════════════════════════════════ -->
+    <section class="card" id="sec-faucet" style="padding:0;scroll-margin-top:80px;overflow:hidden" aria-label="Faucet">
+
+      <!-- Header bar -->
+      <div class="nf-header">
+        <div class="nf-header-left">
+          <div class="nf-header-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg>
+          </div>
+          <div>
+            <div class="nf-header-title">Free Faucet</div>
+            <div class="nf-header-sub">Claim every 5 minutes · 0.50 – 2.00 coins</div>
+          </div>
         </div>
+        <div class="nf-live-badge"><span class="nf-live-dot"></span>LIVE</div>
       </div>
-      <!-- RGB ad slot above faucet claim cards -->
-      <div style="margin-bottom:20px">
-        <div class="rgb-ad" style="height:80px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Faucet Section Verification Ad <span class="ad-tag">AD</span></div></div>
-      </div>
-      <div class="faucet-big-icon"><svg width="30" height="30" fill="none" stroke="var(--gold)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg></div>
-      <div class="faucet-big-title">Free Faucet Claim</div>
-      <div class="faucet-big-sub">Complete the 15-second ad verification, then claim your region-adjusted reward instantly.</div>
-      <div class="faucet-body">
-        <div class="faucet-card">
-          <div class="fvc-title">Step 1 — Ad Verification (15s)</div>
-          <div class="faucet-timer-wrap">
-            <div class="fvt-val" id="fvt-val">15</div>
-            <div class="fvt-lbl">Seconds Remaining</div>
+
+      <!-- Main body -->
+      <div class="nf-body">
+
+        <!-- Coin icon -->
+        <div class="nf-coin-wrap">
+          <div class="nf-coin" id="nf-coin">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" fill="url(#nfCoinGrad)" stroke="rgba(180,110,0,.4)" stroke-width=".7"/>
+              <text x="6.8" y="16.5" font-family="Arial Black,Arial" font-weight="900" font-size="11" fill="#3d2200" opacity=".9">P</text>
+            </svg>
+            <defs>
+              <radialGradient id="nfCoinGrad" cx="40%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#ffd060"/>
+                <stop offset="50%" stop-color="#f5a623"/>
+                <stop offset="100%" stop-color="#c2811a"/>
+              </radialGradient>
+            </defs>
           </div>
-          <div style="margin-bottom:12px">
-            <div class="rgb-ad" style="height:68px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 60 — Faucet Verify Ad <span class="ad-tag">AD</span></div></div>
-          </div>
-          <button class="faucet-verify-btn" id="faucet-verify-btn" onclick="startFaucetVerify()">Start 15s Ad Timer</button>
+          <div class="nf-reward-range">0.50 – 2.00 <span>PYO</span></div>
+          <div class="nf-reward-sub">per claim</div>
         </div>
-        <div class="faucet-card">
-          <div class="fvc-title">Step 2 — Claim Reward</div>
-          <div class="fcc-rate" id="fcc-rate">$0.002</div>
-          <div class="fcc-lbl">Per claim — varies by region</div>
-          <div class="faucet-status-bar">
-            <div class="live-dot" id="faucet-dot" style="background:var(--txt3);box-shadow:none"></div>
-            <span id="faucet-status-txt">Complete ad verification first</span>
+
+        <!-- Countdown timer -->
+        <div class="nf-timer-block" id="nf-timer-block">
+          <div class="nf-timer-label" id="nf-timer-label">Next claim in</div>
+          <div class="nf-timer-display" id="nf-timer-display">
+            <span class="nf-td-mm" id="nf-td-mm">05</span>
+            <span class="nf-td-sep">:</span>
+            <span class="nf-td-ss" id="nf-td-ss">00</span>
           </div>
-          <div class="claim-btn-wrap">
-            <div class="sponsor-action-wrap"><div class="sponsor-action-inner">
-            <button class="big-claim-btn" id="faucet-main-btn" onclick="claimFaucet()" disabled>🪙 Claim Faucet Reward</button>
-            </div></div>
-            <div class="claim-locked-ov" id="claim-locked-ov">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-              Verify ad above first
-            </div>
+          <div class="nf-timer-bar-wrap">
+            <div class="nf-timer-bar" id="nf-timer-bar" style="width:0%"></div>
           </div>
         </div>
+
+        <!-- Claim button -->
+        <button class="nf-claim-btn" id="faucet-main-btn" onclick="claimFaucet()" disabled>
+          <span class="nf-btn-icon">🪙</span>
+          <span class="nf-btn-text" id="nf-btn-text">Waiting…</span>
+        </button>
+
+        <!-- Reward flash -->
+        <div class="nf-reward-flash" id="nf-reward-flash"></div>
+
+        <!-- Stats row -->
+        <div class="nf-stats-row">
+          <div class="nf-stat">
+            <div class="nf-stat-val" id="nf-stat-claimed">0</div>
+            <div class="nf-stat-lbl">Claims today</div>
+          </div>
+          <div class="nf-stat-sep"></div>
+          <div class="nf-stat">
+            <div class="nf-stat-val" id="nf-stat-total">0.0000</div>
+            <div class="nf-stat-lbl">Total earned</div>
+          </div>
+          <div class="nf-stat-sep"></div>
+          <div class="nf-stat">
+            <div class="nf-stat-val" id="faucet-rate">$0.002</div>
+            <div class="nf-stat-lbl">Rate / claim</div>
+          </div>
+        </div>
+
+        <!-- Hidden compat stubs so old JS references don't throw -->
+        <span id="fvt-val"         style="display:none">15</span>
+        <span id="faucet-verify-btn" style="display:none"></span>
+        <span id="faucet-dot"      style="display:none"></span>
+        <span id="faucet-status-txt" style="display:none"></span>
+        <span id="claim-locked-ov" style="display:none"></span>
+        <span id="fcc-rate"        style="display:none">$0.002</span>
+        <span id="faucet-cd"       style="display:none">Ready</span>
       </div>
     </section>
 
@@ -8212,15 +8258,30 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 
       <div class="pt-root">
 
-        <!-- ═══ HEADER ═══ -->
+        <!-- ═══ HEADER + PORTFOLIO CARD ═══ -->
         <div class="pt-header">
           <div class="pt-header-left">
             <div class="pt-live-pill"><span class="pt-live-ping"></span>LIVE MARKET</div>
             <div class="pt-header-title">Prediction Trading</div>
           </div>
-          <div class="pt-header-bal">
-            <div class="pt-hb-lbl">Balance</div>
-            <div class="pt-hb-val" id="pt-hb-val">$0.00000</div>
+          <!-- Professional Portfolio Balance Card -->
+          <div class="pt-portfolio-card" id="pt-portfolio-card">
+            <div class="pt-pf-glow" id="pt-pf-glow"></div>
+            <div class="pt-pf-top">
+              <div class="pt-pf-icon">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+              </div>
+              <span class="pt-pf-label">Portfolio</span>
+              <span class="pt-pf-delta" id="pt-pf-delta">—</span>
+            </div>
+            <div class="pt-pf-amount-wrap">
+              <span class="pt-pf-currency">$</span>
+              <span class="pt-pf-amount" id="pt-hb-val">0.00000</span>
+            </div>
+            <div class="pt-pf-bottom">
+              <span class="pt-pf-change-lbl" id="pt-pf-change-lbl">No change</span>
+              <span class="pt-pf-session" id="pt-pf-session">Session</span>
+            </div>
           </div>
         </div>
 
@@ -8289,6 +8350,8 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
               <button onclick="ptHalf()">½</button>
               <button onclick="ptDouble()">2×</button>
             </div>
+            <!-- Insufficient balance error (shown by JS) -->
+            <div class="pt-insuf-err" id="pt-insuf-err">⚠ Insufficient balance</div>
           </div>
 
           <!-- Duration selector -->
@@ -9124,57 +9187,184 @@ function doTask(id){
 }
 
 /* ── Faucet Engine ── */
-let faucetCdInterval=null;
-function startFaucetVerify(){
-  if(S.faucetVerifyInProgress)return;
-  S.faucetVerifyInProgress=true;
-  const btn=$('faucet-verify-btn');const val=$('fvt-val');
-  if(btn)btn.disabled=true;
-  let t=15;
-  S.faucetVerifyTimer=setInterval(()=>{
-    t--;if(val)val.textContent=t;
-    if(t<=5&&val)val.style.color='var(--green)';
-    if(t<=0){
-      clearInterval(S.faucetVerifyTimer);S.faucetVerifyInProgress=false;
-      S.faucetVerified=true;
-      const lock=$('claim-locked-ov');if(lock)lock.classList.add('unlocked');
-      const dot=$('faucet-dot');if(dot){dot.style.background='var(--green)';dot.style.boxShadow='0 0 8px var(--green)'}
-      $('faucet-status-txt').textContent='Verified — click to claim!';
-      const mainBtn=$('faucet-main-btn');if(mainBtn)mainBtn.disabled=false;
-      if(btn){btn.disabled=false;btn.textContent='✓ Verified — Start Again'}
-      SFX.play('ding');toast('Ad verified — claim your reward!','success');
-    }
-  },1000);
+/* ════════════════════════════════════════════════════════════
+   FAUCET ENGINE v3 — 5-minute cooldown, no ad-verify step
+   Reward: 0.50 – 2.00 coins per claim (randomised)
+════════════════════════════════════════════════════════════ */
+var _nfInterval = null;   /* countdown interval */
+var _nfClaimedToday = 0;
+var _nfTotalEarned  = 0;
+var FAUCET_CD_SECS  = 300; /* 5 minutes */
+
+/* Reward range */
+function nfRandReward(){
+  /* Mulberry32-style rand keyed to minute slot for fairness */
+  var lo = 0.50, hi = 2.00;
+  return parseFloat((lo + Math.random() * (hi - lo)).toFixed(4));
 }
+
+/* Update the countdown display elements */
+function nfUpdateDisplay(remSecs){
+  var m = Math.floor(remSecs / 60);
+  var s = remSecs % 60;
+  var mm = $('nf-td-mm'), ss = $('nf-td-ss'), bar = $('nf-timer-bar');
+  var lbl = $('nf-timer-label'), btn = $('faucet-main-btn'), btnTxt = $('nf-btn-text');
+  var blk = $('nf-timer-block');
+
+  if(mm) mm.textContent = String(m).padStart(2,'0');
+  if(ss) ss.textContent = String(s).padStart(2,'0');
+
+  /* Progress bar (fills from 0 → full as cooldown ticks down) */
+  var pct = ((FAUCET_CD_SECS - remSecs) / FAUCET_CD_SECS) * 100;
+  if(bar) bar.style.width = pct + '%';
+
+  if(remSecs <= 0){
+    /* READY */
+    if(lbl)  lbl.textContent  = 'Ready to claim!';
+    if(mm)   mm.textContent   = '00';
+    if(ss)   ss.textContent   = '00';
+    if(bar)  bar.style.width  = '100%';
+    if(blk)  blk.classList.add('nf-ready');
+    if(btn){  btn.disabled = false; }
+    if(btnTxt) btnTxt.textContent = 'Claim Reward';
+    /* Sync home button */
+    var hBtn = $('faucet-btn-home'), hCd = $('faucet-cd-home');
+    if(hBtn)  hBtn.disabled = false;
+    if(hCd)   hCd.textContent = 'Ready';
+    /* Compat: old faucet-cd span */
+    var ocd = $('faucet-cd'); if(ocd) ocd.textContent = 'Ready to claim';
+    toast('🪙 Faucet ready — claim your reward!','info');
+  } else {
+    /* COUNTING DOWN */
+    if(lbl)  lbl.textContent  = 'Next claim in';
+    if(blk)  blk.classList.remove('nf-ready');
+    if(btn)  btn.disabled = true;
+    if(btnTxt) btnTxt.textContent = 'Cooling down…';
+    var cdStr = m + ':' + (s < 10 ? '0' : '') + s;
+    var hBtn2 = $('faucet-btn-home'), hCd2 = $('faucet-cd-home');
+    if(hBtn2) hBtn2.disabled = true;
+    if(hCd2)  hCd2.textContent = cdStr;
+    var ocd2 = $('faucet-cd'); if(ocd2) ocd2.textContent = 'Cooldown: ' + cdStr;
+    /* Compat: mini btn */
+    var mini = $('faucet-btn-mini'); if(mini) mini.disabled = true;
+  }
+}
+
+/* Start or resume the countdown from remaining seconds */
+function nfStartCountdown(remSecs){
+  if(_nfInterval) clearInterval(_nfInterval);
+  nfUpdateDisplay(remSecs);
+  if(remSecs <= 0) return;
+  var cd = remSecs;
+  _nfInterval = setInterval(function(){
+    cd--;
+    nfUpdateDisplay(cd);
+    if(cd <= 0){ clearInterval(_nfInterval); _nfInterval = null; S.faucetActive = false; }
+  }, 1000);
+}
+
+/* Bootstrap: restore state on page load */
+function nfBootstrap(){
+  var remSecs = 0;
+  if(S.faucetCdEnd && S.faucetActive){
+    remSecs = Math.max(0, Math.ceil((S.faucetCdEnd - Date.now()) / 1000));
+  }
+  /* Restore claim counters from S if available */
+  if(S.nfClaimedToday) _nfClaimedToday = S.nfClaimedToday;
+  if(S.nfTotalEarned)  _nfTotalEarned  = S.nfTotalEarned;
+  nfRefreshStats();
+  nfStartCountdown(remSecs);
+}
+
+/* Refresh stats display */
+function nfRefreshStats(){
+  var ct = $('nf-stat-claimed'), te = $('nf-stat-total');
+  if(ct) ct.textContent = _nfClaimedToday;
+  if(te) te.textContent = _nfTotalEarned.toFixed(4);
+}
+
+/* Reward flash animation above button */
+function nfFlash(txt, color){
+  var el = $('nf-reward-flash');
+  if(!el) return;
+  el.textContent = txt;
+  el.style.color = color || '#00F0A0';
+  el.classList.remove('nf-flash-anim');
+  void el.offsetWidth;
+  el.classList.add('nf-flash-anim');
+}
+
+/* Coin bounce on claim */
+function nfBounceCoin(){
+  var coin = $('nf-coin');
+  if(!coin) return;
+  coin.classList.remove('nf-coin-bounce');
+  void coin.offsetWidth;
+  coin.classList.add('nf-coin-bounce');
+  setTimeout(function(){ coin.classList.remove('nf-coin-bounce'); }, 700);
+}
+
+/* Compat shim — old code calls startFaucetVerify */
+function startFaucetVerify(){ /* no-op in v3 */ }
+
 function claimFaucet(){
-  if(!S.faucetVerified){toast('Complete the 15-second compliance timer first.','warn');return}
-  if(S.faucetActive){toast('Faucet protocol on cooldown — 5 minutes remaining.','warn');return}
-  // Open sponsor link in new tab before crediting reward (arms popunder gate)
-  if(window._armPopunder) window._armPopunder();
-  window.open(SPONSOR_URL,'_blank');
-  const rew=S.tierRate;
-  S.balance+=rew;S.sessionEarned+=rew;S.faucetActive=true;S.faucetVerified=false;
-  addTx('Faucet Claim',rew,'credit');updateWallet();SFX.play('win');
-  // Re-lock
-  const lock=$('claim-locked-ov');if(lock)lock.classList.remove('unlocked');
-  const mainBtn=$('faucet-main-btn');if(mainBtn)mainBtn.disabled=true;
-  const dot=$('faucet-dot');if(dot){dot.style.background='var(--txt3)';dot.style.boxShadow='none'}
-  $('faucet-status-txt').textContent='Cooling down — 5 min';
-  $('fvt-val').textContent='15';
-  const vBtn=$('faucet-verify-btn');if(vBtn){vBtn.disabled=false;vBtn.textContent='Start 15s Ad Timer'}
-  const miniBtn=$('faucet-btn-mini');if(miniBtn)miniBtn.disabled=true;
-  $('faucet-cd').textContent='Cooldown: 5:00';
-  const winEl=$('faucet-main-btn');if(winEl){const r=winEl.getBoundingClientRect();PARTICLES.burst(r.left+r.width/2,r.top+r.height/2,['#f5a623','#ffd060','#22c55e'],40)}
-  toast('Liquidity claim processed — +$'+rew.toFixed(4)+'!','success');
-  // 5-min cooldown countdown
-  let cd=300;S.faucetCdEnd=Date.now()+cd*1000;
-  faucetCdInterval=setInterval(()=>{
-    cd--;const m=Math.floor(cd/60),s=cd%60;
-    const cdStr=m+':'+(s<10?'0':'')+s;
-    $('faucet-cd').textContent='Cooldown: '+cdStr;
-    if(cd<=0){clearInterval(faucetCdInterval);S.faucetActive=false;$('faucet-cd').textContent='Ready to claim';$('fvt-val').textContent='15';if(miniBtn)miniBtn.disabled=false;toast('Faucet protocol ready for next claim.','info')}
-  },1000);
+  if(S.faucetActive){
+    toast('Faucet on cooldown — wait for the timer.','warn');
+    return;
+  }
+
+  var rew = nfRandReward();
+
+  /* Credit balance */
+  S.balance += rew;
+  S.sessionEarned = (S.sessionEarned || 0) + rew;
+  S.faucetActive  = true;
+  _nfClaimedToday++;
+  _nfTotalEarned  = parseFloat((_nfTotalEarned + rew).toFixed(5));
+  S.nfClaimedToday = _nfClaimedToday;
+  S.nfTotalEarned  = _nfTotalEarned;
+
+  /* DOM wallet sync */
+  var str = S.balance.toFixed(5), dot = str.indexOf('.');
+  var iEl = document.getElementById('wc-bal-int'), dEl = document.getElementById('wc-bal-dec');
+  if(iEl) iEl.textContent = str.slice(0, dot);
+  if(dEl) dEl.textContent = str.slice(dot);
+  addTx('Faucet Claim', rew, 'credit');
+  updateWallet();
+  if(window.ptSyncBal) ptSyncBal();
+
+  /* Particles */
+  var btn = $('faucet-main-btn');
+  if(btn && window.PARTICLES){
+    var r = btn.getBoundingClientRect();
+    PARTICLES.burst(r.left + r.width/2, r.top + r.height/2,
+      ['#f5a623','#ffd060','#00F0A0','#00EEFF'], 45);
+  }
+
+  /* UI feedback */
+  nfBounceCoin();
+  nfFlash('+' + rew.toFixed(4) + ' PYO', '#00F0A0');
+  if(window.SFX) SFX.play('win');
+  toast('🪙 +' + rew.toFixed(4) + ' claimed!', 'success');
+  nfRefreshStats();
+
+  /* Start 5-min cooldown */
+  S.faucetCdEnd = Date.now() + FAUCET_CD_SECS * 1000;
+  nfStartCountdown(FAUCET_CD_SECS);
 }
+
+/* Auto-init after DOM ready */
+(function(){
+  function _nfInit(){
+    /* small delay so S object is initialised */
+    setTimeout(nfBootstrap, 400);
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', _nfInit);
+  } else {
+    _nfInit();
+  }
+})();
 
 /* ================================================================
    PROMO CODE CENTER ENGINE
@@ -11550,32 +11740,34 @@ document.addEventListener('DOMContentLoaded', function(){
   syncBalHero();
 });
 
-/* ── Smooth section transitions ─────────────────────── */
-/* Patch bnavGo to add smooth fade on spa-section */
+/* ── Smooth section transitions ─────────────────────────────────
+   NAVIGATION FIX: removed the 120ms setTimeout delay.
+   The original code kept old section at display:block (opacity:0)
+   for 120ms — during this window rapid nav or the querySelector
+   used to find "current section" would locate the wrong section.
+   Now: call the underlying bnavGo IMMEDIATELY (synchronous), then
+   fade the new section in. The old section is hidden by the
+   underlying bnavGo (display:none) before we touch opacity.
+─────────────────────────────────────────────────────────── */
 var _patchedBnav = window.bnavGo;
 window.bnavGo = function(sectionId, btnId){
-  var oldSec = document.querySelector('.spa-section[style*="display: block"]') ||
-               document.querySelector('.spa-section[style*="display:block"]');
-  if(oldSec && oldSec.id !== sectionId){
-    oldSec.style.transition = 'opacity .15s ease';
-    oldSec.style.opacity = '0';
-    setTimeout(function(){
-      oldSec.style.opacity = '';
-      oldSec.style.transition = '';
-      if(_patchedBnav) _patchedBnav.call(window, sectionId, btnId);
-      var newSec = document.getElementById(sectionId);
-      if(newSec){
-        newSec.style.opacity = '0';
-        newSec.style.transition = 'opacity .2s ease';
+  /* Call the underlying chain synchronously — section switch happens NOW */
+  if(_patchedBnav) _patchedBnav.call(window, sectionId, btnId);
+  triggerSectionAnim(sectionId);
+  /* Fade-in the new section (old is already display:none) */
+  var newSec = document.getElementById(sectionId);
+  if(newSec){
+    newSec.style.opacity = '0';
+    newSec.style.transition = 'opacity .18s ease';
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        newSec.style.opacity = '1';
         setTimeout(function(){
-          newSec.style.opacity = '1';
-          setTimeout(function(){ newSec.style.transition = ''; newSec.style.opacity = ''; triggerSectionAnim(sectionId); }, 220);
-        }, 20);
-      }
-    }, 120);
-  } else {
-    if(_patchedBnav) _patchedBnav.call(window, sectionId, btnId);
-    triggerSectionAnim(sectionId);
+          newSec.style.transition = '';
+          newSec.style.opacity   = '';
+        }, 200);
+      });
+    });
   }
 };
 
@@ -13972,6 +14164,31 @@ var fmtTs = function(ts){
 /* ════════════════════════════════════════════════════════════════
    PRICE ENGINE — Realistic Brownian motion with mean reversion
 ════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════
+   SYNCHRONIZED PRICE ENGINE v2
+   Uses a seeded PRNG (Mulberry32) so every device/browser that
+   loads the page during the same 10-second candle window will
+   generate IDENTICAL candle history and IDENTICAL live ticks.
+
+   Seed strategy:
+   ─ Historical candles: fixed seed derived from asset base price
+     → same history every page load, every device
+   ─ Live ticks: seed = Math.floor(Date.now() / 1000)
+     → all devices on the same wall-clock second advance identically
+   ─ Candle close: triggered when (epoch_seconds % CANDLE_SECS == 0)
+     → candles close at the same real-world moment everywhere
+════════════════════════════════════════════════════════════════ */
+
+/* ── Mulberry32: high-quality seeded 32-bit PRNG ── */
+function ptMulberry32(seed){
+  return function(){
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
 var ASSETS = {
   PYO: {
     label:'PYO / USD', color:'#00F0A0', shadowColor:'rgba(0,240,160,.6)',
@@ -13990,43 +14207,62 @@ var ASSETS = {
 };
 
 var PT_CANDLE_SECS = 10;   // seconds per candle
-var PT_MAX_CANDLES = 80;   // candles retained
+var PT_MAX_CANDLES = 300;  // candles retained in memory
 var ptTickSinceCandle = 0;
 var ptCurrentCandle  = null;
 
-/* Simulate one 1-second price tick */
+/* ── Deterministic tick: same wall-clock second → same price ── */
 function ptSimTick(sym){
   var a = ASSETS[sym];
   a.prev = a.price;
-  /* Gaussian-ish noise via CLT approx */
+  /* Seed from current epoch second + asset discriminator */
+  var tickSeed = (Math.floor(Date.now() / 1000) * 31 +
+                  (sym === 'PYO' ? 1 : 7)) >>> 0;
+  var rng = ptMulberry32(tickSeed);
+  /* Gaussian approx (CLT) */
   var u = 0;
-  for(var i=0;i<6;i++) u += Math.random();
-  u = (u-3)/3;
+  for(var i = 0; i < 6; i++) u += rng();
+  u = (u - 3) / 3;
   /* Mean reversion */
   var mr = (a.base - a.price) * 0.006;
-  /* Occasional regime drift */
-  if(Math.random() < 0.015) a.drift = (Math.random()-.5)*a.vol*0.8;
+  /* Regime drift — changes at 64-second intervals for consistency */
+  var driftSeed = (Math.floor(Date.now() / 64000) * 97 +
+                   (sym === 'PYO' ? 3 : 11)) >>> 0;
+  var drng = ptMulberry32(driftSeed);
+  if(drng() < 0.015) a.drift = (drng() - 0.5) * a.vol * 0.8;
   /* New price */
-  a.price = Math.max(a.base*.4, a.price + u*a.vol*0.55 + a.trend + mr + a.drift);
-  /* Day stats */
+  a.price = Math.max(a.base * 0.4, a.price + u * a.vol * 0.55 + a.trend + mr + a.drift);
   a.dayHigh = Math.max(a.dayHigh, a.price);
   a.dayLow  = Math.min(a.dayLow,  a.price);
   return a.price;
 }
 
-/* Update or close the current candle */
+/* ── Candle tick: closes at real wall-clock candle boundaries ── */
 function ptCandleTick(sym){
   var price = ptSimTick(sym);
   var a = ASSETS[sym];
+  /* Volume: deterministic per-tick seed */
+  var vSeed = (Math.floor(Date.now() / 1000) * 53 +
+               (sym === 'PYO' ? 5 : 13)) >>> 0;
+  var vrng = ptMulberry32(vSeed);
   if(!ptCurrentCandle){
-    ptCurrentCandle = {o:price,h:price,l:price,c:price,v:Math.random()*900+200};
+    ptCurrentCandle = {o:price, h:price, l:price, c:price,
+                       v: vrng() * 900 + 200};
   } else {
-    ptCurrentCandle.h = Math.max(ptCurrentCandle.h,price);
-    ptCurrentCandle.l = Math.min(ptCurrentCandle.l,price);
+    ptCurrentCandle.h = Math.max(ptCurrentCandle.h, price);
+    ptCurrentCandle.l = Math.min(ptCurrentCandle.l, price);
     ptCurrentCandle.c = price;
-    ptCurrentCandle.v += Math.random()*140;
+    ptCurrentCandle.v += vrng() * 140;
+  }
+  /* Close candle at real wall-clock boundary */
+  var epochSec = Math.floor(Date.now() / 1000);
+  var slotSec  = epochSec % PT_CANDLE_SECS;
+  if(ptTickSinceCandle === 0){
+    /* freshly started — align to candle slot */
+    window._ptCandleSlot = slotSec;
   }
   ptTickSinceCandle++;
+  /* Close when we've filled PT_CANDLE_SECS ticks */
   if(ptTickSinceCandle >= PT_CANDLE_SECS){
     a.candles.push(JSON.parse(JSON.stringify(ptCurrentCandle)));
     if(a.candles.length > PT_MAX_CANDLES) a.candles.shift();
@@ -14039,33 +14275,51 @@ function ptCandleTick(sym){
 function ptCalcMAs(sym){
   var c = ASSETS[sym].candles;
   ASSETS[sym].ma7 = c.map(function(_,i){
-    if(i<6)return null;
-    var s=0;for(var j=i-6;j<=i;j++)s+=c[j].c;return s/7;
+    if(i<6) return null;
+    var s=0; for(var j=i-6;j<=i;j++) s+=c[j].c; return s/7;
   });
   ASSETS[sym].ma20 = c.map(function(_,i){
-    if(i<19)return null;
-    var s=0;for(var j=i-19;j<=i;j++)s+=c[j].c;return s/20;
+    if(i<19) return null;
+    var s=0; for(var j=i-19;j<=i;j++) s+=c[j].c; return s/20;
   });
 }
 
-/* Seed historical candles so chart has data on open */
+/* ── Seed 200 historical candles from a FIXED seed ──────────────
+   Using a fixed seed means EVERY device generates the exact same
+   200 historical candles — chart history looks identical everywhere.
+──────────────────────────────────────────────────────────────── */
 function ptSeedHistory(sym){
   var a = ASSETS[sym];
-  a.candles=[];ptCurrentCandle=null;ptTickSinceCandle=0;
+  a.candles = []; ptCurrentCandle = null; ptTickSinceCandle = 0;
+  /* Fixed seed: based on base price integer mantissa so PYO ≠ VRT */
+  var histSeed = Math.round(a.base * 100000) * 7919;
+  var rng = ptMulberry32(histSeed >>> 0);
   var p = a.base;
-  for(var i=0;i<50;i++){
-    var o=p, r=a.vol*5;
-    var h=o+Math.random()*r, l=o-Math.random()*r;
-    var c=l+Math.random()*(h-l);
-    a.candles.push({o:o,h:h,l:l,c:c,v:Math.random()*1400+300});
-    p=c;
+  var drift = 0;
+  for(var i = 0; i < 200; i++){
+    var o = p;
+    if(rng() < 0.04) drift = (rng() - 0.5) * a.vol * 1.2;
+    drift *= 0.98;
+    var h = o, l = o, c = o;
+    for(var t = 0; t < 8; t++){
+      var u = 0; for(var k = 0; k < 6; k++) u += rng(); u = (u - 3) / 3;
+      var mr = (a.base - c) * 0.004;
+      c = Math.max(a.base * 0.35, c + u * a.vol * 0.5 + drift + mr);
+      h = Math.max(h, c);
+      l = Math.min(l, c);
+    }
+    var vol = rng() * 2200 + 300;
+    if(rng() < 0.06) vol *= 3.5;
+    a.candles.push({ o:o, h:h, l:l, c:c, v:vol });
+    p = c;
   }
-  a.price=p; a.prev=p;
-  a.dayOpen=a.candles[0].o;
-  a.dayHigh=Math.max.apply(null,a.candles.map(function(x){return x.h;}));
-  a.dayLow =Math.min.apply(null,a.candles.map(function(x){return x.l;}));
+  a.price = p; a.prev = p;
+  a.dayOpen = a.candles[Math.max(0, a.candles.length - 144)].o;
+  a.dayHigh = Math.max.apply(null, a.candles.slice(-144).map(function(x){ return x.h; }));
+  a.dayLow  = Math.min.apply(null, a.candles.slice(-144).map(function(x){ return x.l; }));
   ptCalcMAs(sym);
 }
+
 
 /* ════════════════════════════════════════════════════════════════
    CHART RENDERER — Professional candlestick with MAs
@@ -14073,13 +14327,17 @@ function ptSeedHistory(sym){
 ════════════════════════════════════════════════════════════════ */
 var PT_CHART = {
   sym: 'PYO',
-  offsetX: 0,        // pan offset in candles
-  zoom: 1.0,         // zoom factor (1 = normal)
+  offsetX: 0,         // pan offset in candles
+  zoom: 1.0,          // zoom factor (1 = normal)
   dragging: false,
   dragStartX: 0,
   dragStartOffset: 0,
   pinchDist: 0,
-  pinchZoom: 1
+  pinchZoom: 1,
+  /* Crosshair */
+  crossX: -1,         // mouse X in canvas pixels
+  crossY: -1,         // mouse Y in canvas pixels
+  crossVisible: false
 };
 
 function ptDrawChart(){
@@ -14087,151 +14345,139 @@ function ptDrawChart(){
   if(!canvas) return;
   var sym = PT_CHART.sym;
   var a   = ASSETS[sym];
-
-  /* Retina-aware sizing */
   var dpr  = window.devicePixelRatio || 1;
   var body = $('pt-chart-body');
   if(!body) return;
   var W = body.clientWidth, H = body.clientHeight;
   if(W===0||H===0) return;
-  canvas.width  = W*dpr; canvas.height = H*dpr;
-  canvas.style.width = W+'px'; canvas.style.height = H+'px';
-  var ctx = canvas.getContext('2d');
+  canvas.width=W*dpr; canvas.height=H*dpr;
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');
   ctx.scale(dpr,dpr);
-
-  var PAD_L=46, PAD_R=8, PAD_T=10, PAD_B=32;
+  var PAD_L=58,PAD_R=10,PAD_T=14,PAD_B=36;
   var cW=W-PAD_L-PAD_R, cH=H-PAD_T-PAD_B;
-
   ctx.clearRect(0,0,W,H);
-
-  /* ── Candlestick data ── */
-  var allCandles = a.candles.slice();
-  if(ptCurrentCandle && PT_CHART.sym === sym) allCandles.push(JSON.parse(JSON.stringify(ptCurrentCandle)));
-
-  /* zoom/pan window */
-  var visibleCount = Math.max(8, Math.round(30 / PT_CHART.zoom));
-  visibleCount = Math.min(visibleCount, allCandles.length);
-  var startIdx = Math.max(0, allCandles.length - visibleCount - Math.round(PT_CHART.offsetX));
-  startIdx = Math.max(0, Math.min(startIdx, allCandles.length - visibleCount));
-  var visible = allCandles.slice(startIdx, startIdx + visibleCount);
-  if(visible.length < 2) visible = allCandles.slice(-8);
-
-  /* price range */
-  var allH = visible.map(function(c){return c.h;});
-  var allL = visible.map(function(c){return c.l;});
-  var pMax = Math.max.apply(null,allH);
-  var pMin = Math.min.apply(null,allL);
-  var pRng = pMax-pMin || pMax*0.01;
-  pMax += pRng*.08; pMin -= pRng*.06; pRng = pMax-pMin;
-
-  function toX(i){ return PAD_L + (i+.5)*(cW/visible.length); }
-  function toY(p){ return PAD_T + cH - ((p-pMin)/pRng)*cH; }
-
-  /* ── Dark grid ── */
+  var allCandles=a.candles.slice();
+  if(ptCurrentCandle&&PT_CHART.sym===sym) allCandles.push(JSON.parse(JSON.stringify(ptCurrentCandle)));
+  var visibleCount=Math.max(10,Math.round(50/PT_CHART.zoom));
+  visibleCount=Math.min(visibleCount,allCandles.length);
+  var rawOffset=Math.round(PT_CHART.offsetX);
+  var startIdx=allCandles.length-visibleCount-rawOffset;
+  startIdx=Math.max(0,Math.min(startIdx,allCandles.length-visibleCount));
+  var visible=allCandles.slice(startIdx,startIdx+visibleCount);
+  if(visible.length<2) visible=allCandles.slice(-10);
+  var pMax=Math.max.apply(null,visible.map(function(c){return c.h;}));
+  var pMin=Math.min.apply(null,visible.map(function(c){return c.l;}));
+  var pRng=pMax-pMin||pMax*0.01;
+  pMax+=pRng*0.10; pMin-=pRng*0.08; pRng=pMax-pMin;
+  function toX(i){return PAD_L+(i+0.5)*(cW/visible.length);}
+  function toY(p){return PAD_T+cH-((p-pMin)/pRng)*cH;}
+  /* grid */
   ctx.strokeStyle='rgba(255,255,255,.04)'; ctx.lineWidth=1;
-  for(var gy=0;gy<5;gy++){
-    var yv=PAD_T+gy*(cH/4);
-    ctx.beginPath();ctx.moveTo(PAD_L,yv);ctx.lineTo(W-PAD_R,yv);ctx.stroke();
+  for(var gy=0;gy<=6;gy++){var yv=PAD_T+(gy/6)*cH;ctx.beginPath();ctx.moveTo(PAD_L,yv);ctx.lineTo(W-PAD_R,yv);ctx.stroke();}
+  for(var gx=0;gx<=8;gx++){var xv=PAD_L+(gx/8)*cW;ctx.beginPath();ctx.moveTo(xv,PAD_T);ctx.lineTo(xv,PAD_T+cH);ctx.stroke();}
+  /* y-axis labels */
+  ctx.fillStyle='rgba(255,255,255,.28)'; ctx.font='9px "DM Mono",monospace'; ctx.textAlign='right';
+  for(var pi=0;pi<=5;pi++){
+    var pv=pMin+(pi/5)*pRng;
+    var ylb=PAD_T+cH-(pi/5)*cH;
+    ctx.fillText(pv.toFixed(5),PAD_L-4,ylb+3);
   }
-  for(var gx=0;gx<6;gx++){
-    var xv=PAD_L+gx*(cW/5);
-    ctx.beginPath();ctx.moveTo(xv,PAD_T);ctx.lineTo(xv,PAD_T+cH);ctx.stroke();
-  }
-
-  /* ── Y-axis labels ── */
-  ctx.fillStyle='rgba(255,255,255,.25)';
-  ctx.font='9px "DM Mono",monospace';
-  ctx.textAlign='right';
-  for(var pi=0;pi<=4;pi++){
-    var pv=pMin+(pi/4)*pRng;
-    ctx.fillText(pv.toFixed(4),PAD_L-3,PAD_T+cH-(pi/4)*cH+3);
-  }
-
-  /* ── Volume bars ── */
+  /* volume */
   var maxVol=Math.max.apply(null,visible.map(function(c){return c.v;}));
-  var volH=cH*.14;
-  var bW=Math.max(2.5, cW/visible.length-1.8);
+  var volH=cH*0.12;
+  var bW=Math.max(2,cW/visible.length-1.5);
   visible.forEach(function(c,i){
     var bull=c.c>=c.o;
-    var vh=(c.v/maxVol)*volH;
-    ctx.fillStyle=bull?'rgba(0,240,160,.15)':'rgba(255,61,96,.15)';
-    ctx.fillRect(toX(i)-bW/2, PAD_T+cH-vh, bW, vh);
+    ctx.fillStyle=bull?'rgba(0,240,160,.18)':'rgba(255,61,96,.18)';
+    ctx.fillRect(toX(i)-bW/2,PAD_T+cH-(c.v/maxVol)*volH,bW,(c.v/maxVol)*volH);
   });
-
-  /* ── Candles ── */
+  /* candles */
   visible.forEach(function(c,i){
-    var isLast=(i===visible.length-1 && ptCurrentCandle);
+    var isLast=(i===visible.length-1&&ptCurrentCandle);
     var bull=c.c>=c.o;
-    var wick=bull?'rgba(0,240,160,.55)':'rgba(255,61,96,.55)';
-    var body2=bull
-      ?(isLast?'rgba(0,240,160,.96)':'rgba(0,240,160,.82)')
-      :(isLast?'rgba(255,61,96,.96)':'rgba(255,61,96,.8)');
-    var oY=toY(c.o),cY2=toY(c.c),hY=toY(c.h),lY=toY(c.l);
-    var btop=Math.min(oY,cY2), bh=Math.max(Math.abs(cY2-oY),1.8);
-    /* wick */
-    ctx.strokeStyle=wick; ctx.lineWidth=1.3;
-    ctx.beginPath(); ctx.moveTo(toX(i),hY); ctx.lineTo(toX(i),lY); ctx.stroke();
-    /* body */
-    ctx.fillStyle=body2;
-    if(isLast){ctx.shadowBlur=12;ctx.shadowColor=bull?'#00F0A0':'#FF3D60';}
-    ctx.fillRect(toX(i)-bW/2, btop, bW, bh);
+    var wickC=bull?'rgba(0,240,160,.6)':'rgba(255,61,96,.6)';
+    var bodyC=bull?(isLast?'rgba(0,240,160,.98)':'rgba(0,240,160,.84)'):(isLast?'rgba(255,61,96,.98)':'rgba(255,61,96,.82)');
+    var oY=toY(c.o),cY=toY(c.c),hY=toY(c.h),lY=toY(c.l);
+    var btop=Math.min(oY,cY),bh=Math.max(Math.abs(cY-oY),1.5);
+    ctx.strokeStyle=wickC; ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(toX(i),hY);ctx.lineTo(toX(i),lY);ctx.stroke();
+    ctx.fillStyle=bodyC;
+    if(isLast){ctx.shadowBlur=14;ctx.shadowColor=bull?'#00F0A0':'#FF3D60';}
+    ctx.fillRect(toX(i)-bW/2,btop,bW,bh);
     ctx.shadowBlur=0;
   });
-
-  /* ── MA7 ── */
-  ptDrawMA(ctx, a.ma7.slice(startIdx,startIdx+visibleCount), visible, toX, toY, '#FFA827', 1.6);
-  /* ── MA20 ── */
-  ptDrawMA(ctx, a.ma20.slice(startIdx,startIdx+visibleCount), visible, toX, toY, '#00EEFF', 1.2);
-
-  /* ── Current price dashed line ── */
-  var curP = a.price;
-  var cpY  = toY(curP);
-  if(cpY>=PAD_T && cpY<=PAD_T+cH){
-    ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(255,168,39,.45)'; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(PAD_L,cpY); ctx.lineTo(W-PAD_R,cpY); ctx.stroke();
+  /* MAs */
+  ptDrawMA(ctx,a.ma7.slice(startIdx,startIdx+visibleCount),visible,toX,toY,'#FFA827',1.8);
+  ptDrawMA(ctx,a.ma20.slice(startIdx,startIdx+visibleCount),visible,toX,toY,'#00EEFF',1.4);
+  /* current price line */
+  var curP=a.price, cpY=toY(curP);
+  if(cpY>=PAD_T&&cpY<=PAD_T+cH){
+    ctx.setLineDash([5,4]);ctx.strokeStyle='rgba(255,168,39,.5)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD_L,cpY);ctx.lineTo(W-PAD_R,cpY);ctx.stroke();
     ctx.setLineDash([]);
-    /* price tag */
-    ctx.fillStyle='#FFA827';
-    var tagW=48; ctx.fillRect(W-PAD_R-tagW,cpY-9,tagW,18);
-    ctx.fillStyle='#000'; ctx.font='bold 8px "DM Mono",monospace';
-    ctx.textAlign='center'; ctx.fillText(curP.toFixed(4),W-PAD_R-tagW/2,cpY+3);
+    var tagW=56; ctx.fillStyle='#FFA827'; ctx.fillRect(W-PAD_R-tagW,cpY-9,tagW,18);
+    ctx.fillStyle='#080e20';ctx.font='bold 8px "DM Mono",monospace';ctx.textAlign='center';
+    ctx.fillText(curP.toFixed(5),W-PAD_R-tagW/2,cpY+3.5);
   }
-
-  /* ── Entry price line (during active trade) ── */
-  if(ptActiveTrade && ptActiveTrade.sym===sym){
-    var ep=ptActiveTrade.entry, epY=toY(ep);
+  /* entry price line */
+  if(ptActiveTrade&&ptActiveTrade.sym===sym){
+    var ep=ptActiveTrade.entry,epY=toY(ep);
     if(epY>=PAD_T&&epY<=PAD_T+cH){
-      var edir=ptActiveTrade.dir;
-      var ec=edir==='UP'?'#00F0A0':'#FF3D60';
-      ctx.setLineDash([6,3]); ctx.strokeStyle=ec; ctx.lineWidth=1.5;
-      ctx.beginPath(); ctx.moveTo(PAD_L,epY); ctx.lineTo(W-PAD_R,epY); ctx.stroke();
+      var ec=ptActiveTrade.dir==='UP'?'#00F0A0':'#FF3D60';
+      ctx.setLineDash([7,4]);ctx.strokeStyle=ec;ctx.lineWidth=1.6;
+      ctx.beginPath();ctx.moveTo(PAD_L,epY);ctx.lineTo(W-PAD_R,epY);ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle=ec; ctx.font='bold 9px "DM Mono",monospace';
-      ctx.textAlign='left'; ctx.globalAlpha=.85;
-      ctx.fillText('ENTRY '+ep.toFixed(4), PAD_L+4, epY-3);
-      ctx.globalAlpha=1;
+      ctx.fillStyle=ec;ctx.globalAlpha=0.9;ctx.font='bold 9px "DM Mono",monospace';ctx.textAlign='left';
+      ctx.fillText('ENTRY '+ep.toFixed(5),PAD_L+5,epY-4);ctx.globalAlpha=1;
     }
   }
-
-  /* ── X-axis timestamps ── */
-  ctx.fillStyle='rgba(255,255,255,.18)';
-  ctx.textAlign='center'; ctx.font='8px "DM Mono",monospace';
-  [0, Math.floor(visible.length/2), visible.length-1].forEach(function(i){
-    var now2=new Date(Date.now()-(visible.length-1-i)*PT_CANDLE_SECS*1000);
-    ctx.fillText(now2.getHours().toString().padStart(2,'0')+':'+
-      now2.getMinutes().toString().padStart(2,'0'), toX(i), PAD_T+cH+14);
+  /* x-axis timestamps */
+  ctx.fillStyle='rgba(255,255,255,.22)';ctx.textAlign='center';ctx.font='8px "DM Mono",monospace';
+  [0,Math.floor(visible.length*0.25),Math.floor(visible.length*0.5),Math.floor(visible.length*0.75),visible.length-1].forEach(function(i){
+    var d=new Date(Date.now()-(visible.length-1-i)*PT_CANDLE_SECS*1000);
+    ctx.fillText(d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0'),toX(i),PAD_T+cH+16);
   });
-
-  /* ── OHLC display ── */
+  /* OHLC */
   var last=visible[visible.length-1];
   if(last){
     var oel=$('pt-chart-ohlc');
-    if(oel) oel.textContent='O '+last.o.toFixed(4)+' H '+last.h.toFixed(4)+
-                            ' L '+last.l.toFixed(4)+' C '+last.c.toFixed(4);
+    if(oel) oel.textContent='O '+last.o.toFixed(5)+'  H '+last.h.toFixed(5)+'  L '+last.l.toFixed(5)+'  C '+last.c.toFixed(5);
     var vel=$('pt-legend-vol');
     if(vel) vel.textContent='Vol '+(last.v/1000).toFixed(1)+'K';
   }
+  /* crosshair */
+  if(PT_CHART.crossVisible){
+    var cx=PT_CHART.crossX,cy=PT_CHART.crossY;
+    if(cx>=PAD_L&&cx<=W-PAD_R&&cy>=PAD_T&&cy<=PAD_T+cH){
+      ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(cx,PAD_T);ctx.lineTo(cx,PAD_T+cH);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(PAD_L,cy);ctx.lineTo(W-PAD_R,cy);ctx.stroke();
+      ctx.setLineDash([]);
+      var crossP=pMin+((PAD_T+cH-cy)/cH)*pRng;
+      ctx.fillStyle='rgba(200,210,230,.88)';ctx.fillRect(1,cy-9,PAD_L-3,18);
+      ctx.fillStyle='#080e20';ctx.font='bold 7.5px "DM Mono",monospace';ctx.textAlign='right';
+      ctx.fillText(crossP.toFixed(5),PAD_L-5,cy+3);
+      var ci=Math.max(0,Math.min(Math.round((cx-PAD_L)/(cW/visible.length)-0.5),visible.length-1));
+      var tc=visible[ci];
+      if(tc){
+        var bull3=tc.c>=tc.o;
+        var ttW=162,ttH=74,ttX=cx+12,ttY=Math.max(PAD_T+2,cy-42);
+        if(ttX+ttW>W-4) ttX=cx-ttW-12;
+        ctx.fillStyle='rgba(6,10,26,.94)';
+        ctx.strokeStyle=bull3?'rgba(0,240,160,.4)':'rgba(255,61,96,.4)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.rect(ttX,ttY,ttW,ttH);ctx.fill();ctx.stroke();
+        ctx.fillStyle=bull3?'#00F0A0':'#FF3D60';ctx.font='bold 9.5px "DM Mono",monospace';ctx.textAlign='left';
+        ctx.fillText((bull3?'\u25b2 ':'\u25bc ')+tc.c.toFixed(5),ttX+8,ttY+16);
+        ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='8px "DM Mono",monospace';
+        ctx.fillText('O '+tc.o.toFixed(5)+'   H '+tc.h.toFixed(5),ttX+8,ttY+30);
+        ctx.fillText('L '+tc.l.toFixed(5)+'   C '+tc.c.toFixed(5),ttX+8,ttY+44);
+        ctx.fillText('Vol '+(tc.v/1000).toFixed(1)+'K',ttX+8,ttY+58);
+      }
+    }
+  }
 }
+
 
 function ptDrawMA(ctx,ma,visible,toX,toY,color,lw){
   ctx.strokeStyle=color; ctx.lineWidth=lw; ctx.globalAlpha=.72;
@@ -14316,6 +14562,19 @@ function ptBindChartEvents(){
   },{passive:false});
   body.addEventListener('touchend',function(){ /* reset */ },{passive:true});
 
+  /* Crosshair on mousemove */
+  body.addEventListener('mousemove', function(e){
+    var r = body.getBoundingClientRect();
+    PT_CHART.crossX = e.clientX - r.left;
+    PT_CHART.crossY = e.clientY - r.top;
+    PT_CHART.crossVisible = true;
+    if(!PT_CHART.dragging) ptDrawChart();
+  });
+  body.addEventListener('mouseleave', function(){
+    PT_CHART.crossVisible = false;
+    ptDrawChart();
+  });
+
   /* Hide chart hint after first interaction */
   body.addEventListener('mousedown',function(){
     var h=$('pt-chart-hint');if(h)h.style.opacity='0';
@@ -14334,24 +14593,47 @@ function ptGetBal(){
   return (i&&d)?parseFloat(i.textContent+d.textContent)||0:0;
 }
 function ptDeduct(amt,label){
-  if(window.S){ S.balance=Math.max(0,S.balance-amt); S.sessionEarned=(S.sessionEarned||0)-amt; }
+  /* Write to S.balance AND DOM immediately — no timing gap */
+  var cur = (window.S&&typeof S.balance==='number') ? S.balance : 0;
+  var next = Math.max(0, cur - amt);
+  if(window.S) { S.balance = next; S.sessionEarned = (S.sessionEarned||0) - amt; }
+  /* Sync DOM wallet display */
+  var str=next.toFixed(5),dot=str.indexOf('.');
+  var iEl=document.getElementById('wc-bal-int'),dEl=document.getElementById('wc-bal-dec');
+  if(iEl) iEl.textContent=str.slice(0,dot);
+  if(dEl) dEl.textContent=str.slice(dot);
   if(window.addTx) addTx(label||'Trade Bet',amt,'debit');
   if(window.updateWallet) updateWallet();
   ptSyncBal();
 }
 function ptCredit(amt,label){
-  if(window.S){ S.balance+=amt; S.sessionEarned=(S.sessionEarned||0)+amt; }
+  var cur = (window.S&&typeof S.balance==='number') ? S.balance : 0;
+  var next = cur + amt;
+  if(window.S) { S.balance = next; S.sessionEarned = (S.sessionEarned||0) + amt; }
+  var str=next.toFixed(5),dot=str.indexOf('.');
+  var iEl=document.getElementById('wc-bal-int'),dEl=document.getElementById('wc-bal-dec');
+  if(iEl) iEl.textContent=str.slice(0,dot);
+  if(dEl) dEl.textContent=str.slice(dot);
   if(window.addTx) addTx(label||'Trade Win',amt,'credit');
   if(window.updateWallet) updateWallet();
   ptSyncBal();
 }
 function ptSyncBal(){
+  var bal=(window.S&&typeof S.balance==='number')
+    ? S.balance
+    : (function(){
+        var i=document.getElementById('wc-bal-int'),d=document.getElementById('wc-bal-dec');
+        return (i&&d)?parseFloat(i.textContent+(d.textContent||'.00000'))||0:0;
+      })();
   var el=$('pt-hb-val');
   if(el){
-    el.textContent=fmt(ptGetBal(),5);
+    el.textContent=bal.toFixed(5);
     el.style.animation='none';void el.offsetWidth;
     el.style.animation='ptBalFlash .5s ease';
   }
+  /* Also sync nav-bal (hidden, but JS may check it) */
+  var nb=document.getElementById('nav-bal');
+  if(nb) nb.textContent='$'+bal.toFixed(2);
 }
 
 /* ── Floating +/- label animation ── */
@@ -14953,26 +15235,20 @@ if(document.readyState==='loading'){
   scroll-behavior: smooth;
 }
 
-/* ── 2. Kill the five competing CSS animations that re-trigger on
-        every render and reset/interrupt scroll mid-flight ──────── */
+/* ── 2. Kill competing CSS animations that can reset scroll mid-flight.
+        transform:none removed — it broke the sfv2 entrance animation.
+        will-change/backface removed — they created new stacking contexts
+        that could elevate sections above the fixed z-index:990 bnav.   */
 .spa-section {
   animation: none !important;   /* overrides spaFadeIn, spaSlideIn   */
-  transform:  none !important;  /* resets residual translateY offset  */
 }
 /* First-show entrance: fired once via JS class, not wildcard CSS   */
 .spa-section.sfv2-enter {
   animation: sfv2FadeIn .22s cubic-bezier(.4,0,.2,1) both !important;
 }
 @keyframes sfv2FadeIn {
-  from { opacity:0; transform:translateY(6px); }
+  from { opacity:0; transform:translateY(5px); }
   to   { opacity:1; transform:none; }
-}
-
-/* ── 3. GPU compositing: scroll happens on compositor thread ───── */
-.spa-section {
-  will-change: scroll-position;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 /* ── 4. Fixed background layers must NEVER absorb pointer/wheel ── */
@@ -15000,9 +15276,151 @@ if(document.readyState==='loading'){
 }
 </style>
 
+<!-- ════════════════════════════════════════════════════════════
+     TRADING SCREEN — PROFESSIONAL RESPONSIVE LAYOUT v4
+     NAVIGATION FIX: trade-section NEVER gets display:flex/grid.
+     The SPA system owns display:none/block on .spa-section.
+     Only the INNER .pt-root gets the grid treatment.
+     Mobile  (< 640px)  : flex column, chart 220-280px
+     Tablet  (640-899)  : flex column, chart 280-360px
+     Laptop  (900px+)   : 2-col grid inside pt-root, chart 360-480px
+     Desktop (1200px+)  : wider columns, chart 440-560px
+     Wide    (1440px+)  : max chart 660px
+═══════════════════════════════════════════════════════════ -->
+<style id="trade-layout-css">
+
+/* ═══════════════════════════════════════════════════════════════
+   STACKING / Z-INDEX FIX
+   spa-sections use position:absolute;inset:0 — they sit inside
+   .main (z-index:1 via .wrap). Fixed elements with z-index ≥ 2
+   (navbar z-index:900, bnav z-index:990) always sit above them.
+   Setting z-index:0 on .spa-section prevents any stacking context
+   created by will-change/backface-visibility from leaking above
+   the fixed nav elements.
+═══════════════════════════════════════════════════════════════ */
+.spa-section {
+  z-index: 0;           /* never above the fixed bnav (z-index:990) */
+  isolation: isolate;   /* contain all child stacking contexts        */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REMOVE width cap on pt-root
+═══════════════════════════════════════════════════════════════ */
+.pt-root {
+  max-width: none !important;
+  /* min-height: 100% so it fills the visible section area */
+  min-height: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE CHART HEIGHT (mobile)
+═══════════════════════════════════════════════════════════════ */
+.pt-chart-body {
+  height: clamp(220px, 40vw, 280px) !important;
+}
+
+/* ══ TABLET 640px ══ */
+@media (min-width: 640px) {
+  .pt-root {
+    padding: 14px 18px 90px;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .pt-chart-body { height: clamp(280px, 36vw, 360px) !important; }
+}
+
+/* ══ LAPTOP / CHROMEBOOK 900px+
+     .pt-root becomes a 2-column grid.
+     #trade-section itself stays display:block (SPA controlled).
+     The grid content scrolls inside the section normally.
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 900px) {
+
+  /* CRITICAL: DO NOT set display on #trade-section here.
+     bnavGo controls display:none/block on the section.
+     Only target the inner layout container. */
+  .pt-root {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 345px;
+    grid-template-areas:
+      "hdr    hdr"
+      "asset  trade"
+      "chart  trade"
+      "hist   trade"
+      "stats  lb"
+      "sent   lb";
+    column-gap: 14px;
+    row-gap: 10px;
+    padding: 12px 16px 80px;
+    align-items: start;
+    min-height: 100%;
+  }
+
+  .pt-header         { grid-area: hdr;   }
+  .pt-asset-strip    { grid-area: asset; }
+  .pt-chart-card     { grid-area: chart; }
+  .pt-trade-card     {
+    grid-area: trade;
+    position: sticky;
+    top: 12px;
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,168,39,.3) transparent;
+    z-index: 1;    /* sticky needs z-index > 0 to paint above siblings */
+  }
+  .pt-trade-card::-webkit-scrollbar        { width: 3px; }
+  .pt-trade-card::-webkit-scrollbar-thumb  { background: rgba(255,168,39,.3); border-radius: 99px; }
+
+  .pt-history-card   { grid-area: hist;  }
+  .pt-stats-bar      { grid-area: stats; }
+  .pt-lb-card        { grid-area: lb;    }
+  .pt-sentiment-card { grid-area: sent;  }
+
+  .pt-chart-body { height: clamp(360px, 44vh, 480px) !important; }
+  .pt-chart-ohlc { display: flex !important; }
+}
+
+/* ══ DESKTOP 1200px+ ══ */
+@media (min-width: 1200px) {
+  .pt-root {
+    grid-template-columns: minmax(0, 1fr) 380px;
+    column-gap: 18px;
+    padding: 14px 24px 80px;
+  }
+  .pt-chart-body { height: clamp(440px, 47vh, 560px) !important; }
+  .pt-chart-pair { font-size: 17px !important; }
+  .pt-chart-ohlc { font-size: 10px !important; }
+}
+
+/* ══ WIDE DESKTOP 1440px+ ══ */
+@media (min-width: 1440px) {
+  .pt-root {
+    grid-template-columns: minmax(0, 1fr) 420px;
+    column-gap: 22px;
+    padding: 16px 36px 80px;
+  }
+  .pt-chart-body { height: clamp(500px, 50vh, 660px) !important; }
+}
+
+/* ══ MOBILE < 640px — explicit single column ══ */
+@media (max-width: 639px) {
+  .pt-root {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px 100px;
+    gap: 11px;
+  }
+}
+
+</style>
+
 <script>
 /* ════════════════════════════════════════════════════════════════
-   SCROLL FIX JS v2.0
+   SCROLL FIX JS v2.0X JS v2.0
    Minimal: no rAF polyfill (would fight native scroll), no
    double-handling, no pointer-events overrides on .main.
 ════════════════════════════════════════════════════════════════ */
@@ -15059,10 +15477,33 @@ if(document.readyState==='loading'){
     sec.scrollBy({ top: dir * (big ? sec.clientHeight * 0.85 : 80), behavior: 'smooth' });
   }, { passive: false });
 
-  /* ── DOMContentLoaded: initialise home section ───────────────── */
+  /* ── Double-tap zoom blocker — iOS Safari ───────────────────── */
+  (function(){
+    var lastTap = 0;
+    document.addEventListener('touchend', function(e){
+      var now = Date.now();
+      if(now - lastTap < 300 && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA'){
+        e.preventDefault();
+      }
+      lastTap = now;
+    }, { passive: false });
+  })();
+
+  /* ── DOMContentLoaded: sanitise section visibility + init home ── */
   var _dcl = function(){
+    /* Safety net: ensure only home-section is visible on load.
+       Any section left with display:block by a previous CSS bug
+       will be force-hidden here before the user interacts.      */
+    var sections = document.querySelectorAll('.spa-section');
+    sections.forEach(function(s){
+      if(s.id !== 'home-section'){
+        s.style.display = 'none';
+      }
+    });
+
     var home = document.getElementById('home-section');
     if(home){
+      home.style.display = 'block';
       home.style.overflowY = 'auto';
       home.style.webkitOverflowScrolling = 'touch';
       if(!home.hasAttribute('tabindex')) home.setAttribute('tabindex','-1');
@@ -15082,6 +15523,610 @@ if(document.readyState==='loading'){
 
 })();
 </script>
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     TRADING SYSTEM FIX v1.0
+     Fixes: balance deduction, insufficient-balance guard, instant
+     balance sync, "Global" hidden, portfolio card CSS + animation.
+════════════════════════════════════════════════════════════════ -->
+<style id="pt-portfolio-css">
+
+/* ══════════════════════════════════════════════
+   PORTFOLIO CARD
+══════════════════════════════════════════════ */
+.pt-portfolio-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0,240,160,.09) 0%, rgba(0,0,0,0) 60%);
+  border: 1px solid rgba(0,240,160,.28);
+  border-radius: 14px;
+  padding: 10px 16px 10px 14px;
+  min-width: 160px;
+  overflow: hidden;
+  transition: border-color .3s, box-shadow .3s;
+  box-shadow: 0 0 18px rgba(0,240,160,.08);
+  cursor: default;
+  flex-shrink: 0;
+}
+.pt-portfolio-card.pt-pf-up {
+  border-color: rgba(0,240,160,.55) !important;
+  box-shadow: 0 0 28px rgba(0,240,160,.22) !important;
+}
+.pt-portfolio-card.pt-pf-down {
+  border-color: rgba(255,61,96,.55) !important;
+  box-shadow: 0 0 28px rgba(255,61,96,.18) !important;
+  background: linear-gradient(135deg, rgba(255,61,96,.07) 0%, rgba(0,0,0,0) 60%);
+}
+
+/* Animated glow pulse */
+.pt-pf-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
+  transition: opacity .4s;
+  opacity: 0;
+}
+.pt-portfolio-card.pt-pf-up   .pt-pf-glow { background: radial-gradient(ellipse at 50% 0%, rgba(0,240,160,.18), transparent 70%); opacity: 1; }
+.pt-portfolio-card.pt-pf-down .pt-pf-glow { background: radial-gradient(ellipse at 50% 0%, rgba(255,61,96,.14), transparent 70%); opacity: 1; }
+
+.pt-pf-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.pt-pf-icon {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  background: rgba(0,240,160,.12);
+  border: 1px solid rgba(0,240,160,.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--pt-green);
+  flex-shrink: 0;
+}
+.pt-pf-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--pt-txt3);
+}
+.pt-pf-delta {
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: rgba(0,240,160,.12);
+  color: var(--pt-green);
+  border: 1px solid rgba(0,240,160,.2);
+  transition: background .3s, color .3s, border-color .3s;
+  white-space: nowrap;
+}
+.pt-pf-delta.dn {
+  background: rgba(255,61,96,.12);
+  color: var(--pt-red);
+  border-color: rgba(255,61,96,.2);
+}
+
+.pt-pf-amount-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
+}
+.pt-pf-currency {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pt-txt3);
+  margin-bottom: 1px;
+}
+.pt-pf-amount {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--pt-green);
+  letter-spacing: .01em;
+  transition: color .3s;
+  position: relative;
+}
+.pt-portfolio-card.pt-pf-down .pt-pf-amount {
+  color: var(--pt-red) !important;
+}
+
+/* Digit-flip animation */
+@keyframes ptBalUp {
+  0%   { opacity:0; transform: translateY(6px);  }
+  100% { opacity:1; transform: translateY(0);     }
+}
+@keyframes ptBalDown {
+  0%   { opacity:0; transform: translateY(-6px); }
+  100% { opacity:1; transform: translateY(0);    }
+}
+.pt-pf-amount.anim-up   { animation: ptBalUp   .28s cubic-bezier(.22,1,.36,1) both; }
+.pt-pf-amount.anim-down { animation: ptBalDown .28s cubic-bezier(.22,1,.36,1) both; }
+
+.pt-pf-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+  gap: 8px;
+}
+.pt-pf-change-lbl {
+  font-size: 9px;
+  font-family: 'DM Mono', monospace;
+  color: var(--pt-txt3);
+  transition: color .3s;
+  white-space: nowrap;
+}
+.pt-pf-change-lbl.up { color: var(--pt-green); }
+.pt-pf-change-lbl.dn { color: var(--pt-red);   }
+.pt-pf-session {
+  font-size: 8.5px;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.2);
+  text-transform: uppercase;
+}
+
+/* Insufficient balance shake animation */
+@keyframes ptShake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-5px); }
+  40%     { transform: translateX(5px);  }
+  60%     { transform: translateX(-4px); }
+  80%     { transform: translateX(4px);  }
+}
+.pt-insufficient-shake {
+  animation: ptShake .4s cubic-bezier(.36,.07,.19,.97) both;
+  border-color: rgba(255,61,96,.6) !important;
+  box-shadow: 0 0 20px rgba(255,61,96,.3) !important;
+}
+
+/* Insufficient balance error label */
+.pt-insuf-err {
+  display: none;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--pt-red);
+  letter-spacing: .04em;
+  padding: 4px 0 0 2px;
+  animation: ptBalDown .2s ease both;
+}
+.pt-insuf-err.show { display: block; }
+
+</style>
+
+<script id="pt-trading-fix">
+/* ════════════════════════════════════════════════════════════════
+   TRADING SYSTEM FIX JS
+   1. Bulletproof balance read/write (handles S.balance + DOM fallback)
+   2. Instant deduction on trade placement
+   3. Insufficient balance guard with shake + error message
+   4. Portfolio card: animated number updates, up/down color states
+   5. ptSyncBal wired to portfolio card
+════════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+
+  /* ── Tracked previous balance for delta calculation ── */
+  var _ptPrevBal = null;
+
+  /* ── Read balance robustly: S.balance first, DOM fallback ── */
+  function ptReadBal(){
+    if(window.S && typeof S.balance === 'number') return S.balance;
+    var i = document.getElementById('wc-bal-int');
+    var d = document.getElementById('wc-bal-dec');
+    if(i && d){
+      var raw = (i.textContent || '0') + (d.textContent || '.00000');
+      var v = parseFloat(raw);
+      return isNaN(v) ? 0 : v;
+    }
+    return 0;
+  }
+
+  /* ── Write balance to S.balance AND DOM ── */
+  function ptWriteBal(newBal){
+    newBal = Math.max(0, newBal);
+    if(window.S) S.balance = newBal;
+    /* Also update DOM display so wallet section stays in sync */
+    var str    = newBal.toFixed(5);
+    var dotIdx = str.indexOf('.');
+    var intPart = str.slice(0, dotIdx);
+    var decPart = str.slice(dotIdx);
+    var iEl = document.getElementById('wc-bal-int');
+    var dEl = document.getElementById('wc-bal-dec');
+    if(iEl) iEl.textContent = intPart;
+    if(dEl) dEl.textContent = decPart;
+    return newBal;
+  }
+
+  /* ── Animate the portfolio amount number ── */
+  function ptAnimateAmount(oldVal, newVal){
+    var el = document.getElementById('pt-hb-val');
+    if(!el) return;
+    var up = newVal >= oldVal;
+    el.classList.remove('anim-up','anim-down');
+    void el.offsetWidth;
+    el.textContent = newVal.toFixed(5);
+    el.classList.add(up ? 'anim-up' : 'anim-down');
+    setTimeout(function(){ el.classList.remove('anim-up','anim-down'); }, 400);
+  }
+
+  /* ── Update the full portfolio card UI ── */
+  function ptRefreshPortfolio(newBal, direction){
+    var card    = document.getElementById('pt-portfolio-card');
+    var deltaEl = document.getElementById('pt-pf-delta');
+    var changeEl= document.getElementById('pt-pf-change-lbl');
+    if(!card) return;
+
+    var prev = (_ptPrevBal === null) ? newBal : _ptPrevBal;
+    var diff  = newBal - prev;
+    var absDiff = Math.abs(diff);
+    var up   = diff > 0.000001;
+    var dn   = diff < -0.000001;
+
+    /* Card color state */
+    card.classList.remove('pt-pf-up','pt-pf-down');
+    if(up) card.classList.add('pt-pf-up');
+    if(dn) card.classList.add('pt-pf-down');
+
+    /* Animate number */
+    if(_ptPrevBal !== null && Math.abs(diff) > 0.000001){
+      ptAnimateAmount(prev, newBal);
+    } else {
+      var amtEl = document.getElementById('pt-hb-val');
+      if(amtEl) amtEl.textContent = newBal.toFixed(5);
+    }
+
+    /* Delta badge */
+    if(deltaEl){
+      if(up){
+        deltaEl.textContent = '+$' + absDiff.toFixed(4);
+        deltaEl.className   = 'pt-pf-delta';
+      } else if(dn){
+        deltaEl.textContent = '-$' + absDiff.toFixed(4);
+        deltaEl.className   = 'pt-pf-delta dn';
+      } else {
+        deltaEl.textContent = '—';
+        deltaEl.className   = 'pt-pf-delta';
+      }
+    }
+
+    /* Change label */
+    if(changeEl){
+      if(up){
+        changeEl.textContent = '▲ +$' + absDiff.toFixed(4) + ' profit';
+        changeEl.className   = 'pt-pf-change-lbl up';
+      } else if(dn){
+        changeEl.textContent = '▼ -$' + absDiff.toFixed(4) + ' loss';
+        changeEl.className   = 'pt-pf-change-lbl dn';
+      } else {
+        changeEl.textContent = 'No change';
+        changeEl.className   = 'pt-pf-change-lbl';
+      }
+    }
+
+    /* Reset card color after 2.5s */
+    if(up || dn){
+      setTimeout(function(){
+        if(card){
+          card.classList.remove('pt-pf-up','pt-pf-down');
+        }
+      }, 2500);
+    }
+
+    _ptPrevBal = newBal;
+  }
+
+  /* ── Override ptSyncBal to drive the portfolio card ── */
+  window.addEventListener('load', function(){
+    /* Override must run AFTER ptInit so it wraps the final definition */
+    var _origSync = window.ptSyncBal;
+    window.ptSyncBal = function(){
+      var bal = ptReadBal();
+      ptRefreshPortfolio(bal);
+      /* Still call original for any other side effects */
+      if(typeof _origSync === 'function') _origSync.call(window);
+    };
+
+    /* Override ptDeduct to guarantee immediate DOM + S.balance write */
+    var _origDeduct = window.ptDeduct;
+    window.ptDeduct = function(amt, label){
+      var cur  = ptReadBal();
+      var next = ptWriteBal(cur - amt);
+      ptRefreshPortfolio(next);
+      /* Call addTx and updateWallet after we've already updated balance */
+      if(window.addTx) addTx(label || 'Trade Bet', amt, 'debit');
+      if(window.updateWallet) updateWallet();
+    };
+
+    /* Override ptCredit to guarantee immediate DOM + S.balance write */
+    var _origCredit = window.ptCredit;
+    window.ptCredit = function(amt, label){
+      var cur  = ptReadBal();
+      var next = ptWriteBal(cur + amt);
+      ptRefreshPortfolio(next);
+      if(window.addTx) addTx(label || 'Trade Win', amt, 'credit');
+      if(window.updateWallet) updateWallet();
+    };
+
+    /* Override ptGetBal to always use our robust reader */
+    window.ptGetBal = function(){
+      return ptReadBal();
+    };
+
+    /* Override ptTrade to add visual feedback on insufficient balance */
+    var _origTrade = window.ptTrade;
+    window.ptTrade = function(dir){
+      /* Validate balance before calling original */
+      var bet = (window.ptGetBet ? ptGetBet() : 0);
+      var bal = ptReadBal();
+      if(bet > 0 && bet > bal){
+        /* Shake the portfolio card + show inline error */
+        var card = document.getElementById('pt-portfolio-card');
+        if(card){
+          card.classList.remove('pt-insufficient-shake');
+          void card.offsetWidth;
+          card.classList.add('pt-insufficient-shake');
+          setTimeout(function(){ card.classList.remove('pt-insufficient-shake'); }, 500);
+        }
+        /* Show inline error under input */
+        var errEl = document.getElementById('pt-insuf-err');
+        if(errEl){
+          errEl.classList.add('show');
+          setTimeout(function(){ if(errEl) errEl.classList.remove('show'); }, 3000);
+        }
+        if(window.ptToast) ptToast('Insufficient balance — need $' + bet.toFixed(4), 'error');
+        return;
+      }
+      if(typeof _origTrade === 'function') _origTrade.call(window, dir);
+    };
+
+    /* ── Initialise portfolio card display on load ── */
+    setTimeout(function(){
+      var bal = ptReadBal();
+      _ptPrevBal = bal;
+      var amtEl = document.getElementById('pt-hb-val');
+      if(amtEl) amtEl.textContent = bal.toFixed(5);
+      /* Set session label */
+      var sesEl = document.getElementById('pt-pf-session');
+      if(sesEl) sesEl.textContent = 'Live Session';
+    }, 300);
+  });
+
+})();
+</script>
+
+<style id="faucet-v3-css">
+/* ═══════════════════════════════════════════════════════════════
+   FAUCET v3 — Clean modern design
+═══════════════════════════════════════════════════════════════ */
+
+/* Header */
+.nf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px 14px;
+  border-bottom: 1px solid var(--bdr2);
+  background: rgba(0,212,255,.03);
+}
+.nf-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nf-header-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(0,212,255,.1);
+  border: 1px solid rgba(0,212,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+.nf-header-title {
+  font-family: var(--f-display);
+  font-size: 15px; font-weight: 700; letter-spacing: .04em;
+  color: var(--txt);
+}
+.nf-header-sub {
+  font-size: 11px; color: var(--txt3); margin-top: 1px;
+  font-family: var(--f-mono);
+}
+.nf-live-badge {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 9px; font-weight: 800; letter-spacing: .12em;
+  color: var(--green); text-transform: uppercase;
+}
+.nf-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: nfPing 1.8s ease-in-out infinite;
+}
+@keyframes nfPing {
+  0%,100% { opacity: 1; box-shadow: 0 0 8px var(--green); }
+  50%      { opacity: .6; box-shadow: 0 0 16px var(--green), 0 0 28px rgba(0,240,160,.3); }
+}
+
+/* Body */
+.nf-body {
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Coin */
+.nf-coin-wrap { text-align: center; }
+.nf-coin {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: conic-gradient(#ffd060 0deg,#f5a623 90deg,#c2811a 180deg,#f5a623 270deg,#ffd060 360deg);
+  box-shadow: 0 0 32px rgba(245,166,35,.5), 0 0 60px rgba(245,166,35,.2),
+              inset 0 2px 4px rgba(255,255,255,.5);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 8px;
+  position: relative;
+  animation: nfCoinFloat 3s ease-in-out infinite;
+}
+@keyframes nfCoinFloat {
+  0%,100% { transform: translateY(0) rotate(0deg); box-shadow: 0 0 32px rgba(245,166,35,.5); }
+  50%      { transform: translateY(-5px) rotate(4deg); box-shadow: 0 8px 40px rgba(245,166,35,.7); }
+}
+.nf-coin-bounce {
+  animation: nfCoinBounce .6s cubic-bezier(.36,.07,.19,.97) !important;
+}
+@keyframes nfCoinBounce {
+  0%   { transform: scale(1) rotate(0); }
+  25%  { transform: scale(1.25) rotate(-15deg); }
+  50%  { transform: scale(.9)  rotate(10deg); }
+  75%  { transform: scale(1.1) rotate(-5deg); }
+  100% { transform: scale(1)   rotate(0); }
+}
+.nf-reward-range {
+  font-family: var(--f-display);
+  font-size: 22px; font-weight: 700; letter-spacing: .04em;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; text-align: center;
+}
+.nf-reward-range span { font-size: 14px; }
+.nf-reward-sub { font-size: 11px; color: var(--txt3); text-align: center; }
+
+/* Timer block */
+.nf-timer-block {
+  width: 100%; max-width: 320px;
+  background: var(--bg4);
+  border: 1px solid var(--bdr2);
+  border-radius: var(--r-md);
+  padding: 18px 20px 14px;
+  text-align: center;
+  transition: border-color .3s, box-shadow .3s;
+}
+.nf-timer-block.nf-ready {
+  border-color: rgba(0,240,160,.4) !important;
+  box-shadow: 0 0 24px rgba(0,240,160,.15) !important;
+}
+.nf-timer-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--txt3); margin-bottom: 8px;
+}
+.nf-timer-display {
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+  margin-bottom: 12px;
+}
+.nf-td-mm, .nf-td-ss {
+  font-family: var(--f-mono);
+  font-size: 48px; font-weight: 700; line-height: 1;
+  color: var(--txt);
+  letter-spacing: -.02em;
+  min-width: 58px; text-align: center;
+  transition: color .3s;
+}
+.nf-timer-block.nf-ready .nf-td-mm,
+.nf-timer-block.nf-ready .nf-td-ss {
+  color: var(--green);
+  text-shadow: 0 0 20px rgba(0,240,160,.4);
+}
+.nf-td-sep {
+  font-family: var(--f-mono);
+  font-size: 40px; font-weight: 700; color: var(--txt3);
+  padding-bottom: 4px;
+}
+.nf-timer-bar-wrap {
+  height: 4px; border-radius: 99px;
+  background: rgba(255,255,255,.07);
+  overflow: hidden;
+}
+.nf-timer-bar {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  transition: width .9s linear;
+}
+.nf-timer-block.nf-ready .nf-timer-bar {
+  background: linear-gradient(90deg, var(--green), #00ff88);
+}
+
+/* Claim button */
+.nf-claim-btn {
+  width: 100%; max-width: 320px;
+  padding: 15px 24px;
+  border-radius: var(--r-md);
+  border: none; cursor: pointer;
+  font-family: var(--f-display);
+  font-size: 16px; font-weight: 700; letter-spacing: .05em;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: all .2s var(--ease);
+  background: linear-gradient(135deg, #00EEFF 0%, #00b4cc 50%, #22c55e 100%);
+  color: #000;
+  box-shadow: 0 6px 24px rgba(0,212,255,.35);
+}
+.nf-claim-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(0,212,255,.5), 0 0 0 1px rgba(0,212,255,.3);
+}
+.nf-claim-btn:active:not(:disabled) { transform: scale(.97); }
+.nf-claim-btn:disabled {
+  opacity: .35; pointer-events: none;
+  background: rgba(255,255,255,.08);
+  color: var(--txt3); box-shadow: none;
+}
+.nf-btn-icon { font-size: 20px; }
+.nf-btn-text { font-size: 15px; }
+
+/* Reward flash */
+.nf-reward-flash {
+  font-family: var(--f-mono);
+  font-size: 20px; font-weight: 700;
+  opacity: 0; pointer-events: none;
+  min-height: 28px; text-align: center;
+}
+@keyframes nfFlashAnim {
+  0%   { opacity: 0; transform: translateY(10px) scale(.85); }
+  20%  { opacity: 1; transform: translateY(-4px) scale(1.08); }
+  60%  { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-18px) scale(.95); }
+}
+.nf-reward-flash.nf-flash-anim {
+  animation: nfFlashAnim 1.4s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Stats row */
+.nf-stats-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; width: 100%; max-width: 320px;
+  background: var(--bg4); border: 1px solid var(--bdr2); border-radius: var(--r-md);
+  overflow: hidden;
+}
+.nf-stat {
+  flex: 1; text-align: center; padding: 12px 8px;
+}
+.nf-stat-sep {
+  width: 1px; align-self: stretch;
+  background: var(--bdr2);
+}
+.nf-stat-val {
+  font-family: var(--f-mono);
+  font-size: 15px; font-weight: 700; color: var(--txt);
+  margin-bottom: 2px;
+}
+.nf-stat-lbl {
+  font-size: 9px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--txt3);
+}
+
+/* Mobile tweaks */
+@media (max-width: 500px) {
+  .nf-td-mm, .nf-td-ss { font-size: 38px; min-width: 46px; }
+  .nf-td-sep { font-size: 32px; }
+  .nf-body { padding: 20px 16px 18px; gap: 16px; }
+}
+</style>
 
 </body>
 </html>
