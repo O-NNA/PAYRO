@@ -9704,6 +9704,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       ════════════════════════════════════════════ */
       function tvInitFirebase(){
         try {
+          if(typeof firebase === 'undefined'){ console.warn('Firebase SDK not loaded — skipping.'); return; }
           var app;
           if(!firebase.apps || firebase.apps.length===0){
             app = firebase.initializeApp(FB_CONFIG);
@@ -10020,12 +10021,12 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         <div style="background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.14);border-radius:12px;padding:14px 16px;">
           <div style="font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--cyan);text-transform:uppercase;margin-bottom:8px">🌐 Global Video Hub — Share a Video with All Users</div>
           <div style="display:flex;gap:8px;margin-bottom:8px">
-            <input class="gvh-url-input" id="gvh-url-input" type="url" placeholder="Paste YouTube or Vimeo URL…" style="flex:1;min-width:0">
+            <input class="gvh-url-input" id="gvh-url-input" type="url" placeholder="YouTube, TikTok, Instagram, Twitter link paste karo…" style="flex:1;min-width:0">
             <button class="gvh-add-btn" id="gvh-add-btn" onclick="gvhSubmitVideo()">Add</button>
           </div>
           <input class="gvh-title-input" id="gvh-title-input" type="text" placeholder="Optional: custom title" style="width:100%;margin-bottom:8px">
           <div class="gvh-submit-status" id="gvh-submit-status"></div>
-          <div style="font-size:10px;color:var(--txt3);margin-top:4px">Videos added here appear for <strong style="color:var(--cyan)">ALL users</strong> instantly · Earn <strong style="color:var(--gold)">+15 PC</strong> after 30s watch · Thumbnails auto-fetched</div>
+          <div style="font-size:10px;color:var(--txt3);margin-top:4px">YouTube · TikTok · Instagram · Twitter/X · Vimeo · Dailymotion — <strong style="color:var(--cyan)">ALL users</strong> ko dikhe · Earn <strong style="color:var(--gold)">+15 PC</strong> after 30s watch · Thumbnails auto-fetched</div>
         </div>
       </div>
 
@@ -10198,6 +10199,10 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
                 <option value="medium">⚡ 360p</option>
               </select>
             </div>
+            <button class="vsh-ftr-btn" onclick="vshFullscreen()" title="Fullscreen" style="padding:5px 10px">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+              Full
+            </button>
             <button class="vsh-player-close" onclick="vshClosePlayer()">
               <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
@@ -18275,33 +18280,36 @@ if(document.readyState==='loading'){
 /* Thumb */
 .vsh-thumb {
   position: relative; width: 100%; padding-top: 56.25%;
-  background: var(--bg3); overflow: hidden; flex-shrink: 0;
+  background: linear-gradient(135deg,#0e1326,#060911); overflow: hidden; flex-shrink: 0;
 }
 .vsh-thumb img {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; transition: transform .4s var(--ease), filter .3s;
 }
+.vsh-thumb::after {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background: linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 50%);
+}
 .vsh-card:hover .vsh-thumb img { transform: scale(1.07); filter: brightness(1.08); }
 .vsh-thumb-ph {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
-  background: linear-gradient(135deg,var(--bg3),var(--bg4));
+  background: linear-gradient(135deg,#0f1428,#08090f);
   color: var(--txt3); font-size: 11px; font-weight: 600;
 }
 
-/* Play overlay */
+/* Play overlay — always visible on mobile, hover on desktop */
 .vsh-play-ov {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,.3); opacity: 0; transition: opacity .25s;
+  background: rgba(0,0,0,.18); opacity: 1; transition: opacity .25s; z-index: 3;
 }
-.vsh-card:hover .vsh-play-ov { opacity: 1; }
 .vsh-play-circle {
   width: 54px; height: 54px; border-radius: 50%;
-  background: rgba(245,166,35,.9); box-shadow: 0 0 30px rgba(245,166,35,.6);
+  background: rgba(245,166,35,.92); box-shadow: 0 0 30px rgba(245,166,35,.55);
   display: flex; align-items: center; justify-content: center; color: #1a0e00;
-  transform: scale(.78); transition: transform .25s var(--spring);
+  transform: scale(1); transition: transform .25s var(--spring);
 }
-.vsh-card:hover .vsh-play-circle { transform: scale(1); }
+.vsh-card:hover .vsh-play-circle { transform: scale(1.12); box-shadow: 0 0 44px rgba(245,166,35,.8); }
 
 /* Badges on thumb */
 .vsh-dur-badge {
@@ -19845,7 +19853,15 @@ function v3Save() {
 }
 
 function v3Load() {
-  try { var d = JSON.parse(localStorage.getItem(KEY_VIDS) || '[]'); if(Array.isArray(d)) V3.videos = d; } catch(e){}
+  try {
+    var d = JSON.parse(localStorage.getItem(KEY_VIDS) || '[]');
+    if(Array.isArray(d)) {
+      /* Repair every stored video — fix null embedBase, missing thumb, wrong source */
+      V3.videos = d.map(function(v){ return v3RepairVideo(v); });
+      /* Save repaired data back */
+      try { localStorage.setItem(KEY_VIDS, JSON.stringify(V3.videos)); } catch(e){}
+    }
+  } catch(e){}
   try {
     var sub = JSON.parse(localStorage.getItem(KEY_SUB) || 'null');
     if (sub && sub.expiry && Date.now() < sub.expiry) { V3.sub = true; V3.expiry = sub.expiry; }
@@ -19880,12 +19896,29 @@ function v3Parse(url) {
 /* Build embed URL with quality param */
 function v3EmbedUrl(vid, quality) {
   var q = quality || V3.currentQuality;
-  var base = vid.embedBase || '';
-  if (vid.source === 'YouTube') {
+  var rawBase = vid.embedBase || '';
+  /* If embedBase missing, re-derive from URL (handles old localStorage data) */
+  if (!rawBase && vid.url) {
+    var _u = vid.url;
+    var ytM = _u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+    if (ytM) rawBase = 'https://www.youtube.com/embed/' + ytM[1];
+    if (!rawBase) { var viM = _u.match(/vimeo\.com\/(\d+)/); if (viM) rawBase = 'https://player.vimeo.com/video/' + viM[1]; }
+    if (!rawBase) { var dmM = _u.match(/dailymotion\.com\/video\/([a-z0-9]+)/i); if (dmM) rawBase = 'https://www.dailymotion.com/embed/video/' + dmM[1]; }
+    if (rawBase) vid.embedBase = rawBase; // cache for next call
+  }
+  if(!rawBase) return null;
+  var base = rawBase.split('?')[0]; // always strip old params cleanly
+  var src = vid.source || '';
+  if (src === 'YouTube' || base.indexOf('youtube.com/embed') >= 0) {
     var vq = { hd1080:'hd1080', hd720:'hd720', large:'large', medium:'medium' }[q] || 'hd720';
     return base + '?autoplay=1&rel=0&vq=' + vq + '&modestbranding=1';
   }
-  if (vid.source === 'Vimeo') return base + '?autoplay=1&quality=' + (q === 'hd1080' ? '1080p' : q === 'hd720' ? '720p' : '480p');
+  if (src === 'Vimeo' || base.indexOf('vimeo.com') >= 0) {
+    return base + '?autoplay=1&quality=' + (q === 'hd1080' ? '1080p' : q === 'hd720' ? '720p' : '480p');
+  }
+  if (src === 'Dailymotion' || base.indexOf('dailymotion.com') >= 0) {
+    return base + '?autoplay=1&quality=1080';
+  }
   return base;
 }
 
@@ -19927,7 +19960,62 @@ function v3Render() {
   v3UpdateCategoryFilters();
 }
 
+/* ── Repair a video object — re-derive thumb/embedBase/source from URL ── */
+function v3RepairVideo(v) {
+  if (!v || !v.url) return v;
+  var _u = v.url;
+
+  /* Detect YouTube */
+  var ytM = _u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if (ytM) {
+    if (!v.thumb || v.thumb === '') v.thumb = 'https://img.youtube.com/vi/' + ytM[1] + '/hqdefault.jpg';
+    if (!v.thumbFb || v.thumbFb === '') v.thumbFb = 'https://img.youtube.com/vi/' + ytM[1] + '/mqdefault.jpg';
+    if (!v.embedBase || v.embedBase === null || v.embedBase.indexOf('?') >= 0) v.embedBase = 'https://www.youtube.com/embed/' + ytM[1];
+    if (!v.source || v.source === 'Direct') v.source = 'YouTube';
+    v.ytId = ytM[1];
+    return v;
+  }
+
+  /* Detect Vimeo */
+  var viM = _u.match(/vimeo\.com\/(\d+)/);
+  if (viM) {
+    if (!v.thumb || v.thumb === '') v.thumb = 'https://vumbnail.com/' + viM[1] + '.jpg';
+    if (!v.embedBase || v.embedBase === null) v.embedBase = 'https://player.vimeo.com/video/' + viM[1];
+    if (!v.source || v.source === 'Direct') v.source = 'Vimeo';
+    return v;
+  }
+
+  /* Detect Dailymotion */
+  var dmM = _u.match(/dailymotion\.com\/video\/([a-z0-9]+)/i);
+  if (dmM) {
+    if (!v.thumb || v.thumb === '') v.thumb = 'https://www.dailymotion.com/thumbnail/video/' + dmM[1];
+    if (!v.embedBase || v.embedBase === null) v.embedBase = 'https://www.dailymotion.com/embed/video/' + dmM[1];
+    if (!v.source || v.source === 'Direct') v.source = 'Dailymotion';
+    return v;
+  }
+
+  /* TikTok / Instagram / Twitter / Facebook — no embed, platform icon as thumb */
+  var extPlatforms = {
+    tiktok:    { re: /tiktok\.com/i,    icon: 'https://img.icons8.com/color/96/tiktok.png',      label: 'TikTok' },
+    instagram: { re: /instagram\.com/i, icon: 'https://img.icons8.com/color/96/instagram-new.png', label: 'Instagram' },
+    twitter:   { re: /twitter\.com|x\.com/i, icon: 'https://img.icons8.com/color/96/twitter--v1.png', label: 'Twitter/X' },
+    facebook:  { re: /facebook\.com/i,  icon: 'https://img.icons8.com/color/96/facebook-new.png', label: 'Facebook' }
+  };
+  for (var key in extPlatforms) {
+    if (extPlatforms[key].re.test(_u)) {
+      if (!v.thumb || v.thumb === '') v.thumb = extPlatforms[key].icon;
+      v.embedBase = null; v.external = true;
+      if (!v.source || v.source === 'Direct') v.source = extPlatforms[key].label;
+      return v;
+    }
+  }
+  return v;
+}
+
 function v3BuildCard(v, idx) {
+  /* Always repair before rendering */
+  v3RepairVideo(v);
+
   var catColors = { Finance:'var(--gold)', Gaming:'var(--red)', Earning:'var(--green)', Tech:'var(--cyan)', Trading:'var(--violet)', Other:'var(--txt2)' };
   var todayKey  = new Date().toISOString().slice(0,10);
   var watched   = V3.watched[v.id + '_' + todayKey] || V3.watched[v.id];
@@ -19948,19 +20036,37 @@ function v3BuildCard(v, idx) {
     + '<option value="medium">⚡ 360p</option>'
     + '</select></div>';
 
+  /* Platform badge color */
+  var srcBadgeColor = v.source === 'YouTube' ? '#ff0000' : v.source === 'TikTok' ? '#010101' : v.source === 'Instagram' ? '#E1306C' : 'var(--txt3)';
+  var srcIcon = v.source === 'YouTube' ? '▶' : v.source === 'TikTok' ? '♪' : v.source === 'Instagram' ? '📷' : '▶';
+
+  /* Thumb HTML — use img if thumb exists, else colored gradient placeholder */
+  var thumbHtml;
+  if (v.thumb && v.thumb !== '') {
+    thumbHtml = '<img src="' + v.thumb + '" alt="' + (v.title||'') + '" loading="lazy" '
+      + 'style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" '
+      + 'onerror="this.onerror=null;this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+      + '<div class="vsh-thumb-ph" style="display:none;">'
+        + '<span style="font-size:28px">' + srcIcon + '</span>'
+        + '<span style="font-size:11px;margin-top:4px;color:rgba(255,255,255,.6)">' + (v.source||'Video') + '</span>'
+      + '</div>';
+  } else {
+    thumbHtml = '<div class="vsh-thumb-ph">'
+      + '<span style="font-size:28px">' + srcIcon + '</span>'
+      + '<span style="font-size:11px;margin-top:4px;color:rgba(255,255,255,.6)">' + (v.source||'Video') + '</span>'
+    + '</div>';
+  }
+
   card.innerHTML =
     '<div class="vsh-thumb">'
-      + (v.thumb ? '<img src="' + v.thumb + '" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' : '')
-      + '<div class="vsh-thumb-ph" style="' + (v.thumb ? 'display:none' : '') + '">'
-          + '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
-          + v.source
-        + '</div>'
+      + thumbHtml
       + '<div class="vsh-play-ov"><div class="vsh-play-circle"><svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" style="margin-left:2px"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>'
       + '<div class="vsh-pts-badge">+' + (v.pts||5) + ' pts</div>'
       + '<div class="vsh-cat-badge">' + (v.cat||'Video') + '</div>'
       + (v.duration ? '<div class="vsh-dur-badge">' + v.duration + '</div>' : '')
       + (watched ? '<div class="vsh-watched-badge">✓ Watched</div>' : '')
       + (locked ? '<div class="vsh-lock-ov"><div class="vsh-lock-ov-icon">🔒</div><div class="vsh-lock-ov-txt">Premium Only</div><div class="vsh-lock-ov-sub">$0.50/mo</div></div>' : '')
+      + '<div class="vsh-src-badge" style="position:absolute;bottom:32px;right:8px;background:' + srcBadgeColor + ';color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.04em">' + (v.source||'Video') + '</div>'
     + '</div>'
     + '<div class="vsh-card-body">'
       + '<div class="vsh-card-title">' + (v.title || v3TitleFromUrl(v.url)) + '</div>'
@@ -20005,6 +20111,33 @@ window.v3OpenPlayer = function(v) {
     if(window.toast) toast('Subscribe $0.50/mo to watch premium content!','warn');
     return;
   }
+
+  /* ── Re-derive embedBase from URL if null/missing (handles old localStorage data) ── */
+  var embedBase = v.embedBase || null;
+  if (!embedBase && v.url) {
+    var _u = v.url;
+    var ytM = _u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+    if (ytM) embedBase = 'https://www.youtube.com/embed/' + ytM[1];
+    if (!embedBase) {
+      var viM = _u.match(/vimeo\.com\/(\d+)/);
+      if (viM) embedBase = 'https://player.vimeo.com/video/' + viM[1];
+    }
+    if (!embedBase) {
+      var dmM = _u.match(/dailymotion\.com\/video\/([a-z0-9]+)/i);
+      if (dmM) embedBase = 'https://www.dailymotion.com/embed/video/' + dmM[1];
+    }
+    if (embedBase) v.embedBase = embedBase; // patch the object for future calls
+  }
+
+  // Platforms that cannot be embedded in iframe → open in new tab
+  var cannotEmbed = !embedBase;
+  if (cannotEmbed) {
+    window.open(v.url, '_blank');
+    if(window.v3AwardPoints) v3AwardPoints(v);
+    if(window.toast) toast('🔗 ' + (v.source||'Video') + ' — nayi tab mein khula!', 'info');
+    return 'external'; // signal to GVH wrapper
+  }
+
   V3.currentVid = v;
 
   var modal   = document.getElementById('vsh-player-modal');
@@ -20016,9 +20149,8 @@ window.v3OpenPlayer = function(v) {
   if (!modal) return;
 
   if (titleEl) titleEl.textContent = v.title || v3TitleFromUrl(v.url);
-  if (srcEl)   srcEl.textContent   = v.url.length > 60 ? v.url.slice(0,57) + '…' : v.url;
+  if (srcEl)   srcEl.textContent   = v.url.length > 55 ? v.url.slice(0,52) + '…' : v.url;
 
-  /* Quality from card preference or global */
   var quality = v._cardQuality || V3.currentQuality;
   var hdSel = document.getElementById('vsh-hd-select');
   if (hdSel) hdSel.value = quality;
@@ -20027,12 +20159,11 @@ window.v3OpenPlayer = function(v) {
   document.body.style.overflow = 'hidden';
 
   if (V3.sub) {
-    /* Premium: instant play */
     if (gate) gate.className = 'vsh-ad-gate done';
-    if (iframe) iframe.src = v3EmbedUrl(v, quality);
+    var embedSrc = v3EmbedUrl(v, quality);
+    if (iframe && embedSrc) iframe.src = embedSrc;
     v3AwardPoints(v);
   } else {
-    /* Free: 5-second ad countdown */
     if (gate) gate.className = 'vsh-ad-gate';
     v3RunAdTimer(v, iframe, quality);
   }
@@ -20056,7 +20187,8 @@ function v3RunAdTimer(v, iframe, quality) {
     if (rem <= 0) {
       clearInterval(V3.adTimer);
       if (gate) gate.className = 'vsh-ad-gate done';
-      if (iframe) iframe.src = v3EmbedUrl(v, quality);
+      var embedSrc = v3EmbedUrl(v, quality);
+      if (iframe && embedSrc) iframe.src = embedSrc;
       v3AwardPoints(v);
     }
   }, 1000);
@@ -20072,6 +20204,23 @@ window.vshClosePlayer = function() {
   if (gate)   gate.className = 'vsh-ad-gate';
   document.body.style.overflow = '';
   V3.currentVid = null;
+};
+
+window.vshFullscreen = function() {
+  var wrap = document.getElementById('vsh-iframe-wrap');
+  var iframe = document.getElementById('vsh-iframe');
+  var el = iframe || wrap;
+  if (!el) return;
+  try {
+    if (el.requestFullscreen)       el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.mozRequestFullScreen)    el.mozRequestFullScreen();
+    else if (el.msRequestFullscreen)     el.msRequestFullscreen();
+  } catch(e) {}
+};
+
+window.vshOpenExternal = function() {
+  if (V3.currentVid) window.open(V3.currentVid.url, '_blank');
 };
 
 window.vshChangeQuality = function(q) {
@@ -20350,6 +20499,10 @@ if (document.readyState === 'loading') {
 
 /* Expose for debugging/testing */
 window.V3 = V3;
+window.v3Render = v3Render;
+window.v3EmbedUrl = v3EmbedUrl;
+window.v3Load = v3Load;
+window.v3RepairVideo = v3RepairVideo;
 
 })();
 </script>
@@ -22492,105 +22645,174 @@ var _gvhWatchSec     = 0;
 var _gvhWatchTarget  = 30;
 var _gvhWatchVid     = null;
 
-/* ─────────────────────────────────────────────────────────────
-   🌐 GLOBAL VIDEO STORAGE — JSONBin.io (free)
-   HOW TO ACTIVATE (2 minutes, 100% free):
-     1. Go to https://jsonbin.io  →  Sign Up Free
-     2. Click "Create Bin" → paste  []  → Save
-     3. Copy the BIN ID from the URL bar
-     4. Go to API Keys → copy your Master Key
-     5. Paste both below and save this file
-   Until configured: videos save locally per device only.
-──────────────────────────────────────────────────────────────- */
-var GVH_JSONBIN_KEY = '';   // ← Your Master Key e.g. '$2a$10$abc...'
-var GVH_JSONBIN_BIN = '';   // ← Your BIN ID     e.g. '6700abcdef123'
+/* ═══════════════════════════════════════════════════════════════
+   🌐 GLOBAL VIDEO STORAGE — jsonblob.com (100% FREE, NO API KEY)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SETUP (one time, 30 seconds):
+     1. Open any browser → press F12 → Console tab
+     2. Paste this command and press Enter:
+        fetch('https://jsonblob.com/api/jsonBlob',{method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:'[]'}).then(r=>{var id=r.headers.get('Location').split('/').pop();
+        console.log('✅ YOUR BLOB ID:', id); alert('Copy this ID: '+id);})
+     3. Copy the ID shown in the alert
+     4. Paste it below as GVH_BLOB_ID value
+     5. Save and re-upload to Netlify — DONE!
+   After setup: ALL users worldwide share the same video list.
+   Without setup: videos save locally (your device only).
+═══════════════════════════════════════════════════════════════ */
+var GVH_BLOB_ID = '';  // ← Paste your jsonblob ID here e.g. '1234567890123456789'
 
-/* ── Storage: JSONBin when keys set, localStorage as fallback/cache ── */
+/* ── Storage: jsonblob.com (global) + localStorage (cache/fallback) ── */
+var GVH_BLOB_URL = 'https://jsonblob.com/api/jsonBlob/';
+
 async function gvhLoad(){
-  // Try JSONBin first
-  if(GVH_JSONBIN_KEY && GVH_JSONBIN_BIN){
+  if(GVH_BLOB_ID){
     try{
-      var r = await fetch('https://api.jsonbin.io/v3/b/'+GVH_JSONBIN_BIN+'/latest',{
-        headers:{'X-Master-Key':GVH_JSONBIN_KEY,'X-Bin-Meta':'false'},
+      var r = await fetch(GVH_BLOB_URL + GVH_BLOB_ID, {
+        headers:{'Accept':'application/json'},
         cache:'no-store'
       });
-      var d = await r.json();
-      var arr = Array.isArray(d) ? d : (Array.isArray((d||{}).record) ? d.record : null);
-      if(arr){ try{ localStorage.setItem(GVH_BIN_ID, JSON.stringify(arr)); }catch(e){} return arr; }
+      if(r.ok){
+        var d = await r.json();
+        var arr = Array.isArray(d) ? d : [];
+        try{ localStorage.setItem(GVH_BIN_ID, JSON.stringify(arr)); }catch(e){}
+        return arr;
+      }
     }catch(e){}
   }
-  // localStorage fallback
+  // localStorage fallback (device-only if blob not configured)
   try{ var d2=JSON.parse(localStorage.getItem(GVH_BIN_ID)||'[]'); return Array.isArray(d2)?d2:[]; }catch(e){ return []; }
 }
+
 async function gvhSave(videos){
-  // Always write to localStorage immediately
+  // Always write to localStorage first (instant local display)
   try{ localStorage.setItem(GVH_BIN_ID, JSON.stringify(videos)); }catch(e){}
-  // Then push to JSONBin if configured
-  if(GVH_JSONBIN_KEY && GVH_JSONBIN_BIN){
+  // Push to global jsonblob if configured
+  if(GVH_BLOB_ID){
     try{
-      await fetch('https://api.jsonbin.io/v3/b/'+GVH_JSONBIN_BIN,{
+      await fetch(GVH_BLOB_URL + GVH_BLOB_ID, {
         method:'PUT',
-        headers:{'Content-Type':'application/json','X-Master-Key':GVH_JSONBIN_KEY},
-        body:JSON.stringify(videos)
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(videos)
       });
-    }catch(e){}
+    }catch(e){ console.warn('GVH cloud save failed:',e); }
   }
 }
 
-/* ── Thumbnail helper ── */
-function gvhThumb(url){
-  var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
-  if(yt) return 'https://img.youtube.com/vi/'+yt[1]+'/hqdefault.jpg';
-  return '';
+/* ── Platform detection ── */
+function gvhDetectPlatform(url){
+  if(/youtube\.com\/watch|youtu\.be\//i.test(url))   return 'youtube';
+  if(/youtube\.com\/shorts\//i.test(url))             return 'ytshorts';
+  if(/vimeo\.com\/\d/i.test(url))                    return 'vimeo';
+  if(/tiktok\.com\/@.+\/video\//i.test(url))         return 'tiktok';
+  if(/instagram\.com\/reel\//i.test(url))            return 'instagram';
+  if(/instagram\.com\/p\//i.test(url))               return 'instagram';
+  if(/twitter\.com\/.+\/status|x\.com\/.+\/status/i.test(url)) return 'twitter';
+  if(/dailymotion\.com\/video\//i.test(url))         return 'dailymotion';
+  if(/facebook\.com\/.+\/videos?\//i.test(url))      return 'facebook';
+  return 'direct';
 }
+
+/* ── Thumbnail helper — supports YouTube, TikTok, Instagram, etc. ── */
+function gvhThumb(url){
+  var platform = gvhDetectPlatform(url);
+  if(platform === 'youtube' || platform === 'ytshorts'){
+    var ytId = gvhYtId(url);
+    if(ytId) return 'https://img.youtube.com/vi/'+ytId+'/hqdefault.jpg';
+  }
+  if(platform === 'vimeo'){
+    var vi = url.match(/vimeo\.com\/(\d+)/);
+    if(vi) return 'https://vumbnail.com/'+vi[1]+'.jpg'; // free vimeo thumb CDN
+  }
+  if(platform === 'dailymotion'){
+    var dm = url.match(/dailymotion\.com\/video\/([a-z0-9]+)/i);
+    if(dm) return 'https://www.dailymotion.com/thumbnail/video/'+dm[1];
+  }
+  // TikTok/Instagram/Twitter/Facebook: no direct thumb possible, use platform icon
+  var icons = {
+    tiktok:    'https://img.icons8.com/color/96/tiktok.png',
+    instagram: 'https://img.icons8.com/color/96/instagram-new.png',
+    twitter:   'https://img.icons8.com/color/96/twitter--v1.png',
+    facebook:  'https://img.icons8.com/color/96/facebook-new.png',
+  };
+  return icons[platform] || '';
+}
+
 function gvhYtId(url){
-  var m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  var m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
   return m ? m[1] : null;
 }
+
 function gvhEmbedUrl(url){
-  var ytId = gvhYtId(url);
-  if(ytId) return 'https://www.youtube.com/embed/'+ytId+'?autoplay=1&rel=0&modestbranding=1';
-  var vi = url.match(/vimeo\.com\/(\d+)/);
-  if(vi)   return 'https://player.vimeo.com/video/'+vi[1]+'?autoplay=1';
+  var platform = gvhDetectPlatform(url);
+  if(platform === 'youtube' || platform === 'ytshorts'){
+    var ytId = gvhYtId(url);
+    if(ytId) return 'https://www.youtube.com/embed/'+ytId; // NO params — v3EmbedUrl adds them
+  }
+  if(platform === 'vimeo'){
+    var vi = url.match(/vimeo\.com\/(\d+)/);
+    if(vi) return 'https://player.vimeo.com/video/'+vi[1]; // NO params
+  }
+  if(platform === 'dailymotion'){
+    var dm = url.match(/dailymotion\.com\/video\/([a-z0-9]+)/i);
+    if(dm) return 'https://www.dailymotion.com/embed/video/'+dm[1];
+  }
+  // TikTok, Instagram, Twitter, Facebook — cannot be iframed → return null
+  if(['tiktok','instagram','twitter','facebook'].indexOf(platform) >= 0) return null;
+  // Direct/unknown — try to embed as-is
   return url;
 }
 
-/* ── Submit a new video (any user) ── */
+function gvhPlatformLabel(url){
+  var p = gvhDetectPlatform(url);
+  var labels = {youtube:'YouTube',ytshorts:'YT Shorts',vimeo:'Vimeo',
+    tiktok:'TikTok',instagram:'Instagram',twitter:'Twitter/X',
+    facebook:'Facebook',dailymotion:'Dailymotion',direct:'Video'};
+  return labels[p] || 'Video';
+}
+
+/* ── Submit a new video (any user) — YouTube, TikTok, Instagram, Twitter, etc. ── */
 window.gvhSubmitVideo = async function(){
   var urlEl   = document.getElementById('gvh-url-input');
   var titleEl = document.getElementById('gvh-title-input');
-  var status  = document.getElementById('gvh-submit-status');
   var btn     = document.getElementById('gvh-add-btn');
   var url     = (urlEl ? urlEl.value.trim() : '');
-  if(!url){ _gvhStatus('Paste a YouTube or Vimeo link first','err'); return; }
+  if(!url){ _gvhStatus('📋 Koi bhi video link paste karo (YouTube, TikTok, Instagram…)','err'); return; }
   if(!/^https?:\/\//i.test(url)) url = 'https://'+url;
 
+  var platform = gvhDetectPlatform(url);
+  var ytId     = gvhYtId(url);
   btn && (btn.disabled = true);
-  _gvhStatus('Saving globally…','');
+  _gvhStatus(GVH_BLOB_ID ? '🌐 Globally save ho raha hai…' : '💾 Saving locally (setup global storage for worldwide)…','');
 
   var videos = await gvhLoad();
-  var ytId   = gvhYtId(url);
-  var title  = (titleEl ? titleEl.value.trim() : '') || (ytId ? '' : url.split('/').pop().split('?')[0]) || 'Video';
 
   // Deduplicate by URL
   if(videos.find(function(v){ return v.url === url; })){
-    _gvhStatus('This video is already in the global list!','err');
+    _gvhStatus('⚠️ Yeh video already list mein hai!','err');
     btn && (btn.disabled = false);
     return;
   }
 
+  var platformLabel = gvhPlatformLabel(url);
+  var customTitle   = (titleEl ? titleEl.value.trim() : '');
+  var title         = customTitle || platformLabel + ' Video';
+
   var vid = {
-    id:      'gvh_'+Date.now(),
-    url:     url,
-    title:   title,
-    thumb:   gvhThumb(url),
-    ytId:    ytId||null,
-    pts:     5,
-    addedAt: Date.now()
+    id:        'gvh_'+Date.now(),
+    url:       url,
+    title:     title,
+    thumb:     gvhThumb(url),
+    ytId:      ytId||null,
+    platform:  platform,
+    embedUrl:  gvhEmbedUrl(url),
+    pts:       5,
+    addedAt:   Date.now()
   };
 
-  // If YouTube: try to get title from noembed API
-  if(ytId){
+  // Auto-fetch YouTube title via noembed (free, no key needed)
+  if(ytId && !customTitle){
     try{
       var r = await fetch('https://noembed.com/embed?url='+encodeURIComponent(url));
       var d = await r.json();
@@ -22599,24 +22821,42 @@ window.gvhSubmitVideo = async function(){
   }
 
   videos.unshift(vid);
-  if(videos.length > 200) videos = videos.slice(0,200); // cap at 200 global videos
+  if(videos.length > 500) videos = videos.slice(0,500); // cap at 500 global videos
   await gvhSave(videos);
 
   // Also push into the local V3 videos so it shows immediately without re-render delay
   if(window.V3){
+    // Map platform to source label that v3EmbedUrl understands
+    var srcLabel = {youtube:'YouTube', ytshorts:'YouTube', vimeo:'Vimeo',
+      tiktok:'TikTok', instagram:'Instagram', twitter:'Twitter', facebook:'Facebook',
+      dailymotion:'Dailymotion', direct:'Direct'}[vid.platform] || 'Direct';
+
     V3.videos.unshift({
-      id:vid.id, url:vid.url, title:vid.title, cat:'Video',
-      pts:vid.pts, access:'free', source: ytId?'YouTube':'Direct',
-      thumb:vid.thumb, thumbFb:vid.thumb, embedBase:gvhEmbedUrl(vid.url), addedAt:vid.addedAt
+      id:        vid.id,
+      url:       vid.url,
+      title:     vid.title,
+      cat:       'Video',
+      pts:       vid.pts,
+      access:    'free',
+      source:    srcLabel,
+      thumb:     vid.thumb,
+      thumbFb:   vid.thumb,
+      embedBase: vid.embedUrl,   // null for TikTok/Instagram → opens externally
+      addedAt:   vid.addedAt,
+      platform:  vid.platform,
+      external:  (vid.embedUrl === null) // flag: must open in new tab
     });
-    if(window.v3Render) v3Render();
+    if(window.v3Render) window.v3Render();
   }
 
-  _gvhStatus('✅ Added globally! All users can now see this video.','ok');
+  var globalMsg = GVH_BLOB_ID
+    ? '✅ Video globally save ho gaya! Puri duniya ke log dekh sakte hain.'
+    : '✅ Locally saved! Global ke liye setup karo (instructions file mein hain).';
+  _gvhStatus(globalMsg,'ok');
   if(urlEl)   urlEl.value   = '';
   if(titleEl) titleEl.value = '';
   btn && (btn.disabled = false);
-  if(window.toast) toast('🎬 Video added to global hub!','success');
+  if(window.toast) toast('🎬 '+vid.title+' added!','success');
 };
 
 function _gvhStatus(msg, cls){
@@ -22633,20 +22873,26 @@ async function gvhPoll(){
   if(cloudVideos.length === 0){ setTimeout(gvhPoll, GVH_POLL_MS); return; }
 
   if(window.V3){
-    // Merge: add cloud videos not already in V3.videos
     var existing = new Set(V3.videos.map(function(v){ return v.id; }));
     var merged = false;
     cloudVideos.forEach(function(cv){
       if(!existing.has(cv.id)){
-        V3.videos.unshift({
+        var v = {
           id:cv.id, url:cv.url, title:cv.title||'Video', cat:'Video',
-          pts:cv.pts||5, access:'free', source: cv.ytId?'YouTube':'Direct',
-          thumb:cv.thumb||'', thumbFb:cv.thumb||'', embedBase:gvhEmbedUrl(cv.url), addedAt:cv.addedAt
-        });
+          pts:cv.pts||5, access:'free', source:cv.source||'Video',
+          thumb:cv.thumb||'', thumbFb:cv.thumb||'',
+          embedBase:cv.embedBase||null, platform:cv.platform||null,
+          addedAt:cv.addedAt
+        };
+        if(window.v3RepairVideo) v3RepairVideo(v); // re-derive thumb/embed from URL
+        V3.videos.push(v);
         merged = true;
       }
     });
-    if(merged && window.v3Render) v3Render();
+    if(merged){
+      V3.videos.sort(function(a,b){ return (b.addedAt||0)-(a.addedAt||0); });
+      if(window.v3Render) window.v3Render();
+    }
   }
   setTimeout(gvhPoll, GVH_POLL_MS);
 }
@@ -22657,6 +22903,31 @@ function gvhStartPoll(){
   _gvhPollerActive = true;
   gvhPoll();
 }
+
+/* Also load GVH videos on page init immediately */
+setTimeout(async function(){
+  var gvhVids = await gvhLoad();
+  if(!gvhVids.length || !window.V3) return;
+  var existing = new Set(V3.videos.map(function(v){ return v.id; }));
+  var added = false;
+  gvhVids.forEach(function(cv){
+    if(existing.has(cv.id)) return;
+    var v = {
+      id:cv.id, url:cv.url, title:cv.title||'Video', cat:'Video',
+      pts:cv.pts||5, access:'free', source:cv.source||'Video',
+      thumb:cv.thumb||'', thumbFb:cv.thumb||'',
+      embedBase:cv.embedBase||null, platform:cv.platform||null,
+      addedAt:cv.addedAt
+    };
+    if(window.v3RepairVideo) v3RepairVideo(v);
+    V3.videos.push(v);
+    added = true;
+  });
+  if(added){
+    V3.videos.sort(function(a,b){ return (b.addedAt||0)-(a.addedAt||0); });
+    if(window.v3Render) window.v3Render();
+  }
+}, 1800);
 
 /* Patch bnavGo to trigger poll when entering video section */
 setTimeout(function(){
@@ -22673,8 +22944,9 @@ var _origV3Open = null;
 setTimeout(function(){
   _origV3Open = window.v3OpenPlayer;
   window.v3OpenPlayer = function(v){
-    if(_origV3Open) _origV3Open.apply(this, arguments);
-    gvhStartWatchTimer(v);
+    var result = _origV3Open ? _origV3Open.apply(this, arguments) : undefined;
+    // Only start watch timer if video opened in modal (not external new tab)
+    if(result !== 'external') gvhStartWatchTimer(v);
   };
   var _origV3Close = window.vshClosePlayer;
   window.vshClosePlayer = function(){
