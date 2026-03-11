@@ -6703,7 +6703,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         <svg width="14" height="14" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" fill="url(#pcGF)"/><text x="11" y="24" font-family="Arial Black,serif" font-weight="900" font-size="15" fill="#3d2200">P</text></svg>
         <span id="pcoin-nav-val">0</span><span style="font-size:9px;opacity:.6">PC</span>
       </div>
-      <button class="hbg" id="hbg" onclick="toggleDrawer()" aria-label="Menu"><span></span><span></span><span></span></button>
+      <button class="hbg" id="hbg" onclick="(window.toggleLsb||window.toggleDrawer||function(){})()" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
@@ -8791,323 +8791,1149 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
          ╚══════════════════════════════════════════════════════════════╝ -->
     <div class="spa-section" id="trade-section" style="display:none;padding:0;overflow-y:auto;overflow-x:hidden;">
 
-      <!-- Risk Banner -->
-      <div class="pt-risk-banner">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r=".8" fill="currentColor" stroke="none"/></svg>
-        <span><strong>Risk Warning:</strong> Trading involves risk. Analyze the market carefully before placing trades. Only trade what you can afford to lose.</span>
+      <!-- ══════════════════════════════════════════════════════════
+           TRADINGVIEW-STYLE CHART — Real Data + Shared Drawings
+      ══════════════════════════════════════════════════════════ -->
+
+      <!-- Lightweight Charts — reliable CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+      <!-- Firebase compat SDKs -->
+      <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+      <style>
+      /* ═══════════════════════════════════
+         TRADE SECTION — FULL REDESIGN
+      ═══════════════════════════════════ */
+      #trade-section { background: #05070f; }
+
+      /* Risk banner */
+      .tv-risk-banner {
+        display:flex; align-items:center; gap:8px;
+        background: rgba(245,166,35,0.08);
+        border-bottom: 1px solid rgba(245,166,35,0.15);
+        padding: 8px 14px;
+        font-size: 11px; color: rgba(245,166,35,0.85);
+      }
+
+      /* Top bar: pair + price */
+      .tv-topbar {
+        display:flex; align-items:center; gap:10px;
+        padding: 10px 14px 8px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        background: #0a0d1a;
+        flex-wrap:wrap; gap: 8px;
+      }
+      .tv-pair-selector {
+        display:flex; gap:6px; flex-wrap:wrap;
+      }
+      .tv-pair-btn {
+        padding: 5px 10px; border-radius: 6px; font-size:11px; font-weight:600;
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+        color: #6e7fa8; cursor:pointer; transition: all 0.2s;
+        font-family: 'DM Mono', monospace;
+      }
+      .tv-pair-btn.active, .tv-pair-btn:hover {
+        background: rgba(245,166,35,0.15); border-color: rgba(245,166,35,0.5);
+        color: #f5a623;
+      }
+      .tv-price-display {
+        margin-left:auto; text-align:right;
+      }
+      .tv-price-val {
+        font-size:20px; font-weight:700; color:#fff;
+        font-family:'DM Mono',monospace; line-height:1;
+      }
+      .tv-price-chg {
+        font-size:11px; margin-top:2px;
+        font-family:'DM Mono',monospace;
+      }
+      .tv-price-chg.up { color: #22c55e; }
+      .tv-price-chg.dn { color: #ef4444; }
+
+      /* Timeframe bar */
+      .tv-tf-bar {
+        display:flex; align-items:center; gap:4px;
+        padding: 7px 14px;
+        background: #080b18;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        overflow-x:auto; scrollbar-width:none;
+      }
+      .tv-tf-bar::-webkit-scrollbar { display:none; }
+      .tv-tf-btn {
+        padding: 4px 10px; border-radius:5px; font-size:11px; font-weight:600;
+        background:transparent; border:1px solid transparent;
+        color: #6e7fa8; cursor:pointer; transition:all 0.15s;
+        white-space:nowrap;
+      }
+      .tv-tf-btn.active, .tv-tf-btn:hover {
+        background: rgba(0,212,255,0.12); border-color: rgba(0,212,255,0.3);
+        color: #00d4ff;
+      }
+      .tv-tf-sep { width:1px; height:16px; background:rgba(255,255,255,0.08); margin:0 4px; flex-shrink:0; }
+
+      /* Drawing tools bar */
+      .tv-tools-bar {
+        display:flex; align-items:center; gap:6px;
+        padding: 7px 14px;
+        background: #080b18;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        overflow-x:auto; scrollbar-width:none;
+      }
+      .tv-tools-bar::-webkit-scrollbar { display:none; }
+      .tv-tool-btn {
+        display:flex; align-items:center; gap:5px;
+        padding: 5px 10px; border-radius:6px; font-size:11px;
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+        color: #6e7fa8; cursor:pointer; transition:all 0.15s; white-space:nowrap;
+      }
+      .tv-tool-btn.active, .tv-tool-btn:hover {
+        background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.4);
+        color: #a78bfa;
+      }
+      .tv-tool-btn.danger { }
+      .tv-tool-btn.danger:hover {
+        background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4);
+        color: #ef4444;
+      }
+      .tv-tools-label {
+        font-size:10px; color: #30395a; margin-right:4px; white-space:nowrap;
+      }
+      .tv-tools-sep { width:1px; height:16px; background:rgba(255,255,255,0.08); margin:0 2px; flex-shrink:0; }
+
+      /* Chart container */
+      .tv-chart-wrap {
+        position:relative; width:100%; height:380px;
+        background:#05070f;
+      }
+      #tv-chart { width:100%; height:100%; }
+      .tv-chart-loading {
+        position:absolute; inset:0; display:flex; flex-direction:column;
+        align-items:center; justify-content:center; gap:10px;
+        background:#05070f; z-index:10;
+        font-size:13px; color:#6e7fa8;
+      }
+      .tv-chart-loading-dot {
+        width:40px; height:40px; border-radius:50%;
+        border:2px solid rgba(0,212,255,0.15);
+        border-top-color:#00d4ff;
+        animation: tvSpin 0.8s linear infinite;
+      }
+      @keyframes tvSpin { to { transform:rotate(360deg); } }
+
+      /* Drawing mode overlay hint */
+      .tv-draw-hint {
+        position:absolute; top:10px; left:50%; transform:translateX(-50%);
+        background:rgba(139,92,246,0.9); color:#fff;
+        padding:5px 14px; border-radius:20px; font-size:11px; font-weight:600;
+        pointer-events:none; display:none; z-index:20; white-space:nowrap;
+      }
+
+      /* OHLCV legend */
+      .tv-ohlcv {
+        padding: 6px 14px;
+        background:#080b18;
+        font-family:'DM Mono',monospace; font-size:10px; color:#6e7fa8;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+      }
+      .tv-ohlcv span { white-space:nowrap; }
+      .tv-ohlcv .ov { color:#eef1ff; }
+      .tv-ohlcv .og { color:#22c55e; }
+      .tv-ohlcv .or { color:#ef4444; }
+
+      /* ── TRADE CARD ── */
+      .tv-trade-card {
+        margin:12px 12px 0;
+        background: linear-gradient(145deg,#0f1322,#0a0d1a);
+        border:1px solid rgba(245,166,35,0.15);
+        border-radius:16px; padding:16px; overflow:hidden;
+      }
+      .tv-tc-title {
+        font-size:12px; font-weight:700; letter-spacing:.08em;
+        color:#f5a623; text-transform:uppercase; margin-bottom:14px;
+        display:flex; align-items:center; gap:7px;
+      }
+      .tv-tc-live-dot {
+        width:7px;height:7px;border-radius:50%;background:#22c55e;
+        box-shadow:0 0 8px #22c55e; animation:ptPing 1.8s ease-in-out infinite;
+      }
+
+      /* Amount input */
+      .tv-amount-row { margin-bottom:12px; }
+      .tv-amount-label { font-size:11px; color:#6e7fa8; margin-bottom:6px; }
+      .tv-amount-wrap {
+        display:flex; align-items:center;
+        background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+        border-radius:8px; overflow:hidden;
+      }
+      .tv-amount-sym { padding:0 10px; color:#6e7fa8; font-size:14px; }
+      .tv-amount-input {
+        flex:1; background:transparent; border:none; outline:none;
+        color:#fff; font-size:16px; font-weight:600;
+        font-family:'DM Mono',monospace; padding:10px 0;
+      }
+      .tv-quick-btns { display:flex; gap:5px; margin-top:7px; flex-wrap:wrap; }
+      .tv-quick-btn {
+        padding:4px 9px; border-radius:5px; font-size:10px; font-weight:600;
+        background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09);
+        color:#6e7fa8; cursor:pointer; transition:all 0.15s;
+      }
+      .tv-quick-btn:hover { background:rgba(245,166,35,0.12); border-color:rgba(245,166,35,0.3); color:#f5a623; }
+
+      /* Duration */
+      .tv-dur-row { margin-bottom:12px; }
+      .tv-dur-label { font-size:11px; color:#6e7fa8; margin-bottom:6px; }
+      .tv-dur-btns { display:flex; gap:6px; }
+      .tv-dur-btn {
+        flex:1; padding:8px 4px; border-radius:8px; font-size:11px; font-weight:600;
+        background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09);
+        color:#6e7fa8; cursor:pointer; transition:all 0.2s;
+        text-align:center; line-height:1.3;
+      }
+      .tv-dur-btn.active {
+        background:rgba(0,212,255,0.12); border-color:rgba(0,212,255,0.4); color:#00d4ff;
+      }
+      .tv-dur-mult { display:block; font-size:10px; color:inherit; opacity:0.7; }
+
+      /* Payout strip */
+      .tv-payout-strip {
+        display:flex; align-items:center; gap:8px;
+        background:rgba(255,255,255,0.03); border-radius:10px;
+        padding:10px 12px; margin-bottom:14px;
+      }
+      .tv-ps-item { flex:1; text-align:center; }
+      .tv-ps-lbl { font-size:9px; color:#6e7fa8; text-transform:uppercase; letter-spacing:.06em; }
+      .tv-ps-val { font-size:14px; font-weight:700; color:#fff; font-family:'DM Mono',monospace; margin-top:2px; }
+      .tv-ps-arrow { color:#30395a; font-size:18px; }
+
+      /* UP/DOWN buttons */
+      .tv-dir-row { display:flex; gap:10px; margin-bottom:12px; }
+      .tv-btn-up, .tv-btn-dn {
+        flex:1; padding:16px 8px; border-radius:12px; font-size:15px; font-weight:800;
+        display:flex; flex-direction:column; align-items:center; gap:3px;
+        cursor:pointer; transition:all 0.2s; border:2px solid transparent;
+      }
+      .tv-btn-up {
+        background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.08));
+        border-color:rgba(34,197,94,0.4); color:#22c55e;
+      }
+      .tv-btn-up:active { transform:scale(0.97); background:rgba(34,197,94,0.3); }
+      .tv-btn-dn {
+        background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(239,68,68,0.08));
+        border-color:rgba(239,68,68,0.4); color:#ef4444;
+      }
+      .tv-btn-dn:active { transform:scale(0.97); background:rgba(239,68,68,0.3); }
+      .tv-dir-sub { font-size:10px; opacity:0.7; font-weight:400; }
+
+      /* Active trade panel */
+      .tv-active-panel {
+        background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2);
+        border-radius:12px; padding:14px; margin-bottom:12px;
+      }
+      .tv-ap-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+      .tv-ap-live { display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:#00d4ff; }
+      .tv-ap-dir { font-size:16px; font-weight:800; }
+      .tv-ap-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+      .tv-ap-stat { background:rgba(255,255,255,0.04); border-radius:8px; padding:8px 10px; }
+      .tv-aps-lbl { font-size:9px; color:#6e7fa8; text-transform:uppercase; letter-spacing:.06em; }
+      .tv-aps-val { font-size:13px; font-weight:700; color:#fff; font-family:'DM Mono',monospace; margin-top:2px; }
+      .tv-timer-bar-wrap { height:4px; background:rgba(255,255,255,0.08); border-radius:2px; margin-bottom:10px; overflow:hidden; }
+      .tv-timer-bar { height:100%; background:linear-gradient(90deg,#00d4ff,#8b5cf6); border-radius:2px; transition:width 1s linear; }
+      .tv-early-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+      .tv-early-txt { font-size:11px; color:#6e7fa8; }
+      .tv-early-btn {
+        padding:6px 12px; border-radius:8px; font-size:11px; font-weight:600;
+        background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#ef4444;
+        cursor:pointer;
+      }
+
+      /* History card */
+      .tv-hist-card {
+        margin:12px 12px 0;
+        background:linear-gradient(145deg,#0f1322,#0a0d1a);
+        border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden;
+      }
+      .tv-hist-header {
+        display:flex; align-items:center; justify-content:space-between;
+        padding:12px 14px; border-bottom:1px solid rgba(255,255,255,0.05);
+      }
+      .tv-hist-title { font-size:12px; font-weight:700; color:#eef1ff; display:flex; align-items:center; gap:6px; }
+      .tv-hist-count { font-size:11px; color:#6e7fa8; font-family:'DM Mono',monospace; }
+      .tv-hist-list { padding:8px 0; }
+      .tv-hist-empty { padding:18px; text-align:center; color:#30395a; font-size:12px; }
+      .tv-hist-row {
+        display:flex; align-items:center; gap:10px;
+        padding:8px 14px; border-bottom:1px solid rgba(255,255,255,0.03);
+        font-size:11px;
+      }
+      .tv-hist-dir { font-weight:700; font-size:12px; }
+      .tv-hist-meta { flex:1; color:#6e7fa8; }
+      .tv-hist-pnl { font-weight:700; font-family:'DM Mono',monospace; }
+      .tv-hist-badge {
+        padding:2px 7px; border-radius:20px; font-size:10px; font-weight:600;
+      }
+      .tv-hist-badge.win { background:rgba(34,197,94,0.15); color:#22c55e; }
+      .tv-hist-badge.loss { background:rgba(239,68,68,0.15); color:#ef4444; }
+
+      /* Stats bar */
+      .tv-stats-bar {
+        margin:12px 12px 0;
+        display:flex; gap:6px; flex-wrap:wrap;
+      }
+      .tv-sb-chip {
+        flex:1; min-width:60px; text-align:center;
+        background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);
+        border-radius:10px; padding:10px 6px;
+      }
+      .tv-sb-val { font-size:14px; font-weight:700; color:#fff; font-family:'DM Mono',monospace; }
+      .tv-sb-lbl { font-size:9px; color:#6e7fa8; text-transform:uppercase; letter-spacing:.05em; margin-top:2px; }
+
+      /* Sentiment */
+      .tv-sent-card {
+        margin:12px 12px 20px;
+        background:linear-gradient(145deg,#0f1322,#0a0d1a);
+        border:1px solid rgba(255,255,255,0.07); border-radius:16px;
+        padding:14px;
+      }
+      .tv-sent-title { font-size:12px; color:#6e7fa8; margin-bottom:10px; }
+      .tv-sent-bar { height:6px; background:rgba(239,68,68,0.3); border-radius:3px; overflow:hidden; margin-bottom:6px; }
+      .tv-sent-fill { height:100%; background:linear-gradient(90deg,#22c55e,#00d4ff); border-radius:3px; transition:width 1s; }
+      .tv-sent-labels { display:flex; justify-content:space-between; font-size:11px; font-weight:600; }
+
+      /* Firebase sync indicator */
+      .tv-sync-dot {
+        display:inline-flex; align-items:center; gap:4px;
+        font-size:9px; color:#6e7fa8; margin-left:auto;
+      }
+      .tv-sync-dot-inner {
+        width:5px;height:5px;border-radius:50%;background:#22c55e;
+        box-shadow:0 0 6px #22c55e;
+      }
+      .tv-sync-dot-inner.offline { background:#ef4444; box-shadow:0 0 6px #ef4444; }
+
+      /* Insuf error */
+      .tv-insuf-err { font-size:11px; color:#ef4444; margin-top:5px; display:none; }
+      </style>
+
+      <!-- ══ RISK BANNER ══ -->
+      <div class="tv-risk-banner">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+        <span><strong>Risk Warning:</strong> Trading involves risk. Only trade what you can afford to lose.</span>
       </div>
 
-      <div class="pt-root">
+      <!-- ══ TOP BAR: PAIR + PRICE ══ -->
+      <div class="tv-topbar">
+        <div class="tv-pair-selector" id="tv-pairs">
+          <button class="tv-pair-btn active" onclick="tvSelectPair('BTCUSDT','BTC/USDT')">BTC/USDT</button>
+          <button class="tv-pair-btn" onclick="tvSelectPair('ETHUSDT','ETH/USDT')">ETH/USDT</button>
+          <button class="tv-pair-btn" onclick="tvSelectPair('SOLUSDT','SOL/USDT')">SOL/USDT</button>
+          <button class="tv-pair-btn" onclick="tvSelectPair('BNBUSDT','BNB/USDT')">BNB/USDT</button>
+          <button class="tv-pair-btn" onclick="tvSelectPair('XRPUSDT','XRP/USDT')">XRP/USDT</button>
+        </div>
+        <div class="tv-price-display">
+          <div class="tv-price-val" id="tv-price-val">—</div>
+          <div class="tv-price-chg" id="tv-price-chg">+0.00%</div>
+        </div>
+      </div>
 
-        <!-- ═══ HEADER + PORTFOLIO CARD ═══ -->
-        <div class="pt-header">
-          <div class="pt-header-left">
-            <div class="pt-live-pill"><span class="pt-live-ping"></span>LIVE MARKET</div>
-            <div class="pt-header-title">Prediction Trading</div>
+      <!-- ══ TIMEFRAME BAR ══ -->
+      <div class="tv-tf-bar">
+        <span style="font-size:9px;color:#30395a;margin-right:4px;flex-shrink:0">TF</span>
+        <button class="tv-tf-btn" onclick="tvSetTF('1m')">1m</button>
+        <button class="tv-tf-btn active" onclick="tvSetTF('5m')">5m</button>
+        <button class="tv-tf-btn" onclick="tvSetTF('15m')">15m</button>
+        <button class="tv-tf-btn" onclick="tvSetTF('30m')">30m</button>
+        <div class="tv-tf-sep"></div>
+        <button class="tv-tf-btn" onclick="tvSetTF('1h')">1H</button>
+        <button class="tv-tf-btn" onclick="tvSetTF('4h')">4H</button>
+        <button class="tv-tf-btn" onclick="tvSetTF('1d')">1D</button>
+        <button class="tv-tf-btn" onclick="tvSetTF('1w')">1W</button>
+        <div class="tv-tf-sep"></div>
+        <button class="tv-tf-btn" onclick="tvSetTF('1M')">1M</button>
+      </div>
+
+      <!-- ══ DRAWING TOOLS ══ -->
+      <div class="tv-tools-bar">
+        <span class="tv-tools-label">DRAW</span>
+        <button class="tv-tool-btn" id="tv-tool-cursor" onclick="tvSetTool('cursor')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-7 1-4 7z"/></svg> Cursor
+        </button>
+        <button class="tv-tool-btn" id="tv-tool-hline" onclick="tvSetTool('hline')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/></svg> H-Line
+        </button>
+        <button class="tv-tool-btn" id="tv-tool-trend" onclick="tvSetTool('trend')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="20" x2="20" y2="4"/></svg> Trend
+        </button>
+        <div class="tv-tools-sep"></div>
+        <button class="tv-tool-btn danger" id="tv-tool-clear" onclick="tvClearDrawings()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg> Clear All
+        </button>
+        <div class="tv-sync-dot" id="tv-sync-indicator">
+          <div class="tv-sync-dot-inner" id="tv-sync-dot"></div>
+          <span id="tv-sync-txt">Syncing…</span>
+        </div>
+      </div>
+
+      <!-- ══ OHLCV LEGEND ══ -->
+      <div class="tv-ohlcv" id="tv-ohlcv">
+        <span>O <span class="ov" id="tv-ov-o">—</span></span>
+        <span>H <span class="og" id="tv-ov-h">—</span></span>
+        <span>L <span class="or" id="tv-ov-l">—</span></span>
+        <span>C <span class="ov" id="tv-ov-c">—</span></span>
+        <span>Vol <span class="ov" id="tv-ov-v">—</span></span>
+      </div>
+
+      <!-- ══ CHART ══ -->
+      <div class="tv-chart-wrap">
+        <div id="tv-chart"></div>
+        <div class="tv-chart-loading" id="tv-loading">
+          <div class="tv-chart-loading-dot"></div>
+          <span>Loading chart data…</span>
+        </div>
+        <div class="tv-draw-hint" id="tv-draw-hint"></div>
+      </div>
+
+      <!-- ══ TRADE CARD ══ -->
+      <div class="tv-trade-card">
+        <div class="tv-tc-title">
+          <div class="tv-tc-live-dot"></div>
+          Prediction Trading
+        </div>
+
+        <!-- Amount -->
+        <div class="tv-amount-row">
+          <div class="tv-amount-label">Trade Amount (USD)</div>
+          <div class="tv-amount-wrap">
+            <span class="tv-amount-sym">$</span>
+            <input class="tv-amount-input" id="tv-bet" type="number" min="0.0001" step="0.0001" value="0.0010" autocomplete="off">
           </div>
-          <!-- Professional Portfolio Balance Card -->
-          <div class="pt-portfolio-card" id="pt-portfolio-card">
-            <div class="pt-pf-glow" id="pt-pf-glow"></div>
-            <div class="pt-pf-top">
-              <div class="pt-pf-icon">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-              </div>
-              <span class="pt-pf-label">Portfolio</span>
-              <span class="pt-pf-delta" id="pt-pf-delta">—</span>
+          <div class="tv-quick-btns">
+            <button class="tv-quick-btn" onclick="tvQ(0.0001)">MIN</button>
+            <button class="tv-quick-btn" onclick="tvQ(0.001)">$0.001</button>
+            <button class="tv-quick-btn" onclick="tvQ(0.005)">$0.005</button>
+            <button class="tv-quick-btn" onclick="tvQ(0.01)">$0.010</button>
+            <button class="tv-quick-btn" onclick="tvHalf()">½</button>
+            <button class="tv-quick-btn" onclick="tvDouble()">2×</button>
+          </div>
+          <div class="tv-insuf-err" id="tv-insuf">⚠ Insufficient balance</div>
+        </div>
+
+        <!-- Duration -->
+        <div class="tv-dur-row">
+          <div class="tv-dur-label">Trade Duration</div>
+          <div class="tv-dur-btns">
+            <button class="tv-dur-btn" id="tv-dur-1" onclick="tvDur(1)">1 MIN<span class="tv-dur-mult">×1.5</span></button>
+            <button class="tv-dur-btn active" id="tv-dur-5" onclick="tvDur(5)">5 MIN<span class="tv-dur-mult">×1.8</span></button>
+            <button class="tv-dur-btn" id="tv-dur-15" onclick="tvDur(15)">15 MIN<span class="tv-dur-mult">×2.2</span></button>
+          </div>
+        </div>
+
+        <!-- Payout strip -->
+        <div class="tv-payout-strip">
+          <div class="tv-ps-item">
+            <div class="tv-ps-lbl">Stake</div>
+            <div class="tv-ps-val" id="tv-ps-stake">$0.0010</div>
+          </div>
+          <div class="tv-ps-arrow">⟶</div>
+          <div class="tv-ps-item">
+            <div class="tv-ps-lbl" id="tv-ps-mlbl">Win ×1.8</div>
+            <div class="tv-ps-val" id="tv-ps-payout" style="color:#22c55e">$0.0018</div>
+          </div>
+          <div class="tv-ps-item">
+            <div class="tv-ps-lbl">Duration</div>
+            <div class="tv-ps-val" id="tv-ps-dur">5 min</div>
+          </div>
+        </div>
+
+        <!-- Active trade panel -->
+        <div id="tv-active-panel" style="display:none">
+          <div class="tv-active-panel">
+            <div class="tv-ap-header">
+              <div class="tv-ap-live"><span class="tv-tc-live-dot"></span> TRADE LIVE</div>
+              <div class="tv-ap-dir" id="tv-ap-dir">▲ UP</div>
             </div>
-            <div class="pt-pf-amount-wrap">
-              <span class="pt-pf-currency">$</span>
-              <span class="pt-pf-amount" id="pt-hb-val">0.00000</span>
+            <div class="tv-timer-bar-wrap">
+              <div class="tv-timer-bar" id="tv-timer-bar" style="width:100%"></div>
             </div>
-            <div class="pt-pf-bottom">
-              <span class="pt-pf-change-lbl" id="pt-pf-change-lbl">No change</span>
-              <span class="pt-pf-session" id="pt-pf-session">Session</span>
+            <div class="tv-ap-stats">
+              <div class="tv-ap-stat"><div class="tv-aps-lbl">Entry Price</div><div class="tv-aps-val" id="tv-ap-entry">—</div></div>
+              <div class="tv-ap-stat"><div class="tv-aps-lbl">Current Price</div><div class="tv-aps-val" id="tv-ap-cur">—</div></div>
+              <div class="tv-ap-stat"><div class="tv-aps-lbl">Position</div><div class="tv-aps-val" id="tv-ap-pos">—</div></div>
+              <div class="tv-ap-stat"><div class="tv-aps-lbl">Potential Win</div><div class="tv-aps-val" id="tv-ap-win" style="color:#22c55e">$0.00</div></div>
+            </div>
+            <div class="tv-early-row">
+              <span class="tv-early-txt">Exit now → get <strong id="tv-early-amt">$0.00</strong></span>
+              <button class="tv-early-btn" onclick="tvEarlyExit()">Exit Early (50%)</button>
             </div>
           </div>
         </div>
 
-        <!-- ═══ ASSET TABS ═══ -->
-        <div class="pt-asset-strip">
-          <button class="pt-asset-btn pt-asset-active" id="pt-btn-PYO" onclick="ptPickAsset('PYO')">
-            <span class="pt-ab-dot" style="background:#00F0A0;box-shadow:0 0 6px #00F0A0"></span>
-            <span class="pt-ab-sym">PYO</span>
-            <span class="pt-ab-name">PayRo Coin</span>
+        <!-- UP / DOWN buttons -->
+        <div class="tv-dir-row" id="tv-dir-row">
+          <button class="tv-btn-up" onclick="tvTrade('UP')">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+            <span style="font-size:15px;font-weight:800">UP</span>
+            <span class="tv-dir-sub">Price rises</span>
           </button>
-          <button class="pt-asset-btn" id="pt-btn-VRT" onclick="ptPickAsset('VRT')">
-            <span class="pt-ab-dot" style="background:#B855F7;box-shadow:0 0 6px #B855F7"></span>
-            <span class="pt-ab-sym">VRT</span>
-            <span class="pt-ab-name">Vortex Token</span>
+          <button class="tv-btn-dn" onclick="tvTrade('DOWN')">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            <span style="font-size:15px;font-weight:800">DOWN</span>
+            <span class="tv-dir-sub">Price falls</span>
           </button>
-          <!-- Live price display -->
-          <div class="pt-price-box">
-            <div class="pt-price-val" id="pt-price-val">$0.00000</div>
-            <div class="pt-price-chg" id="pt-price-chg">+0.00%</div>
-          </div>
         </div>
+      </div>
 
-        <!-- ═══ CHART CARD ═══ -->
-        <div class="pt-chart-card">
-          <div class="pt-chart-top-bar">
-            <div class="pt-chart-title-row">
-              <span class="pt-chart-pair" id="pt-chart-pair">PYO / USD</span>
-              <span class="pt-chart-tf">1s · 5min</span>
-            </div>
-            <div class="pt-chart-ohlc" id="pt-chart-ohlc">O — H — L — C —</div>
+      <!-- ══ TRADE HISTORY ══ -->
+      <div class="tv-hist-card">
+        <div class="tv-hist-header">
+          <div class="tv-hist-title">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Trade History
           </div>
-
-          <!-- Canvas -->
-          <div class="pt-chart-body" id="pt-chart-body">
-            <canvas id="pt-canvas" class="pt-canvas"></canvas>
-            <!-- Zoom/Pan overlay hint -->
-            <div class="pt-chart-hint" id="pt-chart-hint">Pinch to zoom · Drag to pan</div>
-          </div>
-
-          <!-- MA Legend + Volume -->
-          <div class="pt-chart-footer">
-            <span class="pt-legend-item"><i class="pt-leg-line" style="background:#FFA827"></i>MA7</span>
-            <span class="pt-legend-item"><i class="pt-leg-line" style="background:#00EEFF"></i>MA20</span>
-            <span class="pt-legend-sep">|</span>
-            <span class="pt-legend-vol" id="pt-legend-vol">Vol: —</span>
-            <span class="pt-legend-sep" style="margin-left:auto">|</span>
-            <span class="pt-chart-hint-sm" id="pt-drag-hint">← drag chart →</span>
-          </div>
+          <span class="tv-hist-count" id="tv-hist-count">0 trades</span>
         </div>
-
-        <!-- ═══ TRADE CARD ═══ -->
-        <div class="pt-trade-card">
-
-          <!-- Amount row -->
-          <div class="pt-amount-row">
-            <div class="pt-ar-label">Trade Amount (USD)</div>
-            <div class="pt-ar-input-wrap">
-              <span class="pt-ar-sym">$</span>
-              <input class="pt-ar-input" id="pt-bet-input" type="number" min="0.0001" step="0.0001" value="0.0010" autocomplete="off">
-            </div>
-            <div class="pt-quick-row">
-              <button onclick="ptQ(0.0001)">MIN</button>
-              <button onclick="ptQ(0.001)">$0.001</button>
-              <button onclick="ptQ(0.005)">$0.005</button>
-              <button onclick="ptQ(0.01)">$0.010</button>
-              <button onclick="ptHalf()">½</button>
-              <button onclick="ptDouble()">2×</button>
-            </div>
-            <!-- Insufficient balance error (shown by JS) -->
-            <div class="pt-insuf-err" id="pt-insuf-err">⚠ Insufficient balance</div>
-          </div>
-
-          <!-- Duration selector -->
-          <div class="pt-dur-row">
-            <div class="pt-dur-lbl">Trade Duration</div>
-            <div class="pt-dur-btns">
-              <button class="pt-dur-btn" id="pt-dur-1" onclick="ptSetDuration(1)">1 MIN<span class="pt-dur-mult">×1.5</span></button>
-              <button class="pt-dur-btn pt-dur-active" id="pt-dur-5" onclick="ptSetDuration(5)">5 MIN<span class="pt-dur-mult">×1.8</span></button>
-              <button class="pt-dur-btn" id="pt-dur-15" onclick="ptSetDuration(15)">15 MIN<span class="pt-dur-mult">×2.2</span></button>
-            </div>
-          </div>
-
-          <!-- Payout preview -->
-          <div class="pt-payout-strip">
-            <div class="pt-ps-item">
-              <div class="pt-ps-lbl">Stake</div>
-              <div class="pt-ps-val" id="pt-ps-stake">$0.0010</div>
-            </div>
-            <div class="pt-ps-arrow">⟶</div>
-            <div class="pt-ps-item">
-              <div class="pt-ps-lbl" id="pt-ps-mult-lbl">Win Payout ×1.8</div>
-              <div class="pt-ps-val" id="pt-ps-payout" style="color:var(--pt-green)">$0.0018</div>
-            </div>
-            <div class="pt-ps-item">
-              <div class="pt-ps-lbl">Duration</div>
-              <div class="pt-ps-val" id="pt-ps-dur">5 min</div>
-            </div>
-          </div>
-
-          <!-- Stop Loss / Take Profit Panel -->
-          <div class="pt-sltp-row">
-            <button class="pt-sltp-toggle" id="pt-sltp-toggle" onclick="ptToggleSLTP()">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span>Stop Loss / Take Profit</span>
-              <svg class="pt-sltp-arrow" id="pt-sltp-arrow" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="pt-sltp-panel" id="pt-sltp-panel" style="display:none">
-              <div class="pt-sltp-grid">
-                <div class="pt-sltp-field">
-                  <div class="pt-sltp-label">
-                    <span style="color:var(--pt-red)">■</span> Stop Loss (SL)
-                  </div>
-                  <div class="pt-sltp-input-wrap">
-                    <span class="pt-sltp-sym">$</span>
-                    <input class="pt-sltp-input" id="pt-sl-input" type="number" min="0" step="0.0001" placeholder="0.00000" autocomplete="off">
-                    <button class="pt-sltp-clear" onclick="document.getElementById('pt-sl-input').value=''">×</button>
-                  </div>
-                  <div class="pt-sltp-hint">Auto-exit if price hits this level</div>
-                </div>
-                <div class="pt-sltp-field">
-                  <div class="pt-sltp-label">
-                    <span style="color:var(--pt-green)">■</span> Take Profit (TP)
-                  </div>
-                  <div class="pt-sltp-input-wrap">
-                    <span class="pt-sltp-sym">$</span>
-                    <input class="pt-sltp-input" id="pt-tp-input" type="number" min="0" step="0.0001" placeholder="0.00000" autocomplete="off">
-                    <button class="pt-sltp-clear" onclick="document.getElementById('pt-tp-input').value=''">×</button>
-                  </div>
-                  <div class="pt-sltp-hint">Auto-win if price hits this level</div>
-                </div>
-              </div>
-              <div class="pt-sltp-note">
-                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-                SL/TP closes trade early. SL returns 50%; TP pays full ×1.8 payout.
-              </div>
-            </div>
-          </div>
-
-          <!-- UP / DOWN Buttons -->
-          <div class="pt-dir-row" id="pt-dir-row">
-            <button class="pt-btn-up" id="pt-btn-up" onclick="ptTrade('UP')">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-              <span class="pt-dir-label">UP</span>
-              <span class="pt-dir-sub">Price rises</span>
-            </button>
-            <button class="pt-btn-down" id="pt-btn-down" onclick="ptTrade('DOWN')">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-              <span class="pt-dir-label">DOWN</span>
-              <span class="pt-dir-sub">Price falls</span>
-            </button>
-          </div>
-
-          <!-- Active Trade Panel (hidden until trade placed) -->
-          <div class="pt-active-panel" id="pt-active-panel" style="display:none">
-            <div class="pt-ap-header">
-              <div class="pt-ap-live-badge"><span class="pt-ap-dot"></span>TRADE LIVE</div>
-              <div class="pt-ap-direction" id="pt-ap-dir">▲ UP</div>
-            </div>
-
-            <!-- Countdown timer -->
-            <div class="pt-timer-block">
-              <svg class="pt-timer-ring" width="110" height="110" viewBox="0 0 110 110">
-                <circle class="pt-ring-bg" cx="55" cy="55" r="48"/>
-                <circle class="pt-ring-fill" id="pt-ring" cx="55" cy="55" r="48" style="stroke-dashoffset:301.6"/>
-              </svg>
-              <div class="pt-timer-inner">
-                <div class="pt-timer-val" id="pt-timer-val">5:00</div>
-                <div class="pt-timer-sub">remaining</div>
-              </div>
-            </div>
-
-            <!-- Live trade stats -->
-            <div class="pt-ap-stats">
-              <div class="pt-ap-stat">
-                <div class="pt-aps-lbl">Entry Price</div>
-                <div class="pt-aps-val" id="pt-ap-entry">—</div>
-              </div>
-              <div class="pt-ap-stat">
-                <div class="pt-aps-lbl">Current Price</div>
-                <div class="pt-aps-val" id="pt-ap-cur">—</div>
-              </div>
-              <div class="pt-ap-stat">
-                <div class="pt-aps-lbl">Position</div>
-                <div class="pt-aps-val" id="pt-ap-pos">—</div>
-              </div>
-              <div class="pt-ap-stat">
-                <div class="pt-aps-lbl">Potential Win</div>
-                <div class="pt-aps-val" id="pt-ap-win" style="color:var(--pt-green)">$0.00</div>
-              </div>
-            </div>
-
-            <!-- Early exit -->
-            <div class="pt-early-row">
-              <span class="pt-early-txt">Exit now → get back <strong id="pt-early-amt">$0.00</strong></span>
-              <button class="pt-early-btn" onclick="ptEarlyExit()">Exit Early (50%)</button>
-            </div>
-          </div>
-
-        </div><!-- /pt-trade-card -->
-
-        <!-- ═══ HISTORY ═══ -->
-        <div class="pt-history-card">
-          <div class="pt-hc-header">
-            <div class="pt-hc-title">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              Trade History
-            </div>
-            <span class="pt-hc-count" id="pt-hc-count">0 trades</span>
-          </div>
-          <div class="pt-hc-list" id="pt-hc-list">
-            <div class="pt-hc-empty">No trades placed yet — be the first to trade!</div>
-          </div>
+        <div class="tv-hist-list" id="tv-hist-list">
+          <div class="tv-hist-empty">No trades yet — place your first trade!</div>
         </div>
+      </div>
 
-        <!-- ═══ STATS BAR ═══ -->
-        <div class="pt-stats-bar">
-          <div class="pt-sb-chip">
-            <div class="pt-sb-val" id="pts-total">0</div>
-            <div class="pt-sb-lbl">Total</div>
-          </div>
-          <div class="pt-sb-chip">
-            <div class="pt-sb-val" id="pts-wins" style="color:var(--pt-green)">0</div>
-            <div class="pt-sb-lbl">Wins</div>
-          </div>
-          <div class="pt-sb-chip">
-            <div class="pt-sb-val" id="pts-losses" style="color:var(--pt-red)">0</div>
-            <div class="pt-sb-lbl">Losses</div>
-          </div>
-          <div class="pt-sb-chip">
-            <div class="pt-sb-val" id="pts-wr">0%</div>
-            <div class="pt-sb-lbl">Win Rate</div>
-          </div>
-          <div class="pt-sb-chip">
-            <div class="pt-sb-val" id="pts-pnl">$0.00</div>
-            <div class="pt-sb-lbl">Net P&amp;L</div>
-          </div>
+      <!-- ══ STATS BAR ══ -->
+      <div class="tv-stats-bar">
+        <div class="tv-sb-chip"><div class="tv-sb-val" id="tvs-total">0</div><div class="tv-sb-lbl">Total</div></div>
+        <div class="tv-sb-chip"><div class="tv-sb-val" id="tvs-wins" style="color:#22c55e">0</div><div class="tv-sb-lbl">Wins</div></div>
+        <div class="tv-sb-chip"><div class="tv-sb-val" id="tvs-losses" style="color:#ef4444">0</div><div class="tv-sb-lbl">Losses</div></div>
+        <div class="tv-sb-chip"><div class="tv-sb-val" id="tvs-wr">0%</div><div class="tv-sb-lbl">Win Rate</div></div>
+        <div class="tv-sb-chip"><div class="tv-sb-val" id="tvs-pnl">$0.00</div><div class="tv-sb-lbl">Net P&L</div></div>
+      </div>
+
+      <!-- ══ SENTIMENT ══ -->
+      <div class="tv-sent-card">
+        <div class="tv-sent-title">Market Sentiment — <span id="tv-sent-sym">BTC/USDT</span></div>
+        <div class="tv-sent-bar"><div class="tv-sent-fill" id="tv-sent-fill" style="width:55%"></div></div>
+        <div class="tv-sent-labels">
+          <span style="color:#22c55e" id="tv-sent-bull">▲ 55% BULL</span>
+          <span style="color:#ef4444" id="tv-sent-bear">45% BEAR ▼</span>
         </div>
+      </div>
 
-        <!-- ═══ TRADING LEADERBOARD ═══ -->
-        <div class="pt-lb-card">
-          <div class="pt-hc-header">
-            <div class="pt-hc-title">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-              Top Traders — Session
-            </div>
-            <span class="pt-lb-live-badge"><span class="pt-live-ping" style="width:5px;height:5px;display:inline-block;border-radius:50%;background:var(--pt-green);box-shadow:0 0 6px var(--pt-green);animation:ptPing 1.8s ease-in-out infinite"></span>LIVE</span>
-          </div>
-          <div class="pt-lb-list" id="pt-lb-list">
-            <div class="pt-hc-empty">Be the first trader on the leaderboard!</div>
-          </div>
-        </div>
+      <!-- ══ CHART ENGINE + TRADE LOGIC ══ -->
+      <script>
+      (function(){
+      /* ════════════════════════════════════════════════
+         CONFIG — Replace with your Firebase project!
+         Free setup: console.firebase.google.com
+      ════════════════════════════════════════════════ */
+      var FB_CONFIG = {
+        apiKey: "AIzaSyBdpMKxkw_eBDvP9AotukYyc7uOfG4iI9M",
+        authDomain: "payro-d78ad.firebaseapp.com",
+        databaseURL: "https://payro-d78ad-default-rtdb.firebaseio.com",
+        projectId: "payro-d78ad",
+        storageBucket: "payro-d78ad.firebasestorage.app",
+        messagingSenderId: "984784420415",
+        appId: "1:984784420415:web:185323ba4df2e8f879828a",
+        measurementId: "G-D710R6PSN1"
+      };
+      /* ─────────── END CONFIG ─────────── */
 
-        <!-- ═══ MARKET SENTIMENT ═══ -->
-        <div class="pt-sentiment-card">
-          <div class="pt-sent-title">Market Sentiment — <span id="pt-sent-sym">PYO</span></div>
-          <div class="pt-sent-bar-wrap">
-            <div class="pt-sent-bar">
-              <div class="pt-sent-up-fill" id="pt-sent-up-fill" style="width:55%"></div>
-            </div>
-            <div class="pt-sent-labels">
-              <span class="pt-sent-up-lbl" id="pt-sent-up-lbl">▲ 55% BULL</span>
-              <span class="pt-sent-dn-lbl" id="pt-sent-dn-lbl">45% BEAR ▼</span>
-            </div>
-          </div>
-          <div class="pt-vol-row">
-            <div class="pt-vol-item">
-              <div class="pt-vol-lbl">24h Volume</div>
-              <div class="pt-vol-val" id="pt-vol-24h">—</div>
-            </div>
-            <div class="pt-vol-item">
-              <div class="pt-vol-lbl">24h High</div>
-              <div class="pt-vol-val" id="pt-vol-high" style="color:var(--pt-green)">—</div>
-            </div>
-            <div class="pt-vol-item">
-              <div class="pt-vol-lbl">24h Low</div>
-              <div class="pt-vol-val" id="pt-vol-low" style="color:var(--pt-red)">—</div>
-            </div>
-            <div class="pt-vol-item">
-              <div class="pt-vol-lbl">Open</div>
-              <div class="pt-vol-val" id="pt-vol-open">—</div>
-            </div>
-          </div>
-        </div>
+      /* State */
+      var tvChart, tvSeries, tvWs;
+      var tvSymbol   = 'BTCUSDT';
+      var tvPairName = 'BTC/USDT';
+      var tvTF       = '5m';
+      var tvTool     = 'cursor';
+      var tvDrawings = [];        /* { type, price/p1/p2, series } */
+      var tvDrawStep = 0;
+      var tvPendingP1 = null;
+      var tvCurrentPrice = 0;
+      var tvFirebaseDB   = null;
+      var tvFirebaseRef  = null;
+      var tvConnected    = false;
 
-      </div><!-- /pt-root -->
+      /* Trade state */
+      var tvDuration = 5;
+      var tvMultipliers = {1:1.5, 5:1.8, 15:2.2};
+      var tvActiveTrade = null;
+      var tvTradeTimer  = null;
+      var tvTradeTotal  = 0, tvTradeWins = 0, tvTradeLosses = 0, tvTradePnl = 0;
+
+      /* ── Binance TF map ── */
+      var TF_MAP = {'1m':'1m','5m':'5m','15m':'15m','30m':'30m','1h':'1h','4h':'4h','1d':'1d','1w':'1w','1M':'1M'};
+      var TF_MS  = {'1m':60000,'5m':300000,'15m':900000,'30m':1800000,'1h':3600000,'4h':14400000,'1d':86400000,'1w':604800000,'1M':2592000000};
+
+      /* ── Init on section show ── */
+      function tvInit(){
+        if(tvChart) return; // already initialized
+        setTimeout(function(){ tvBuildChart(); tvInitFirebase(); },100);
+      }
+
+      /* Watch for section becoming visible */
+      var _tvObs = new MutationObserver(function(muts){
+        muts.forEach(function(m){
+          if(m.target.id==='trade-section' && m.target.style.display!=='none') tvInit();
+        });
+      });
+      var _tvEl = document.getElementById('trade-section');
+      if(_tvEl) _tvObs.observe(_tvEl,{attributes:true,attributeFilter:['style']});
+      // Also check immediately
+      if(_tvEl && _tvEl.style.display!=='none') setTimeout(tvInit,200);
+
+      /* ── BUILD CHART ── */
+      function tvBuildChart(){
+        var el = document.getElementById('tv-chart');
+        if(!el || tvChart) return;
+        tvChart = LightweightCharts.createChart(el, {
+          width: el.clientWidth,
+          height: 380,
+          layout: { background:{type:'solid',color:'#05070f'}, textColor:'#6e7fa8' },
+          grid: { vertLines:{color:'rgba(255,255,255,0.04)'}, horzLines:{color:'rgba(255,255,255,0.04)'} },
+          crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+          rightPriceScale: { borderColor:'rgba(255,255,255,0.08)', textColor:'#6e7fa8' },
+          timeScale: { borderColor:'rgba(255,255,255,0.08)', timeVisible:true, secondsVisible:false, rightOffset:12 },
+          handleScale: { axisPressedMouseMove:true, mouseWheel:true, pinch:true },
+          handleScroll: { mouseWheel:true, pressedMouseMove:true, horzTouchDrag:true, vertTouchDrag:false }
+        });
+        tvSeries = tvChart.addCandlestickSeries({
+          upColor:'#22c55e', downColor:'#ef4444',
+          borderUpColor:'#22c55e', borderDownColor:'#ef4444',
+          wickUpColor:'rgba(34,197,94,0.6)', wickDownColor:'rgba(239,68,68,0.6)'
+        });
+
+        /* Resize */
+        window.addEventListener('resize', function(){
+          if(tvChart) tvChart.applyOptions({width: el.clientWidth});
+        });
+
+        /* Crosshair for OHLCV */
+        tvChart.subscribeCrosshairMove(function(p){
+          if(p.seriesData.size>0){
+            var d = p.seriesData.get(tvSeries);
+            if(d){
+              var fmt = function(v){ return v?v.toFixed(tvCurrentPrice>100?2:5):'—'; };
+              document.getElementById('tv-ov-o').textContent = fmt(d.open);
+              document.getElementById('tv-ov-h').textContent = fmt(d.high);
+              document.getElementById('tv-ov-l').textContent = fmt(d.low);
+              document.getElementById('tv-ov-c').textContent = fmt(d.close);
+            }
+          }
+        });
+
+        /* Click handler for drawings */
+        el.addEventListener('click', function(e){
+          if(tvTool==='cursor') return;
+          var rect = el.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          var price = tvChart.priceToCoordinate ? null : null;
+          /* Use series coordinate conversion */
+          try {
+            price = tvSeries.coordinateToPrice(y);
+            var time = tvChart.timeScale().coordinateToTime(x);
+          } catch(err){ return; }
+          tvHandleClick(price, time, x, y);
+        });
+
+        tvFetchCandles();
+        tvConnectWS();
+      }
+
+      /* ── FETCH HISTORICAL CANDLES ── */
+      /* ── FETCH CANDLES — with retry + fallback API ── */
+      var tvFetchRetry = 0;
+      var tvFetchMaxRetry = 3;
+      var TV_APIS = [
+        'https://api.binance.com/api/v3/klines?symbol={sym}&interval={tf}&limit=500',
+        'https://api1.binance.com/api/v3/klines?symbol={sym}&interval={tf}&limit=500',
+        'https://api2.binance.com/api/v3/klines?symbol={sym}&interval={tf}&limit=500',
+        'https://api3.binance.com/api/v3/klines?symbol={sym}&interval={tf}&limit=500'
+      ];
+
+      function tvFetchCandles(){
+        document.getElementById('tv-loading').style.display='flex';
+        document.getElementById('tv-loading').innerHTML =
+          '<div class="tv-chart-loading-dot"></div><span>Loading chart data…</span>';
+        tvFetchRetry = 0;
+        tvTryFetch(0);
+      }
+
+      function tvTryFetch(apiIdx){
+        if(apiIdx >= TV_APIS.length){ tvFetchRetry++; apiIdx=0; }
+        if(tvFetchRetry > tvFetchMaxRetry){
+          document.getElementById('tv-loading').innerHTML =
+            '<span style="color:#ef4444;font-size:12px">⚠ Failed to load.<br>Check internet & retry.</span>'+
+            '<button onclick="tvFetchCandles()" style="margin-top:8px;padding:6px 14px;border-radius:8px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.3);color:#00d4ff;font-size:11px;cursor:pointer">🔄 Retry</button>';
+          return;
+        }
+        var url = TV_APIS[apiIdx]
+          .replace('{sym}', tvSymbol)
+          .replace('{tf}', tvTF);
+
+        fetch(url, {cache:'no-cache'})
+          .then(function(r){
+            if(!r.ok) throw new Error('HTTP '+r.status);
+            return r.json();
+          })
+          .then(function(data){
+            if(!Array.isArray(data) || data.length===0) throw new Error('empty');
+            var candles = data.map(function(k){
+              return {
+                time:  Math.floor(k[0]/1000),
+                open:  parseFloat(k[1]),
+                high:  parseFloat(k[2]),
+                low:   parseFloat(k[3]),
+                close: parseFloat(k[4])
+              };
+            });
+            tvSeries.setData(candles);
+            var last = candles[candles.length-1];
+            tvCurrentPrice = last.close;
+            /* Calc 24h change */
+            var first = candles[0];
+            var chgPct = ((last.close - first.open)/first.open)*100;
+            tvUpdatePriceDisplay(last.close, chgPct);
+            /* Update OHLCV legend */
+            var fmt = function(v){ return v?(v>100?v.toFixed(2):v.toFixed(5)):'—'; };
+            document.getElementById('tv-ov-o').textContent = fmt(last.open);
+            document.getElementById('tv-ov-h').textContent = fmt(last.high);
+            document.getElementById('tv-ov-l').textContent = fmt(last.low);
+            document.getElementById('tv-ov-c').textContent = fmt(last.close);
+            tvChart.timeScale().fitContent();
+            document.getElementById('tv-loading').style.display='none';
+            tvFetchRetry = 0;
+            tvConnectWS();
+          })
+          .catch(function(err){
+            console.warn('API '+(apiIdx+1)+' failed:',err);
+            setTimeout(function(){ tvTryFetch(apiIdx+1); }, 800);
+          });
+      }
+
+      /* ── BINANCE WEBSOCKET — auto-reconnect ── */
+      var tvWsRetryDelay = 2000;
+      var tvWsRetryMax   = 30000;
+
+      function tvConnectWS(){
+        if(tvWs){
+          try{ tvWs.onclose=null; tvWs.close(); }catch(e){}
+          tvWs = null;
+        }
+        /* Try both WS endpoints */
+        var wsUrls = [
+          'wss://stream.binance.com:9443/ws/'+tvSymbol.toLowerCase()+'@kline_'+tvTF,
+          'wss://stream.binance.com:443/ws/'+tvSymbol.toLowerCase()+'@kline_'+tvTF
+        ];
+        var wsIdx = 0;
+        function tryWs(){
+          try {
+            tvWs = new WebSocket(wsUrls[wsIdx % wsUrls.length]);
+            tvWs.onopen = function(){
+              tvWsRetryDelay = 2000; /* reset delay on success */
+              /* update sync dot */
+              var dot = document.getElementById('tv-sync-dot');
+              if(dot && !dot.classList.contains('offline')) {
+                dot.style.background='#00d4ff';
+                dot.style.boxShadow='0 0 6px #00d4ff';
+              }
+            };
+            tvWs.onmessage = function(e){
+              var msg; try{ msg=JSON.parse(e.data); }catch(er){return;}
+              var k = msg.k; if(!k) return;
+              var candle = {
+                time:  Math.floor(k.t/1000),
+                open:  parseFloat(k.o),
+                high:  parseFloat(k.h),
+                low:   parseFloat(k.l),
+                close: parseFloat(k.c)
+              };
+              if(tvSeries){ tvSeries.update(candle); }
+              var prev = tvCurrentPrice;
+              tvCurrentPrice = candle.close;
+              /* Flash price green/red */
+              var priceEl = document.getElementById('tv-price-val');
+              if(priceEl && prev !== candle.close){
+                priceEl.style.color = candle.close > prev ? '#22c55e' : '#ef4444';
+                clearTimeout(tvPriceFlashTimer);
+                tvPriceFlashTimer = setTimeout(function(){ priceEl.style.color='#fff'; }, 400);
+              }
+              tvUpdatePriceDisplay(candle.close, null);
+              if(tvActiveTrade){ tvUpdateActiveTrade(candle.close); }
+            };
+            tvWs.onerror = function(){};
+            tvWs.onclose = function(){
+              /* Exponential backoff reconnect */
+              tvWsRetryDelay = Math.min(tvWsRetryDelay * 1.5, tvWsRetryMax);
+              wsIdx++;
+              setTimeout(tryWs, tvWsRetryDelay);
+            };
+          } catch(e){
+            setTimeout(tryWs, tvWsRetryDelay);
+          }
+        }
+        tryWs();
+      }
+      var tvPriceFlashTimer = null;
+
+      /* ── PRICE DISPLAY ── */
+      var _tvPrevPrice = 0;
+      function tvUpdatePriceDisplay(price, pct){
+        var el = document.getElementById('tv-price-val');
+        var chgEl = document.getElementById('tv-price-chg');
+        if(!el) return;
+        var fmt = price>100 ? price.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2}) : price.toFixed(5);
+        el.textContent = '$'+fmt;
+        document.getElementById('tv-ov-c').textContent = fmt;
+        if(pct!==null && pct!==undefined){
+          var sign = pct>=0?'+':'';
+          chgEl.textContent = sign+pct.toFixed(2)+'%';
+          chgEl.className = 'tv-price-chg '+(pct>=0?'up':'dn');
+        }
+        _tvPrevPrice = price;
+      }
+
+      /* ── TIMEFRAME SWITCHER ── */
+      window.tvSetTF = function(tf){
+        tvTF = tf;
+        document.querySelectorAll('.tv-tf-btn').forEach(function(b){
+          b.classList.toggle('active', b.textContent.trim()===tf);
+        });
+        if(tvSeries){ tvFetchCandles(); }
+      };
+
+      /* ── PAIR SWITCHER ── */
+      window.tvSelectPair = function(sym, name){
+        tvSymbol = sym; tvPairName = name;
+        document.querySelectorAll('.tv-pair-btn').forEach(function(b){
+          b.classList.remove('active');
+          if(b.textContent.trim()===name) b.classList.add('active');
+        });
+        document.getElementById('tv-sent-sym').textContent = name;
+        if(tvSeries){ tvFetchCandles(); }
+        /* update Firebase drawings path */
+        if(tvFirebaseDB) tvListenDrawings();
+        /* update chart title */
+        document.getElementById('tv-price-val').textContent='—';
+      };
+
+      /* ════════════════════════════════════════════
+         DRAWING TOOLS
+      ════════════════════════════════════════════ */
+      window.tvSetTool = function(tool){
+        tvTool = tool; tvDrawStep = 0; tvPendingP1 = null;
+        document.querySelectorAll('.tv-tool-btn[id^="tv-tool-"]').forEach(function(b){
+          b.classList.toggle('active', b.id==='tv-tool-'+tool);
+        });
+        var hint = document.getElementById('tv-draw-hint');
+        if(tool==='cursor'){ hint.style.display='none'; }
+        else if(tool==='hline'){ hint.style.display='block'; hint.textContent='Click on chart to draw Horizontal Line'; }
+        else if(tool==='trend'){ hint.style.display='block'; hint.textContent='Click 2 points to draw Trend Line'; }
+      };
+
+      function tvHandleClick(price, time, x, y){
+        if(tvTool==='hline'){
+          tvAddHLine(price, true);
+          tvSetTool('cursor');
+        } else if(tvTool==='trend'){
+          if(tvDrawStep===0){
+            tvPendingP1 = {price:price, time:time};
+            tvDrawStep = 1;
+            document.getElementById('tv-draw-hint').textContent='Now click second point';
+          } else {
+            tvAddTrendLine(tvPendingP1, {price:price, time:time}, true);
+            tvPendingP1 = null; tvDrawStep = 0;
+            tvSetTool('cursor');
+          }
+        }
+      }
+
+      function tvAddHLine(price, saveToFB){
+        var line = tvSeries.createPriceLine({
+          price: price,
+          color: 'rgba(245,166,35,0.8)',
+          lineWidth: 1.5,
+          lineStyle: LightweightCharts.LineStyle.Dashed,
+          axisLabelVisible: true,
+          title: '$'+price.toFixed(tvCurrentPrice>100?2:5)
+        });
+        var drawing = {type:'hline', price:price, lineObj:line};
+        tvDrawings.push(drawing);
+        if(saveToFB && tvFirebaseRef){
+          tvFirebaseRef.push({type:'hline', price:price});
+        }
+      }
+
+      function tvAddTrendLine(p1, p2, saveToFB){
+        /* Lightweight charts doesn't have native trend lines — use pricelines at both points */
+        /* We'll use a workaround: add a custom price line + annotation */
+        var line1 = tvSeries.createPriceLine({
+          price: p1.price,
+          color:'rgba(139,92,246,0.6)',
+          lineWidth:1,
+          lineStyle: LightweightCharts.LineStyle.Dotted,
+          axisLabelVisible: false,
+          title:'TL↑'
+        });
+        var line2 = tvSeries.createPriceLine({
+          price: p2.price,
+          color:'rgba(139,92,246,0.6)',
+          lineWidth:1,
+          lineStyle: LightweightCharts.LineStyle.Dotted,
+          axisLabelVisible: false,
+          title:'TL↓'
+        });
+        tvDrawings.push({type:'trend', p1:p1.price, p2:p2.price, lineObj1:line1, lineObj2:line2});
+        if(saveToFB && tvFirebaseRef){
+          tvFirebaseRef.push({type:'trend', p1:{price:p1.price,time:p1.time}, p2:{price:p2.price,time:p2.time}});
+        }
+      }
+
+      window.tvClearDrawings = function(){
+        tvDrawings.forEach(function(d){
+          try{
+            if(d.lineObj) tvSeries.removePriceLine(d.lineObj);
+            if(d.lineObj1) tvSeries.removePriceLine(d.lineObj1);
+            if(d.lineObj2) tvSeries.removePriceLine(d.lineObj2);
+          }catch(e){}
+        });
+        tvDrawings = [];
+        if(tvFirebaseRef) tvFirebaseRef.remove();
+      };
+
+      /* ════════════════════════════════════════════
+         FIREBASE — Shared Persistent Drawings
+      ════════════════════════════════════════════ */
+      function tvInitFirebase(){
+        try {
+          var app;
+          if(!firebase.apps || firebase.apps.length===0){
+            app = firebase.initializeApp(FB_CONFIG);
+          } else {
+            app = firebase.apps[0];
+          }
+          /* Init Analytics if available */
+          try { firebase.analytics(); } catch(ae){}
+
+          tvFirebaseDB = firebase.database();
+          tvListenDrawings();
+
+          /* Connection status indicator */
+          tvFirebaseDB.ref('.info/connected').on('value', function(snap){
+            tvConnected = snap.val()===true;
+            var dot = document.getElementById('tv-sync-dot');
+            var txt = document.getElementById('tv-sync-txt');
+            if(dot){ dot.className = 'tv-sync-dot-inner'+(tvConnected?'':' offline'); }
+            if(txt){ txt.textContent = tvConnected ? '🟢 Live Sync' : '🔴 Offline'; }
+          });
+        } catch(e){
+          console.warn('Firebase init failed:',e);
+          var dot = document.getElementById('tv-sync-dot');
+          var txt = document.getElementById('tv-sync-txt');
+          if(dot){ dot.classList.add('offline'); }
+          if(txt){ txt.textContent = '⚪ Local only'; }
+        }
+      }
+
+      function tvListenDrawings(){
+        if(!tvFirebaseDB) return;
+        /* Path: drawings/{symbol}/{tf} */
+        var path = 'drawings/'+tvSymbol+'/'+tvTF;
+        if(tvFirebaseRef){ tvFirebaseRef.off(); }
+        tvFirebaseRef = tvFirebaseDB.ref(path);
+
+        /* Clear existing drawings before loading from DB */
+        tvDrawings.forEach(function(d){
+          try{
+            if(d.lineObj) tvSeries.removePriceLine(d.lineObj);
+            if(d.lineObj1) tvSeries.removePriceLine(d.lineObj1);
+            if(d.lineObj2) tvSeries.removePriceLine(d.lineObj2);
+          }catch(e){}
+        });
+        tvDrawings = [];
+
+        /* Listen for all drawings */
+        tvFirebaseRef.on('child_added', function(snap){
+          var d = snap.val();
+          if(!d || !tvSeries) return;
+          if(d.type==='hline'){ tvAddHLine(d.price, false); }
+          else if(d.type==='trend'){ tvAddTrendLine(d.p1, d.p2, false); }
+        });
+        tvFirebaseRef.on('child_removed', function(){
+          /* Redraw from scratch on remove */
+          tvDrawings.forEach(function(d){
+            try{
+              if(d.lineObj) tvSeries.removePriceLine(d.lineObj);
+              if(d.lineObj1) tvSeries.removePriceLine(d.lineObj1);
+              if(d.lineObj2) tvSeries.removePriceLine(d.lineObj2);
+            }catch(e){}
+          });
+          tvDrawings = [];
+        });
+      }
+
+      /* ════════════════════════════════════════════
+         TRADE LOGIC
+      ════════════════════════════════════════════ */
+      function tvQ(v){ document.getElementById('tv-bet').value=v.toFixed(4); tvUpdatePayout(); }
+      function tvHalf(){ var v=parseFloat(document.getElementById('tv-bet').value)||0.001; document.getElementById('tv-bet').value=(v/2).toFixed(4); tvUpdatePayout(); }
+      function tvDouble(){ var v=parseFloat(document.getElementById('tv-bet').value)||0.001; document.getElementById('tv-bet').value=(v*2).toFixed(4); tvUpdatePayout(); }
+      window.tvQ=tvQ; window.tvHalf=tvHalf; window.tvDouble=tvDouble;
+
+      function tvDur(d){
+        tvDuration=d;
+        ['1','5','15'].forEach(function(n){ var b=document.getElementById('tv-dur-'+n); if(b) b.classList.toggle('active',parseInt(n)===d); });
+        tvUpdatePayout();
+      }
+      window.tvDur=tvDur;
+
+      function tvUpdatePayout(){
+        var stake = parseFloat(document.getElementById('tv-bet').value)||0;
+        var mult  = tvMultipliers[tvDuration]||1.8;
+        document.getElementById('tv-ps-stake').textContent  = '$'+stake.toFixed(4);
+        document.getElementById('tv-ps-payout').textContent = '$'+(stake*mult).toFixed(4);
+        document.getElementById('tv-ps-mlbl').textContent   = 'Win ×'+mult;
+        document.getElementById('tv-ps-dur').textContent    = tvDuration+' min';
+      }
+      document.getElementById('tv-bet').addEventListener('input', tvUpdatePayout);
+
+      window.tvTrade = function(dir){
+        if(tvActiveTrade){ alert('Trade already active!'); return; }
+        var stake = parseFloat(document.getElementById('tv-bet').value)||0;
+        if(stake<=0){ document.getElementById('tv-insuf').style.display='block'; return; }
+        document.getElementById('tv-insuf').style.display='none';
+
+        var entry = tvCurrentPrice;
+        var mult  = tvMultipliers[tvDuration]||1.8;
+        var totalSec = tvDuration * 60;
+        var elapsed  = 0;
+
+        tvActiveTrade = {dir:dir, stake:stake, entry:entry, mult:mult, totalSec:totalSec};
+
+        /* Show active panel */
+        document.getElementById('tv-active-panel').style.display='block';
+        document.getElementById('tv-dir-row').style.opacity='0.4';
+        document.getElementById('tv-dir-row').style.pointerEvents='none';
+        document.getElementById('tv-ap-dir').textContent = (dir==='UP'?'▲':'▼')+' '+dir;
+        document.getElementById('tv-ap-dir').style.color = dir==='UP'?'#22c55e':'#ef4444';
+        document.getElementById('tv-ap-entry').textContent = '$'+entry.toFixed(entry>100?2:5);
+        document.getElementById('tv-early-amt').textContent = '$'+(stake*0.5).toFixed(4);
+
+        /* Entry line on chart */
+        var entryLine = tvSeries.createPriceLine({
+          price:entry, color:'rgba(0,212,255,0.7)', lineWidth:1.5,
+          lineStyle:LightweightCharts.LineStyle.Dashed,
+          axisLabelVisible:true, title:'Entry'
+        });
+        tvActiveTrade.entryLine = entryLine;
+
+        /* Timer */
+        tvTradeTimer = setInterval(function(){
+          elapsed++;
+          var rem = totalSec - elapsed;
+          var pct = (1 - elapsed/totalSec) * 100;
+          document.getElementById('tv-timer-bar').style.width = Math.max(0,pct)+'%';
+
+          /* Update current + position */
+          var cur = tvCurrentPrice;
+          document.getElementById('tv-ap-cur').textContent = '$'+cur.toFixed(cur>100?2:5);
+          var inMoney = (dir==='UP' && cur>entry) || (dir==='DOWN' && cur<entry);
+          document.getElementById('tv-ap-pos').textContent = inMoney ? '✓ IN MONEY' : '✗ OUT';
+          document.getElementById('tv-ap-pos').style.color = inMoney ? '#22c55e' : '#ef4444';
+          document.getElementById('tv-ap-win').textContent = '$'+(stake*mult).toFixed(4);
+
+          if(elapsed>=totalSec){ tvSettleTrade(cur); }
+        }, 1000);
+      };
+
+      function tvSettleTrade(finalPrice){
+        clearInterval(tvTradeTimer);
+        var t = tvActiveTrade;
+        if(!t) return;
+        var won = (t.dir==='UP' && finalPrice>t.entry) || (t.dir==='DOWN' && finalPrice<t.entry);
+        var pnl = won ? (t.stake*t.mult - t.stake) : -t.stake;
+        tvTradeTotal++; tvTradePnl+=pnl;
+        if(won){ tvTradeWins++; } else { tvTradeLosses++; }
+
+        /* Remove entry line */
+        try{ tvSeries.removePriceLine(t.entryLine); }catch(e){}
+
+        /* Add to history */
+        tvAddHistory(t, finalPrice, won, pnl);
+        tvUpdateStats();
+
+        /* Reset UI */
+        document.getElementById('tv-active-panel').style.display='none';
+        document.getElementById('tv-dir-row').style.opacity='';
+        document.getElementById('tv-dir-row').style.pointerEvents='';
+        tvActiveTrade = null;
+
+        /* Show result */
+        var msg = won ? '🎉 WIN! +$'+pnl.toFixed(4) : '😞 LOSS -$'+(Math.abs(pnl)).toFixed(4);
+        alert(msg);
+      }
+
+      function tvUpdateActiveTrade(cur){
+        if(!tvActiveTrade) return;
+        document.getElementById('tv-ap-cur').textContent = '$'+cur.toFixed(cur>100?2:5);
+      }
+
+      window.tvEarlyExit = function(){
+        if(!tvActiveTrade) return;
+        clearInterval(tvTradeTimer);
+        var t = tvActiveTrade;
+        var payout = t.stake * 0.5;
+        var pnl    = payout - t.stake;
+        tvTradeTotal++; tvTradeLosses++;
+        tvTradePnl += pnl;
+        try{ tvSeries.removePriceLine(t.entryLine); }catch(e){}
+        tvAddHistory(t, tvCurrentPrice, false, pnl, true);
+        tvUpdateStats();
+        document.getElementById('tv-active-panel').style.display='none';
+        document.getElementById('tv-dir-row').style.opacity='';
+        document.getElementById('tv-dir-row').style.pointerEvents='';
+        tvActiveTrade = null;
+        alert('Exited early. Received $'+payout.toFixed(4));
+      };
+
+      function tvAddHistory(t, finalPrice, won, pnl, early){
+        var list = document.getElementById('tv-hist-list');
+        /* Remove empty msg */
+        var empty = list.querySelector('.tv-hist-empty');
+        if(empty) empty.remove();
+        var row = document.createElement('div');
+        row.className='tv-hist-row';
+        var dirCol = t.dir==='UP'?'#22c55e':'#ef4444';
+        var badge  = won ? '<span class="tv-hist-badge win">WIN</span>' : '<span class="tv-hist-badge loss">'+(early?'EARLY':'LOSS')+'</span>';
+        row.innerHTML =
+          '<span class="tv-hist-dir" style="color:'+dirCol+'">'+(t.dir==='UP'?'▲':'▼')+' '+t.dir+'</span>'+
+          '<span class="tv-hist-meta">'+tvPairName+' · '+t.totalSec/60+'min · $'+t.stake.toFixed(4)+'</span>'+
+          badge+
+          '<span class="tv-hist-pnl" style="color:'+(won?'#22c55e':'#ef4444')+'">'+(won?'+':'')+pnl.toFixed(4)+'</span>';
+        list.insertBefore(row, list.firstChild);
+        document.getElementById('tv-hist-count').textContent = tvTradeTotal+' trades';
+      }
+
+      function tvUpdateStats(){
+        document.getElementById('tvs-total').textContent = tvTradeTotal;
+        document.getElementById('tvs-wins').textContent  = tvTradeWins;
+        document.getElementById('tvs-losses').textContent= tvTradeLosses;
+        document.getElementById('tvs-wr').textContent    = tvTradeTotal?(Math.round(tvTradeWins/tvTradeTotal*100)+'%'):'0%';
+        var pnlEl = document.getElementById('tvs-pnl');
+        pnlEl.textContent = (tvTradePnl>=0?'+':'')+tvTradePnl.toFixed(4);
+        pnlEl.style.color = tvTradePnl>=0?'#22c55e':'#ef4444';
+        /* Sentiment update */
+        var bull = 50 + Math.round(tvTradeWins/Math.max(tvTradeTotal,1)*50 - 25 + (Math.random()-0.5)*10);
+        bull = Math.max(20,Math.min(80,bull));
+        document.getElementById('tv-sent-fill').style.width = bull+'%';
+        document.getElementById('tv-sent-bull').textContent = '▲ '+bull+'% BULL';
+        document.getElementById('tv-sent-bear').textContent = (100-bull)+'% BEAR ▼';
+      }
+
+      /* Expose global functions */
+      window.tvSelectPair = window.tvSelectPair || tvSelectPair;
+
+      })();
+      </script>
+
     </div><!-- /trade-section -->
 
     <!-- ╔══════════════════════════════════════════════════════════╗
@@ -22766,6 +23592,67 @@ img, canvas, svg, video {
 document.addEventListener('touchmove', function(e){
   if(e.touches.length > 1) e.preventDefault();
 }, {passive:false});
+</script>
+
+<script>
+/* ══════════════════════════════════════════════
+   BULLETPROOF SIDEBAR FIX — runs after all JS
+══════════════════════════════════════════════ */
+(function fixSidebar(){
+  var lsb     = document.getElementById('lsb');
+  var overlay = document.getElementById('lsb-mob-ov');
+  var hbg     = document.getElementById('hbg');
+
+  if(!lsb){ console.warn('lsb not found'); return; }
+
+  /* Ensure openLsb / closeLsb / toggleLsb always exist */
+  window.openLsb = function(){
+    lsb.classList.add('lsb-open');
+    hbg && hbg.classList.add('open');
+    if(overlay){ overlay.classList.add('open'); overlay.style.display='block'; }
+    document.body.style.overflow='hidden';
+  };
+  window.closeLsb = function(){
+    lsb.classList.remove('lsb-open');
+    hbg && hbg.classList.remove('open');
+    if(overlay){ overlay.classList.remove('open'); }
+    document.body.style.overflow='';
+  };
+  window.toggleLsb = function(){
+    lsb.classList.contains('lsb-open') ? closeLsb() : openLsb();
+  };
+  /* Override toggleDrawer too */
+  window.toggleDrawer = window.toggleLsb;
+
+  /* Rewire hbg button directly */
+  if(hbg){
+    hbg.onclick = null;
+    hbg.addEventListener('click', function(e){
+      e.stopPropagation();
+      toggleLsb();
+    });
+    hbg.addEventListener('touchend', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      toggleLsb();
+    }, {passive:false});
+  }
+
+  /* Close on overlay click */
+  if(overlay){
+    overlay.addEventListener('click', closeLsb);
+    overlay.addEventListener('touchend', function(e){
+      e.preventDefault(); closeLsb();
+    }, {passive:false});
+  }
+
+  /* Close on ESC */
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape') closeLsb();
+  });
+
+  console.log('✅ Sidebar fix applied');
+})();
 </script>
 </body>
 </html>
