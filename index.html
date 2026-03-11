@@ -9115,6 +9115,37 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 
       /* Insuf error */
       .tv-insuf-err { font-size:11px; color:#ef4444; margin-top:5px; display:none; }
+
+      /* Candle countdown timer in TF bar */
+      .tv-candle-timer {
+        display:inline-flex; align-items:center; gap:4px;
+        margin-left:auto; flex-shrink:0;
+        background:rgba(0,212,255,0.07); border:1px solid rgba(0,212,255,0.18);
+        border-radius:20px; padding:2px 8px 2px 4px;
+      }
+      .tv-ct-ring { display:flex; align-items:center; }
+      .tv-ct-val {
+        font-family:'DM Mono',monospace; font-size:11px; font-weight:700;
+        color:#00d4ff; letter-spacing:.03em; min-width:32px;
+      }
+
+      /* Compact UP/DOWN buttons */
+      .tv-dir-compact { gap:8px; margin-bottom:0; }
+      .tv-btn-sm {
+        padding:10px 8px !important;
+        min-height:52px !important;
+        border-radius:12px !important;
+      }
+      .tv-btn-sm .tv-dir-sub { display:block; }
+
+      /* Drawing tool hint */
+      .tv-draw-hint {
+        position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
+        background:rgba(5,7,15,0.92); border:1px solid rgba(245,166,35,0.3);
+        border-radius:8px; padding:5px 12px; font-size:11px; color:#f5a623;
+        white-space:nowrap; pointer-events:none; z-index:10;
+        display:none;
+      }
       </style>
 
       <!-- ══ RISK BANNER ══ -->
@@ -9138,7 +9169,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         </div>
       </div>
 
-      <!-- ══ TIMEFRAME BAR ══ -->
+      <!-- ══ TIMEFRAME BAR + CANDLE COUNTDOWN ══ -->
       <div class="tv-tf-bar">
         <span style="font-size:9px;color:#30395a;margin-right:4px;flex-shrink:0">TF</span>
         <button class="tv-tf-btn" onclick="tvSetTF('1m')">1m</button>
@@ -9152,23 +9183,50 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
         <button class="tv-tf-btn" onclick="tvSetTF('1w')">1W</button>
         <div class="tv-tf-sep"></div>
         <button class="tv-tf-btn" onclick="tvSetTF('1M')">1M</button>
+        <!-- Candle countdown timer -->
+        <div class="tv-candle-timer" id="tv-candle-timer">
+          <div class="tv-ct-ring">
+            <svg width="22" height="22" viewBox="0 0 22 22">
+              <circle cx="11" cy="11" r="9" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2.5"/>
+              <circle cx="11" cy="11" r="9" fill="none" stroke="#00d4ff" stroke-width="2.5"
+                stroke-dasharray="56.5" stroke-dashoffset="0"
+                stroke-linecap="round" transform="rotate(-90 11 11)"
+                id="tv-ct-arc"/>
+            </svg>
+          </div>
+          <span class="tv-ct-val" id="tv-ct-val">—</span>
+        </div>
       </div>
 
-      <!-- ══ DRAWING TOOLS ══ -->
+      <!-- ══ DRAWING TOOLS (improved) ══ -->
       <div class="tv-tools-bar">
         <span class="tv-tools-label">DRAW</span>
-        <button class="tv-tool-btn" id="tv-tool-cursor" onclick="tvSetTool('cursor')">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-7 1-4 7z"/></svg> Cursor
+        <button class="tv-tool-btn active" id="tv-tool-cursor" onclick="tvSetTool('cursor')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-7 1-4 7z"/></svg> Cursor
         </button>
         <button class="tv-tool-btn" id="tv-tool-hline" onclick="tvSetTool('hline')">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/></svg> H-Line
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/></svg>
+          <span style="color:#f5a623">H-Line</span>
+        </button>
+        <button class="tv-tool-btn" id="tv-tool-support" onclick="tvSetTool('support')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <span style="color:#22c55e">Support</span>
+        </button>
+        <button class="tv-tool-btn" id="tv-tool-resist" onclick="tvSetTool('resist')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/></svg>
+          <span style="color:#ef4444">Resist</span>
         </button>
         <button class="tv-tool-btn" id="tv-tool-trend" onclick="tvSetTool('trend')">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="20" x2="20" y2="4"/></svg> Trend
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><line x1="4" y1="20" x2="20" y2="4"/></svg>
+          <span style="color:#8b5cf6">Trend</span>
+        </button>
+        <button class="tv-tool-btn" id="tv-tool-fib" onclick="tvSetTool('fib')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2"><path d="M4 4h16M4 10h12M4 16h8M4 20h4"/></svg>
+          <span style="color:#00d4ff">Fib</span>
         </button>
         <div class="tv-tools-sep"></div>
-        <button class="tv-tool-btn danger" id="tv-tool-clear" onclick="tvClearDrawings()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg> Clear All
+        <button class="tv-tool-btn danger" onclick="tvClearDrawings()">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg> Clear
         </button>
         <div class="tv-sync-dot" id="tv-sync-indicator">
           <div class="tv-sync-dot-inner" id="tv-sync-dot"></div>
@@ -9202,7 +9260,31 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
           Prediction Trading
         </div>
 
-        <!-- Amount -->
+        <!-- Duration — TOP -->
+        <div class="tv-dur-row">
+          <div class="tv-dur-label">Trade Duration</div>
+          <div class="tv-dur-btns">
+            <button class="tv-dur-btn" id="tv-dur-1" onclick="tvDur(1)">1 MIN<span class="tv-dur-mult">×1.5</span></button>
+            <button class="tv-dur-btn active" id="tv-dur-5" onclick="tvDur(5)">5 MIN<span class="tv-dur-mult">×1.8</span></button>
+            <button class="tv-dur-btn" id="tv-dur-15" onclick="tvDur(15)">15 MIN<span class="tv-dur-mult">×2.2</span></button>
+          </div>
+        </div>
+
+        <!-- UP / DOWN — compact, right below duration -->
+        <div class="tv-dir-row tv-dir-compact" id="tv-dir-row">
+          <button class="tv-btn-up tv-btn-sm" onclick="tvTrade('UP')">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+            <span style="font-size:13px;font-weight:800;letter-spacing:.06em">UP</span>
+            <span class="tv-dir-sub" style="font-size:9px">Price rises</span>
+          </button>
+          <button class="tv-btn-dn tv-btn-sm" onclick="tvTrade('DOWN')">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            <span style="font-size:13px;font-weight:800;letter-spacing:.06em">DOWN</span>
+            <span class="tv-dir-sub" style="font-size:9px">Price falls</span>
+          </button>
+        </div>
+
+        <!-- Amount — below UP/DOWN -->
         <div class="tv-amount-row">
           <div class="tv-amount-label">Trade Amount (USD)</div>
           <div class="tv-amount-wrap">
@@ -9218,16 +9300,6 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
             <button class="tv-quick-btn" onclick="tvDouble()">2×</button>
           </div>
           <div class="tv-insuf-err" id="tv-insuf">⚠ Insufficient balance</div>
-        </div>
-
-        <!-- Duration -->
-        <div class="tv-dur-row">
-          <div class="tv-dur-label">Trade Duration</div>
-          <div class="tv-dur-btns">
-            <button class="tv-dur-btn" id="tv-dur-1" onclick="tvDur(1)">1 MIN<span class="tv-dur-mult">×1.5</span></button>
-            <button class="tv-dur-btn active" id="tv-dur-5" onclick="tvDur(5)">5 MIN<span class="tv-dur-mult">×1.8</span></button>
-            <button class="tv-dur-btn" id="tv-dur-15" onclick="tvDur(15)">15 MIN<span class="tv-dur-mult">×2.2</span></button>
-          </div>
         </div>
 
         <!-- Payout strip -->
@@ -9270,19 +9342,6 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
           </div>
         </div>
 
-        <!-- UP / DOWN buttons -->
-        <div class="tv-dir-row" id="tv-dir-row">
-          <button class="tv-btn-up" onclick="tvTrade('UP')">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-            <span style="font-size:15px;font-weight:800">UP</span>
-            <span class="tv-dir-sub">Price rises</span>
-          </button>
-          <button class="tv-btn-dn" onclick="tvTrade('DOWN')">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-            <span style="font-size:15px;font-weight:800">DOWN</span>
-            <span class="tv-dir-sub">Price falls</span>
-          </button>
-        </div>
       </div>
 
       <!-- ══ TRADE HISTORY ══ -->
@@ -9539,6 +9598,8 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
             tvWs.onmessage = function(e){
               var msg; try{ msg=JSON.parse(e.data); }catch(er){return;}
               var k = msg.k; if(!k) return;
+              /* Update candle countdown */
+              tvCandleCloseMs = k.T; // close time in ms
               var candle = {
                 time:  Math.floor(k.t/1000),
                 open:  parseFloat(k.o),
@@ -9616,7 +9677,39 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       };
 
       /* ════════════════════════════════════════════
-         DRAWING TOOLS
+         CANDLE COUNTDOWN TIMER
+      ════════════════════════════════════════════ */
+      var tvCandleCloseMs = 0;  // from WS k.T
+      var tvCtInterval = null;
+
+      function tvStartCandleTimer(){
+        if(tvCtInterval) clearInterval(tvCtInterval);
+        tvCtInterval = setInterval(function(){
+          if(!tvCandleCloseMs) return;
+          var rem = tvCandleCloseMs - Date.now();
+          if(rem < 0) rem = 0;
+          var secs  = Math.floor(rem / 1000);
+          var mins  = Math.floor(secs / 60);
+          var s     = secs % 60;
+          var display = mins > 0 ? mins+'m '+(s<10?'0':'')+s+'s' : s+'s';
+          var valEl = document.getElementById('tv-ct-val');
+          if(valEl) valEl.textContent = display;
+
+          /* Arc progress */
+          var arcEl = document.getElementById('tv-ct-arc');
+          if(arcEl && TF_MS[tvTF]){
+            var total = TF_MS[tvTF];
+            var pct   = Math.max(0, Math.min(1, rem / total));
+            var circumference = 56.5;
+            arcEl.setAttribute('stroke-dashoffset', circumference * (1 - pct));
+            arcEl.setAttribute('stroke', rem < 10000 ? '#ef4444' : rem < 30000 ? '#f5a623' : '#00d4ff');
+          }
+        }, 250);
+      }
+      tvStartCandleTimer();
+
+      /* ════════════════════════════════════════════
+         DRAWING TOOLS — UPGRADED
       ════════════════════════════════════════════ */
       window.tvSetTool = function(tool){
         tvTool = tool; tvDrawStep = 0; tvPendingP1 = null;
@@ -9624,75 +9717,141 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
           b.classList.toggle('active', b.id==='tv-tool-'+tool);
         });
         var hint = document.getElementById('tv-draw-hint');
+        var hints = {
+          'cursor':  '',
+          'hline':   '📏 Click on chart to place Horizontal Line',
+          'support': '🟢 Click to place Support Level (green)',
+          'resist':  '🔴 Click to place Resistance Level (red)',
+          'trend':   '📐 Click 2 points to draw Trend Line',
+          'fib':     '🌀 Click 2 points for Fibonacci Retracement'
+        };
         if(tool==='cursor'){ hint.style.display='none'; }
-        else if(tool==='hline'){ hint.style.display='block'; hint.textContent='Click on chart to draw Horizontal Line'; }
-        else if(tool==='trend'){ hint.style.display='block'; hint.textContent='Click 2 points to draw Trend Line'; }
+        else { hint.style.display='block'; hint.textContent=hints[tool]||'Click on chart'; }
       };
 
       function tvHandleClick(price, time, x, y){
         if(tvTool==='hline'){
-          tvAddHLine(price, true);
+          tvAddHLine(price, 'rgba(245,166,35,0.85)', 'H', true);
+          tvSetTool('cursor');
+        } else if(tvTool==='support'){
+          tvAddHLine(price, 'rgba(34,197,94,0.85)', 'S', true);
+          tvSetTool('cursor');
+        } else if(tvTool==='resist'){
+          tvAddHLine(price, 'rgba(239,68,68,0.85)', 'R', true);
           tvSetTool('cursor');
         } else if(tvTool==='trend'){
           if(tvDrawStep===0){
             tvPendingP1 = {price:price, time:time};
             tvDrawStep = 1;
-            document.getElementById('tv-draw-hint').textContent='Now click second point';
+            document.getElementById('tv-draw-hint').textContent='📐 Now click second point for trend line';
           } else {
             tvAddTrendLine(tvPendingP1, {price:price, time:time}, true);
+            tvPendingP1 = null; tvDrawStep = 0;
+            tvSetTool('cursor');
+          }
+        } else if(tvTool==='fib'){
+          if(tvDrawStep===0){
+            tvPendingP1 = {price:price, time:time};
+            tvDrawStep = 1;
+            document.getElementById('tv-draw-hint').textContent='🌀 Now click end point for Fibonacci';
+          } else {
+            tvAddFibLevels(tvPendingP1.price, price, true);
             tvPendingP1 = null; tvDrawStep = 0;
             tvSetTool('cursor');
           }
         }
       }
 
-      function tvAddHLine(price, saveToFB){
+      function tvAddHLine(price, color, tag, saveToFB){
         var line = tvSeries.createPriceLine({
           price: price,
-          color: 'rgba(245,166,35,0.8)',
+          color: color,
           lineWidth: 1.5,
           lineStyle: LightweightCharts.LineStyle.Dashed,
           axisLabelVisible: true,
-          title: '$'+price.toFixed(tvCurrentPrice>100?2:5)
+          title: (tag==='H'?'H ':'')+(tag==='S'?'🟢 SUP ':'')+(tag==='R'?'🔴 RES ':'')+
+                 '$'+price.toFixed(tvCurrentPrice>100?2:5)
         });
-        var drawing = {type:'hline', price:price, lineObj:line};
+        var drawing = {type:'hline', color:color, tag:tag, price:price, lineObj:line};
         tvDrawings.push(drawing);
         if(saveToFB && tvFirebaseRef){
-          tvFirebaseRef.push({type:'hline', price:price});
+          tvFirebaseRef.push({type:'hline', price:price, color:color, tag:tag});
         }
       }
 
       function tvAddTrendLine(p1, p2, saveToFB){
-        /* Lightweight charts doesn't have native trend lines — use pricelines at both points */
-        /* We'll use a workaround: add a custom price line + annotation */
-        var line1 = tvSeries.createPriceLine({
-          price: p1.price,
-          color:'rgba(139,92,246,0.6)',
-          lineWidth:1,
-          lineStyle: LightweightCharts.LineStyle.Dotted,
-          axisLabelVisible: false,
-          title:'TL↑'
-        });
-        var line2 = tvSeries.createPriceLine({
-          price: p2.price,
-          color:'rgba(139,92,246,0.6)',
-          lineWidth:1,
-          lineStyle: LightweightCharts.LineStyle.Dotted,
-          axisLabelVisible: false,
-          title:'TL↓'
-        });
-        tvDrawings.push({type:'trend', p1:p1.price, p2:p2.price, lineObj1:line1, lineObj2:line2});
+        /* Real slope trend line using LineSeries overlay */
+        try {
+          var slope = (p2.price - p1.price);
+          var timeDiff = (p2.time - p1.time) || 1;
+          /* Extend line: go back to chart start and forward */
+          var tMin = p1.time - timeDiff * 10;
+          var tMax = p2.time + timeDiff * 10;
+          var pMin = p1.price + slope * ((tMin - p1.time) / timeDiff);
+          var pMax = p1.price + slope * ((tMax - p1.time) / timeDiff);
+
+          var trendSeries = tvChart.addLineSeries({
+            color: 'rgba(139,92,246,0.9)',
+            lineWidth: 2,
+            lineStyle: LightweightCharts.LineStyle.Solid,
+            crosshairMarkerVisible: false,
+            lastValueVisible: false,
+            priceLineVisible: false,
+          });
+          trendSeries.setData([
+            {time: tMin, value: pMin},
+            {time: p1.time, value: p1.price},
+            {time: p2.time, value: p2.price},
+            {time: tMax, value: pMax}
+          ]);
+          tvDrawings.push({type:'trend', p1:p1.price, p2:p2.price, seriesObj:trendSeries});
+        } catch(e){
+          /* Fallback to price lines if LineSeries fails */
+          tvSeries.createPriceLine({price:p1.price, color:'rgba(139,92,246,0.6)', lineWidth:1, lineStyle:LightweightCharts.LineStyle.Dotted, axisLabelVisible:false, title:'TL'});
+          tvSeries.createPriceLine({price:p2.price, color:'rgba(139,92,246,0.6)', lineWidth:1, lineStyle:LightweightCharts.LineStyle.Dotted, axisLabelVisible:false, title:'TL'});
+        }
         if(saveToFB && tvFirebaseRef){
           tvFirebaseRef.push({type:'trend', p1:{price:p1.price,time:p1.time}, p2:{price:p2.price,time:p2.time}});
+        }
+      }
+
+      function tvAddFibLevels(highPrice, lowPrice, saveToFB){
+        /* Standard Fibonacci retracement levels */
+        var diff = Math.abs(highPrice - lowPrice);
+        var base = Math.min(highPrice, lowPrice);
+        var fibs = [
+          {ratio:0,    color:'rgba(34,197,94,0.7)',  label:'0%'},
+          {ratio:0.236,color:'rgba(0,212,255,0.7)',  label:'23.6%'},
+          {ratio:0.382,color:'rgba(245,166,35,0.8)', label:'38.2%'},
+          {ratio:0.5,  color:'rgba(255,255,255,0.7)',label:'50%'},
+          {ratio:0.618,color:'rgba(245,166,35,0.8)', label:'61.8%'},
+          {ratio:0.786,color:'rgba(0,212,255,0.7)',  label:'78.6%'},
+          {ratio:1,    color:'rgba(239,68,68,0.7)',  label:'100%'}
+        ];
+        fibs.forEach(function(f){
+          var price = base + diff * (1 - f.ratio);
+          var line = tvSeries.createPriceLine({
+            price: price,
+            color: f.color,
+            lineWidth: 1,
+            lineStyle: LightweightCharts.LineStyle.Dotted,
+            axisLabelVisible: true,
+            title: 'Fib '+f.label
+          });
+          tvDrawings.push({type:'fib', price:price, lineObj:line});
+        });
+        if(saveToFB && tvFirebaseRef){
+          tvFirebaseRef.push({type:'fib', high:highPrice, low:lowPrice});
         }
       }
 
       window.tvClearDrawings = function(){
         tvDrawings.forEach(function(d){
           try{
-            if(d.lineObj) tvSeries.removePriceLine(d.lineObj);
-            if(d.lineObj1) tvSeries.removePriceLine(d.lineObj1);
-            if(d.lineObj2) tvSeries.removePriceLine(d.lineObj2);
+            if(d.lineObj)   tvSeries.removePriceLine(d.lineObj);
+            if(d.seriesObj) tvChart.removeSeries(d.seriesObj);
+            if(d.lineObj1)  tvSeries.removePriceLine(d.lineObj1);
+            if(d.lineObj2)  tvSeries.removePriceLine(d.lineObj2);
           }catch(e){}
         });
         tvDrawings = [];
