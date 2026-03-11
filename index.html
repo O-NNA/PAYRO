@@ -16,7 +16,7 @@
     cookie_flags: 'SameSite=None;Secure'
   });
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>PAYRO — Global Capital Platform</title>
 <!-- SPONSOR AD SCRIPT -->
 <script type='text/javascript' src='https://pl28874426.effectivegatecpm.com/1f/81/29/1f8129a5e1425dd72a6354c5ecff9d54.js'></script>
@@ -106,6 +106,7 @@ html{
   height:100%;
   scroll-behavior:auto;
   font-size: clamp(14px, 2vw, 16px);
+  overflow-x:hidden;
 }
 body{
   font-family:var(--f-body);
@@ -113,6 +114,7 @@ body{
   color:var(--txt);
   height:100%;
   overflow:auto !important;
+  overflow-x:hidden !important;
   line-height:1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -129,7 +131,7 @@ input,select{font-family:var(--f-body)}
 ================================================================ */
 .bg-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .bg-wrap::before{content:'';position:absolute;width:1200px;height:1200px;top:-500px;left:-300px;background:radial-gradient(circle,rgba(245,166,35,0.05),transparent 65%);animation:bgA 22s ease-in-out infinite alternate}
-.bg-wrap::after{content:'';position:absolute;width:900px;height:900px;bottom:-350px;right:-200px;background:radial-gradient(circle,rgba(0,212,255,0.04),transparent 65%);animation:bgB 28s ease-in-out infinite alternate}
+.bg-wrap::after{content:'';position:absolute;width:100%;max-width:900px;height:900px;bottom:-350px;right:-200px;background:radial-gradient(circle,rgba(0,212,255,0.04),transparent 65%);animation:bgB 28s ease-in-out infinite alternate}
 .bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(245,166,35,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,0.03) 1px,transparent 1px);background-size:56px 56px}
 @keyframes bgA{from{transform:translate(0,0)}to{transform:translate(80px,70px)}}
 @keyframes bgB{from{transform:translate(0,0)}to{transform:translate(-70px,-80px)}}
@@ -228,7 +230,11 @@ input,select{font-family:var(--f-body)}
    5. LAYOUT — SPA Shell: Fixed Header + Fixed BottomNav + Scrollable Middle
 ================================================================ */
 .wrap{
-  position:fixed;inset:0;z-index:1;
+  position:fixed;
+  left:0;right:0;
+  top:24px; /* ticker height */
+  bottom:0;
+  z-index:1;
   display:flex;flex-direction:column;
   overflow:hidden;
 }
@@ -653,7 +659,7 @@ input,select{font-family:var(--f-body)}
   }
 }
 
-@media(min-width:900px){
+@media(min-width:100%;max-width:900px){
   .mines-layout{
     grid-template-columns:240px 1fr;
     gap:14px;
@@ -767,7 +773,7 @@ input,select{font-family:var(--f-body)}
 .mi-lbl{font-size:10px;color:var(--txt3);letter-spacing:.07em;text-transform:uppercase;margin-top:2px}
 /* Grid: uses aspect-ratio but constrained by container */
 .mines-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;padding:18px;background:var(--bg1);border:1px solid var(--bdr2);border-radius:var(--r-lg);width:100%;box-sizing:border-box}
-.mc{aspect-ratio:1;border-radius:var(--r-md);border:1px solid var(--bdr2);background:linear-gradient(135deg,var(--bg3),var(--bg4));display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .22s var(--ease);position:relative;overflow:hidden;min-width:0;min-height:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.mc{aspect-ratio:1;border-radius:var(--r-md);border:1px solid var(--bdr2);background:linear-gradient(135deg,var(--bg3),var(--bg4));display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .22s var(--ease);position:relative;overflow:hidden;min-width:0;min-height:0}
 .mc:hover:not(.revealed):not(.locked){border-color:var(--gold);background:linear-gradient(135deg,var(--bg4),#1e2540);transform:scale(1.06) translateY(-2px);box-shadow:0 6px 20px var(--gold-g),inset 0 1px 0 rgba(255,255,255,.08)}
 .mc.locked{cursor:default;opacity:.6}
 @keyframes gemReveal{0%{transform:scale(0.4) rotateY(90deg);opacity:0}60%{transform:scale(1.18) rotateY(-8deg);opacity:1}80%{transform:scale(0.92)}100%{transform:scale(1) rotateY(0deg)}}
@@ -781,7 +787,7 @@ input,select{font-family:var(--f-body)}
 /* Ctrl inline ad: width-constrained */
 .mines-ctrl-ad{width:100%;overflow:hidden;margin-top:12px}
 .mines-ctrl-ad .rgb-ad{width:100%!important;min-height:72px}
-@media(max-width:900px){
+@media(max-width:100%;max-width:900px){
   .mines-layout{grid-template-columns:220px 1fr}
   .mines-info{grid-template-columns:1fr 1fr;gap:8px}
 }
@@ -866,7 +872,7 @@ input,select{font-family:var(--f-body)}
   box-shadow:0 4px 14px var(--gold-g);
   flex-shrink:0;
   min-width:80px;
-  touch-action:manipulation;
+  
 }
 .faucet-btn:hover:not(:disabled){
   transform:translateY(-1px);
@@ -1208,7 +1214,7 @@ input,select{font-family:var(--f-body)}
    23. FOOTER + TOASTS
 ================================================================ */
 .ad-foot{width:100%;min-height:68px;border-top:1px solid var(--bdr2);background:var(--bg1);display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;color:var(--txt3)}
-.ad-foot .rgb-ad{width:730px;height:52px}
+.ad-foot .rgb-ad{width:100%;max-width:100%;max-width:728px;height:52px}
 .ad-foot .rgb-ad-inner{height:48px}
 .toasts{position:fixed;bottom:22px;right:22px;z-index:8500;display:flex;flex-direction:column;gap:9px;pointer-events:none}
 .toast{padding:11px 16px;border-radius:var(--r-md);background:var(--bg2);border:1px solid var(--bdr);box-shadow:var(--card-sh);font-size:13px;font-weight:500;display:flex;align-items:center;gap:10px;pointer-events:all;max-width:300px;animation:toastIn .35s var(--spring)}
@@ -1255,7 +1261,7 @@ input,select{font-family:var(--f-body)}
   animation:adSweep 5s ease-in-out infinite 2.5s;pointer-events:none;
 }
 .sponsor-banner-inner{
-  width:100%;max-width:970px;min-height:50px;
+  width:100%;max-width:100%;max-width:970px;min-height:50px;
   display:flex;align-items:center;justify-content:center;
   font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.06em;gap:10px;
   position:relative;z-index:1;
@@ -1291,7 +1297,7 @@ input,select{font-family:var(--f-body)}
 .daily-reward-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:99px;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(245,166,35,.12));border:1px solid rgba(139,92,246,.35);font-family:var(--f-mono);font-size:18px;font-weight:700;color:var(--gold);margin-bottom:16px;text-shadow:0 0 12px var(--gold-g)}
 .daily-security-note{font-size:11px;color:var(--txt3);display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px}
 /* ── Leaderboard & Wallet inner grids ── */
-@media(max-width:900px){
+@media(max-width:100%;max-width:900px){
   .sec-wallet-inner{grid-template-columns:1fr!important}
   .lb-inner-grid{grid-template-columns:1fr!important}
 }
@@ -1312,7 +1318,7 @@ input,select{font-family:var(--f-body)}
 }
 
 /* ── 900px: tablet portrait ── */
-@media(max-width:900px){
+@media(max-width:100%;max-width:900px){
   .geo-grid{grid-template-columns:1fr 1fr}
   .pstats{grid-template-columns:1fr 1fr}
   .task-grid{grid-template-columns:1fr}
@@ -1347,7 +1353,7 @@ input,select{font-family:var(--f-body)}
 /* ── 600px: standard phone ── */
 @media(max-width:600px){
   /* Core layout */
-  .main{gap:14px}
+  .main{padding:12px 10px;gap:14px}
   .navbar{padding:0 12px}
   /* Balance pill hides text */
   .wallet-pill .wallet-bal{display:none}
@@ -1451,7 +1457,7 @@ input,select{font-family:var(--f-body)}
 .pt-tier{font-weight:600;color:var(--txt)}
 .pt-commission{font-family:var(--f-mono);font-weight:700;color:var(--green)}
 .partner-note{margin-top:14px;padding:12px 14px;background:rgba(0,212,255,.04);border:1px dashed rgba(0,212,255,.18);border-radius:var(--r-sm);font-size:11px;color:var(--txt3);line-height:1.65}
-@media(max-width:900px){.partner-layout{grid-template-columns:1fr}.partner-stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:100%;max-width:900px){.partner-layout{grid-template-columns:1fr}.partner-stats-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.partner-stats-grid{grid-template-columns:1fr}}
 
 /* ================================================================
@@ -1481,6 +1487,13 @@ input,select{font-family:var(--f-body)}
   will-change: transform, opacity;
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+/* Spin canvas always responsive — never overflows viewport */
+#spin-canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 /* RGB glow elements also animate border-color + box-shadow */
 .screen-rgb-frame,
@@ -1731,7 +1744,7 @@ html { scroll-behavior: smooth }
 .ref-payout-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px}
 .rps-pending{background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.2)}
 .rps-processed{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
-@media(max-width:900px){.ref-stats-row{grid-template-columns:repeat(3,1fr)}.ref-main-grid{grid-template-columns:1fr}.ref-attribution{grid-template-columns:1fr}.ref-tier-grid{grid-template-columns:repeat(2,1fr)}.ref-camp-row{grid-template-columns:1fr 80px 80px 80px}}
+@media(max-width:100%;max-width:900px){.ref-stats-row{grid-template-columns:repeat(3,1fr)}.ref-main-grid{grid-template-columns:1fr}.ref-attribution{grid-template-columns:1fr}.ref-tier-grid{grid-template-columns:repeat(2,1fr)}.ref-camp-row{grid-template-columns:1fr 80px 80px 80px}}
 @media(max-width:600px){.ref-stats-row{grid-template-columns:1fr 1fr}.ref-subid-row{grid-template-columns:1fr}.ref-utm-row{grid-template-columns:1fr 1fr}.ref-share-row{grid-template-columns:1fr}.ref-camp-row{grid-template-columns:1fr 80px 80px}}
 @media(max-width:420px){.ref-stats-row{grid-template-columns:1fr 1fr}.ref-tier-grid{grid-template-columns:1fr 1fr}}
 
@@ -1939,7 +1952,7 @@ html { scroll-behavior: smooth }
 .aff-table-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .aff-table-title{font-size:12px;font-weight:700;color:var(--txt);letter-spacing:.03em}
 .aff-table-wrap{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r-md);overflow:hidden;overflow-x:auto}
-.aff-data-table{width:100%;border-collapse:collapse;min-width:480px}
+.aff-data-table{width:100%;border-collapse:collapse;min-width:480px;overflow-x:auto}
 .aff-data-table thead tr{background:var(--bg4)}
 .aff-data-table th{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--bdr2);white-space:nowrap}
 .aff-data-table td{font-size:12px;color:var(--txt2);padding:11px 14px;border-bottom:1px solid var(--bdr2)}
@@ -1982,7 +1995,7 @@ html { scroll-behavior: smooth }
 .aff-feed-time{font-family:var(--f-mono);font-size:9px;color:var(--txt3);white-space:nowrap;flex-shrink:0}
 
 /* Responsive */
-@media(max-width:900px){
+@media(max-width:100%;max-width:900px){
   .aff-main-grid{grid-template-columns:1fr}
   .aff-analytics-grid{grid-template-columns:1fr}
   .aff-hero{grid-template-columns:1fr}
@@ -2044,7 +2057,7 @@ html { scroll-behavior: smooth }
 .stb-inner{
   position:relative;z-index:1;
   display:flex;align-items:center;justify-content:space-between;
-  max-width:1220px;margin:0 auto;
+  max-width:100%;max-width:1220px;margin:0 auto;
   padding:0 28px;height:90px;gap:20px;
 }
 
@@ -2245,7 +2258,7 @@ html { scroll-behavior: smooth }
 .aff-hero-eyebrow{font-size:9px;font-weight:700;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
 .aff-live-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:ldPulse 2s ease-in-out infinite;flex-shrink:0}
 .aff-hero-title{font-family:var(--f-display);font-size:26px;font-weight:700;letter-spacing:.03em;color:#fff;margin-bottom:6px}
-.aff-hero-tagline{font-size:13px;color:var(--txt2);line-height:1.6;max-width:480px;margin-bottom:14px}
+.aff-hero-tagline{font-size:13px;color:var(--txt2);line-height:1.6;max-width:min(480px,100%);margin-bottom:14px}
 .aff-hero-badges{display:flex;flex-wrap:wrap;gap:8px}
 .aff-hbadge{font-size:9px;font-weight:700;letter-spacing:.1em;padding:3px 10px;border-radius:99px;text-transform:uppercase}
 .aff-hbadge-cyan{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--cyan)}
@@ -2450,7 +2463,7 @@ html { scroll-behavior: smooth }
 .aff-feed-time{font-family:var(--f-mono);font-size:9px;color:var(--txt3);white-space:nowrap;flex-shrink:0}
 
 /* Responsive */
-@media(max-width:900px){
+@media(max-width:100%;max-width:900px){
   .aff-main-grid{grid-template-columns:1fr}
   .aff-analytics-grid{grid-template-columns:1fr}
   .aff-kpi-strip{grid-template-columns:repeat(3,1fr)}
@@ -2654,7 +2667,7 @@ html { scroll-behavior: smooth }
   transition:transform .2s var(--spring),box-shadow .2s ease,background .2s ease;
   position:relative;
   overflow:hidden;
-  touch-action:manipulation;
+  
   min-height:44px;
 }
 .wc-btn::after{
@@ -2921,7 +2934,7 @@ html { scroll-behavior: smooth }
   overflow:hidden;
   font-family:var(--f-body);
   min-width:40px;
-  touch-action:manipulation;
+  
 }
 .bnav-item::before{
   content:'';
@@ -3274,8 +3287,10 @@ html { scroll-behavior: smooth }
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:14px;
-  padding:14px 16px;
+  gap:10px;
+  padding:14px 14px;
+  overflow:hidden;
+  min-width:0;
 }
 .cdb-left{display:flex;align-items:center;gap:12px;min-width:0}
 .cdb-icon{
@@ -3287,10 +3302,10 @@ html { scroll-behavior: smooth }
   box-shadow:0 0 14px rgba(139,92,246,.2);
 }
 .cdb-label{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;margin-bottom:2px}
-.cdb-day{font-family:var(--f-display);font-size:19px;font-weight:700;color:var(--txt);line-height:1.1}
+.cdb-day{font-family:var(--f-display);font-size:clamp(15px,4.5vw,19px);font-weight:700;color:var(--txt);line-height:1.1;white-space:nowrap}
 .cdb-sub{font-size:10px;color:var(--gold);margin-top:1px;font-weight:600}
-.cdb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
-.cdb-timer-lbl{font-size:10px;color:var(--txt3);font-family:var(--f-mono);text-align:right}
+.cdb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;min-width:0;max-width:45%}
+.cdb-timer-lbl{font-size:10px;color:var(--txt3);font-family:var(--f-mono);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .cdb-btn{
   padding:9px 18px;
   border-radius:var(--r-sm);
@@ -3687,15 +3702,6 @@ button, a, .card, .tp-card, .wc-btn, .task-item {
 .tp-card:hover{
   box-shadow:0 12px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(245,166,35,.1);
   transform:translateY(-1px);
-}
-
-/* Better SPA section fade-in */
-.spa-section{
-  animation:spaFadeIn .2s ease both;
-}
-@keyframes spaFadeIn{
-  from{opacity:0;transform:translateY(4px)}
-  to{opacity:1;transform:translateY(0)}
 }
 
 /* Navbar brand polish */
@@ -4621,14 +4627,19 @@ input:focus{
   color:var(--green);font-size:.62rem;font-weight:700;
 }
 .v3-bh-actions{
-  display:flex;gap:8px;margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;margin-top:16px;
+  width:100%;
 }
 .v3-bh-btn{
-  flex:1;padding:9px 0;border-radius:12px;
-  font-size:.73rem;font-weight:700;letter-spacing:.04em;
+  width:100%;min-width:0;
+  padding:10px 4px;border-radius:12px;
+  font-size:.68rem;font-weight:700;letter-spacing:.03em;
   border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:6px;
+  display:flex;align-items:center;justify-content:center;gap:5px;
   transition:all .22s ease;text-transform:uppercase;
+  overflow:hidden;white-space:nowrap;
 }
 .v3-bh-btn:active{transform:scale(.96);}
 .v3-bh-btn-primary{
@@ -5521,6 +5532,7 @@ input:focus,select:focus,textarea:focus{
 #home-section,#tasks-section,#games-section,
 #wallet-section,#referral-section,#profile-section{
   padding-bottom:110px;
+  overflow-x:hidden;
 }
 </style>
 <!-- ═══════════════════════════════════════════════════════
@@ -6417,15 +6429,6 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
 </style>
 </head>
 <body>
-<!-- ══ SPLASH SCREEN ══ -->
-<div id="payro-splash" aria-hidden="true">
-  <div class="spl-inner">
-    <svg class="spl-coin" viewBox="0 0 36 36" fill="none" width="64" height="64"><defs><radialGradient id="splG" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#ffd060"/><stop offset="50%" stop-color="#f5a623"/><stop offset="100%" stop-color="#c2811a"/></radialGradient></defs><circle cx="18" cy="18" r="17" fill="url(#splG)"/><ellipse cx="12" cy="11" rx="5" ry="3" fill="rgba(255,255,255,.22)" transform="rotate(-30 12 11)"/><text x="10.5" y="24" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#3d2200" opacity="0.85">P</text></svg>
-    <div class="spl-name">PAYRO</div>
-    <div class="spl-sub">Loading your wallet…</div>
-    <div class="spl-bar"><div class="spl-bar-fill"></div></div>
-  </div>
-</div>
 
 <!-- SHARED SVG DEFS for P-Coin gradient (single reference, zero duplication) -->
 <svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
@@ -6475,139 +6478,101 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
      LEFT SIDEBAR NAVIGATION — Sleek fixed panel
 ============================================================ -->
 <aside class="lsb" id="lsb" role="navigation" aria-label="Primary Navigation">
+<style>
+/* ═══ SIDEBAR v3 ═══ */
+.lsb-v3-top{
+  display:flex;align-items:center;gap:12px;
+  padding:22px 18px 18px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.lsb-v3-logo-box{
+  width:42px;height:42px;border-radius:13px;
+  background:linear-gradient(135deg,#FFA827,#FF6B00);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(255,140,0,.35);
+  flex-shrink:0;
+}
+.lsb-v3-brand{font-size:18px;font-weight:900;letter-spacing:.06em;
+  background:linear-gradient(90deg,#FFA827,#FFD84A);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.lsb-v3-sub{font-size:9px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-top:1px;}
+.lsb-v3-close{
+  margin-left:auto;width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.07);border:none;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;
+  color:rgba(255,255,255,.5);
+}
+/* Nav cards */
+.lsb-v3-body{padding:16px 14px;display:flex;flex-direction:column;gap:10px;}
+.lsb-v3-card{
+  display:flex;align-items:center;gap:14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:16px 14px;
+  cursor:pointer;transition:all .18s;text-decoration:none;
+}
+.lsb-v3-card:active,.lsb-v3-card:hover{background:rgba(255,255,255,.09);transform:translateY(-1px);}
+.lsb-v3-card-icon{
+  width:42px;height:42px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.lsb-v3-card-info{flex:1;min-width:0;}
+.lsb-v3-card-name{font-size:14px;font-weight:700;color:#fff;letter-spacing:.02em;}
+.lsb-v3-card-desc{font-size:11px;color:rgba(255,255,255,.38);margin-top:2px;}
+.lsb-v3-badge{
+  padding:4px 10px;border-radius:99px;font-size:10px;font-weight:700;
+  letter-spacing:.06em;border:1px solid;flex-shrink:0;
+}
+.lsb-v3-footer{
+  padding:16px 18px;
+  font-size:10px;color:rgba(255,255,255,.2);letter-spacing:.08em;
+  border-top:1px solid rgba(255,255,255,.06);margin-top:auto;
+  text-align:center;
+}
+</style>
 
-  <!-- Logo -->
-  <div class="lsb-logo">
-    <div class="lsb-logo-icon">
-      <svg width="18" height="18" fill="none" stroke="#000" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+  <div class="lsb-v3-top">
+    <div class="lsb-v3-logo-box">
+      <svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
     </div>
     <div>
-      <div class="lsb-logo-text">PAYRO</div>
-      <div class="lsb-logo-sub">Capital Platform</div>
+      <div class="lsb-v3-brand">PAYRO</div>
+      <div class="lsb-v3-sub">Capital Platform</div>
     </div>
+    <button class="lsb-v3-close" onclick="closeLsb()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
   </div>
 
-  <!-- Balance / P-Coin display -->
-  <div class="lsb-bal">
-    <!-- P-Coin SVG -->
-    <svg class="lsb-bal-coin pcoin-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Outer rim shadow -->
-      <circle cx="18" cy="18" r="17" fill="rgba(0,0,0,0.35)"/>
-      <!-- Main disc -->
-      <circle cx="18" cy="18" r="16" fill="url(#pcGF)"/>
-      <!-- Beveled edge -->
-      <circle cx="18" cy="18" r="15.2" fill="none" stroke="rgba(255,200,60,0.5)" stroke-width="1.2"/>
-      <circle cx="18" cy="18" r="13.5" fill="none" stroke="rgba(120,70,0,0.4)" stroke-width="0.7"/>
-      <!-- Highlight sheen -->
-      <ellipse cx="13" cy="12" rx="5" ry="3" fill="rgba(255,255,255,0.22)" transform="rotate(-30 13 12)"/>
-      <ellipse cx="11" cy="11" rx="2.5" ry="1.2" fill="rgba(255,255,255,0.35)" transform="rotate(-30 11 11)"/>
-      <!-- P Letter -->
-      <text x="10.5" y="24" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#3d2200" opacity="0.85">P</text>
-      <text x="11" y="23.5" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#7a4400" opacity="0.6">P</text>
-      <!-- Rim sparkles -->
-      <circle cx="18" cy="3" r="1" fill="rgba(255,240,150,0.7)"/>
-      <circle cx="31" cy="10" r="0.8" fill="rgba(255,240,150,0.5)"/>
-    </svg>
-    <div class="lsb-bal-info">
-      <div class="lsb-bal-val" id="lsb-bal-val">$0.00</div>
-      <div class="lsb-bal-lbl">P-Coin Balance</div>
+  <div class="lsb-v3-body">
+
+    <!-- Trade Card -->
+    <div class="lsb-v3-card" onclick="bnavGo('trade-section','bnav-trade');setTimeout(closeLsb,80);">
+      <div class="lsb-v3-card-icon" style="background:rgba(0,212,80,.12);border:1px solid rgba(0,212,80,.18)">
+        <svg width="20" height="20" fill="none" stroke="#00D450" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      </div>
+      <div class="lsb-v3-card-info">
+        <div class="lsb-v3-card-name">Prediction Trading</div>
+        <div class="lsb-v3-card-desc">Crypto &amp; market forecasts</div>
+      </div>
+      <span class="lsb-v3-badge" style="background:rgba(0,212,80,.12);color:#00D450;border-color:rgba(0,212,80,.25)">LIVE</span>
     </div>
+
+    <!-- Hot Videos Card -->
+    <div class="lsb-v3-card" onclick="bnavGo('video-section','bnav-video');setTimeout(closeLsb,80);">
+      <div class="lsb-v3-card-icon" style="background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.2)">
+        <svg width="20" height="20" fill="none" stroke="#FF6B35" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 2c-5.33 4-8 8-8 12a8 8 0 0016 0c0-4-2.67-8-8-12z"/><path d="M9 12c.5-2 2-3 3-4 1 1 2.5 2 3 4a3 3 0 01-6 0z"/></svg>
+      </div>
+      <div class="lsb-v3-card-info">
+        <div class="lsb-v3-card-name">Hot Videos</div>
+        <div class="lsb-v3-card-desc">Watch &amp; earn PC rewards</div>
+      </div>
+      <span class="lsb-v3-badge" style="background:rgba(255,107,53,.12);color:#FF6B35;border-color:rgba(255,107,53,.25)">HOT</span>
+    </div>
+
   </div>
 
-  <!-- ─ Referral — TOP ─ -->
-  <div class="lsb-sec" style="color:var(--cyan)">Referral</div>
-  <div class="lsb-item lsb-item-featured" onclick="bnavGo('referral-section','bnav-referral');closeLsb()" tabindex="0" role="button" aria-label="Affiliate Dashboard">
-    <div class="lsb-ic" style="color:var(--cyan)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-    </div>
-    Affiliate Dashboard
-    <span class="lsb-badge live">Earn</span>
-  </div>
-
-  <div class="lsb-divider"></div>
-
-  <!-- ─ Games ─ -->
-  <div class="lsb-sec">Games</div>
-  <div class="lsb-item" onclick="goSpinSection();closeLsb()" tabindex="0" role="button" aria-label="Lucky Spin">
-    <div class="lsb-ic" style="color:var(--gold)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-    </div>
-    Lucky Spin Wheel
-    <span class="lsb-badge hot">Live</span>
-  </div>
-  <div class="lsb-item" onclick="goSpinSection();closeLsb()" tabindex="0" role="button" aria-label="Reward Spin">
-    <div class="lsb-ic" style="color:var(--cyan)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-    </div>
-    Reward Spin (Watch)
-    <span class="lsb-badge" style="background:rgba(0,212,255,.1);color:var(--cyan);border-color:rgba(0,212,255,.2)">+Spins</span>
-  </div>
-  <div class="lsb-item" onclick="switchGameTab('mines');scrollToId('sec-games-hub');closeLsb()" tabindex="0" role="button" aria-label="Mines">
-    <div class="lsb-ic" style="color:var(--red)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-    </div>
-    Mines Risk &amp; Reward
-    <span class="lsb-badge hot">3D</span>
-  </div>
-
-  <div class="lsb-divider"></div>
-
-  <!-- ─ Earn ─ -->
-  <div class="lsb-sec">Earn</div>
-  <div class="lsb-item" onclick="bnavGo('tasks-section','bnav-tasks');closeLsb()" tabindex="0" role="button" aria-label="Task Engine">
-    <div class="lsb-ic" style="color:var(--green)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-    </div>
-    Revenue Tasks
-    <span class="lsb-badge">200 Live</span>
-  </div>
-  <div class="lsb-item" onclick="bnavGo('tasks-section','bnav-tasks');closeLsb()" tabindex="0" role="button" aria-label="Promo Vault">
-    <div class="lsb-ic" style="color:var(--violet)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-    </div>
-    Code Vault
-    <span class="lsb-badge new-b">New</span>
-  </div>
-  <div class="lsb-item" onclick="goFaucetSection();closeLsb()" tabindex="0" role="button" aria-label="Faucet">
-    <div class="lsb-ic" style="color:var(--cyan)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg>
-    </div>
-    Claim Faucet
-    <span class="lsb-badge live">Live</span>
-  </div>
-  <div class="lsb-item lsb-item-daily" onclick="claimDailyBonus();closeLsb()" tabindex="0" role="button" aria-label="Daily Bonus">
-    <div class="lsb-ic" style="color:var(--violet)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    </div>
-    Daily Bonus
-    <span class="lsb-badge" style="background:rgba(139,92,246,.12);color:var(--violet);border-color:rgba(139,92,246,.2)" id="lsb-daily-badge">Claim</span>
-  </div>
-
-  <div class="lsb-divider"></div>
-
-  <!-- ─ Account ─ -->
-  <div class="lsb-sec">Account</div>
-  <div class="lsb-item" onclick="bnavGo('profile-section','bnav-profile');closeLsb()" tabindex="0" role="button" aria-label="Leaderboard">
-    <div class="lsb-ic" style="color:var(--gold)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-    </div>
-    Leaderboard
-  </div>
-  <div class="lsb-item" onclick="bnavGo('wallet-section','bnav-wallet');closeLsb()" tabindex="0" role="button" aria-label="Wallet">
-    <div class="lsb-ic" style="color:var(--green)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 010-4h14v4"/><rect x="2" y="8" width="20" height="12" rx="2"/></svg>
-    </div>
-    Capital Account
-  </div>
-  <div class="lsb-item" onclick="bnavGo('profile-section','bnav-profile');closeLsb()" tabindex="0" role="button" aria-label="Roadmap">
-    <div class="lsb-ic" style="color:var(--violet)">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 17l6-10 5 7 3-4 4 7"/></svg>
-    </div>
-    10-Day Roadmap
-  </div>
-
-
-  <div class="lsb-footer">PAYRO v4 &nbsp;·&nbsp; <strong>3D Ecosystem</strong></div>
+  <div class="lsb-v3-footer">PAYRO &nbsp;·&nbsp; Earn &amp; Play</div>
 </aside>
 
 <!-- RGB NEON SCREEN BORDER -->
@@ -6722,22 +6687,12 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation">
     <div class="nav-brand">
-      <!-- P-Coin Logo replacing text brand -->
-      <div class="nav-logo-pcoin" title="PAYRO">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="38" height="38" aria-label="PAYRO">
-          <circle cx="18" cy="18" r="17" fill="rgba(0,0,0,0.35)"/>
-          <circle cx="18" cy="18" r="16" fill="url(#pcGF)"/>
-          <circle cx="18" cy="18" r="15.2" fill="none" stroke="rgba(255,200,60,0.5)" stroke-width="1.2"/>
-          <circle cx="18" cy="18" r="13.5" fill="none" stroke="rgba(120,70,0,0.4)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="12" rx="5" ry="3" fill="rgba(255,255,255,0.22)" transform="rotate(-30 13 12)"/>
-          <ellipse cx="11" cy="11" rx="2.5" ry="1.2" fill="rgba(255,255,255,0.35)" transform="rotate(-30 11 11)"/>
-          <text x="10.5" y="24" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#3d2200" opacity="0.85">P</text>
-          <text x="11" y="23.5" font-family="Arial Black,Georgia,serif" font-weight="900" font-size="16" fill="#7a4400" opacity="0.6">P</text>
-          <circle cx="18" cy="3" r="1" fill="rgba(255,240,150,0.7)"/>
-          <circle cx="31" cy="10" r="0.8" fill="rgba(255,240,150,0.5)"/>
-        </svg>
+      <div class="nav-logo">
+        <svg width="18" height="18" fill="none" stroke="#000" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       </div>
-      <div><span class="brand-sub" style="font-size:10px;display:block">3D Gaming Ecosystem v4</span></div>
+      <div class="nav-brand-text">
+        <span class="brand-name">PAYRO</span>
+      </div>
     </div>
     <div class="nav-right">
       <div class="geo-pill detecting" id="geo-pill" style="display:none"><span class="flag" id="geo-flag">🌐</span><span id="geo-country">Detecting...</span><span class="rate" id="geo-rate">—</span></div>
@@ -7463,7 +7418,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       </div>
 
     <!-- AD BREAK 4 — between tasks and promo -->
-    <div class="ad-break-pair" style="display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start">
+    <div style="display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start">
       <div class="rgb-ad" style="height:250px"><div class="rgb-ad-inner" style="flex-direction:column;gap:6px;font-size:12px"><span class="ad-tag">AD</span><div style="font-size:24px;opacity:.2">⬛</div><span>300 × 250</span><span style="font-size:10px;color:var(--txt3)">Rectangle Ad Slot</span><span class="ad-tag">AD</span></div></div>
       <div style="display:flex;flex-direction:column;gap:14px">
         <div class="rgb-ad" style="height:116px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Slot 4 <span class="ad-tag">AD</span></div></div>
@@ -7534,8 +7489,8 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       <div class="rgb-ad" style="height:94px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 90 — Mid-Page Ad Slot 6 <span class="ad-tag">AD</span></div></div>
     </div>
 
-    <!-- ── SECTION: LEADERBOARD (tasks view) ── -->
-    <section class="card" id="sec-leaderboard-tasks" style="padding:24px;scroll-margin-top:80px" aria-label="Leaderboard">
+    <!-- ── SECTION: LEADERBOARD ── -->
+    <section class="card" id="sec-leaderboard" style="padding:24px;scroll-margin-top:80px" aria-label="Leaderboard">
       <div class="sh">
         <div class="sh-l">
           <div class="sh-ic si-gold"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
@@ -7650,9 +7605,6 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       </div>
     </section>
 
-
-
-
     </div><!-- /tp-tasks -->
 
 
@@ -7660,217 +7612,339 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
          ║  TAB PANEL 3 — WALLET                               ║
          ╚═══════════════════════════════════════════════════════╝ -->
     <div class="spa-section" id="wallet-section">
+<style>
+/* ═══════════════════ PAYRO WALLET v2 ═══════════════════ */
+.pw2-root{
+  position:absolute;inset:0;
+  background:#080d18;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding:0 0 80px;
+  display:flex;flex-direction:column;
+}
+/* ── Top header bar ── */
+.pw2-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  flex-shrink:0;
+}
+.pw2-topbar-title{
+  font-size:16px;font-weight:700;letter-spacing:.06em;color:#fff;
+}
+.pw2-topbar-sub{
+  font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-top:1px;
+}
+/* ── Main balance hero ── */
+.pw2-hero{
+  padding:28px 20px 24px;
+  background:linear-gradient(175deg,rgba(245,166,35,.06) 0%,transparent 60%);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  flex-shrink:0;
+}
+.pw2-hero-label{
+  font-size:10px;font-weight:700;letter-spacing:.14em;
+  color:rgba(255,200,60,.55);text-transform:uppercase;margin-bottom:10px;
+}
+.pw2-hero-coins{
+  font-size:52px;font-weight:900;line-height:1;
+  color:#fff;letter-spacing:-.01em;
+  font-family:'Rajdhani','DM Sans',sans-serif;
+}
+.pw2-hero-coins span{
+  font-size:20px;font-weight:600;color:rgba(255,255,255,.35);margin-left:4px;
+}
+.pw2-hero-inr{
+  font-size:15px;font-weight:600;color:#22c55e;margin-top:6px;
+  font-family:'DM Mono','Courier New',monospace;
+}
+.pw2-hero-status{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:12px;
+  background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);
+  border-radius:99px;padding:4px 12px;
+  font-size:10px;font-weight:700;letter-spacing:.08em;color:#22c55e;
+}
+.pw2-hero-dot{
+  width:5px;height:5px;border-radius:50%;background:#22c55e;
+  animation:pw2pulse 1.4s ease-in-out infinite;
+}
+@keyframes pw2pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* ── Trophy panel ── */
+.pw2-trophy-panel{
+  margin:16px 20px;
+  background:linear-gradient(135deg,#0f1e0a 0%,#0a1520 100%);
+  border:1px solid rgba(245,166,35,.18);
+  border-radius:18px;
+  padding:20px;
+  display:flex;align-items:center;gap:16px;
+  flex-shrink:0;
+}
+.pw2-trophy-img{
+  font-size:56px;line-height:1;flex-shrink:0;
+  filter:drop-shadow(0 2px 12px rgba(255,168,39,.5));
+}
+.pw2-trophy-info{flex:1;}
+.pw2-trophy-title{
+  font-size:13px;font-weight:700;color:rgba(255,200,60,.9);
+  letter-spacing:.05em;margin-bottom:3px;
+}
+.pw2-trophy-desc{
+  font-size:11px;color:rgba(255,255,255,.4);line-height:1.5;margin-bottom:12px;
+}
+.pw2-withdraw-btn{
+  display:block;width:100%;
+  background:linear-gradient(90deg,#FFA827 0%,#FF8C00 100%);
+  color:#1a0d00;font-size:13px;font-weight:800;
+  border:none;border-radius:11px;padding:12px 0;
+  cursor:pointer;letter-spacing:.04em;
+  box-shadow:0 3px 14px rgba(255,140,0,.3);
+  transition:opacity .15s,transform .1s;
+}
+.pw2-withdraw-btn:active{opacity:.85;transform:scale(.98)}
+/* ── Info row ── */
+.pw2-info-row{
+  margin:0 20px 16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:14px 16px;
+  display:flex;align-items:center;gap:12px;
+  flex-shrink:0;
+}
+.pw2-info-icon{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,200,60,.1);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pw2-info-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5;}
+.pw2-info-text b{color:#FFA827;}
+/* ── Earn grid ── */
+.pw2-earn-section{margin:0 20px;flex-shrink:0;}
+.pw2-earn-title{
+  font-size:13px;font-weight:700;color:rgba(255,255,255,.7);
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.pw2-earn-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+}
+.pw2-earn-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;padding:16px 14px;
+  cursor:pointer;transition:all .18s;
+  display:flex;align-items:center;gap:12px;
+}
+.pw2-earn-card:active{transform:scale(.97);background:rgba(255,255,255,.07)}
+.pw2-earn-icon{
+  width:38px;height:38px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.pw2-earn-name{font-size:11px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.04em;text-transform:uppercase;}
+.pw2-earn-reward{font-size:13px;font-weight:800;color:#FFA827;margin-top:1px;}
 
-<!-- ── DEPOSIT / WITHDRAW MODALS ── -->
-<div class="mw-overlay" id="mw-deposit-overlay" onclick="closeMwModal('deposit')">
-  <div class="mw-sheet" onclick="event.stopPropagation()" style="position:relative">
-    <div class="mw-sheet-handle"></div>
-    <button class="mw-close-btn" onclick="closeMwModal('deposit')">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="mw-sheet-title">💎 Deposit Funds</div>
-    <div class="mw-sheet-sub">Add USDT or USDC to your PAYRO wallet</div>
-    <div class="mw-body">
-      <div class="mw-info-row">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        Minimum deposit: <strong style="color:var(--gold)">$0.10 USDT/USDC</strong> · TRC20 network
+/* ── Withdraw modal ── */
+.pw2-modal-ov{
+  position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(4px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;visibility:hidden;transition:all .25s;
+}
+.pw2-modal-ov.open{opacity:1;visibility:visible;}
+.pw2-modal{
+  width:100%;max-width:480px;
+  background:#0f1525;
+  border-radius:22px 22px 0 0;
+  border-top:1px solid rgba(255,255,255,.1);
+  padding:24px 20px 40px;
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.pw2-modal-ov.open .pw2-modal{transform:translateY(0);}
+.pw2-modal-handle{
+  width:36px;height:4px;background:rgba(255,255,255,.15);
+  border-radius:2px;margin:0 auto 20px;
+}
+.pw2-modal-title{
+  font-size:17px;font-weight:800;color:#fff;margin-bottom:4px;
+}
+.pw2-modal-sub{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px;}
+.pw2-modal-input-label{
+  font-size:11px;font-weight:700;letter-spacing:.08em;
+  color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:7px;
+}
+.pw2-modal-input{
+  width:100%;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:12px;
+  padding:13px 15px;font-size:14px;color:#fff;
+  font-family:inherit;outline:none;box-sizing:border-box;
+  margin-bottom:14px;
+}
+.pw2-modal-input:focus{border-color:rgba(255,168,39,.5);}
+.pw2-modal-input::placeholder{color:rgba(255,255,255,.2);}
+.pw2-modal-confirm{
+  width:100%;
+  background:linear-gradient(90deg,#FFA827,#FF8C00);
+  color:#1a0d00;font-size:14px;font-weight:800;
+  border:none;border-radius:12px;padding:14px;
+  cursor:pointer;letter-spacing:.04em;margin-top:4px;
+}
+.pw2-modal-close{
+  position:absolute;top:20px;right:20px;
+  background:rgba(255,255,255,.08);border:none;
+  width:32px;height:32px;border-radius:50%;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+/* Responsive */
+@media(min-width:480px){
+  .pw2-earn-grid{grid-template-columns:repeat(4,1fr);}
+}
+</style>
+
+<div class="pw2-root" id="pw2-root">
+
+  <!-- Top bar -->
+  <div class="pw2-topbar">
+    <div>
+      <div class="pw2-topbar-title">Wallet</div>
+      <div class="pw2-topbar-sub">P-COIN EARNINGS</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <div style="width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e"></div>
+      <span style="font-size:11px;color:#22c55e;font-weight:600">Active</span>
+    </div>
+  </div>
+
+  <!-- Hero balance -->
+  <div class="pw2-hero">
+    <div class="pw2-hero-label">Total P-Coins</div>
+    <div class="pw2-hero-coins" id="pw2-coins">0<span>PC</span></div>
+    <div class="pw2-hero-inr" id="pw2-inr">≈ ₹0.00</div>
+    <div class="pw2-hero-status">
+      <span class="pw2-hero-dot"></span>
+      1000 PC = ₹5
+    </div>
+  </div>
+
+  <!-- Trophy + Withdraw -->
+  <div class="pw2-trophy-panel">
+    <div class="pw2-trophy-img">🏆</div>
+    <div class="pw2-trophy-info">
+      <div class="pw2-trophy-title">Withdraw Earnings</div>
+      <div class="pw2-trophy-desc">Send your P-Coins to your crypto wallet. Min. 1000 PC required.</div>
+      <button class="pw2-withdraw-btn" onclick="pw2OpenWithdraw()">Withdraw Funds</button>
+    </div>
+  </div>
+
+  <!-- Min withdrawal info -->
+  <div class="pw2-info-row">
+    <div class="pw2-info-icon">
+      <svg width="16" height="16" fill="none" stroke="#FFA827" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    </div>
+    <div class="pw2-info-text">
+      Min. withdrawal: <b>$1.00</b> &nbsp;·&nbsp; USD Balance: <b id="pw2-usd">$0.00000</b>
+    </div>
+  </div>
+
+  <!-- Earn more section -->
+  <div class="pw2-earn-section">
+    <div class="pw2-earn-title">Earn More</div>
+    <div class="pw2-earn-grid">
+      <div class="pw2-earn-card" onclick="goSpinSection()">
+        <div class="pw2-earn-icon" style="background:rgba(245,166,35,.12)">
+          <svg width="20" height="20" fill="none" stroke="#FFA827" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <div>
+          <div class="pw2-earn-name">Lucky Spin</div>
+          <div class="pw2-earn-reward">+100 PC</div>
+        </div>
       </div>
-      <div class="mw-field-lbl">Deposit Network</div>
-      <select class="mw-input" id="mw-dep-network">
-        <option value="trc20">USDT TRC20 (Tron)</option>
-        <option value="erc20">USDT ERC20 (Ethereum)</option>
-        <option value="bsc">USDC BEP20 (BSC)</option>
-      </select>
-      <div class="mw-field-lbl">Amount (USD)</div>
-      <input class="mw-input" id="mw-dep-amount" type="number" min="0.1" step="0.01" placeholder="0.10" value="">
-      <div class="mw-amount-row">
-        <button class="mw-quick-amt" onclick="document.getElementById('mw-dep-amount').value='0.50'">$0.50</button>
-        <button class="mw-quick-amt" onclick="document.getElementById('mw-dep-amount').value='1.00'">$1.00</button>
-        <button class="mw-quick-amt" onclick="document.getElementById('mw-dep-amount').value='5.00'">$5.00</button>
-        <button class="mw-quick-amt" onclick="document.getElementById('mw-dep-amount').value='10.00'">$10.00</button>
+      <div class="pw2-earn-card" onclick="bnavGo('tasks-section','bnav-tasks')">
+        <div class="pw2-earn-icon" style="background:rgba(34,197,94,.1)">
+          <svg width="20" height="20" fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div>
+          <div class="pw2-earn-name">Tasks</div>
+          <div class="pw2-earn-reward">+50 PC</div>
+        </div>
       </div>
-      <button class="mw-confirm-btn mw-confirm-green" onclick="confirmDeposit()">
-        Generate Deposit Address
-      </button>
-      <div id="mw-dep-result" style="display:none;margin-top:14px;padding:14px;border-radius:12px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);font-size:.75rem;color:var(--text-mid);word-break:break-all;">
-        <div style="font-weight:700;color:var(--green);margin-bottom:6px">📋 Deposit Address Generated</div>
-        <div id="mw-dep-addr" style="font-family:var(--font-mono);font-size:.68rem;color:#fff"></div>
-        <button onclick="copyDepAddr()" style="margin-top:8px;padding:6px 14px;border-radius:8px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:var(--green);font-size:.7rem;font-weight:700;cursor:pointer;">Copy Address</button>
+      <div class="pw2-earn-card" onclick="bnavGo('video-section','bnav-video')">
+        <div class="pw2-earn-icon" style="background:rgba(255,107,53,.1)">
+          <svg width="20" height="20" fill="none" stroke="#ff6b35" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2c-5.33 4-8 8-8 12a8 8 0 0016 0c0-4-2.67-8-8-12z"/></svg>
+        </div>
+        <div>
+          <div class="pw2-earn-name">Hot Videos</div>
+          <div class="pw2-earn-reward">+20 PC</div>
+        </div>
+      </div>
+      <div class="pw2-earn-card" onclick="goFaucetSection()">
+        <div class="pw2-earn-icon" style="background:rgba(0,212,255,.1)">
+          <svg width="20" height="20" fill="none" stroke="#00d4ff" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22a9 9 0 009-9H3a9 9 0 009 9z"/><path d="M3.22 12A9 9 0 0114 3.1l3 3-1.5 1.5"/></svg>
+        </div>
+        <div>
+          <div class="pw2-earn-name">Faucet</div>
+          <div class="pw2-earn-reward">+10 PC</div>
+        </div>
       </div>
     </div>
   </div>
+
 </div>
 
-<div class="mw-overlay" id="mw-withdraw-overlay" onclick="closeMwModal('withdraw')">
-  <div class="mw-sheet" onclick="event.stopPropagation()" style="position:relative">
-    <div class="mw-sheet-handle"></div>
-    <button class="mw-close-btn" onclick="closeMwModal('withdraw')">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="mw-sheet-title">💸 Withdraw Funds</div>
-    <div class="mw-sheet-sub">Send earnings to your crypto wallet</div>
-    <div class="mw-body">
-      <div class="mw-info-row">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        Minimum withdrawal: <strong style="color:var(--gold)">$1.00</strong> · Balance: <strong id="mw-wd-bal" style="color:var(--green)">$0.00</strong>
-      </div>
-      <div class="mw-field-lbl">Wallet Address (USDT/USDC)</div>
-      <input class="mw-input" id="mw-wd-addr" type="text" placeholder="Enter your TRC20 or ERC20 address">
-      <div class="mw-field-lbl">Withdraw Amount (USD)</div>
-      <input class="mw-input" id="mw-wd-amount" type="number" min="1" step="0.01" placeholder="1.00">
-      <div class="mw-amount-row">
-        <button class="mw-quick-amt" onclick="setWdAmt(1)">$1.00</button>
-        <button class="mw-quick-amt" onclick="setWdAmt(5)">$5.00</button>
-        <button class="mw-quick-amt" onclick="setWdAmt(10)">$10.00</button>
-        <button class="mw-quick-amt" onclick="setWdAmtAll()">MAX</button>
-      </div>
-      <button class="mw-confirm-btn mw-confirm-gold" onclick="confirmWithdraw()">
-        Request Withdrawal
-      </button>
-      <div id="mw-wd-result" style="display:none;margin-top:14px;padding:14px;border-radius:12px;background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.2);font-size:.75rem;color:var(--text-mid)">
-        <div style="font-weight:700;color:var(--gold);margin-bottom:4px">⏳ Withdrawal Request Queued</div>
-        Processing time: 24–72 hours. Check your transaction history.
-      </div>
-    </div>
+<!-- Withdraw Modal -->
+<div class="pw2-modal-ov" id="pw2-modal-ov" onclick="pw2CloseWithdraw(event)">
+  <div class="pw2-modal" style="position:relative">
+    <button class="pw2-modal-close" onclick="pw2CloseWithdraw()">✕</button>
+    <div class="pw2-modal-handle"></div>
+    <div class="pw2-modal-title">Withdraw Funds</div>
+    <div class="pw2-modal-sub">Send P-Coin earnings to your crypto wallet</div>
+    <div class="pw2-modal-input-label">Wallet Address</div>
+    <input class="pw2-modal-input" type="text" placeholder="Enter your crypto wallet address" id="pw2-addr-input">
+    <div class="pw2-modal-input-label">Amount (PC)</div>
+    <input class="pw2-modal-input" type="number" placeholder="Min. 1000 PC" id="pw2-amt-input" min="1000">
+    <button class="pw2-modal-confirm" onclick="pw2ConfirmWithdraw()">Confirm Withdrawal</button>
   </div>
 </div>
 
-<!-- ── SECTION: WALLET ── -->
-    <section id="sec-wallet" style="scroll-margin-top:80px" aria-label="Capital Account">
+<script>
+(function(){
+  /* Sync balance */
+  function pw2Sync(){
+    var coins = (window.PC && typeof PC.coins==='number') ? Math.max(0,Math.floor(PC.coins)) : 0;
+    var el = document.getElementById('pw2-coins');
+    var inrEl = document.getElementById('pw2-inr');
+    var usdEl = document.getElementById('pw2-usd');
+    if(el){ el.innerHTML = coins.toLocaleString('en-IN') + '<span>PC</span>'; }
+    if(inrEl){ inrEl.textContent = '≈ ₹' + (coins * 0.005).toFixed(2); }
+    if(usdEl){ usdEl.textContent = '$' + (coins * 0.00006).toFixed(5); }
+  }
+  pw2Sync();
+  setInterval(pw2Sync, 2500);
 
-      <div id="wallet-float-container" style="position:fixed;inset:0;pointer-events:none;z-index:9000;overflow:hidden"></div>
-
-      <div class="wallet-card">
-        <div class="wc-header">
-          <div class="wc-header-left">
-            <div class="wc-eyebrow"><span class="wc-live-dot"></span>LIVE BALANCE</div>
-            <div class="wc-title">Capital Account</div>
-          </div>
-          <div class="wc-header-right">
-            <button class="wc-pill-btn" id="daily-reward-btn" onclick="openDailyReward()">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              Daily Reward
-            </button>
-          </div>
-        </div>
-
-        <div class="wc-balance-area">
-          <div class="wc-bal-label">P-Coin Balance</div>
-          <div class="wc-bal-main" id="w-big-bal" style="align-items:baseline;gap:8px">
-            <span class="wc-bal-currency" style="font-size:22px">🪙</span><span class="wc-bal-int" id="wc-bal-int" style="font-size:clamp(42px,10vw,58px)">0</span><span class="wc-bal-dec" id="wc-bal-dec" style="font-size:16px;opacity:.6"> PC</span>
-          </div>
-          <div class="wc-bal-fiat" id="wc-bal-fiat" style="color:var(--gold);font-weight:700">≈ ₹<span id="wc-inr-val">0.000</span> · 1000 PC = ₹5</div>
-          <!-- hidden USD stub so old JS doesn't throw -->
-          <span id="wc-bal-usd" style="display:none">$0.00</span>
-        </div>
-
-        <div class="wc-stats-row">
-          <div class="wc-stat">
-            <div class="wc-stat-val" id="wc-today">+$0.00</div>
-            <div class="wc-stat-lbl">Today</div>
-          </div>
-          <div class="wc-stat-divider"></div>
-          <div class="wc-stat">
-            <div class="wc-stat-val" id="wc-commission">$0.00</div>
-            <div class="wc-stat-lbl">Referral</div>
-          </div>
-          <div class="wc-stat-divider"></div>
-          <div class="wc-stat">
-            <div class="wc-stat-val" id="wc-tx-count">0</div>
-            <div class="wc-stat-lbl">Transactions</div>
-          </div>
-          <div class="wc-stat-divider"></div>
-          <div class="wc-stat">
-            <div class="wc-stat-val wc-stat-green" id="wc-streak">0 days</div>
-            <div class="wc-stat-lbl">Streak</div>
-          </div>
-        </div>
-
-        <!-- Ad slot -->
-        <div style="padding:0 20px">
-          <div class="aads-neon-wrap" id="aads-slot-3">
-            <div class="aads-neon-inner" style="min-height:80px">
-              <div style="width:100%;margin:auto;position:relative;z-index:99998;">
-                <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Action Buttons — upgraded with modal triggers -->
-        <div class="wallet-action-panel">
-          <button class="wap-btn wap-deposit" onclick="openMwModal('deposit')">
-            <div class="wap-btn-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
-            </div>
-            Deposit
-          </button>
-          <button class="wap-btn wap-withdraw" onclick="openMwModal('withdraw')">
-            <div class="wap-btn-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7 7 7-7"/></svg>
-            </div>
-            Withdraw
-          </button>
-        </div>
-
-        <!-- Crypto address panel -->
-        <div class="wallet-address-panel">
-          <div class="waddr-label">
-            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Payout Wallet Address (USDT / USDC TRC20)
-          </div>
-          <div class="waddr-input-wrap">
-            <span class="waddr-prefix">⬡ TRC20</span>
-            <input class="waddr-input" id="wallet-address-input" type="text" placeholder="Enter your USDT/USDC wallet address..." autocomplete="off" spellcheck="false">
-            <button class="waddr-save-btn" onclick="saveWalletAddress()">Save</button>
-          </div>
-        </div>
-
-        <div class="wc-actions">
-          <button class="wc-btn wc-btn-primary" onclick="openMwModal('withdraw')">
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-            Secure Settlement
-          </button>
-          <button class="wc-btn wc-btn-secondary" onclick="exportLedger()">
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Export Ledger
-          </button>
-        </div>
-
-        <!-- Ad slot 2 -->
-        <div style="padding:0 20px">
-          <div class="aads-neon-wrap" id="aads-slot-4" style="animation-delay:1.5s">
-            <div class="aads-neon-inner" style="min-height:80px">
-              <div style="width:100%;margin:auto;position:relative;z-index:99998;">
-                <iframe data-aa='2429810' src='//acceptable.a-ads.com/2429810/?size=Adaptive' style='border:0;padding:0;width:100%;height:auto;overflow:hidden;display:block;margin:auto' allowtransparency='true' allowfullscreen='true' scrolling='no'></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Transaction Ledger — upgraded -->
-        <div class="wc-ledger">
-          <div class="wc-ledger-header">
-            <span class="wc-ledger-title">Transaction History</span>
-            <span class="wc-ledger-count" id="wc-tx-count-badge">0 entries</span>
-          </div>
-          <!-- Filter tabs -->
-          <div class="tx-filter-row" id="tx-filter-row">
-            <div class="tx-f-pill tx-f-active" onclick="filterTxList('all',this)">All</div>
-            <div class="tx-f-pill" onclick="filterTxList('faucet',this)">Faucet</div>
-            <div class="tx-f-pill" onclick="filterTxList('game',this)">Games</div>
-            <div class="tx-f-pill" onclick="filterTxList('task',this)">Tasks</div>
-            <div class="tx-f-pill" onclick="filterTxList('referral',this)">Referral</div>
-          </div>
-          <div id="tx-list" class="v4-stagger">
-            <div class="tx-item tx-empty">
-              <span class="tx-type">No transactions yet — start earning to see your ledger</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
+  /* Withdraw modal */
+  window.pw2OpenWithdraw = function(){
+    var ov = document.getElementById('pw2-modal-ov');
+    if(ov) ov.classList.add('open');
+  };
+  window.pw2CloseWithdraw = function(e){
+    if(e && e.target !== document.getElementById('pw2-modal-ov')) return;
+    var ov = document.getElementById('pw2-modal-ov');
+    if(ov) ov.classList.remove('open');
+  };
+  window.pw2ConfirmWithdraw = function(){
+    var addr = document.getElementById('pw2-addr-input');
+    var amt  = document.getElementById('pw2-amt-input');
+    var coins = (window.PC && typeof PC.coins==='number') ? Math.floor(PC.coins) : 0;
+    if(!addr || !addr.value.trim()){ alert('Please enter your wallet address.'); return; }
+    if(!amt || !amt.value || +amt.value < 1000){ alert('Minimum withdrawal is 1000 PC.'); return; }
+    if(+amt.value > coins){ alert('Insufficient balance.'); return; }
+    var ov = document.getElementById('pw2-modal-ov');
+    if(ov) ov.classList.remove('open');
+    setTimeout(function(){ alert('Withdrawal request submitted! Processing in 24-48 hrs.'); }, 300);
+  };
+})();
+</script>
 
     </div><!-- /tp-wallet -->
 
@@ -8388,7 +8462,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
       </div>
 
       <!-- Leaderboard -->
-      <section class="card" id="sec-leaderboard" style="padding:24px;scroll-margin-top:80px" aria-label="Leaderboard">
+      <section class="card" id="sec-leaderboard-games" style="padding:24px;scroll-margin-top:80px" aria-label="Leaderboard">
         <div class="sh">
           <div class="sh-l">
             <div class="sh-ic si-gold"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
@@ -8715,7 +8789,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
     <!-- ╔══════════════════════════════════════════════════════════════╗
          ║  PREDICTION TRADING SYSTEM — SPA Section                    ║
          ╚══════════════════════════════════════════════════════════════╝ -->
-    <div class="spa-section" id="trade-section" style="display:none;padding:0;overflow-y:auto;">
+    <div class="spa-section" id="trade-section" style="display:none;padding:0;overflow-y:auto;overflow-x:hidden;">
 
       <!-- Risk Banner -->
       <div class="pt-risk-banner">
@@ -9538,7 +9612,7 @@ button:not(:disabled):not([style*="cursor:default"]):hover{
   <footer class="ad-foot" role="complementary" style="flex-direction:column;gap:12px;padding:14px 20px">
     <div style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:1260px">
       <span class="ad-tag">AD</span>
-      <div class="rgb-ad" style="width:730px;height:54px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 50 — Footer Banner Ad Slot <span class="ad-tag">AD</span></div></div>
+      <div class="rgb-ad" style="width:100%;max-width:728px;height:54px"><div class="rgb-ad-inner"><span class="ad-tag">AD</span> 728 × 50 — Footer Banner Ad Slot <span class="ad-tag">AD</span></div></div>
       <span class="ad-tag">AD</span>
     </div>
   </footer>
@@ -9840,14 +9914,13 @@ const LB_NAMES=[
 const LB_BASE_AMT=[4.2212,3.8804,3.1245,2.9001,2.5432,1.8810,1.2345];
 function renderLeaderboard(){
   const list=$('leaderboard-list');if(!list)return;
-  const listTasks=$('leaderboard-list-tasks');
   const entries=[
     ...LB_NAMES.map((p,i)=>({...p,amt:LB_BASE_AMT[i]+(Math.random()*0.005)})),
     {name:'You',tag:'Your Account',amt:S.balance,isYou:true}
   ].sort((a,b)=>b.amt-a.amt);
   const rankCls=['rk-gold','rk-silver','rk-bronze'];
   const rankEmoji=['🥇','🥈','🥉'];
-  const html=entries.map((e,i)=>{
+  list.innerHTML=entries.map((e,i)=>{
     const cls=i<3?rankCls[i]:'rk-norm';
     const rank=i<3?rankEmoji[i]:`#${i+1}`;
     const youClass=e.isYou?' lb-you':'';
@@ -9857,8 +9930,6 @@ function renderLeaderboard(){
       <div class="lb-amt">$${e.amt.toFixed(4)}</div>
     </div>`;
   }).join('');
-  list.innerHTML=html;
-  if(listTasks) listTasks.innerHTML=html;
 }
 
 /* ── GEO / TIER Detection ── */
@@ -11230,6 +11301,9 @@ else init();
   </button>
 
   <!-- Wallet -->
+
+
+  <!-- Wallet -->
   <button class="bnav-item" id="bnav-wallet" onclick="bnavGo('wallet-section','bnav-wallet')" aria-label="Wallet">
     <div class="bnav-ic">
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -11260,25 +11334,15 @@ else init();
     <span class="bnav-lbl">Profile</span>
   </button>
 
-  <!-- Video Hub -->
-  <button class="bnav-item" id="bnav-video" onclick="bnavGo('video-section','bnav-video')" aria-label="Videos">
-    <div class="bnav-ic">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+  <!-- Hot Videos -->
+  <button class="bnav-item bnav-hotvid" id="bnav-video" onclick="bnavGo('video-section','bnav-video')" aria-label="Hot Videos">
+    <div class="bnav-ic" style="position:relative">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2c-5.33 4-8 8-8 12a8 8 0 0016 0c0-4-2.67-8-8-12z"/><path d="M9 12c.5-2 2-3 3-4 1 1 2.5 2 3 4a3 3 0 01-6 0z"/></svg>
+      <span class="bnav-hot-dot"></span>
     </div>
-    <span class="bnav-lbl">Videos</span>
+    <span class="bnav-lbl" style="color:inherit">Hot Videos</span>
   </button>
 
-  <!-- Trade — Prediction Trading -->
-  <button class="bnav-item bnav-trade-pulse" id="bnav-trade" onclick="bnavGo('trade-section','bnav-trade')" aria-label="Trade">
-    <div class="bnav-ic" style="position:relative">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-        <polyline points="16 7 22 7 22 13"/>
-      </svg>
-      <span class="bnav-trade-live-dot"></span>
-    </div>
-    <span class="bnav-lbl">Trade</span>
-  </button>
 
 </nav>
 
@@ -11320,7 +11384,14 @@ else init();
     /* — sectionId IS the section to show — */
     var panelId = sectionId || 'home-section';
     var panel = document.getElementById(panelId);
-    if(panel){ panel.style.display = 'block'; panel.scrollTop = 0; }
+    if(panel){
+      panel.style.display = 'block';
+      panel.scrollTop = 0;
+      /* 144Hz smooth entry */
+      panel.style.animation = 'none';
+      void panel.offsetWidth; /* reflow */
+      panel.style.animation = '';
+    }
     currentTab = panelId;
 
     /* — Sync profile stats when profile tab opens — */
@@ -14459,6 +14530,86 @@ window.plinkoInit = plinkoInit;
 @keyframes ptPing{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
 
 /* ─── Section layout ─── */
+/* ═══ TRADE OVERFLOW FIX + GLOBAL ANIMATIONS ═══ */
+#trade-section,
+#trade-section *,
+.pt-root,
+.pt-asset-strip,
+.pt-trade-card,
+.pt-quick-row,
+.pt-dur-btns {
+  max-width:100%;
+  box-sizing:border-box;
+}
+.pt-asset-strip {
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  flex-wrap:nowrap;
+  scrollbar-width:none;
+}
+.pt-asset-strip::-webkit-scrollbar{display:none;}
+
+/* ── 144Hz CLICK ANIMATIONS ── */
+/* All buttons get snappy tactile feedback */
+.bnav-item,
+.pt-dur-btn,
+.pt-asset-btn,
+.pt-quick-row button,
+.pw2-withdraw-btn,
+.pw2-earn-card,
+.lsb-v3-card {
+  -webkit-tap-highlight-color: transparent;
+  
+}
+
+/* Tap ripple on buttons */
+@keyframes tapRipple {
+  0%   { transform:scale(.94); opacity:.7; }
+  60%  { transform:scale(1.03); opacity:1; }
+  100% { transform:scale(1);   opacity:1; }
+}
+@keyframes tabSwitch {
+  0%   { opacity:0; transform:translateY(6px) scale(.99); }
+  100% { opacity:1; transform:translateY(0)   scale(1);   }
+}
+@keyframes navPop {
+  0%   { transform:scale(.82); }
+  55%  { transform:scale(1.12); }
+  80%  { transform:scale(.96); }
+  100% { transform:scale(1); }
+}
+
+/* Section entry animation */
+.spa-section[style*="block"] {
+  animation: tabSwitch .22s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Nav icon pop on active */
+.bnav-item.bnav-active .bnav-ic {
+  animation: navPop .28s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* Duration button active flash */
+.pt-dur-btn.pt-dur-active {
+  animation: tapRipple .18s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Asset button switch */
+.pt-asset-btn.pt-asset-active {
+  animation: tapRipple .15s ease both;
+}
+
+/* Global will-change for GPU compositing */
+.bnav-item,
+.pt-dur-btn,
+.pt-asset-btn,
+.spa-section {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 #trade-section{
   background:var(--pt-bg0);
   min-height:100%;
@@ -14480,7 +14631,7 @@ window.plinkoInit = plinkoInit;
 
 /* ─── Root padding ─── */
 .pt-root{
-  max-width:640px;margin:0 auto;
+  max-width:min(640px,100%);margin:0 auto;
   padding:12px 12px 110px;
   display:flex;flex-direction:column;gap:11px;
 }
@@ -14587,7 +14738,7 @@ window.plinkoInit = plinkoInit;
   position:relative;
   height:clamp(180px,45vw,240px);
   cursor:crosshair;overflow:hidden;
-  touch-action:pan-y; /* allow vertical scroll to pass through to section */
+   /* allow vertical scroll to pass through to section */
 }
 .pt-canvas{
   position:absolute;inset:0;
@@ -14647,7 +14798,7 @@ window.plinkoInit = plinkoInit;
   color:var(--pt-txt);min-width:0;
 }
 .pt-ar-input::placeholder{color:var(--pt-txt3);}
-.pt-quick-row{display:flex;flex-wrap:wrap;gap:5px;}
+.pt-quick-row{display:flex;flex-wrap:wrap;gap:5px;width:100%;}
 .pt-quick-row button{
   padding:5px 10px;border-radius:7px;cursor:pointer;
   border:1px solid rgba(255,255,255,.1);
@@ -16243,7 +16394,7 @@ if(document.readyState==='loading'){
 
 /* ── 5. Chart body: pan-y lets vertical touch-scroll pass through  */
 .pt-chart-body {
-  touch-action: pan-y !important;
+  
 }
 
 /* ── 6. Keyboard-focusable sections (no visible ring) ─────────── */
@@ -19767,7 +19918,7 @@ window.vpcSubmitProof = function(type) {
 }
 #pcv-modal.open { display:flex; }
 .pcv-modal-box {
-  width:100%; max-width:900px; max-height:calc(100dvh - 24px);
+  width:100%; max-width:100%;max-width:900px; max-height:calc(100dvh - 24px);
   background:rgba(10,13,26,.98); border:1px solid rgba(245,166,35,.2);
   border-radius:20px; overflow:hidden; display:flex; flex-direction:column;
   box-shadow:0 32px 80px rgba(0,0,0,.8), 0 0 0 1px rgba(245,166,35,.08);
@@ -21498,6 +21649,8 @@ if(document.readyState === 'loading') {
     };
   }
 })();
+
+})(); /* close outer RSW IIFE */
 </script>
 
 <script>
@@ -22100,54 +22253,46 @@ if(typeof _origFC === 'function'){
 ═══════════════════════════════════════════════════════════════ -->
 <style id="v4-master-css">
 
-/* ──────────────────────── SPLASH SCREEN ──────────────────────── */
-#payro-splash{
-  position:fixed;inset:0;z-index:99999;
-  background:#080b18;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .5s ease,visibility .5s ease;
-  will-change:opacity;
+/* ──────────────────────── HOT VIDEOS BUTTON ──────────────────────── */
+.bnav-hotvid{
+  position:relative;
 }
-#payro-splash.spl-hidden{opacity:0;visibility:hidden;pointer-events:none}
-.spl-inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
-.spl-coin{
-  animation:splCoinBob 1.4s ease-in-out infinite alternate;
-  filter:drop-shadow(0 0 24px rgba(245,166,35,.7));
+.bnav-hotvid.bnav-active,
+.bnav-hotvid:hover {
+  color: #ff6b35 !important;
 }
-@keyframes splCoinBob{from{transform:scale(1) translateY(0)}to{transform:scale(1.07) translateY(-5px)}}
-.spl-name{
-  font-family:'Rajdhani','DM Sans',system-ui,sans-serif;
-  font-size:32px;font-weight:800;letter-spacing:.22em;
-  background:linear-gradient(90deg,#f5a623,#ffd060,#f5a623);
-  background-size:200% 100%;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:splNameShine 2s linear infinite;
+.bnav-hotvid.bnav-active .bnav-ic svg,
+.bnav-hotvid:hover .bnav-ic svg {
+  stroke: #ff6b35 !important;
+  filter: drop-shadow(0 0 6px rgba(255,107,53,.6));
 }
-@keyframes splNameShine{0%{background-position:0% 0}100%{background-position:200% 0}}
-.spl-sub{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase}
-.spl-bar{width:160px;height:3px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;margin-top:6px}
-.spl-bar-fill{
-  height:100%;width:0%;
-  background:linear-gradient(90deg,#f5a623,#ffd060);border-radius:99px;
-  animation:splBarFill 1.4s cubic-bezier(.4,0,.2,1) forwards;
+.bnav-hotvid.bnav-active .bnav-lbl,
+.bnav-hotvid:hover .bnav-lbl {
+  color: #ff6b35 !important;
 }
-@keyframes splBarFill{0%{width:0%}60%{width:70%}100%{width:100%}}
+.bnav-hot-dot{
+  position:absolute;top:-2px;right:-4px;
+  width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,#ff6b35,#ff3d00);
+  box-shadow:0 0 6px rgba(255,107,53,.8);
+  animation:hotPulse 1.2s ease-in-out infinite;
+}
+@keyframes hotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
 
 /* ──────────────────────── ACTIVITY MARQUEE TICKER ──────────────────────── */
 .act-ticker{
   position:fixed;
   left:0;right:0;
   height:24px;
-  background:rgba(8,11,24,.97);
-  border-bottom:1px solid rgba(245,166,35,.13);
+  background:rgba(8,11,24,.98);
+  border-bottom:1px solid rgba(245,166,35,.22);
   display:flex;align-items:center;
-  z-index:801;
+  z-index:1000;
   overflow:hidden;
   contain:layout paint;
   will-change:transform;
   transform:translateZ(0);
-  /* sits just under the header */
-  top:var(--hdr-h,58px);
+  top:0;
 }
 .act-ticker-badge{
   display:flex;align-items:center;gap:5px;padding:0 10px;flex-shrink:0;
@@ -22246,7 +22391,7 @@ if(typeof _origFC === 'function'){
 }
 /* Touch/click targets large enough on desktop */
 .lsb-item{min-height:44px;cursor:pointer}
-#hbg{cursor:pointer;touch-action:manipulation;min-width:44px;min-height:44px}
+#hbg{cursor:pointer;min-width:44px;min-height:44px}
 
 /* ──────────────────────── DESKTOP/CHROMEBOOK SCALE ──────────────────────── */
 @media(min-width:1100px){
@@ -22261,14 +22406,19 @@ if(typeof _origFC === 'function'){
     position:fixed;
     box-shadow:0 0 120px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.04);
   }
-  .payro-hdr-v2,.act-ticker,.bnav,.bnav-wrap{
+  .payro-hdr-v2,.bnav,.bnav-wrap{
     max-width:480px !important;
     left:50% !important;right:auto !important;
     transform:translateX(-50%) !important;
     width:480px !important;
   }
-  #payro-splash{max-width:480px;left:50%;right:auto;transform:translateX(-50%)}
-  .lsb{top:0 !important}
+  .act-ticker{
+    max-width:480px !important;
+    left:50% !important;right:auto !important;
+    transform:translateX(-50%) !important;
+    width:480px !important;
+  }
+  .lsb{top:24px !important} /* below ticker */
   /* Drawers and modals also center */
   #drw,#drw-ov{max-width:480px;margin:0 auto;left:50%;right:auto;transform:translateX(-50%)}
 }
@@ -22312,24 +22462,7 @@ if(typeof _origFC === 'function'){
 (function(){
 'use strict';
 
-/* ══════════════════════════════════════════
-   1. SPLASH SCREEN — dismiss after load
-══════════════════════════════════════════ */
-var _splashDone = false;
-function dismissSplash(){
-  if(_splashDone) return;
-  _splashDone = true;
-  var s = document.getElementById('payro-splash');
-  if(!s) return;
-  s.classList.add('spl-hidden');
-  setTimeout(function(){ s.remove(); }, 600);
-}
-if(document.readyState === 'complete'){
-  setTimeout(dismissSplash, 900);
-} else {
-  window.addEventListener('load', function(){ setTimeout(dismissSplash, 700); }, {once:true});
-}
-setTimeout(dismissSplash, 3500); // hard failsafe
+/* Splash screen removed */
 
 /* ══════════════════════════════════════════
    2. P-COIN RATE FIX + UNIVERSAL SYNC
@@ -22563,5 +22696,76 @@ document.addEventListener('visibilitychange', function(){
   </div>
 </div>
 
+<style>
+/* ── NAV BRAND TEXT ── */
+.nav-brand-text .brand-name{
+  font-family:'Rajdhani','DM Sans',sans-serif;
+  font-size:clamp(17px,4.5vw,22px);
+  font-weight:800;
+  letter-spacing:.06em;
+  background:linear-gradient(90deg,#FFA827,#FFD84A,#FF9F00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 0 10px rgba(255,168,39,.4));
+}
+</style>
+
+<style id="global-overflow-fix">
+/* ═══ NUCLEAR OVERFLOW PREVENTION ═══ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+html { overflow-x: hidden !important; }
+body { overflow-x: hidden !important; max-width: 100vw !important; }
+
+/* Allow decorative pseudo-elements to be wide (backgrounds) */
+.bg-wrap::before, .bg-wrap::after,
+.sw-bg-layer::before {
+  max-width: none;
+}
+
+
+/* ═══ GLOBAL OVERFLOW KILL ═══ */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+.spa-section, .wrap, .main {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+/* Fix any text that can overflow */
+.v4-ph-name, .v4-ph-uid, .v4-ph-status,
+.v4-level-badge, .v4-stat-val,
+.pt-pf-amount, .pt-header-title,
+.prc-item-val, .profile-rank-card {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+/* Fix wide fixed elements */
+.sponsor-banner-inner { max-width: 100% !important; overflow: hidden !important; }
+.stb-inner { max-width: 100% !important; overflow-x: hidden !important; }
+.faucet-big-sub { max-width: 100% !important; }
+.aff-hero-tagline { max-width: min(480px,100%) !important; }
+.vpn-title, .vpn-body { max-width: 100% !important; width: auto !important; }
+.adblock-box, .ad-box, .daily-box, .promo-modal-box { 
+  max-width: min(420px, calc(100vw - 32px)) !important; 
+}
+/* Ensure all images and media don't overflow */
+img, canvas, svg, video {
+  max-width: 100%;
+}
+</style>
+
+
+<script>
+/* Block ONLY pinch zoom — single finger scroll untouched */
+document.addEventListener('touchmove', function(e){
+  if(e.touches.length > 1) e.preventDefault();
+}, {passive:false});
+</script>
 </body>
 </html>
