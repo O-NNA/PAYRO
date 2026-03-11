@@ -232,7 +232,7 @@ input,select{font-family:var(--f-body)}
 .wrap{
   position:fixed;
   left:0;right:0;
-  top:24px; /* ticker height */
+  top:0; /* ticker now at bottom */
   bottom:0;
   z-index:1;
   display:flex;flex-direction:column;
@@ -3104,7 +3104,7 @@ html { scroll-behavior: smooth }
   overflow-y:auto;
   overflow-x:hidden;
   display:none;
-  padding:clamp(10px, 2vw, 14px) clamp(12px, 2.5vw, 16px) clamp(70px, 12vw, 80px);
+  padding:clamp(10px, 2vw, 14px) clamp(12px, 2.5vw, 16px) clamp(100px, 18vw, 110px);
   -webkit-overflow-scrolling:touch;
   transition:opacity .22s ease;
 }
@@ -12380,7 +12380,7 @@ s0.parentNode.insertBefore(s1,s0);
   window.closeLsb = function(){
     if(!lsb) return;
     lsb.classList.remove('lsb-open');
-    if(overlay){ overlay.classList.remove('open'); }
+    if(overlay){ overlay.classList.remove('open'); overlay.style.display='none'; }
     if(!isDesktop()) document.body.style.overflow = '';
   };
   window.toggleLsb = function(){
@@ -12389,6 +12389,20 @@ s0.parentNode.insertBefore(s1,s0);
   };
   window.toggleDrawer = window.toggleLsb;
 
+  /* Stop clicks INSIDE sidebar from bubbling to document (which would close it) */
+  if(lsb){
+    lsb.addEventListener('click', function(e){ e.stopPropagation(); });
+  }
+
+  /* Close on outside click — but only if NOT clicking the hamburger button */
+  document.addEventListener('click', function(e){
+    if(!lsb || isDesktop()) return;
+    if(!lsb.classList.contains('lsb-open')) return;
+    var hbg = document.getElementById('hbg');
+    if(hbg && hbg.contains(e.target)) return; // hamburger handles its own toggle
+    closeLsb();
+  });
+
   document.addEventListener('keydown', function(e){
     if(e.key==='Escape' && !isDesktop()) closeLsb();
   }, {passive:true});
@@ -12396,7 +12410,7 @@ s0.parentNode.insertBefore(s1,s0);
   window.addEventListener('resize', function(){
     if(isDesktop()){
       lsb.classList.remove('lsb-open');
-      if(overlay) overlay.classList.remove('open');
+      if(overlay){ overlay.classList.remove('open'); overlay.style.display='none'; }
       document.body.style.overflow='';
     }
   }, {passive:true});
@@ -23385,14 +23399,16 @@ if(typeof _origFC === 'function'){
   left:0;right:0;
   height:24px;
   background:rgba(8,11,24,.98);
-  border-bottom:1px solid rgba(245,166,35,.22);
+  border-top:1px solid rgba(245,166,35,.22);
+  border-bottom:none;
   display:flex;align-items:center;
-  z-index:1000;
+  z-index:989; /* just below bnav z-index:990 */
   overflow:hidden;
   contain:layout paint;
   will-change:transform;
   transform:translateZ(0);
-  top:0;
+  bottom:clamp(56px,12vw,64px); /* sit above bottom nav */
+  top:auto;
 }
 .act-ticker-badge{
   display:flex;align-items:center;gap:5px;padding:0 10px;flex-shrink:0;
@@ -23424,8 +23440,8 @@ if(typeof _origFC === 'function'){
 .act-tick-item strong{color:#f5a623;margin:0 2px;font-weight:700}
 .act-tick-sep{color:rgba(255,255,255,.12);padding:0 4px;font-size:9px}
 
-/* Push all content below ticker */
-.main{padding-top:24px !important}
+/* Ticker is at bottom — no top push needed */
+/* .main padding-top removed */
 
 /* ──────────────────────── P-COIN HERO CARD ──────────────────────── */
 .pch-coin-icon{
@@ -23516,17 +23532,20 @@ if(typeof _origFC === 'function'){
   /* Ticker full width */
   .act-ticker{
     max-width:100% !important;
-    left:0 !important; right:0 !important;
-    transform:none !important;
-    width:100% !important;
+    left:200px !important; /* right of sidebar */
+    right:0 !important;
+    width:auto !important;
+    bottom:clamp(56px,8vw,64px) !important;
+    top:auto !important;
   }
 
-  /* Bottom nav full width */
+  /* Bottom nav — also right of sidebar */
   .bnav,.bnav-wrap{
     max-width:100% !important;
-    left:0 !important; right:0 !important;
+    left:200px !important;
+    right:0 !important;
+    width:auto !important;
     transform:none !important;
-    width:100% !important;
   }
 
   /* Main wrap full width, with left sidebar space — KEEP position:fixed */
@@ -23535,7 +23554,7 @@ if(typeof _origFC === 'function'){
     width:100% !important;
     left:200px !important;   /* sidebar width */
     right:0 !important;
-    top:24px !important;     /* ticker height */
+    top:0; /* ticker height */
     bottom:0 !important;
     position:fixed !important;  /* MUST stay fixed — sections are position:absolute inside */
     box-shadow:none !important;
@@ -23584,9 +23603,23 @@ if(typeof _origFC === 'function'){
   .wrap{
     left:220px !important;  /* wider sidebar */
     right:0 !important;
+    top:0 !important;
     padding-left:0 !important;
     padding-right:0 !important;
     position:fixed !important;
+  }
+
+  /* Bnav and ticker also right of wider sidebar */
+  .bnav,.bnav-wrap{
+    left:220px !important;
+    right:0 !important;
+    width:auto !important;
+  }
+  .act-ticker{
+    left:220px !important;
+    right:0 !important;
+    width:auto !important;
+    bottom:clamp(56px,6vw,64px) !important;
   }
 
   /* Wider sidebar on desktop */
@@ -23872,8 +23905,14 @@ setTimeout(function(){
   // Add touchstart listener for Chromebook touchscreen
   hbg.addEventListener('touchstart', function(e){
     e.preventDefault();
-    if(window.toggleDrawer) toggleDrawer();
+    e.stopPropagation();
+    if(window.toggleLsb) toggleLsb();
   }, {passive:false});
+
+  hbg.addEventListener('click', function(e){
+    e.stopPropagation(); // prevent document click from immediately closing
+    if(window.toggleLsb) toggleLsb();
+  });
 
   // Make sure lsb sidebar works on ALL screen widths
   var _origToggle = window.toggleDrawer;
@@ -24069,5 +24108,201 @@ document.addEventListener('touchmove', function(e){
   console.log('✅ Responsive fix applied — screen:'+window.innerWidth+'px');
 })();
 </script>
+<!-- ══════════════════════════════════════════════════════
+     NUCLEAR LAYOUT FIX — FINAL OVERRIDE — ALWAYS WINS
+     Fixes: Chromebook black screen, bottom nav missing,
+            ticker position, sidebar stopPropagation
+══════════════════════════════════════════════════════ -->
+<style id="nuclear-layout-fix">
+
+/* ── MOBILE (default < 768px) ─────────────────────────── */
+
+/* Wrap: full screen, top=0 (no ticker at top anymore) */
+.wrap {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+  padding: 0 !important;
+}
+
+/* Sections fill wrap exactly */
+.main {
+  flex: 1 !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+  position: relative !important;
+  padding-top: 0 !important;
+}
+
+.spa-section {
+  position: absolute !important;
+  inset: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 12px 14px 110px !important; /* extra bottom = bnav+ticker */
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Bottom nav: full width, pinned bottom */
+.bnav {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 990 !important;
+  height: clamp(56px,12vw,64px) !important;
+  display: flex !important;
+}
+
+/* Ticker: just above bottom nav */
+.act-ticker {
+  position: fixed !important;
+  bottom: clamp(56px,12vw,64px) !important;
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 24px !important;
+  z-index: 989 !important;
+}
+
+/* ── TABLET / CHROMEBOOK 768px+ ───────────────────────── */
+@media (min-width: 768px) {
+
+  /* Sidebar: fixed left panel */
+  .lsb {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 200px !important;
+    height: 100vh !important;
+    z-index: 200 !important;
+    transform: none !important;
+    overflow-y: auto !important;
+  }
+  .lsb-mob-ov { display: none !important; }
+  #hbg         { display: none !important; }
+
+  /* Wrap: starts RIGHT of sidebar */
+  .wrap {
+    left: 200px !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: auto !important;
+  }
+
+  /* Bottom nav: right of sidebar */
+  .bnav {
+    left: 200px !important;
+    right: 0 !important;
+    width: auto !important;
+  }
+
+  /* Ticker: right of sidebar, above bnav */
+  .act-ticker {
+    left: 200px !important;
+    right: 0 !important;
+    width: auto !important;
+    bottom: clamp(56px,8vw,64px) !important;
+  }
+
+  /* Sections: normal padding on desktop */
+  .spa-section {
+    padding: 16px 24px 110px !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ── LAPTOP / CHROMEBOOK 1024px+ ─────────────────────── */
+@media (min-width: 1024px) {
+
+  .lsb {
+    width: 220px !important;
+  }
+
+  .wrap {
+    left: 220px !important;
+  }
+
+  .bnav {
+    left: 220px !important;
+  }
+
+  .act-ticker {
+    left: 220px !important;
+    bottom: clamp(56px,6vw,64px) !important;
+  }
+
+  .spa-section {
+    padding: 20px 32px 110px !important;
+  }
+}
+</style>
+
+<script>
+/* ── NUCLEAR JS: sidebar stopPropagation + HBG fix ── */
+(function(){
+  /* Wait for DOM */
+  function applyFix(){
+    var lsb = document.getElementById('lsb');
+    var hbg = document.getElementById('hbg');
+    if(!lsb) return;
+
+    /* Stop clicks INSIDE sidebar from reaching document (prevents instant-close) */
+    if(!lsb._nuclearFixed){
+      lsb._nuclearFixed = true;
+      /* Bubble phase only — stops event going UP to document, but children still fire normally */
+      lsb.addEventListener('click', function(e){ e.stopPropagation(); });
+      lsb.addEventListener('touchstart', function(e){ e.stopPropagation(); }, {passive:true});
+    }
+
+    /* Fix hamburger button */
+    if(hbg && !hbg._nuclearFixed){
+      hbg._nuclearFixed = true;
+      /* Remove old inline onclick to avoid double-fire */
+      hbg.removeAttribute('onclick');
+      hbg.addEventListener('click', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        if(window.toggleLsb) toggleLsb();
+      });
+      hbg.addEventListener('touchend', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        if(window.toggleLsb) toggleLsb();
+      }, {passive:false});
+    }
+
+    /* Close sidebar on outside click */
+    if(!document._nuclearSidebarClose){
+      document._nuclearSidebarClose = true;
+      document.addEventListener('click', function(e){
+        if(!lsb) return;
+        if(window.innerWidth >= 768) return; /* desktop: always visible */
+        if(!lsb.classList.contains('lsb-open')) return;
+        if(lsb.contains(e.target)) return;
+        if(hbg && hbg.contains(e.target)) return;
+        if(window.closeLsb) closeLsb();
+      });
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', applyFix);
+  } else {
+    applyFix();
+  }
+  /* Also run after all other scripts */
+  setTimeout(applyFix, 600);
+  setTimeout(applyFix, 1500);
+})();
+</script>
+
 </body>
 </html>
