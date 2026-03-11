@@ -12357,60 +12357,49 @@ s0.parentNode.insertBefore(s1,s0);
 </script>
 
 <script>
-/* ── LEFT SIDEBAR CONTROLS — injected, no collision with existing JS ── */
+/* ── LEFT SIDEBAR CONTROLS — desktop always visible, mobile toggle ── */
 (function(){
-  var lsb    = document.getElementById('lsb');
+  var lsb     = document.getElementById('lsb');
   var overlay = document.getElementById('lsb-mob-ov');
-  var DESKTOP = 1025;
+  var TABLET  = 768;
+
+  function isDesktop(){ return window.innerWidth >= TABLET; }
 
   window.openLsb = function(){
     if(!lsb) return;
+    if(isDesktop()) return;
     lsb.classList.add('lsb-open');
-    if(overlay) overlay.classList.add('open');
+    if(overlay){ overlay.classList.add('open'); overlay.style.display='block'; }
     document.body.style.overflow = 'hidden';
   };
   window.closeLsb = function(){
     if(!lsb) return;
     lsb.classList.remove('lsb-open');
-    if(overlay) overlay.classList.remove('open');
-    document.body.style.overflow = '';
+    if(overlay){ overlay.classList.remove('open'); }
+    if(!isDesktop()) document.body.style.overflow = '';
   };
   window.toggleLsb = function(){
-    if(lsb && lsb.classList.contains('lsb-open')) closeLsb();
-    else openLsb();
+    if(isDesktop()) return;
+    lsb.classList.contains('lsb-open') ? closeLsb() : openLsb();
   };
+  window.toggleDrawer = window.toggleLsb;
 
-  /* Re-use existing hamburger button to also open sidebar on mobile */
-  var hbgBtn = document.getElementById('hbg');
-  if(hbgBtn){
-    var _origToggle = window.toggleDrawer;
-    // Toggle sidebar on ALL screen sizes (desktop + mobile)
-    window.toggleDrawer = function(){
-      toggleLsb();
-      hbgBtn.classList.toggle('open');
-    };
-    // Add touchstart so it works on Chromebook touchscreens too
-    hbgBtn.addEventListener('touchstart', function(e){
-      e.preventDefault();
-      toggleDrawer();
-    }, {passive:false});
-  }
-
-  /* Keyboard: Escape closes sidebar */
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeLsb();
+    if(e.key==='Escape' && !isDesktop()) closeLsb();
   }, {passive:true});
 
-  /* Auto-close on resize to desktop */
   window.addEventListener('resize', function(){
-    if(window.innerWidth >= DESKTOP) closeLsb();
+    if(isDesktop()){
+      lsb.classList.remove('lsb-open');
+      if(overlay) overlay.classList.remove('open');
+      document.body.style.overflow='';
+    }
   }, {passive:true});
 
-  /* Sidebar item keyboard navigation */
   if(lsb){
     lsb.querySelectorAll('.lsb-item').forEach(function(el){
       el.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); el.click(); }
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }
       });
     });
   }
@@ -23200,53 +23189,181 @@ if(typeof _origFC === 'function'){
 /* Stats row uses PC now — clear old $ text */
 #qs-bal{font-size:0;line-height:0}
 
-/* ──────────────────────── SIDEBAR DESKTOP FIX ──────────────────────── */
-/* Always off-screen on ALL devices, toggled via .lsb-open */
-.lsb{
-  transform:translateX(-110%) !important;
-  z-index:9200 !important;
-  transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s ease !important;
+/* ──────────────────────── SIDEBAR — MOBILE HIDDEN, DESKTOP ALWAYS VISIBLE ── */
+/* Mobile: off-screen, toggle via hamburger */
+@media(max-width:767px){
+  .lsb{
+    transform:translateX(-110%) !important;
+    z-index:9200 !important;
+    transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s ease !important;
+  }
+  .lsb.lsb-open{
+    transform:translateX(0) !important;
+    box-shadow:8px 0 60px rgba(0,0,0,.85) !important;
+  }
+  .lsb-mob-ov{
+    z-index:9100 !important;
+    display:block !important;
+  }
 }
-.lsb.lsb-open{
-  transform:translateX(0) !important;
-  box-shadow:8px 0 60px rgba(0,0,0,.85) !important;
-}
-.lsb-mob-ov{
-  z-index:9100 !important;
-  display:block !important;
-}
-/* Touch/click targets large enough on desktop */
+/* Touch/click targets large enough */
 .lsb-item{min-height:44px;cursor:pointer}
 #hbg{cursor:pointer;min-width:44px;min-height:44px}
 
-/* ──────────────────────── DESKTOP/CHROMEBOOK SCALE ──────────────────────── */
-@media(min-width:1100px){
-  body::before{
-    content:'';position:fixed;inset:0;background:#030507;z-index:-1;
+/* ══════════════════════════════════════════════════════
+   CHROMEBOOK / DESKTOP — FULL RESPONSIVE LAYOUT
+   Designed for 1024px+ screens — no more grey sides!
+══════════════════════════════════════════════════════ */
+
+/* ── Tablet 768px+ ── */
+@media(min-width:768px){
+  body{ font-size:15px; }
+
+  /* Header full width */
+  .payro-hdr-v2{
+    max-width:100% !important;
+    left:0 !important; right:0 !important;
+    transform:none !important;
+    width:100% !important;
+    padding:0 24px !important;
   }
-  .wrap{
-    max-width:480px;
-    margin:0 auto;
-    left:50%;right:auto;
-    transform:translateX(-50%);
-    position:fixed;
-    box-shadow:0 0 120px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.04);
-  }
-  .payro-hdr-v2,.bnav,.bnav-wrap{
-    max-width:480px !important;
-    left:50% !important;right:auto !important;
-    transform:translateX(-50%) !important;
-    width:480px !important;
-  }
+
+  /* Ticker full width */
   .act-ticker{
-    max-width:480px !important;
-    left:50% !important;right:auto !important;
-    transform:translateX(-50%) !important;
-    width:480px !important;
+    max-width:100% !important;
+    left:0 !important; right:0 !important;
+    transform:none !important;
+    width:100% !important;
   }
-  .lsb{top:24px !important} /* below ticker */
-  /* Drawers and modals also center */
-  #drw,#drw-ov{max-width:480px;margin:0 auto;left:50%;right:auto;transform:translateX(-50%)}
+
+  /* Bottom nav full width */
+  .bnav,.bnav-wrap{
+    max-width:100% !important;
+    left:0 !important; right:0 !important;
+    transform:none !important;
+    width:100% !important;
+  }
+
+  /* Main wrap full width, with left sidebar space */
+  .wrap{
+    max-width:100% !important;
+    width:100% !important;
+    left:0 !important; right:0 !important;
+    transform:none !important;
+    position:relative !important;
+    box-shadow:none !important;
+    padding-left:220px; /* space for sidebar */
+    padding-bottom:60px;
+  }
+
+  /* Sidebar always visible on tablet+ */
+  .lsb{
+    transform:translateX(0) !important;
+    position:fixed !important;
+    top:56px !important; /* below header */
+    left:0 !important;
+    width:200px !important;
+    height:calc(100vh - 56px) !important;
+    box-shadow:1px 0 0 rgba(255,255,255,0.06) !important;
+    z-index:100 !important;
+    overflow-y:auto !important;
+  }
+  .lsb-mob-ov{ display:none !important; } /* no overlay on desktop */
+  #hbg{ display:none !important; } /* hide hamburger */
+
+  /* SPA sections get proper width */
+  .spa-section{
+    max-width:100% !important;
+    padding:16px 24px !important;
+  }
+
+  /* Cards grid on tablet */
+  .home-grid, .task-grid, .v3-task-grid{
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── Chromebook / Laptop 1024px+ ── */
+@media(min-width:1024px){
+  body::before{
+    content:''; position:fixed; inset:0;
+    background: radial-gradient(ellipse at top left, rgba(245,166,35,0.03), transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(0,212,255,0.03), transparent 60%),
+                #05070f;
+    z-index:-1;
+  }
+
+  .wrap{
+    padding-left:240px;
+    padding-right:0;
+  }
+
+  /* Wider sidebar on desktop */
+  .lsb{
+    width:220px !important;
+  }
+
+  /* Header padding */
+  .payro-hdr-v2{
+    padding:0 32px !important;
+  }
+
+  /* Content max-width for readability */
+  .spa-section{
+    max-width:900px !important;
+    padding:20px 32px !important;
+  }
+
+  /* Trading section full width on desktop */
+  #trade-section{
+    padding:0 !important;
+    max-width:100% !important;
+  }
+  .tv-chart-wrap{
+    height:460px !important;
+  }
+  #tv-chart{
+    height:460px !important;
+  }
+
+  /* Home grid 3 col */
+  .home-grid{
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Task grid 2 col */
+  .task-grid, .v3-task-grid{
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Games grid 3 col */
+  .gm-grid{
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Wallet card wider */
+  .wc-root{
+    max-width:700px !important;
+  }
+
+  /* Bottom nav hidden on desktop (sidebar has nav) */
+  .bnav, .bnav-wrap{
+    display:none !important;
+  }
+}
+
+/* ── Wide Desktop 1440px+ ── */
+@media(min-width:1440px){
+  .spa-section{
+    max-width:1100px !important;
+    padding:24px 40px !important;
+  }
+  .lsb{ width:240px !important; }
+  .wrap{ padding-left:260px; }
+  .tv-chart-wrap{ height:520px !important; }
+  #tv-chart{ height:520px !important; }
+  .home-grid{ grid-template-columns: repeat(4, 1fr) !important; }
+  .gm-grid{ grid-template-columns: repeat(4, 1fr) !important; }
 }
 
 /* ──────────────────────── 144Hz / PERFORMANCE OPTIMIZATIONS ──────────────────────── */
@@ -23595,18 +23712,20 @@ document.addEventListener('touchmove', function(e){
 </script>
 
 <script>
-/* ══════════════════════════════════════════════
-   BULLETPROOF SIDEBAR FIX — runs after all JS
-══════════════════════════════════════════════ */
-(function fixSidebar(){
+/* ══════════════════════════════════════════════════════
+   FINAL SIDEBAR + RESPONSIVE FIX — desktop aware
+══════════════════════════════════════════════════════ */
+(function finalFix(){
   var lsb     = document.getElementById('lsb');
   var overlay = document.getElementById('lsb-mob-ov');
   var hbg     = document.getElementById('hbg');
+  var TABLET  = 768;
 
-  if(!lsb){ console.warn('lsb not found'); return; }
+  if(!lsb) return;
+  function isDesktop(){ return window.innerWidth >= TABLET; }
 
-  /* Ensure openLsb / closeLsb / toggleLsb always exist */
   window.openLsb = function(){
+    if(isDesktop()) return;
     lsb.classList.add('lsb-open');
     hbg && hbg.classList.add('open');
     if(overlay){ overlay.classList.add('open'); overlay.style.display='block'; }
@@ -23616,29 +23735,26 @@ document.addEventListener('touchmove', function(e){
     lsb.classList.remove('lsb-open');
     hbg && hbg.classList.remove('open');
     if(overlay){ overlay.classList.remove('open'); }
-    document.body.style.overflow='';
+    if(!isDesktop()) document.body.style.overflow='';
   };
   window.toggleLsb = function(){
+    if(isDesktop()) return;
     lsb.classList.contains('lsb-open') ? closeLsb() : openLsb();
   };
-  /* Override toggleDrawer too */
   window.toggleDrawer = window.toggleLsb;
 
-  /* Rewire hbg button directly */
+  /* Rewire HBG — mobile only */
   if(hbg){
     hbg.onclick = null;
     hbg.addEventListener('click', function(e){
-      e.stopPropagation();
-      toggleLsb();
+      e.stopPropagation(); toggleLsb();
     });
     hbg.addEventListener('touchend', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      toggleLsb();
+      e.preventDefault(); e.stopPropagation(); toggleLsb();
     }, {passive:false});
   }
 
-  /* Close on overlay click */
+  /* Overlay close */
   if(overlay){
     overlay.addEventListener('click', closeLsb);
     overlay.addEventListener('touchend', function(e){
@@ -23646,12 +23762,20 @@ document.addEventListener('touchmove', function(e){
     }, {passive:false});
   }
 
-  /* Close on ESC */
+  /* ESC key */
   document.addEventListener('keydown', function(e){
     if(e.key==='Escape') closeLsb();
   });
 
-  console.log('✅ Sidebar fix applied');
+  /* Chart resize on window resize */
+  window.addEventListener('resize', function(){
+    if(window.tvChart){
+      var el = document.getElementById('tv-chart');
+      if(el) window.tvChart.applyOptions({width: el.clientWidth});
+    }
+  }, {passive:true});
+
+  console.log('✅ Responsive fix applied — screen:'+window.innerWidth+'px');
 })();
 </script>
 </body>
