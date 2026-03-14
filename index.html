@@ -728,258 +728,241 @@ button:not(.bnav-item):not([disabled]):active::after{opacity:1}
 .w-submit-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--p2),var(--b3));color:#fff;border-radius:var(--r-md);font-size:14px;font-weight:700;letter-spacing:.06em;box-shadow:var(--glow-p);transition:all .2s}
 .w-submit-btn:active{transform:scale(.98)}
 
-@media(max-width:360px){.v3-bh-amount{font-size:22px}}
+/* Trade section column wrappers — block on mobile, flex on desktop via media query */
+.tv-trade-left{display:block}
+.tv-trade-right{display:block}
 
-.tv-left-col{display:block}
-.tv-right-col{display:block}
+/* ─── Small mobile ─── */
+@media(max-width:360px){
+  .v3-bh-amount{font-size:22px}
+}
 
-/* ================================================================
-   TABLET — 600px to 1023px
-================================================================ */
+/* ─── Tablet 600–1023px ─── */
 @media(min-width:600px) and (max-width:1023px){
-  .wrap{max-width:600px;margin:0 auto;box-shadow:0 0 80px rgba(0,0,0,.8)}
-  .gm-popup-panel,.tf-popup-panel,.overlay-panel{max-width:560px}
+  .wrap{max-width:540px;margin:0 auto;box-shadow:0 0 80px rgba(0,0,0,.8)}
+  .gm-popup-panel,.tf-popup-panel,.overlay-panel{max-width:500px}
   .navbar{padding:0 20px;height:58px}
   .nav-logo{font-size:19px}
-  .nexo-hdr{padding:11px 20px}
-  .spa-section{padding:18px 18px 80px}
+  .nexo-hdr{padding:10px 20px}
+  .spa-section{padding:18px 20px 88px}
   .v3-bh-amount{font-size:30px}
-  .v3-stat-row{grid-template-columns:repeat(3,1fr);gap:10px}
+  .v3-bh-coin-icon{width:52px;height:52px;font-size:19px}
+  .v3-stat-row{gap:10px}
   .v3-stat-val{font-size:16px}
   .scratch-cards-grid{grid-template-columns:repeat(3,1fr)}
   .tv-chart-wrap{height:420px}
 }
 
-/* ================================================================
-   DESKTOP — 1024px+
-================================================================ */
+/* ─── Desktop / Laptop / Chromebook 1024px+ ─── */
+
+/* Sidebar styles */
+#desk-sidebar{
+  display:none;
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:240px;
+  z-index:800;
+  background:rgba(3,6,15,0.98);
+  border-right:1px solid var(--bdr);
+  flex-direction:column;
+  overflow:hidden;
+}
+.dsb-brand-bar{
+  height:64px;
+  display:flex;align-items:center;padding:0 20px;
+  border-bottom:1px solid var(--bdr);
+  background:rgba(3,6,15,0.99);
+  flex-shrink:0;
+}
+.dsb-brand{
+  font-family:var(--f-display);font-size:18px;font-weight:900;
+  background:linear-gradient(135deg,var(--p4),var(--b4));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:.08em;
+}
+.dsb-brand span{
+  font-size:9px;display:block;letter-spacing:.2em;opacity:.45;
+  -webkit-text-fill-color:var(--txt2);background:none;
+  font-family:var(--f-body);font-weight:400;margin-top:-2px;
+}
+.dsb-profile{
+  padding:16px;flex-shrink:0;
+  border-bottom:1px solid var(--bdr);
+  background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(59,130,246,.06));
+}
+.dsb-coin-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.dsb-coin-icon{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--p2),var(--b3));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-size:14px;font-weight:800;color:#fff;
+  box-shadow:var(--glow-p);
+}
+.dsb-bal-label{font-size:9px;color:var(--txt2);letter-spacing:.1em;text-transform:uppercase}
+.dsb-bal-val{font-family:var(--f-display);font-size:18px;font-weight:800;color:var(--p4);line-height:1.1}
+.dsb-fiat{font-size:11px;color:var(--gold2);font-weight:600;margin-top:2px}
+.dsb-mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dsb-ms{background:rgba(0,0,0,.35);border-radius:8px;padding:7px;text-align:center}
+.dsb-ms-val{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--p4)}
+.dsb-ms-lbl{font-size:9px;color:var(--txt3);letter-spacing:.06em;margin-top:2px}
+.dsb-nav{flex:1;overflow-y:auto;padding:6px 0;scrollbar-width:none}
+.dsb-nav::-webkit-scrollbar{display:none}
+.dsb-section-label{
+  font-size:9px;color:var(--txt3);letter-spacing:.14em;
+  text-transform:uppercase;padding:10px 18px 4px;font-weight:700;
+}
+.dsb-divider{height:1px;background:var(--bdr2);margin:4px 16px}
+.dsb-nav-item{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 18px;cursor:pointer;
+  color:var(--txt2);font-size:13px;font-weight:500;
+  transition:.18s;border-left:3px solid transparent;
+}
+.dsb-nav-item:hover{background:rgba(124,58,237,.08);color:var(--txt)}
+.dsb-nav-item.dsb-active{
+  background:rgba(124,58,237,.12);color:var(--p4);
+  border-left-color:var(--p3);
+}
+.dsb-nav-item svg{width:17px;height:17px;flex-shrink:0;opacity:.7}
+.dsb-nav-item.dsb-active svg{opacity:1}
+.dsb-badge{
+  margin-left:auto;background:rgba(124,58,237,.2);
+  border:1px solid rgba(139,92,246,.3);color:var(--p4);
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.04em;
+}
+.dsb-badge-gold{
+  margin-left:auto;background:rgba(245,158,11,.2);
+  border:1px solid rgba(245,158,11,.3);color:var(--gold2);
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;
+}
+
 @media(min-width:1024px){
-  html{font-size:15px}
+  /* ── Show sidebar ── */
+  #desk-sidebar{display:flex}
 
-  /* Full-width layout */
-  .wrap{
-    max-width:100%;
-    margin:0;
-    box-shadow:none;
-    display:grid;
-    grid-template-columns:240px 1fr;
-    grid-template-rows:64px 1fr;
-    grid-template-areas:
-      "navbar navbar"
-      "sidebar main";
-  }
-
-  /* Navbar spans full width */
+  /* ── Navbar full-width, fixed above sidebar ── */
   .navbar{
-    grid-area:navbar;
-    height:64px;
-    padding:0 28px;
-    position:relative!important;
-    z-index:900;
+    position:fixed!important;left:0;right:0;top:0;z-index:900;
+    height:64px;padding:0 28px 0 268px;
   }
-  .nav-logo{font-size:20px}
-  .nav-logo span{font-size:10px}
-  .nav-ibtn{width:36px;height:36px}
-  .ncoin-pill{font-size:13px;padding:5px 14px}
-  .ncoin-pill svg{width:16px;height:16px}
+  .nav-logo{font-size:19px}
+  .nav-logo span{font-size:9px}
 
-  /* Balance header hidden on desktop (info in sidebar) */
-  #nexo-hdr{
-    grid-area:sidebar;
-    display:none!important;
+  /* ── Hide mobile-only elements ── */
+  .bnav{display:none!important}
+  .hbg{display:none!important}
+  #nexo-hdr{display:none!important}
+
+  /* ── Shift wrap right past sidebar, down past navbar ── */
+  .wrap{
+    position:fixed!important;
+    top:64px!important;
+    left:240px!important;
+    right:0!important;
+    bottom:0!important;
+    max-width:none!important;
+    margin:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    display:flex;flex-direction:column;overflow:hidden;
   }
 
-  /* Main content area */
-  .main{
-    grid-area:main;
-    min-height:0;
-    overflow:hidden;
-    position:relative;
-  }
+  /* ── Remove navbar from flex flow (it's now fixed) ── */
+  .wrap .navbar{display:none!important}
 
-  /* Sections — no bottom padding for bnav */
+  /* ── Sections padding ── */
   .spa-section{
-    padding:24px 32px 32px;
+    padding:24px 32px 32px!important;
     scrollbar-width:thin;
   }
   .spa-section::-webkit-scrollbar{width:5px}
 
-  /* Hide mobile bottom nav */
-  .bnav{display:none!important}
-
-  /* ── DESKTOP SIDEBAR NAV ── */
-  .desk-sidebar{
-    grid-area:sidebar;
-    display:flex!important;
-    flex-direction:column;
-    background:rgba(3,6,15,0.97);
-    border-right:1px solid var(--bdr);
-    overflow-y:auto;
-    overflow-x:hidden;
-    scrollbar-width:none;
-    padding:0 0 20px;
-  }
-  .desk-sidebar::-webkit-scrollbar{display:none}
-
-  .dsb-profile{
-    padding:20px 16px 16px;
-    border-bottom:1px solid var(--bdr);
-    background:linear-gradient(135deg,rgba(124,58,237,.14),rgba(59,130,246,.07));
-  }
-  .dsb-coin-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-  .dsb-coin-icon{
-    width:42px;height:42px;border-radius:50%;flex-shrink:0;
-    background:linear-gradient(135deg,var(--p2),var(--b3));
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--f-display);font-size:15px;font-weight:800;color:#fff;
-    box-shadow:var(--glow-p);
-  }
-  .dsb-bal-label{font-size:10px;color:var(--txt2);letter-spacing:.1em;text-transform:uppercase}
-  .dsb-bal-val{font-family:var(--f-display);font-size:20px;font-weight:800;color:var(--p4);line-height:1.1}
-  .dsb-fiat{font-size:11px;color:var(--gold2);font-weight:600;margin-top:2px}
-  .dsb-mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .dsb-ms{background:rgba(0,0,0,.3);border-radius:8px;padding:8px;text-align:center}
-  .dsb-ms-val{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--p4)}
-  .dsb-ms-lbl{font-size:9px;color:var(--txt3);letter-spacing:.06em;margin-top:2px}
-
-  .dsb-nav{padding:8px 0;flex:1}
-  .dsb-nav-item{
-    display:flex;align-items:center;gap:12px;padding:11px 18px;
-    color:var(--txt2);font-size:13px;font-weight:500;cursor:pointer;
-    transition:.2s;border-left:3px solid transparent;position:relative;
-  }
-  .dsb-nav-item:hover{background:rgba(124,58,237,.08);color:var(--txt);border-left-color:rgba(139,92,246,.3)}
-  .dsb-nav-item.active{background:rgba(124,58,237,.13);color:var(--p4);border-left-color:var(--p3)}
-  .dsb-nav-item svg{width:18px;height:18px;flex-shrink:0;opacity:.75}
-  .dsb-nav-item.active svg{opacity:1;filter:drop-shadow(0 0 5px var(--p3))}
-  .dsb-nav-badge{margin-left:auto;background:rgba(124,58,237,.2);border:1px solid rgba(139,92,246,.3);color:var(--p4);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.04em}
-  .dsb-nav-badge-gold{margin-left:auto;background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.3);color:var(--gold2);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px}
-  .dsb-section-label{font-size:9px;color:var(--txt3);letter-spacing:.12em;text-transform:uppercase;padding:12px 18px 4px;font-weight:600}
-  .dsb-divider{height:1px;background:var(--bdr2);margin:6px 16px}
-
-  /* ── CONTENT IMPROVEMENTS ── */
-  /* Bigger balance hero */
-  .v3-balance-hero{padding:28px 24px}
-  .v3-bh-coin-icon{width:56px;height:56px;font-size:20px}
-  .v3-bh-amount{font-size:34px}
+  /* ── Content improvements ── */
+  .v3-balance-hero{padding:26px 22px}
+  .v3-bh-coin-icon{width:52px;height:52px;font-size:18px}
+  .v3-bh-amount{font-size:32px}
   .v3-bh-label{font-size:11px}
   .v3-bh-inr{font-size:13px}
-  .v3-bh-trend{font-size:12px}
   .v3-bh-btn{padding:12px;font-size:13px}
 
-  /* Stat row - 3 wide cards */
-  .v3-stat-row{grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-  .v3-stat-val{font-size:17px}
+  .v3-stat-row{gap:12px;margin-bottom:18px}
+  .v3-stat-val{font-size:16px}
   .v3-stat-lbl{font-size:10px}
+  .v3-stat-card{padding:14px 12px}
 
-  /* Section headings */
   .sec-title{font-size:14px}
 
-  /* Home 2-column layout */
-  .home-desktop-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-    align-items:start;
-  }
-  .home-desktop-full{grid-column:1/-1}
-
-  /* Daily bonus card */
-  .dbc-card{padding:20px}
-
-  /* Stat cards */
-  .v3-stat-card{padding:16px 14px}
-
-  /* Trading Section desktop */
-  .tv-topbar{padding:12px 20px 10px}
+  /* ── Trade section ── */
+  .tv-topbar{padding:12px 22px 10px}
   .tv-pair-btn{padding:6px 14px;font-size:12px}
   .tv-price-val{font-size:26px}
-  .tv-chart-wrap{height:500px}
-  .tv-trade-card{margin:14px 16px 0;padding:20px}
+  .tv-price-chg{font-size:12px}
+  .tv-chart-wrap{height:480px}
+  .tv-tf-bar{padding:8px 22px}
+  .tv-tools-bar{padding:8px 22px}
+  .tv-ohlcv{padding:7px 22px;font-size:11px}
+  .tv-risk-banner{padding:8px 22px;font-size:12px}
+  .tv-trade-card{margin:14px 16px 0;padding:18px}
   .tv-hist-card{margin:14px 16px 0}
   .tv-stats-bar{margin:14px 16px 0}
   .tv-sent-card{margin:14px 16px 20px}
-  .tv-tf-bar{padding:8px 20px}
-  .tv-tools-bar{padding:8px 20px}
-  .tv-ohlcv{padding:7px 20px;font-size:11px}
-  .tv-risk-banner{padding:9px 20px;font-size:12px}
-  .tv-dir-row .tv-btn-up,.tv-dir-row .tv-btn-dn{padding:18px 8px;font-size:16px}
+  .tv-btn-up,.tv-btn-dn{padding:16px 8px;font-size:15px}
 
-  /* Trade section two-column on large desktop */
-  #trade-section{display:grid!important;grid-template-columns:1fr 340px;grid-template-rows:auto}
-  /* Risk banner and topbar span both columns */
-  #trade-section>.tv-risk-banner,
-  #trade-section>.tv-left-col,
-  #trade-section>.tv-right-col{grid-column:auto}
-  .tv-left-col{overflow-y:auto;overflow-x:hidden;min-height:0}
-  .tv-right-col{
-    border-left:1px solid rgba(255,255,255,.06);
+  /* Trade section 2-col layout */
+  #trade-section{
+    overflow:hidden!important;
+    display:flex!important;
+    flex-direction:row!important;
+  }
+  .tv-trade-left{
+    flex:1;min-width:0;overflow-y:auto;overflow-x:hidden;
+    scrollbar-width:thin;
+  }
+  .tv-trade-right{
+    width:320px;flex-shrink:0;
+    border-left:1px solid rgba(255,255,255,.07);
     overflow-y:auto;overflow-x:hidden;
     background:var(--bg1);
-    padding-bottom:20px;
+    scrollbar-width:thin;
   }
-  /* Make risk banner span full width */
-  .tv-risk-banner{grid-column:1/-1}
+  /* Risk banner stays full-width before columns */
+  .tv-risk-banner{flex-shrink:0;width:100%}
 
-  /* Popups centered (not bottom-sheet) on desktop */
-  .overlay-modal,.gm-popup,.tf-popup{
-    align-items:center!important;
-  }
-  .overlay-panel,.gm-popup-panel,.tf-popup-panel{
-    border-radius:var(--r-xl)!important;
-    max-width:520px!important;
-    width:90%!important;
-  }
-  .tf-popup-panel{max-width:580px!important}
-  .gm-popup-panel{max-width:440px!important;padding:28px}
+  /* Video grid 3 columns */
+  .hv-grid{grid-template-columns:repeat(3,1fr)!important;gap:14px!important;padding:14px!important}
 
-  /* Bigger inputs and buttons in overlays */
-  .w-input{padding:12px 14px;font-size:15px}
-  .w-submit-btn{padding:14px;font-size:15px}
-  .overlay-panel-title{font-size:18px}
-  .overlay-panel-sub{font-size:13px}
+  /* Popups centered on desktop */
+  .overlay-modal,.gm-popup,.tf-popup{align-items:center!important}
+  .overlay-panel,.gm-popup-panel{border-radius:var(--r-xl)!important}
+  .overlay-panel{max-width:500px!important;width:90%!important}
+  .gm-popup-panel{max-width:420px!important;width:90%!important}
+  .tf-popup-panel{border-radius:var(--r-xl)!important;max-width:560px!important;width:90%!important}
 
-  /* Scratch cards 4-up */
+  /* Bigger form elements */
+  .w-input{padding:11px 14px;font-size:14px}
+  .w-submit-btn{padding:13px;font-size:14px}
+  .overlay-panel-title{font-size:17px}
+
+  /* Scratch 4-col */
   .scratch-cards-grid{grid-template-columns:repeat(4,1fr);gap:14px}
 
-  /* Wider scrollbar */
-  ::-webkit-scrollbar{width:6px}
+  /* Toast bottom-right */
+  .toast-container{bottom:24px;right:24px;left:auto!important}
+  .toast{min-width:260px;padding:13px 16px;font-size:13px}
 
-  /* Hide mobile hamburger and show nothing on desktop */
-  .hbg{display:none!important}
-
-  /* Video grid 3 columns on desktop */
-  .hv-grid{grid-template-columns:repeat(3,1fr)!important;gap:16px!important;padding:16px!important}
-
-  /* Home section 2-col desktop layout for cards */
-  #home-section .v3-stat-row{grid-template-columns:repeat(3,1fr)}
-
-  /* Bigger toast */
-  .toast-container{bottom:24px;right:24px;left:auto!important;top:auto!important}
-  .toast{min-width:280px;padding:14px 18px;font-size:13px}
-
-  /* Leaderboard wider rows */
-  .lb-row{padding:12px 16px}
-
-  /* Referral section */
-  .ref-code-box{padding:18px 20px}
-
-  /* Wallet section */
-  .wallet-card{padding:20px}
-
-  /* Video section */
-  .vid-card{border-radius:var(--r-lg)}
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:5px}
 }
 
-/* ================================================================
-   LARGE DESKTOP — 1440px+
-================================================================ */
+/* ─── Large desktop 1440px+ ─── */
 @media(min-width:1440px){
-  .wrap{grid-template-columns:260px 1fr}
-  .spa-section{padding:28px 40px 40px}
-  .tv-chart-wrap{height:560px}
-  #trade-section{grid-template-columns:1fr 380px}
-  .gm-popup-panel{max-width:480px!important}
+  #desk-sidebar{width:260px}
+  .navbar{padding-left:288px}
+  .wrap{left:260px!important}
+  .spa-section{padding:28px 40px 40px!important}
+  .tv-chart-wrap{height:540px}
+  .tv-trade-right{width:360px}
+  .hv-grid{grid-template-columns:repeat(4,1fr)!important}
 }
 </style>
 </head>
@@ -992,64 +975,6 @@ button:not(.bnav-item):not([disabled]):active::after{opacity:1}
     <div style="height:100%;width:40%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:99px;animation:adShimmer 1.2s ease-in-out infinite;"></div>
   </div>
 </div>
-<!-- DESKTOP SIDEBAR (hidden on mobile via CSS) -->
-<aside class="desk-sidebar" id="desk-sidebar" style="display:none">
-  <div class="dsb-profile">
-    <div class="dsb-coin-row">
-      <div class="dsb-coin-icon">N</div>
-      <div>
-        <div class="dsb-bal-label">NEXO Balance</div>
-        <div class="dsb-bal-val" id="dsb-bal-val">0 NC</div>
-        <div class="dsb-fiat" id="dsb-fiat-val">≈ Rs. 0</div>
-      </div>
-    </div>
-    <div class="dsb-mini-stats">
-      <div class="dsb-ms"><div class="dsb-ms-val" id="dsb-earned">0</div><div class="dsb-ms-lbl">Session</div></div>
-      <div class="dsb-ms"><div class="dsb-ms-val" id="dsb-streak">1x</div><div class="dsb-ms-lbl">Streak</div></div>
-    </div>
-  </div>
-  <div class="dsb-nav">
-    <div class="dsb-section-label">Main</div>
-    <div class="dsb-nav-item active" id="dsb-home" onclick="dsbGo('home-section','dsb-home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Home
-    </div>
-    <div class="dsb-nav-item" id="dsb-trade" onclick="dsbGo('trade-section','dsb-trade')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-      Trade
-      <span class="dsb-nav-badge">Live</span>
-    </div>
-    <div class="dsb-nav-item" id="dsb-video" onclick="dsbGo('video-section','dsb-video')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-      Watch & Earn
-    </div>
-    <div class="dsb-nav-item" id="dsb-wallet" onclick="dsbGo('wallet-section','dsb-wallet')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 12h2"/></svg>
-      Wallet
-    </div>
-    <div class="dsb-nav-item" id="dsb-refer" onclick="dsbGo('referral-section','dsb-refer')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-      Referral
-      <span class="dsb-nav-badge" style="background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.3);color:#34d399">+Rs. 50</span>
-    </div>
-    <div class="dsb-nav-item" id="dsb-lb" onclick="dsbGo('leaderboard-section','dsb-lb')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 20 18 10"/><polyline points="12 20 12 4"/><polyline points="6 20 6 14"/></svg>
-      Leaderboard
-    </div>
-    <div class="dsb-divider"></div>
-    <div class="dsb-section-label">Games</div>
-    <div class="dsb-nav-item" onclick="openPopup('spin-popup')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-      Lucky Spin
-      <span class="dsb-nav-badge-gold">Daily Free</span>
-    </div>
-    <div class="dsb-nav-item" onclick="openPopup('scratch-popup');initScratchCards()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
-      Scratch & Win
-    </div>
-  </div>
-</aside>
-
 <div class="bg-wrap"></div>
 <div class="bg-grid"></div>
 
@@ -1212,6 +1137,66 @@ button:not(.bnav-item):not([disabled]):active::after{opacity:1}
     <div class="drw-divider"></div>
     <div class="drw-row" onclick="bnavGo('profile-section','bnav-profile');closeDrawer()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile &amp; Settings
+    </div>
+  </div>
+</aside>
+
+<!-- =================== DESKTOP SIDEBAR =================== -->
+<aside id="desk-sidebar">
+  <!-- Brand bar (same height as navbar) -->
+  <div class="dsb-brand-bar">
+    <div class="dsb-brand">NEXO<span>Premium Trading Platform</span></div>
+  </div>
+  <!-- Balance profile -->
+  <div class="dsb-profile">
+    <div class="dsb-coin-row">
+      <div class="dsb-coin-icon">N</div>
+      <div>
+        <div class="dsb-bal-label">NEXO Coins</div>
+        <div class="dsb-bal-val" id="dsb-bal">0 NC</div>
+        <div class="dsb-fiat" id="dsb-inr">≈ Rs. 0.00</div>
+      </div>
+    </div>
+    <div class="dsb-mini-stats">
+      <div class="dsb-ms"><div class="dsb-ms-val" id="dsb-session">0</div><div class="dsb-ms-lbl">Session</div></div>
+      <div class="dsb-ms"><div class="dsb-ms-val" id="dsb-streak">1x</div><div class="dsb-ms-lbl">Streak</div></div>
+    </div>
+  </div>
+  <!-- Navigation -->
+  <div class="dsb-nav">
+    <div class="dsb-section-label">Main</div>
+    <div class="dsb-nav-item dsb-active" id="dsb-home" onclick="dsbNav('home-section','dsb-home','bnav-home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+    </div>
+    <div class="dsb-nav-item" id="dsb-trade" onclick="dsbNav('trade-section','dsb-trade','bnav-trade')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>Trade
+      <span class="dsb-badge">Live</span>
+    </div>
+    <div class="dsb-nav-item" id="dsb-video" onclick="dsbNav('video-section','dsb-video','bnav-video')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>Watch & Earn
+    </div>
+    <div class="dsb-nav-item" id="dsb-wallet" onclick="dsbNav('wallet-section','dsb-wallet','bnav-wallet')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 12h2"/></svg>Wallet
+    </div>
+    <div class="dsb-nav-item" id="dsb-refer" onclick="dsbNav('referral-section','dsb-refer','bnav-refer')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Referral
+      <span class="dsb-badge" style="background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:#34d399">+Rs.50</span>
+    </div>
+    <div class="dsb-nav-item" id="dsb-lb" onclick="dsbNav('leaderboard-section','dsb-lb','bnav-home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 20 18 10"/><polyline points="12 20 12 4"/><polyline points="6 20 6 14"/></svg>Leaderboard
+    </div>
+    <div class="dsb-nav-item" id="dsb-profile" onclick="dsbNav('profile-section','dsb-profile','bnav-home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
+    </div>
+    <div class="dsb-divider"></div>
+    <div class="dsb-section-label">Games</div>
+    <div class="dsb-nav-item" onclick="openPopup('spin-popup')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Lucky Spin
+      <span class="dsb-badge-gold">Free</span>
+    </div>
+    <div class="dsb-nav-item" onclick="openPopup('scratch-popup');initScratchCards()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>Scratch & Win
+      <span class="dsb-badge-gold">3x</span>
     </div>
   </div>
 </aside>
@@ -1554,14 +1539,14 @@ button:not(.bnav-item):not([disabled]):active::after{opacity:1}
     <!-- ========== TRADE SECTION ========== -->
     <div class="spa-section" id="trade-section" style="display:none;padding:0;overflow-y:auto">
 
-      <!-- RISK BANNER -->
+      <!-- RISK BANNER — full width always -->
       <div class="tv-risk-banner">
         <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
         <span><strong>Risk Warning:</strong> Trading involves risk. Only trade what you can afford to lose.</span>
       </div>
 
-      <!-- LEFT COLUMN: chart area -->
-      <div class="tv-left-col">
+      <!-- LEFT COL: chart area (desktop only wrapper, transparent on mobile) -->
+      <div class="tv-trade-left">
 
       <!-- PAIR + PRICE -->
       <div class="tv-topbar">
@@ -1641,10 +1626,10 @@ button:not(.bnav-item):not([disabled]):active::after{opacity:1}
       <!-- AD SLOT in trade -->
       <div class="ad-slot" style="margin:8px 12px;"><span class="ad-slot-content">Advertisement</span></div>
 
-      </div><!-- /tv-left-col -->
+      </div><!-- /tv-trade-left -->
 
-      <!-- RIGHT COLUMN: trading panel -->
-      <div class="tv-right-col">
+      <!-- RIGHT COL: trading panel (desktop only wrapper, transparent on mobile) -->
+      <div class="tv-trade-right">
 
       <!-- TRADE CARD -->
       <div class="tv-trade-card">
@@ -1741,7 +1726,7 @@ button:not(.bnav-item):not([disabled]):active::after{opacity:1}
           <span style="color:var(--r3)" id="tv-sent-bear">45% BEAR</span>
         </div>
       </div>
-      </div><!-- /tv-right-col -->
+      </div><!-- /tv-trade-right -->
 
     </div><!-- /trade-section -->
 
@@ -2782,9 +2767,9 @@ function bnavGo(sectionId, bnavId){
   document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('bnav-active'));
   const sec=document.getElementById(sectionId);
   if(sec){
-    // On desktop, trade-section uses grid layout
+    // Trade section uses flex on desktop for 2-col layout
     if(sectionId==='trade-section' && window.innerWidth>=1024){
-      sec.style.display='grid';
+      sec.style.display='flex';
     } else {
       sec.style.display='block';
     }
@@ -2799,6 +2784,24 @@ function bnavGo(sectionId, bnavId){
   }
   const btn=document.getElementById(bnavId);
   if(btn) btn.classList.add('bnav-active');
+  // Update sidebar active state
+  dsbSetActive(sectionId);
+}
+
+/* ── Sidebar navigation helper ── */
+function dsbNav(sectionId, dsbId, bnavId){
+  bnavGo(sectionId, bnavId);
+}
+function dsbSetActive(sectionId){
+  const map={
+    'home-section':'dsb-home','trade-section':'dsb-trade',
+    'video-section':'dsb-video','wallet-section':'dsb-wallet',
+    'referral-section':'dsb-refer','leaderboard-section':'dsb-lb',
+    'profile-section':'dsb-profile'
+  };
+  document.querySelectorAll('.dsb-nav-item').forEach(el=>el.classList.remove('dsb-active'));
+  const id=map[sectionId];
+  if(id){const el=document.getElementById(id);if(el) el.classList.add('dsb-active');}
 }
 
 /* ================================================================
@@ -2868,6 +2871,15 @@ function updateBalanceUI(){
   document.getElementById('prof-id').textContent='ID: #'+STATE.userId;
   document.getElementById('ref-code').textContent=STATE.refCode;
   document.getElementById('rs-earned').textContent='Rs. 0';
+  // ── Sidebar balance sync ──
+  const _dsb=document.getElementById('dsb-bal');
+  const _dsbi=document.getElementById('dsb-inr');
+  const _dsbses=document.getElementById('dsb-session');
+  const _dsbstr=document.getElementById('dsb-streak');
+  if(_dsb) _dsb.textContent=STATE.coins.toLocaleString()+' NC';
+  if(_dsbi) _dsbi.textContent='≈ Rs. '+nc2inr(STATE.coins);
+  if(_dsbses) _dsbses.textContent=STATE.sessionEarned.toLocaleString()+' NC';
+  if(_dsbstr) _dsbstr.textContent=STATE.streak+'x';
 }
 function addCoins(amount, label='Earned'){
   STATE.coins+=amount;STATE.sessionEarned+=amount;
@@ -3515,87 +3527,8 @@ function tvInitFirebase(){
 }
 
 /* ================================================================
-   DESKTOP SIDEBAR LOGIC
+   INIT
 ================================================================ */
-function isDesktop(){return window.innerWidth>=1024}
-
-function dsbGo(sectionId, dsbId){
-  // Mirror to existing bnavGo
-  const sectionToBnav={
-    'home-section':'bnav-home','trade-section':'bnav-trade',
-    'video-section':'bnav-video','wallet-section':'bnav-wallet',
-    'referral-section':'bnav-refer','leaderboard-section':'bnav-home'
-  };
-  bnavGo(sectionId, sectionToBnav[sectionId]||'bnav-home');
-  updateDsbActive(dsbId);
-}
-
-function updateDsbActive(activeId){
-  document.querySelectorAll('.dsb-nav-item').forEach(el=>el.classList.remove('active'));
-  if(activeId){const el=document.getElementById(activeId);if(el) el.classList.add('active');}
-}
-
-function syncDsbBalance(){
-  if(!isDesktop()) return;
-  const nc=STATE.balance||0;
-  const dsv=document.getElementById('dsb-bal-val');
-  const dfi=document.getElementById('dsb-fiat-val');
-  const dse=document.getElementById('dsb-earned');
-  const dss=document.getElementById('dsb-streak');
-  if(dsv) dsv.textContent=nc.toLocaleString()+' NC';
-  if(dfi) dfi.textContent='≈ Rs. '+(nc*0.01).toFixed(2);
-  if(dse) dse.textContent=(STATE.sessionEarned||0)+' NC';
-  if(dss) dss.textContent=(STATE.streak||1)+'x';
-}
-
-function initDesktopSidebar(){
-  const sidebar=document.getElementById('desk-sidebar');
-  if(!sidebar) return;
-  if(isDesktop()){
-    sidebar.style.display='flex';
-  } else {
-    sidebar.style.display='none';
-  }
-  syncDsbBalance();
-}
-
-// Patch updateBalanceUI to also sync sidebar
-const _origUpdateBalanceUI=updateBalanceUI;
-window.updateBalanceUI=function(){
-  _origUpdateBalanceUI();
-  syncDsbBalance();
-};
-
-// Handle resize
-let _dsbResizeTimer;
-window.addEventListener('resize',()=>{
-  clearTimeout(_dsbResizeTimer);
-  _dsbResizeTimer=setTimeout(initDesktopSidebar,120);
-});
-
-// Also patch bnavGo to update sidebar active state
-const _origBnavGo=bnavGo;
-window.bnavGo=function(sectionId,bnavId){
-  _origBnavGo(sectionId,bnavId);
-  // Re-apply grid for trade on desktop (in case original sets display:block)
-  if(sectionId==='trade-section' && window.innerWidth>=1024){
-    const ts=document.getElementById('trade-section');
-    if(ts && ts.style.display!=='none') ts.style.display='grid';
-  }
-  const sectionToDsb={
-    'home-section':'dsb-home','trade-section':'dsb-trade',
-    'video-section':'dsb-video','wallet-section':'dsb-wallet',
-    'referral-section':'dsb-refer','leaderboard-section':'dsb-lb'
-  };
-  updateDsbActive(sectionToDsb[sectionId]||null);
-};
-
-// Initialize after DOM ready
-document.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(initDesktopSidebar,300);
-});
-
-
 function init(){
   initDailyBonus();
   updateBalanceUI();
