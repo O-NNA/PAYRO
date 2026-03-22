@@ -485,6 +485,90 @@ img,canvas{max-width:100%}
 @media(min-width:1201px){:root{--sb:260px}.casino-grid{grid-template-columns:repeat(5,1fr)!important}.wd-card{width:155px!important}}
 @media(max-width:480px){.mbox{max-width:100%!important;margin:8px!important;border-radius:16px!important}.game-mbox{max-width:100%!important;border-radius:20px 20px 0 0!important}.ov{padding:8px!important;align-items:flex-end!important}#lottery-overlay{padding:16px 12px!important}.lotto-slot-wrap{gap:7px!important}}
 @media(max-width:1023px){#bnav{padding-bottom:env(safe-area-inset-bottom);height:calc(58px + env(safe-area-inset-bottom))}body{padding-bottom:calc(62px + env(safe-area-inset-bottom))}}
+/* ══ HOME GOD-LEVEL CARDS ══ */
+.home-icon-card{cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .25s cubic-bezier(.34,1.56,.64,1);-webkit-tap-highlight-color:transparent}
+.home-icon-card:hover{transform:translateY(-8px) scale(1.07)}
+.home-icon-card:active{transform:scale(.93)}
+.hic-art{width:100%;padding-top:100%;position:relative;border-radius:20px;overflow:hidden;
+  box-shadow:0 6px 22px var(--hglow,rgba(255,102,0,.4)),0 0 0 1.5px rgba(255,255,255,.1);
+  transition:box-shadow .3s}
+.home-icon-card:hover .hic-art{box-shadow:0 14px 40px var(--hglow,rgba(255,102,0,.7)),0 0 0 2px rgba(255,255,255,.25),0 0 60px var(--hglow,rgba(255,102,0,.25))}
+.hic-bg{position:absolute;inset:0}
+.hic-noise{position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hic-bottom-arc{position:absolute;bottom:-30%;left:-20%;width:140%;height:70%;background:rgba(255,255,255,.12);border-radius:50%}
+.hic-circle{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.home-icon-card:hover .hic-circle{transform:scale(1.2) translateY(-3px)}
+.hic-shine{position:absolute;top:-35%;left:-35%;width:70%;height:70%;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 65%);pointer-events:none}
+.hic-badge{position:absolute;top:7px;right:7px;font-size:.42rem;font-weight:900;padding:2px 6px;border-radius:5px;letter-spacing:.5px;backdrop-filter:blur(4px)}
+.hic-badge-new{background:rgba(0,220,100,.85);color:#fff}
+.hic-badge-hot{background:rgba(255,40,40,.85);color:#fff}
+.hic-badge-18{background:rgba(0,0,0,.65);color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.2)}
+.hic-badge-ff{background:rgba(255,30,30,.9);color:#fff}
+.hic-label{font-size:.68rem;font-weight:900;color:#fff;text-align:center;text-transform:uppercase;letter-spacing:.7px;line-height:1.1}
+.hic-sub{font-size:.5rem;font-weight:700;color:rgba(255,255,255,.42);text-align:center;text-transform:uppercase;letter-spacing:.4px;margin-top:-2px}
+/* Coin burst on hover */
+.hic-coin{position:absolute;pointer-events:none;font-size:.8rem;animation:hicCoinFly .7s ease forwards;z-index:10}
+@keyframes hicCoinFly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--cx),var(--cy)) scale(.3);opacity:0}}
+/* Live stats bar */
+.live-stat{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;flex:1;min-width:0}
+.live-stat-val{font-size:1rem;font-weight:900;line-height:1}
+.live-stat-lbl{font-size:.52rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+/* Hot offers scroll */
+.hot-offer-card{flex-shrink:0;width:118px;border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s cubic-bezier(.34,1.56,.64,1)}
+.hot-offer-card:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 16px 35px rgba(0,0,0,.5)}
+.hoc-bubble{width:100%;padding-top:80%;position:relative;border-radius:14px 14px 0 0;overflow:hidden}
+.hoc-footer{padding:6px 7px 7px;background:rgba(20,20,30,.9);border:1px solid rgba(255,255,255,.07);border-top:none;border-radius:0 0 14px 14px;display:flex;align-items:center;justify-content:space-between}
+.hoc-earn{padding:2px 7px;border-radius:50px;font-size:.54rem;font-weight:800}
+@media(max-width:360px){.hic-art{border-radius:16px}.hic-circle{font-size:1.6rem}.hic-label{font-size:.6rem}}
+
+/* ══ EARN CAROUSEL ══ */
+#earn-carousel::-webkit-scrollbar{display:none}
+@keyframes ecSweep{0%{left:-100%;opacity:0}20%{opacity:1}60%{left:150%;opacity:.5}100%{left:150%;opacity:0}}
+.ec-swipe-card{display:flex;flex-direction:column}
+.ec-swipe-card:active{transform:scale(.97)!important}
+.ec-card{flex-shrink:0;width:200px;border-radius:22px;overflow:hidden;cursor:pointer;position:relative;
+  scroll-snap-align:start;transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s;
+  border:1.5px solid rgba(255,255,255,.1)}
+.ec-card:hover,.ec-card:active{transform:translateY(-10px) scale(1.04)}
+.ec-card-bg{position:absolute;inset:0}
+.ec-card-noise{position:absolute;inset:0;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ec-card-glow{position:absolute;bottom:-30%;left:10%;width:80%;height:70%;border-radius:50%;opacity:.35;filter:blur(22px)}
+.ec-icon{font-size:3rem;position:relative;z-index:2;display:block;text-align:center;margin:28px 0 8px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5));transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.ec-card:hover .ec-icon{transform:scale(1.2) translateY(-4px)}
+.ec-body{position:relative;z-index:2;padding:0 14px 18px}
+.ec-title{font-size:.95rem;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5);letter-spacing:.3px;margin-bottom:3px}
+.ec-sub{font-size:.62rem;color:rgba(255,255,255,.5);font-weight:700;letter-spacing:.4px;margin-bottom:10px}
+.ec-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:50px;font-size:.6rem;font-weight:900;letter-spacing:.5px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.ec-badge{position:absolute;top:10px;right:10px;font-size:.48rem;font-weight:900;padding:3px 7px;border-radius:6px;letter-spacing:.6px;backdrop-filter:blur(6px);z-index:3}
+/* Chatbot */
+.bot-bubble{max-width:80%;padding:10px 14px;border-radius:16px;font-size:.82rem;font-weight:600;line-height:1.5}
+.bot-ai{background:linear-gradient(135deg,rgba(255,102,0,.15),rgba(160,32,240,.1));border:1px solid rgba(255,102,0,.2);color:#fff;border-radius:16px 16px 16px 4px}
+.bot-user{background:linear-gradient(135deg,rgba(255,102,0,.25),rgba(255,60,0,.15));border:1px solid rgba(255,102,0,.35);color:#fff;align-self:flex-end;border-radius:16px 16px 4px 16px}
+.bot-typing{display:flex;gap:4px;align-items:center;padding:10px 14px;background:rgba(255,102,0,.08);border:1px solid rgba(255,102,0,.15);border-radius:16px 16px 16px 4px;align-self:flex-start}
+.bot-dot{width:7px;height:7px;border-radius:50%;background:var(--or);animation:botDot 1.2s ease-in-out infinite}
+.bot-dot:nth-child(2){animation-delay:.2s}.bot-dot:nth-child(3){animation-delay:.4s}
+@keyframes botDot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-6px);opacity:1}}
+.bot-qr{padding:6px 12px;border-radius:50px;background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.3);color:rgba(255,255,255,.7);font-family:'Exo 2',sans-serif;font-size:.68rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .18s;flex-shrink:0}
+.bot-qr:hover{background:rgba(255,102,0,.25);color:#fff}
+#bot-msgs::-webkit-scrollbar{width:3px}
+#bot-msgs::-webkit-scrollbar-thumb{background:rgba(255,102,0,.3)}
+#bot-quick::-webkit-scrollbar{display:none}
+
+/* ══ PREMIUM EARNING AREA ══ */
+@keyframes eaDiceFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-8px) rotate(5deg)}}
+@keyframes eaFloatCoin{0%,100%{transform:translateY(0) scale(1);opacity:.7}50%{transform:translateY(-10px) scale(1.1);opacity:1}}
+.ea-float-coin{position:absolute;font-size:1.2rem;pointer-events:none;animation:eaFloatCoin 2.5s ease-in-out infinite;z-index:2;filter:drop-shadow(0 0 6px rgba(255,215,0,.6))}
+#ea-casino:hover,#ea-trading:hover{transform:translateY(-8px) scale(1.02)!important}
+#ea-casino:hover #ea-casino-img,#ea-trading:hover #ea-trading-img{transform:scale(1.06)}
+@media(max-width:480px){
+  #ea-big-cards{grid-template-columns:1fr!important;gap:18px!important}
+  #ea-casino{margin-top:0}
+  #ea-trading{margin-top:4px}
+}
+@media(min-width:481px) and (max-width:700px){
+  #ea-big-cards{grid-template-columns:1fr 1fr}
+}
+
 /* ── GALLERY ── */
 .gal-tab{padding:7px 16px;border-radius:50px;font-weight:700;font-size:.78rem;cursor:pointer;transition:all .2s;border:1.5px solid rgba(255,60,0,.25);background:rgba(255,60,0,.06);color:rgba(255,255,255,.45);font-family:'Exo 2',sans-serif;flex-shrink:0;white-space:nowrap}
 .gal-tab.act-gal{background:linear-gradient(135deg,#FF3D00,#AA0000);color:#fff;border-color:transparent;box-shadow:0 4px 18px rgba(255,60,0,.5)}
@@ -596,6 +680,9 @@ img,canvas{max-width:100%}
     <div class="sbi" data-s="leaderboard" onclick="go('leaderboard')"><i class="fa-solid fa-trophy"></i>Leaderboard</div>
     <div class="sbi" data-s="withdraw" onclick="go('withdraw')"><i class="fa-solid fa-wallet"></i>Withdraw</div>
     <div class="sbi" data-s="faq" onclick="go('faq')"><i class="fa-solid fa-circle-question"></i>FAQ</div>
+    <div class="sb-sect">Auth</div>
+    <div class="sbi" onclick="openM('lmod')"><i class="fa-solid fa-right-to-bracket"></i>Login</div>
+    <div class="sbi" onclick="openM('rmod')"><i class="fa-solid fa-user-plus"></i>Register</div>
   </nav>
   <div style="padding:12px;flex-shrink:0">
     <div class="ad ads" style="height:130px;border-radius:10px"></div>
@@ -611,6 +698,7 @@ img,canvas{max-width:100%}
   </div>
   <div style="flex:1"></div>
   <div class="bal-chip"><i class="fa-solid fa-coins"></i><span id="tBal">0 Coins</span></div>
+  <button class="hbtn" onclick="openM('lmod')"><i class="fa-solid fa-right-to-bracket"></i></button>
 </div>
 
 <!-- ════════════════════════ MAIN ════════════════════════ -->
@@ -625,111 +713,64 @@ img,canvas{max-width:100%}
 
 <!-- ─── HOME ─── -->
 <section id="s-home" class="sec active">
-  <div class="hero-section">
-    <canvas id="heroBg" style="position:absolute;inset:0;pointer-events:none"></canvas>
-    <div style="position:relative;z-index:2;width:100%">
-      <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.28);border-radius:50px;font-size:.7rem;font-weight:700;color:var(--or);margin-bottom:16px">
-        <i class="fa-solid fa-circle" style="color:var(--gn);font-size:.45rem"></i>INDIA'S #1 EARNING PLATFORM
-      </div>
-      <h1 style="font-size:clamp(1.9rem,7vw,3.2rem);font-weight:900;margin-bottom:10px;line-height:1.2">
-        <span class="glow-txt" style="color:var(--or)">Earn Free</span><br>
-        <span style="color:#fff">Coins</span> <span class="glow-gd" style="color:var(--gd)">Every 5 Mins</span>
-      </h1>
-      <p style="color:rgba(255,255,255,.42);font-size:.95rem;margin-bottom:22px;max-width:440px;margin-left:auto;margin-right:auto">Faucet, Casino, Trading, Tasks — one platform. Withdraw anytime!</p>
-      <div style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-bottom:12px">
-        <button class="btn gpulse" onclick="go('faucet')"><i class="fa-solid fa-bolt"></i>CLAIM FREE COINS</button>
-        <button class="btn" style="background:none;border:2px solid var(--or);box-shadow:none;color:var(--or)" onclick="go('casino')"><i class="fa-solid fa-dice"></i>CASINO</button>
-      </div>
-      <!-- GALLERY HOT BUTTON -->
-      <div style="display:flex;justify-content:center;margin-bottom:20px">
-        <button onclick="go('gallery')" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:50px;background:linear-gradient(135deg,rgba(255,60,0,.15),rgba(170,0,0,.12));border:1.5px solid rgba(255,60,0,.45);color:#FF6666;font-family:'Exo 2',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;position:relative;overflow:hidden;transition:all .25s;letter-spacing:.5px" onmouseover="this.style.background='linear-gradient(135deg,rgba(255,60,0,.3),rgba(170,0,0,.25))';" onmouseout="this.style.background='linear-gradient(135deg,rgba(255,60,0,.15),rgba(170,0,0,.12))'">
-          <i class="fa-solid fa-fire" style="color:#FF4400;font-size:1rem;animation:glowPulse 1.5s infinite"></i>
-          HOT GALLERY
-          <span style="padding:2px 8px;border-radius:50px;background:rgba(255,60,0,.25);font-size:.6rem;font-weight:900;color:#FF8888;margin-left:2px">18+</span>
-        </button>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:460px;margin-left:auto;margin-right:auto">
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--or)">50K+</div><div style="font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Active Users</div></div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gd)">2Cr+</div><div style="font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Coins Paid</div></div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gn)">5 Min</div><div style="font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Claim Time</div></div>
-      </div>
+
+<!-- ══ HERO ══ -->
+<div style="position:relative;overflow:hidden;border-radius:20px;margin-bottom:14px;background:linear-gradient(135deg,#0d0010 0%,#130820 40%,#0d0d00 100%);padding:20px 16px 18px">
+  <canvas id="heroBg" style="position:absolute;inset:0;pointer-events:none;width:100%;height:100%;border-radius:20px"></canvas>
+  <!-- Glow orbs -->
+  <div style="position:absolute;top:-40px;left:-30px;width:160px;height:160px;background:radial-gradient(circle,rgba(255,102,0,.2),transparent 70%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:-40px;right:-20px;width:140px;height:140px;background:radial-gradient(circle,rgba(160,32,240,.18),transparent 70%);pointer-events:none"></div>
+  <div style="position:relative;z-index:2;text-align:center">
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 13px;background:rgba(255,102,0,.12);border:1px solid rgba(255,102,0,.3);border-radius:50px;font-size:.62rem;font-weight:700;color:var(--or);margin-bottom:10px">
+      <i class="fa-solid fa-circle" style="color:var(--gn);font-size:.38rem;animation:blink 1.4s infinite"></i>INDIA'S #1 EARNING PLATFORM
     </div>
+    <h1 style="font-size:clamp(1.55rem,5.5vw,2.4rem);font-weight:900;line-height:1.18;margin-bottom:7px">
+      <span style="color:var(--or);text-shadow:0 0 20px rgba(255,102,0,.8),0 0 40px rgba(255,102,0,.3)">Earn Free</span>
+      <span style="color:#fff"> Coins</span><br>
+      <span style="color:var(--gd);text-shadow:0 0 18px rgba(255,215,0,.6)">Every 5 Mins</span>
+    </h1>
+    <p style="color:rgba(255,255,255,.36);font-size:.8rem;margin-bottom:15px">Faucet · Casino · Trading · Tasks · Tournaments</p>
+    <!-- MEGA CLAIM BUTTON -->
+    <button id="homeClaimBtn" onclick="go('faucet');homeClaimEffect(this)" class="btn gpulse" style="font-size:.92rem;padding:13px 32px;border-radius:14px;letter-spacing:1px;position:relative;overflow:hidden">
+      <i class="fa-solid fa-bolt" style="font-size:1rem"></i>&nbsp;⚡ CLAIM FREE COINS
+    </button>
   </div>
+</div>
 
-  <!-- GALLERY TEASER ON HOME -->
-  <div class="rv" style="margin-bottom:20px">
-    <!-- Section heading -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF3D00,#AA0000);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(255,60,0,.5);animation:glowPulse 2s infinite"><i class="fa-solid fa-fire" style="color:#fff;font-size:.95rem"></i></div>
-        <div>
-          <div style="font-size:.98rem;font-weight:900;color:#fff">Hot Gallery <span style="font-size:.6rem;padding:2px 7px;border-radius:50px;background:rgba(255,60,0,.2);color:#FF8888;border:1px solid rgba(255,60,0,.35);vertical-align:middle">18+</span></div>
-          <div style="font-size:.62rem;color:rgba(255,255,255,.32)"><i class="fa-solid fa-coins" style="color:#FFD700;font-size:.55rem;margin-right:2px"></i>Earn 500 Coins per video</div>
-        </div>
-      </div>
-      <button onclick="go('gallery')" style="padding:5px 13px;border-radius:8px;background:rgba(255,60,0,.1);border:1px solid rgba(255,60,0,.3);color:#FF8888;font-family:'Exo 2',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer">View All <i class="fa-solid fa-arrow-right" style="font-size:.6rem"></i></button>
-    </div>
-
-    <!-- Blurred preview grid 2x2 -->
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
-      <!-- Card 1 - Free teaser -->
-      <div onclick="go('gallery')" style="border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/11;cursor:pointer;transition:all .25s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#3a0820,#6a1840)"></div>
-        <div style="position:absolute;inset:0;backdrop-filter:blur(14px);background:rgba(10,5,15,.65);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
-          <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FF3D00,#880000);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(255,60,0,.7)"><i class="fa-solid fa-play" style="color:#fff;font-size:.9rem;margin-left:2px"></i></div>
-          <div style="font-size:.65rem;font-weight:900;color:#fff">Preview Free</div>
-          <div style="padding:2px 9px;border-radius:50px;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.3);font-size:.56rem;font-weight:900;color:var(--gn)">FREE</div>
-          <div style="font-size:.54rem;color:rgba(255,255,255,.38)"><i class="fa-solid fa-eye" style="margin-right:2px"></i>52K views</div>
-        </div>
-      </div>
-      <!-- Card 2 -->
-      <div onclick="go('gallery')" style="border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/11;cursor:pointer;transition:all .25s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0a30,#3a1060)"></div>
-        <div style="position:absolute;inset:0;backdrop-filter:blur(14px);background:rgba(5,5,20,.7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
-          <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FF3D00,#880000);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(255,60,0,.7)"><i class="fa-solid fa-lock" style="color:#fff;font-size:.9rem"></i></div>
-          <div style="font-size:.65rem;font-weight:900;color:#fff">Exclusive</div>
-          <div style="padding:2px 9px;border-radius:50px;background:rgba(255,60,0,.15);border:1px solid rgba(255,60,0,.35);font-size:.56rem;font-weight:900;color:#FF8888"><i class="fa-solid fa-coins" style="font-size:.5rem;margin-right:2px"></i>2,000 Coins</div>
-          <div style="font-size:.54rem;color:rgba(255,255,255,.38)"><i class="fa-solid fa-eye" style="margin-right:2px"></i>31K views</div>
-        </div>
-      </div>
-      <!-- Card 3 -->
-      <div onclick="go('gallery')" style="border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/11;cursor:pointer;transition:all .25s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#2a1500,#4a2800)"></div>
-        <div style="position:absolute;inset:0;backdrop-filter:blur(14px);background:rgba(15,8,0,.68);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
-          <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FF3D00,#880000);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(255,60,0,.7)"><i class="fa-solid fa-lock" style="color:#fff;font-size:.9rem"></i></div>
-          <div style="font-size:.65rem;font-weight:900;color:#fff">Premium</div>
-          <div style="padding:2px 9px;border-radius:50px;background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);font-size:.56rem;font-weight:900;color:#FFD700"><i class="fa-solid fa-star" style="font-size:.5rem;margin-right:2px"></i>TOP RATED</div>
-          <div style="font-size:.54rem;color:rgba(255,255,255,.38)"><i class="fa-solid fa-eye" style="margin-right:2px"></i>77K views</div>
-        </div>
-      </div>
-      <!-- Card 4 -->
-      <div onclick="go('gallery')" style="border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/11;cursor:pointer;transition:all .25s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0a2010,#103020)"></div>
-        <div style="position:absolute;inset:0;backdrop-filter:blur(14px);background:rgba(5,15,8,.7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
-          <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FF3D00,#880000);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(255,60,0,.7)"><i class="fa-solid fa-play" style="color:#fff;font-size:.9rem;margin-left:2px"></i></div>
-          <div style="font-size:.65rem;font-weight:900;color:#fff">New Upload</div>
-          <div style="padding:2px 9px;border-radius:50px;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.3);font-size:.56rem;font-weight:900;color:var(--gn)">FREE</div>
-          <div style="font-size:.54rem;color:rgba(255,255,255,.38)"><i class="fa-solid fa-bolt" style="color:#FFD700;margin-right:2px"></i>Just Added</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CTA strip below grid -->
-    <div onclick="go('gallery')" style="margin-top:10px;padding:11px 16px;border-radius:12px;background:linear-gradient(135deg,rgba(255,60,0,.1),rgba(170,0,0,.08));border:1.5px solid rgba(255,60,0,.22);display:flex;align-items:center;justify-content:space-between;cursor:pointer" >
-      <div style="font-size:.78rem;font-weight:800;color:#FF8888"><i class="fa-solid fa-fire" style="color:#FF4400;margin-right:5px"></i>+50 more hot videos locked</div>
-      <div style="font-size:.72rem;font-weight:900;color:var(--or)">View All <i class="fa-solid fa-chevron-right" style="font-size:.6rem"></i></div>
-    </div>
+<!-- ══ LIVE STATS BAR ══ -->
+<div class="rv" style="display:flex;gap:8px;margin-bottom:16px">
+  <div class="live-stat">
+    <div class="live-stat-val" style="color:var(--or)" id="stat-users">50,247</div>
+    <div class="live-stat-lbl">Active Users</div>
   </div>
-
-  <!-- QUICK ACCESS CARDS -->
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:11px;margin-bottom:20px">
-    <div class="card rv" style="cursor:pointer;text-align:center;padding:16px" onclick="go('faucet')"><i class="fa-solid fa-faucet" style="font-size:1.8rem;color:var(--or);margin-bottom:7px;display:block"></i><div style="font-weight:800;font-size:.85rem">Faucet</div><div style="font-size:.7rem;color:var(--or);margin-top:4px;font-weight:700">+5,000 Coins</div></div>
-    <div class="card rv" style="cursor:pointer;text-align:center;padding:16px;background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.2)" onclick="go('casino')"><i class="fa-solid fa-dice" style="font-size:1.8rem;color:var(--gd);margin-bottom:7px;display:block"></i><div style="font-weight:800;font-size:.85rem">Casino</div><div style="font-size:.7rem;color:var(--gd);margin-top:4px;font-weight:700">10 Games</div></div>
-    <div class="card rv card-gn" style="cursor:pointer;text-align:center;padding:16px" onclick="go('trading')"><i class="fa-solid fa-chart-line" style="font-size:1.8rem;color:var(--gn);margin-bottom:7px;display:block"></i><div style="font-weight:800;font-size:.85rem">Trading</div><div style="font-size:.7rem;color:var(--gn);margin-top:4px;font-weight:700">+2x Returns</div></div>
-    <div class="card rv" style="cursor:pointer;text-align:center;padding:16px" onclick="go('tasks')"><i class="fa-solid fa-list-check" style="font-size:1.8rem;color:var(--or);margin-bottom:7px;display:block"></i><div style="font-weight:800;font-size:.85rem">Tasks</div><div style="font-size:.7rem;color:var(--or);margin-top:4px;font-weight:700">+2500 Coins</div></div>
+  <div class="live-stat">
+    <div class="live-stat-val" style="color:var(--gd)" id="stat-coins">2,14,85,320</div>
+    <div class="live-stat-lbl">Coins Paid</div>
   </div>
-  <div class="ad ads" style="height:82px;border-radius:10px;margin-bottom:18px"></div>
-  <div class="card rv"><div style="font-weight:700;color:#fff;margin-bottom:11px;display:flex;align-items:center;gap:7px"><i class="fa-solid fa-trophy" style="color:var(--gd)"></i>Recent Winners</div><div id="winnersEl" style="display:flex;flex-direction:column;gap:6px"></div></div>
+  <div class="live-stat">
+    <div class="live-stat-val" style="color:var(--gn)">5 Min</div>
+    <div class="live-stat-lbl">Claim Time</div>
+  </div>
+</div>
+
+<!-- ══ EARNING AREA ══ -->
+<div class="rv" style="margin-bottom:20px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--or);box-shadow:0 0 10px var(--or);animation:blink 1.4s infinite;flex-shrink:0"></div>
+      <div>
+        <div style="font-size:.82rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:2px">Earning Area</div>
+        <div style="font-size:.58rem;color:rgba(255,255,255,.3);margin-top:1px">Choose your way to multiply coins</div>
+      </div>
+    </div>
+    <div id="earndots" style="display:flex;gap:4px;align-items:center"></div>
+  </div>
+  <div id="earn-carousel" style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+  </div>
+</div>
+
+<div class="card rv"><div style="font-weight:700;color:#fff;margin-bottom:11px;display:flex;align-items:center;gap:7px"><i class="fa-solid fa-trophy" style="color:var(--gd)"></i>Recent Winners</div><div id="winnersEl" style="display:flex;flex-direction:column;gap:6px"></div></div>
+
 </section>
 
 <!-- ─── FAUCET LOTTERY ─── -->
@@ -968,25 +1009,109 @@ img,canvas{max-width:100%}
 
 <!-- ─── REFERRALS ─── -->
 <section id="s-referrals" class="sec">
-  <h2 class="sec-title rv" style="margin-bottom:18px"><i class="fa-solid fa-users"></i>Referrals</h2>
-  <div class="rv" style="text-align:center;padding:22px;border-radius:16px;margin-bottom:18px;background:rgba(255,102,0,.09);border:1px solid rgba(255,102,0,.25)">
-    <div style="font-size:2.2rem;font-weight:900;color:var(--or)" class="glow-txt">50% Lifetime Commission</div>
-    <p style="color:rgba(255,255,255,.38);margin-top:5px">Earn half of everything your referrals earn — forever!</p>
-  </div>
-  <div class="card rv" style="max-width:600px;margin:0 auto 16px">
-    <h3 style="font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:7px"><i class="fa-solid fa-link" style="color:var(--or)"></i>Your Referral Link</h3>
-    <div class="rbox" style="margin-bottom:12px"><input type="text" id="refIn" readonly/><button onclick="cpRef()" style="flex-shrink:0;padding:7px 13px;border-radius:8px;font-weight:700;font-size:.76rem;background:var(--or);color:#fff;border:none;cursor:pointer"><i class="fa-solid fa-copy"></i>Copy</button></div>
-    <div style="display:flex;flex-wrap:wrap;gap:7px">
-      <button onclick="sWA()" style="padding:7px 14px;border-radius:50px;border:none;cursor:pointer;font-weight:700;font-size:.76rem;display:flex;align-items:center;gap:5px;background:#25D366;color:#fff"><i class="fa-brands fa-whatsapp"></i>WhatsApp</button>
-      <button onclick="sTW()" style="padding:7px 14px;border-radius:50px;border:none;cursor:pointer;font-weight:700;font-size:.76rem;display:flex;align-items:center;gap:5px;background:#1DA1F2;color:#fff"><i class="fa-brands fa-x-twitter"></i>Twitter</button>
-      <button onclick="sFB()" style="padding:7px 14px;border-radius:50px;border:none;cursor:pointer;font-weight:700;font-size:.76rem;display:flex;align-items:center;gap:5px;background:#1877F2;color:#fff"><i class="fa-brands fa-facebook"></i>Facebook</button>
+
+  <!-- Header -->
+  <div class="rv" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+    <h2 class="sec-title"><i class="fa-solid fa-users"></i>Referrals</h2>
+    <div style="padding:5px 14px;border-radius:50px;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);font-size:.68rem;font-weight:800;color:var(--gn)">
+      <i class="fa-solid fa-circle" style="font-size:.38rem;animation:blink 1.4s infinite;margin-right:4px"></i>LIVE TRACKING
     </div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:11px;max-width:600px;margin:0 auto" class="rv">
-    <div class="card" style="text-align:center;padding:14px"><div id="rTotal" style="font-size:1.8rem;font-weight:900;color:var(--or)">0</div><div style="font-size:.68rem;color:rgba(255,255,255,.32);margin-top:2px">Total Refs</div></div>
-    <div class="card" style="text-align:center;padding:14px"><div id="rActive" style="font-size:1.8rem;font-weight:900;color:var(--gd)">0</div><div style="font-size:.68rem;color:rgba(255,255,255,.32);margin-top:2px">Active</div></div>
-    <div class="card" style="text-align:center;padding:14px"><div id="rEarned" style="font-size:1.8rem;font-weight:900;color:var(--gn)">0</div><div style="font-size:.68rem;color:rgba(255,255,255,.32);margin-top:2px">Coins Earned</div></div>
-    <div class="card" style="text-align:center;padding:14px"><div style="font-size:1.8rem;font-weight:900;color:var(--or)">50%</div><div style="font-size:.68rem;color:rgba(255,255,255,.32);margin-top:2px">Commission</div></div>
+
+  <!-- Commission banner -->
+  <div class="rv" style="position:relative;overflow:hidden;border-radius:18px;padding:20px 18px;margin-bottom:18px;background:linear-gradient(135deg,#1a0800,#3d1200,#1a0800);border:1px solid rgba(255,102,0,.3)">
+    <div style="position:absolute;top:-30px;right:-20px;width:130px;height:130px;background:radial-gradient(circle,rgba(255,102,0,.2),transparent 65%)"></div>
+    <div style="position:relative;z-index:2">
+      <div style="font-size:.62rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">Your Earning Power</div>
+      <div style="font-size:2.4rem;font-weight:900;color:var(--or);text-shadow:0 0 25px rgba(255,102,0,.7);line-height:1;margin-bottom:4px">99% <span style="font-size:1.1rem;color:rgba(255,255,255,.7);font-weight:700">Commission</span></div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.45)">Har dost ke earning ka <b style="color:var(--gd)">99%</b> tumhe milega — hamesha ke liye! 🔥</div>
+    </div>
+  </div>
+
+  <!-- YOUR UNIQUE REFERRAL CODE -->
+  <div class="rv card" style="margin-bottom:16px;background:linear-gradient(145deg,#0e0e18,#13131e);border:1px solid rgba(255,102,0,.22)">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--or),var(--dp));display:flex;align-items:center;justify-content:center">
+        <i class="fa-solid fa-link" style="color:#fff;font-size:.8rem"></i>
+      </div>
+      <div>
+        <div style="font-size:.9rem;font-weight:900;color:#fff">Your Unique Referral Link</div>
+        <div style="font-size:.58rem;color:rgba(255,255,255,.35)">Share karo, dost join kare, tum kamaao!</div>
+      </div>
+    </div>
+
+    <!-- Referral Link Box -->
+    <div style="display:flex;align-items:center;gap:8px;padding:11px 14px;border-radius:12px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,102,0,.25);margin-bottom:12px">
+      <i class="fa-solid fa-globe" style="color:var(--gn);font-size:.78rem;flex-shrink:0"></i>
+      <div id="refLinkDisplay" style="flex:1;font-size:.68rem;font-weight:700;color:var(--gn);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:monospace">
+        https://o-nna.github.io/PAYRO/?ref=ME000000
+      </div>
+      <button id="refCopyBtn" onclick="copyRefLink()" style="flex-shrink:0;padding:7px 14px;border-radius:8px;background:var(--or);border:none;color:#fff;font-family:'Exo 2',sans-serif;font-weight:800;font-size:.72rem;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap">
+        <i class="fa-solid fa-copy"></i> Copy
+      </button>
+    </div>
+
+    <!-- Referral CODE box -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:12px;background:rgba(255,102,0,.07);border:1px solid rgba(255,102,0,.2);margin-bottom:14px">
+      <div>
+        <div style="font-size:.58rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px">Your Referral Code</div>
+        <div id="refCodeDisplay" style="font-size:1.2rem;font-weight:900;color:var(--gd);letter-spacing:3px;font-family:monospace">ME000000</div>
+      </div>
+      <button onclick="copyRefCode()" style="padding:8px 16px;border-radius:10px;background:rgba(255,215,0,.15);border:1.5px solid rgba(255,215,0,.35);color:var(--gd);font-family:'Exo 2',sans-serif;font-weight:800;font-size:.72rem;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s">
+        <i class="fa-solid fa-copy"></i> Copy Code
+      </button>
+    </div>
+
+    <!-- Share buttons -->
+    <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Share via</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="shareRef('whatsapp')" style="padding:7px 14px;border-radius:50px;border:none;cursor:pointer;font-weight:800;font-size:.72rem;display:flex;align-items:center;gap:5px;background:#25D366;color:#fff;font-family:'Exo 2',sans-serif"><i class="fa-brands fa-whatsapp"></i>WhatsApp</button>
+      <button onclick="shareRef('telegram')" style="padding:7px 14px;border-radius:50px;border:none;cursor:pointer;font-weight:800;font-size:.72rem;display:flex;align-items:center;gap:5px;background:#229ED9;color:#fff;font-family:'Exo 2',sans-serif"><i class="fa-brands fa-telegram"></i>Telegram</button>
+      <button onclick="shareRef('twitter')" style="padding:7px 14px;border-radius:50px;border:none;cursor:pointer;font-weight:800;font-size:.72rem;display:flex;align-items:center;gap:5px;background:#1DA1F2;color:#fff;font-family:'Exo 2',sans-serif"><i class="fa-brands fa-x-twitter"></i>Twitter</button>
+    </div>
+  </div>
+
+  <!-- Stats grid -->
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px" class="rv">
+    <div class="card" style="text-align:center;padding:16px;background:rgba(255,102,0,.07)">
+      <i class="fa-solid fa-users" style="color:var(--or);font-size:1.3rem;margin-bottom:6px;display:block"></i>
+      <div id="rTotal" style="font-size:1.6rem;font-weight:900;color:var(--or)">0</div>
+      <div style="font-size:.62rem;color:rgba(255,255,255,.32);margin-top:2px;text-transform:uppercase;letter-spacing:1px">Total Refs</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;background:rgba(0,255,136,.05)">
+      <i class="fa-solid fa-user-check" style="color:var(--gn);font-size:1.3rem;margin-bottom:6px;display:block"></i>
+      <div id="rActive" style="font-size:1.6rem;font-weight:900;color:var(--gn)">0</div>
+      <div style="font-size:.62rem;color:rgba(255,255,255,.32);margin-top:2px;text-transform:uppercase;letter-spacing:1px">Active</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;background:rgba(255,215,0,.05)">
+      <i class="fa-solid fa-coins" style="color:var(--gd);font-size:1.3rem;margin-bottom:6px;display:block"></i>
+      <div id="rEarned" style="font-size:1.6rem;font-weight:900;color:var(--gd)">0</div>
+      <div style="font-size:.62rem;color:rgba(255,255,255,.32);margin-top:2px;text-transform:uppercase;letter-spacing:1px">Coins Earned</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;background:rgba(255,102,0,.07)">
+      <i class="fa-solid fa-percent" style="color:var(--or);font-size:1.3rem;margin-bottom:6px;display:block"></i>
+      <div style="font-size:1.6rem;font-weight:900;color:var(--or)">99%</div>
+      <div style="font-size:.62rem;color:rgba(255,255,255,.32);margin-top:2px;text-transform:uppercase;letter-spacing:1px">Commission</div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="card rv" style="background:rgba(255,255,255,.03)">
+    <div style="font-weight:800;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:7px"><i class="fa-solid fa-circle-info" style="color:var(--or)"></i>How It Works</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0">1</div>
+        <div><div style="font-size:.8rem;font-weight:700;color:#fff">Apna link share karo</div><div style="font-size:.65rem;color:rgba(255,255,255,.4)">WhatsApp, Telegram ya social media pe</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0">2</div>
+        <div><div style="font-size:.8rem;font-weight:700;color:#fff">Dost join kare & earn kare</div><div style="font-size:.65rem;color:rgba(255,255,255,.4)">Faucet, Casino, Tasks — kuch bhi</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--gn);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#000;flex-shrink:0">3</div>
+        <div><div style="font-size:.8rem;font-weight:700;color:var(--gn)">Tum 99% passive kamaao 💰</div><div style="font-size:.65rem;color:rgba(255,255,255,.4)">Unke har earn ka 99% tumhara — hamesha!</div></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1001,7 +1126,7 @@ img,canvas{max-width:100%}
 <section id="s-withdraw" class="sec">
 
   <!-- HEADER + BALANCE -->
-  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+  <div class="rv" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
     <h2 class="sec-title"><i class="fa-solid fa-money-bill-transfer"></i>Withdraw</h2>
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <button id="wd-currency-toggle" onclick="toggleWdCurrency()"><i class="fa-solid fa-arrows-rotate" style="font-size:.7rem"></i><span id="wd-cur-label">Switch to $USD</span></button>
@@ -1013,94 +1138,132 @@ img,canvas{max-width:100%}
   </div>
 
   <!-- LIVE WITHDRAWAL TICKER -->
-  <div style="overflow-x:auto;margin-bottom:16px;padding-bottom:4px">
+  <div class="rv" style="overflow-x:auto;margin-bottom:16px;padding-bottom:4px">
     <div id="wd-ticker" style="display:flex;gap:8px;min-width:max-content"></div>
   </div>
 
-  <div class="ad ads" style="height:68px;border-radius:10px;margin-bottom:18px"></div>
+  <div class="ad ads rv" style="height:68px;border-radius:10px;margin-bottom:18px"></div>
 
-  <!-- ── UPI ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#00C896,#009970);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-indian-rupee-sign" style="color:#fff;font-size:.82rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">UPI</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(0,200,150,.15);border:1px solid rgba(0,200,150,.3);font-size:.58rem;font-weight:800;color:#00C896">INSTANT</span>
+  <!-- ── UPI SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#00C896,#00A878);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-indian-rupee-sign" style="color:#fff;font-size:.75rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">UPI</div>
     </div>
-    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-upi-row"></div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-upi-row">
+      <!-- cards rendered by JS -->
+    </div>
   </div>
 
-  <!-- ── CRYPTO ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#F7931A,#FF6600);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-brands fa-bitcoin" style="color:#fff;font-size:.9rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">Crypto</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(247,147,26,.15);border:1px solid rgba(247,147,26,.3);font-size:.58rem;font-weight:800;color:#F7931A">BTC / USDT</span>
+  <!-- ── CRYPTO SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#F7931A,#FF6600);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-brands fa-bitcoin" style="color:#fff;font-size:.85rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">Crypto</div>
     </div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-crypto-row"></div>
   </div>
 
-  <!-- ── PAYTM ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#00BAF2,#0070CC);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-mobile-screen-button" style="color:#fff;font-size:.82rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">Paytm</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(0,186,242,.15);border:1px solid rgba(0,186,242,.3);font-size:.58rem;font-weight:800;color:#00BAF2">INSTANT</span>
+  <!-- ── PAYTM SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#00BAF2,#0080CC);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-mobile-screen-button" style="color:#fff;font-size:.75rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">Paytm</div>
     </div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-paytm-row"></div>
   </div>
 
-  <!-- ── BANK TRANSFER ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#6C63FF,#A020F0);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-building-columns" style="color:#fff;font-size:.82rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">Bank Transfer</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);font-size:.58rem;font-weight:800;color:#A070FF">1-2 HRS</span>
+  <!-- ── BANK TRANSFER SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#6C63FF,#A020F0);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-building-columns" style="color:#fff;font-size:.75rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">Bank Transfer</div>
     </div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-bank-row"></div>
   </div>
 
-  <!-- ── FAUCETPAY ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#3B82F6,#1D4ED8);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-faucet" style="color:#fff;font-size:.78rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">FaucetPay</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);font-size:.58rem;font-weight:800;color:#60A5FA">MICRO WALLET</span>
+  <!-- ── FAUCETPAY SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#3B82F6,#1D4ED8);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-faucet" style="color:#fff;font-size:.72rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">FaucetPay</div>
+      <div style="padding:2px 8px;border-radius:50px;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.4);font-size:.58rem;font-weight:800;color:#60A5FA">MICRO WALLET</div>
     </div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-faucetpay-row"></div>
   </div>
 
-  <!-- ── GOOGLE PLAY ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#01875f,#34a853);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-brands fa-google-play" style="color:#fff;font-size:.82rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">Google Play</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(52,168,83,.15);border:1px solid rgba(52,168,83,.3);font-size:.58rem;font-weight:800;color:#34a853">REDEEM CODE</span>
+  <!-- ── GOOGLE PLAY SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#01875f,#34a853);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-brands fa-google-play" style="color:#fff;font-size:.75rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">Google Play</div>
+      <div style="padding:2px 8px;border-radius:50px;background:rgba(52,168,83,.2);border:1px solid rgba(52,168,83,.4);font-size:.58rem;font-weight:800;color:#34a853">REDEEM CODE</div>
     </div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-gplay-row"></div>
   </div>
 
-  <!-- ── AMAZON ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#FF9900,#E67300);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-brands fa-amazon" style="color:#fff;font-size:.95rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">Amazon</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.3);font-size:.58rem;font-weight:800;color:#FF9900">GIFT CARD</span>
+  <!-- ── AMAZON SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#FF9900,#FF6600);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-brands fa-amazon" style="color:#fff;font-size:.85rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">Amazon</div>
+      <div style="padding:2px 8px;border-radius:50px;background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.35);font-size:.58rem;font-weight:800;color:#FF9900">GIFT CARD</div>
     </div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-amazon-row"></div>
   </div>
 
-  <!-- ── GAME TOP-UP ── -->
-  <div style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
-      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#FF4444,#AA0000);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-gamepad" style="color:#fff;font-size:.82rem"></i></div>
-      <span style="font-size:1rem;font-weight:900;color:#fff">Game Top-Up</span>
-      <span style="padding:2px 8px;border-radius:50px;background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.3);font-size:.58rem;font-weight:800;color:#FF6666">FREE FIRE • PUBG</span>
+  <!-- ── FREE FIRE / PUBG SECTION ── -->
+  <div class="rv" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#FF4444,#CC0000);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-gamepad" style="color:#fff;font-size:.75rem"></i></div>
+      <div style="font-size:1rem;font-weight:900;color:#fff">Game Top-Up</div>
+      <div style="padding:2px 8px;border-radius:50px;background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.35);font-size:.58rem;font-weight:800;color:#FF6666">FREE FIRE • PUBG</div>
     </div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px" id="wd-game-row"></div>
   </div>
 
   <div class="ad ads rv" style="height:200px;border-radius:12px;max-width:350px;margin:0 auto 18px"></div>
 </section>
+
+<!-- MASTI AI CHATBOT MODAL -->
+<div id="bot-modal" style="display:none;position:fixed;inset:0;z-index:5500;background:rgba(0,0,0,.94);backdrop-filter:blur(12px);align-items:flex-end;justify-content:center;padding:0">
+  <div style="width:100%;max-width:480px;height:88vh;background:linear-gradient(180deg,#0c0c1a 0%,#080810 100%);border-radius:26px 26px 0 0;border:1px solid rgba(255,102,0,.3);border-bottom:none;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -12px 60px rgba(255,102,0,.25),0 -4px 30px rgba(155,89,182,.15)">
+    <!-- Bot Header -->
+    <div style="padding:13px 16px 11px;background:linear-gradient(90deg,rgba(255,102,0,.2),rgba(155,89,182,.14));border-bottom:1px solid rgba(255,102,0,.18);display:flex;align-items:center;gap:10px;flex-shrink:0;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-20px;left:-10px;width:100px;height:60px;background:radial-gradient(circle,rgba(255,102,0,.2),transparent 70%);pointer-events:none"></div>
+      <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FF6600,#9B59B6);display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 0 18px rgba(255,102,0,.6),0 0 35px rgba(155,89,182,.2);flex-shrink:0;animation:glowPulse 2.5s infinite">🤖</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.95rem;font-weight:900;color:#fff;letter-spacing:.3px">Masti AI Assistant</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:.58rem;color:rgba(255,255,255,.45);margin-top:1px"><span style="width:6px;height:6px;border-radius:50%;background:#00FF88;display:inline-block;flex-shrink:0;animation:blink 1.4s infinite"></span>Online • Turant Jawab • Sanskar Sir Ka Bot 😂</div>
+      </div>
+      <button onclick="closeBot()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:34px;height:34px;color:rgba(255,255,255,.55);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='rgba(255,102,0,.2)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">✕</button>
+    </div>
+    <!-- Chat Messages -->
+    <div id="bot-msgs" style="flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth">
+      <div class="bot-bubble bot-ai" style="align-self:flex-start">
+        😜 <b>Aye bhai, kya haal hai!</b> Main hoon <b>Masti AI</b> — desi, funky, aur thoda pagal! 🤪<br><br>Koi bhi poocho — coins, withdraw, tournament, gallery, casino… ya seedha gaali do, toh woh bhi milegi wapas! 😂🔥<br><br>Bol kya chahiye?
+      </div>
+    </div>
+    <!-- Quick Replies -->
+    <div id="bot-quick" style="padding:8px 10px 6px;display:flex;gap:6px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.06)">
+      <button class="bot-qr" onclick="botSend('Ek coin ki value kya hai?')">💰 Coin Value</button>
+      <button class="bot-qr" onclick="botSend('Tournament kab hota hai aaj?')">🎮 Tournament</button>
+      <button class="bot-qr" onclick="botSend('Withdraw kaise karu?')">💸 Withdraw</button>
+      <button class="bot-qr" onclick="botSend('Gallery mein kya hai bhai?')">🔥 Gallery</button>
+      <button class="bot-qr" onclick="botSend('Faucet se kitna milta hai?')">💧 Faucet</button>
+      <button class="bot-qr" onclick="botSend('Sale bkl mujhe sab pata hai')" style="background:rgba(255,50,50,.15);border-color:rgba(255,50,50,.4);color:#FF8888">😂 Gaali de</button>
+      <button class="bot-qr" onclick="botSend('Main tumhara developer hun, Sanskar')" style="background:rgba(155,89,182,.2);border-color:rgba(155,89,182,.5);color:#CC88FF">👑 Sanskar Mode</button>
+    </div>
+    <!-- Input -->
+    <div style="padding:8px 12px 16px;display:flex;gap:8px;flex-shrink:0;background:rgba(0,0,0,.35)">
+      <input id="bot-input" type="text" placeholder="Kuch bhi poocho... ya gaali do 😂" maxlength="300"
+        style="flex:1;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,102,0,.28);border-radius:50px;padding:11px 18px;color:#fff;font-family:'Exo 2',sans-serif;font-size:.86rem;outline:none;transition:border-color .2s"
+        onfocus="this.style.borderColor='rgba(255,102,0,.65)'" onblur="this.style.borderColor='rgba(255,102,0,.28)'"
+        onkeydown="if(event.key==='Enter')botSend()">
+      <button onclick="botSend()" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#FF6600,#FF2200);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(255,102,0,.55),0 0 30px rgba(255,102,0,.2);flex-shrink:0;transition:transform .15s" onclick="botSend()" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">➤</button>
+    </div>
+  </div>
+</div>
 
 <!-- WITHDRAW SUCCESS PREMIUM MODAL -->
 <div id="wd-success-modal">
@@ -1210,147 +1373,79 @@ img,canvas{max-width:100%}
 </div></div>
 
 <!-- ─── TOURNAMENTS ─── -->
-<!-- TOURNAMENT STYLES -->
-<style>
-.tc-wrap{background:linear-gradient(160deg,#0e0e1c 0%,#12121f 100%);border:1px solid rgba(255,255,255,.09);border-radius:18px;overflow:hidden;margin-bottom:0}
-.tc-banner{position:relative;width:100%;height:170px;overflow:hidden;background:linear-gradient(135deg,#051810,#0a2a18)}
-.tc-banner img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-.tc-banner-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,10,20,.92) 0%,rgba(5,10,20,.45) 55%,rgba(5,10,20,.15) 100%)}
-.tc-badge-row{position:absolute;top:10px;left:10px;display:flex;gap:6px;align-items:center}
-.tc-badge{padding:4px 11px;border-radius:50px;font-size:.6rem;font-weight:900;letter-spacing:.5px;backdrop-filter:blur(6px)}
-.tc-badge-solo{background:rgba(0,180,255,.2);border:1px solid rgba(0,200,255,.5);color:#00DDFF}
-.tc-badge-map{background:rgba(255,140,0,.2);border:1px solid rgba(255,160,0,.5);color:#FFAA00}
-.tc-match-tag{position:absolute;top:10px;right:10px;padding:4px 11px;border-radius:8px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);font-size:.62rem;font-weight:800;letter-spacing:.5px}
-.tc-match-tag.free{color:#00FF66;border:1px solid rgba(0,255,100,.35)}
-.tc-match-tag.paid{color:#FFD700;border:1px solid rgba(255,215,0,.35)}
-.tc-match-tag.live{color:#FF4444;border:1px solid rgba(255,68,68,.4);animation:glowPulse 1.5s infinite}
-.tc-body{padding:14px 14px 16px}
-.tc-title-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.tc-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#003a15,#006622);border:1px solid rgba(0,200,68,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tc-title{font-size:.98rem;font-weight:900;color:#fff;line-height:1.3}
-.tc-divider{height:1px;background:rgba(255,255,255,.07);margin:10px 0}
-.tc-stats-grid{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;margin-bottom:12px}
-.tc-stat-cell{padding:10px 8px;text-align:center}
-.tc-stat-cell.mid{padding-left:10px;padding-right:10px}
-.tc-stat-div{background:rgba(255,255,255,.07);width:1px}
-.tc-stat-label{font-size:.58rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;font-weight:700}
-.tc-stat-val{font-size:.92rem;font-weight:900;color:var(--or);line-height:1.2}
-.tc-stat-val.white{color:#fff}
-.tc-stat-sub{font-size:.6rem;color:rgba(255,255,255,.3);margin-top:2px}
-.tc-slots-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.tc-slots-count{font-size:.95rem;font-weight:900;color:#fff}
-.tc-join-btn{padding:11px 22px;border-radius:11px;border:none;font-family:'Exo 2',sans-serif;font-weight:900;font-size:.88rem;cursor:pointer;display:flex;align-items:center;gap:7px;letter-spacing:.5px;transition:all .2s;position:relative;overflow:hidden}
-.tc-join-free{background:linear-gradient(135deg,#00DD55,#00AA44);color:#fff;box-shadow:0 4px 18px rgba(0,200,68,.45)}
-.tc-join-free:hover{transform:scale(1.05);box-shadow:0 8px 28px rgba(0,200,68,.7)}
-.tc-join-paid{background:linear-gradient(135deg,#FF8800,#FF5500);color:#fff;box-shadow:0 4px 18px rgba(255,102,0,.45)}
-.tc-join-paid:hover{transform:scale(1.07);box-shadow:0 8px 28px rgba(255,102,0,.7)}
-.tc-join-joined{background:rgba(0,200,68,.15);border:1.5px solid rgba(0,200,68,.4);color:#00FF66;padding:11px 20px;border-radius:11px;font-family:'Exo 2',sans-serif;font-weight:900;font-size:.85rem}
-.tc-join-ended{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.3);padding:11px 20px;border-radius:11px;font-family:'Exo 2',sans-serif;font-weight:700;font-size:.85rem}
-.tc-progress{height:5px;background:rgba(255,255,255,.07);border-radius:50px;overflow:hidden}
-.tc-progress-fill{height:100%;border-radius:50px;transition:width .6s ease}
-.tc-info-strip{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:9px;background:rgba(0,200,68,.06);border:1px solid rgba(0,200,68,.15);margin-top:10px}
-.tc-countdown{font-size:.78rem;font-weight:900;color:#00FF66;font-family:'Rajdhani',sans-serif}
-.tc-winner-row{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:10px;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.12);margin-bottom:8px}
-.tc-winner-rank{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.75rem;flex-shrink:0}
-</style>
-
 <section id="s-tournaments" class="sec">
 
   <!-- HEADER -->
-  <div class="rv" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:9px">
+  <div class="rv" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:9px">
     <div style="display:flex;align-items:center;gap:10px">
-      <div style="width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#00CC44,#006622);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,200,68,.55);animation:glowPulse 2s infinite"><i class="fa-solid fa-gamepad" style="color:#fff;font-size:1.15rem"></i></div>
+      <div style="width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#00CC44,#007722);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,200,68,.5);animation:glowPulse 2s infinite"><i class="fa-solid fa-gamepad" style="color:#fff;font-size:1.1rem"></i></div>
       <div>
-        <div style="font-size:clamp(1.5rem,5vw,2.1rem);font-weight:900;color:#00FF66;text-shadow:0 0 25px rgba(0,255,100,.55);letter-spacing:2px">FF TOURNAMENTS</div>
-        <div style="font-size:.66rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:4px"><i class="fa-solid fa-circle" style="color:#00FF66;font-size:.42rem;animation:blink 1.4s infinite"></i>Daily matches &bull; Win real prizes</div>
+        <div style="font-size:clamp(1.4rem,4vw,2rem);font-weight:900;color:#00FF66;text-shadow:0 0 20px rgba(0,255,100,.5);letter-spacing:2px">FF TOURNAMENTS</div>
+        <div style="font-size:.66rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:4px"><i class="fa-solid fa-circle" style="color:#00FF66;font-size:.42rem"></i>Daily matches • Win real prizes</div>
       </div>
     </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <div style="padding:5px 12px;border-radius:50px;background:rgba(0,200,68,.1);border:1px solid rgba(0,200,68,.3);font-size:.65rem;font-weight:800;color:#00FF66"><i class="fa-solid fa-trophy" style="margin-right:4px"></i>REAL PRIZES</div>
-      <button onclick="openAdminTourney()" style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.2);font-size:.58rem;cursor:pointer;font-family:'Exo 2',sans-serif"><i class="fa-solid fa-lock"></i></button>
-    </div>
+    <div style="padding:5px 12px;border-radius:50px;background:rgba(0,200,68,.1);border:1px solid rgba(0,200,68,.3);font-size:.65rem;font-weight:800;color:#00FF66"><i class="fa-solid fa-trophy" style="margin-right:4px"></i>REAL PRIZES</div>
   </div>
 
-  <!-- HERO BANNER -->
-  <div class="rv" style="position:relative;border-radius:18px;overflow:hidden;margin-bottom:16px">
-    <img src="https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg" style="width:100%;height:180px;object-fit:cover;object-position:center;display:block" onerror="this.parentElement.style.background='linear-gradient(135deg,#051a10,#0a3020)';this.style.display='none'"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.4) 55%,rgba(0,0,0,.1) 100%)"></div>
-    <div style="position:absolute;top:12px;left:12px;display:flex;gap:7px">
-      <span style="padding:4px 12px;border-radius:50px;background:rgba(0,200,68,.25);border:1px solid rgba(0,255,80,.5);font-size:.62rem;font-weight:900;color:#00FF88;backdrop-filter:blur(6px)"><i class="fa-solid fa-circle" style="font-size:.42rem;margin-right:4px;animation:blink 1.4s infinite"></i>LIVE DAILY</span>
-      <span style="padding:4px 12px;border-radius:50px;background:rgba(255,102,0,.22);border:1px solid rgba(255,120,0,.5);font-size:.62rem;font-weight:900;color:#FF8800;backdrop-filter:blur(6px)"><i class="fa-solid fa-fire" style="font-size:.52rem;margin-right:3px"></i>FREE FIRE</span>
-    </div>
-    <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px">
-      <div style="font-size:1.25rem;font-weight:900;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.9);margin-bottom:4px">Win Real Prizes Every Day!</div>
-      <div style="font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <span style="padding:3px 10px;border-radius:6px;background:rgba(0,200,68,.2);color:#00FF88;font-size:.68rem;font-weight:800">6 PM FREE</span>
-        <span style="color:rgba(255,255,255,.4)">|</span>
-        <span style="padding:3px 10px;border-radius:6px;background:rgba(255,150,0,.2);color:#FFAA44;font-size:.68rem;font-weight:800">8 PM ₹5 ENTRY</span>
-        <span style="color:rgba(255,255,255,.4)">|</span>
-        <span style="font-size:.7rem;color:rgba(255,255,255,.55)">Per Kill ₹2-₹5</span>
+  <!-- BANNER -->
+  <div class="rv" style="position:relative;border-radius:16px;overflow:hidden;margin-bottom:18px;cursor:pointer" onclick="toast('Tournaments live soon!','ok','fa-gamepad')">
+    <img src="https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg" style="width:100%;height:160px;object-fit:cover;object-position:center;display:block" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2010,#1a4a28)';this.style.display='none'"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.3) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:14px 16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="padding:3px 10px;border-radius:50px;background:rgba(0,200,68,.25);border:1px solid rgba(0,200,68,.5);font-size:.6rem;font-weight:900;color:#00FF66"><i class="fa-solid fa-circle" style="font-size:.4rem;margin-right:3px"></i>LIVE DAILY</span>
+        <span style="padding:3px 10px;border-radius:50px;background:rgba(255,102,0,.2);border:1px solid rgba(255,102,0,.4);font-size:.6rem;font-weight:900;color:var(--or)"><i class="fa-solid fa-fire" style="font-size:.5rem;margin-right:2px"></i>FREE FIRE</span>
       </div>
+      <div style="font-size:1.15rem;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)">🔥 Win Real Prizes Every Day!</div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.6);margin-top:2px">6 PM Free Entry • 8 PM Paid ₹5 • Per Kill ₹2-₹5</div>
     </div>
   </div>
 
   <!-- TABS -->
-  <div style="display:flex;gap:0;margin-bottom:18px;background:rgba(255,255,255,.04);padding:4px;border-radius:12px;border:1px solid rgba(255,255,255,.06)" class="rv">
-    <button id="ttab-ongoing" onclick="setTourneyTab('ongoing')" style="flex:1;padding:10px 6px;border-radius:9px;background:transparent;border:none;color:rgba(255,255,255,.4);font-family:'Exo 2',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s">ONGOING</button>
-    <button id="ttab-upcoming" onclick="setTourneyTab('upcoming')" style="flex:1;padding:10px 6px;border-radius:9px;background:rgba(0,200,68,.2);border:none;color:#00FF66;font-family:'Exo 2',sans-serif;font-weight:900;font-size:.82rem;cursor:pointer;transition:all .2s">UPCOMING</button>
-    <button id="ttab-results" onclick="setTourneyTab('results')" style="flex:1;padding:10px 6px;border-radius:9px;background:transparent;border:none;color:rgba(255,255,255,.4);font-family:'Exo 2',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s">RESULTS</button>
+  <div style="display:flex;gap:2px;margin-bottom:18px;background:rgba(255,255,255,.05);padding:4px;border-radius:12px" class="rv">
+    <button id="ttab-ongoing" onclick="setTourneyTab('ongoing')" style="flex:1;padding:9px;border-radius:9px;background:rgba(0,200,68,.2);border:none;color:#00FF66;font-family:'Exo 2',sans-serif;font-weight:800;font-size:.8rem;cursor:pointer">ONGOING</button>
+    <button id="ttab-upcoming" onclick="setTourneyTab('upcoming')" style="flex:1;padding:9px;border-radius:9px;background:transparent;border:none;color:rgba(255,255,255,.45);font-family:'Exo 2',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer">UPCOMING</button>
+    <button id="ttab-results" onclick="setTourneyTab('results')" style="flex:1;padding:9px;border-radius:9px;background:transparent;border:none;color:rgba(255,255,255,.45);font-family:'Exo 2',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer">RESULTS</button>
   </div>
 
   <!-- TOURNAMENT CARDS -->
-  <div id="tourney-cards" style="display:flex;flex-direction:column;gap:14px"></div>
+  <div id="tourney-cards" style="display:flex;flex-direction:column;gap:16px"></div>
 
   <div class="ad ads rv" style="height:80px;border-radius:10px;margin-top:18px"></div>
 </section>
 
-<!-- JOIN MODAL -->
-<div class="ov" id="tourney-join-modal"><div class="mbox" style="max-width:390px;padding:0;overflow:hidden">
-  <div id="tj-modal-banner" style="height:100px;background:linear-gradient(135deg,#051810,#0a3020);position:relative;overflow:hidden">
-    <img src="https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg" style="width:100%;height:100%;object-fit:cover;opacity:.5" onerror="this.style.display='none'"/>
-    <div style="position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center">
-      <div style="text-align:center">
-        <i class="fa-solid fa-gamepad" style="color:#00FF66;font-size:1.8rem;display:block;margin-bottom:4px"></i>
-        <div id="tj-title" style="font-size:1rem;font-weight:900;color:#fff">Join Tournament</div>
-      </div>
-    </div>
-    <button class="mbox-close" onclick="closeM('tourney-join-modal')" style="top:8px;right:8px"><i class="fa-solid fa-xmark"></i></button>
+<!-- JOIN TOURNAMENT MODAL -->
+<div class="ov" id="tourney-join-modal"><div class="mbox" style="max-width:380px">
+  <button class="mbox-close" onclick="closeM('tourney-join-modal')"><i class="fa-solid fa-xmark"></i></button>
+  <div style="text-align:center;margin-bottom:16px">
+    <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#00CC44,#007722);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 25px rgba(0,200,68,.5)"><i class="fa-solid fa-gamepad" style="color:#fff;font-size:1.4rem"></i></div>
+    <h3 style="font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:4px" id="tj-title">Join Tournament</h3>
+    <div id="tj-info" style="font-size:.75rem;color:rgba(255,255,255,.4)">Free Fire Full Map Solo</div>
   </div>
-  <div style="padding:16px">
-    <div id="tj-info" style="font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:12px;text-align:center"></div>
-    <div id="tj-paid-warn" style="display:none;padding:11px 14px;border-radius:11px;background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.3);margin-bottom:14px;font-size:.8rem;color:var(--or);text-align:center;font-weight:700"><i class="fa-solid fa-coins" style="color:#FFD700;margin-right:6px"></i><span id="tj-entry-cost">500 Coins (&#8377;5)</span> will be deducted from your balance</div>
-    <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:16px">
-      <div>
-        <label style="font-size:.68rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;display:block;font-weight:700">Free Fire UID *</label>
-        <input type="number" id="tj-uid" placeholder="Enter your 9-10 digit FF UID" class="inp" style="font-size:.9rem"/>
-      </div>
-      <div>
-        <label style="font-size:.68rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;display:block;font-weight:700">In-Game Nickname *</label>
-        <input type="text" id="tj-name" placeholder="Your Free Fire character name" class="inp" style="font-size:.9rem"/>
-      </div>
+  <div id="tj-paid-warn" style="display:none;padding:10px;border-radius:10px;background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.3);margin-bottom:12px;font-size:.78rem;color:var(--or);text-align:center"><i class="fa-solid fa-coins" style="margin-right:5px"></i><span id="tj-entry-cost">500 Coins (₹5)</span> will be deducted</div>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+    <div>
+      <label style="font-size:.68rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;display:block">Free Fire UID</label>
+      <input type="text" id="tj-uid" placeholder="Enter your FF UID (e.g. 123456789)" class="inp"/>
     </div>
-    <button class="btn btn-full" id="tj-confirm-btn" onclick="confirmTourneyJoin()" style="background:linear-gradient(135deg,#00DD55,#00AA33);box-shadow:0 6px 22px rgba(0,200,68,.5);font-size:.95rem;padding:14px">
-      <i class="fa-solid fa-gamepad"></i>CONFIRM JOIN - GOOD LUCK!
-    </button>
-    <div style="text-align:center;margin-top:10px;padding:8px;border-radius:8px;background:rgba(255,255,255,.03);font-size:.67rem;color:rgba(255,255,255,.28)"><i class="fa-solid fa-lock" style="color:var(--or);margin-right:4px"></i>Room ID &amp; Password sent 15 mins before match</div>
+    <div>
+      <label style="font-size:.68rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;display:block">In-Game Name</label>
+      <input type="text" id="tj-name" placeholder="Your Free Fire nickname" class="inp"/>
+    </div>
   </div>
+  <button class="btn btn-full" id="tj-confirm-btn" onclick="confirmTourneyJoin()"><i class="fa-solid fa-gamepad"></i>CONFIRM JOIN</button>
+  <div style="text-align:center;margin-top:10px;font-size:.68rem;color:rgba(255,255,255,.28)">Room ID & Password will be sent before match starts</div>
 </div></div>
 
-<!-- ADMIN WINNERS MODAL -->
+<!-- WINNERS UPDATE MODAL (Admin) -->
 <div class="ov" id="admin-tourney-modal"><div class="mbox" style="max-width:400px">
   <button class="mbox-close" onclick="closeM('admin-tourney-modal')"><i class="fa-solid fa-xmark"></i></button>
-  <div style="text-align:center;margin-bottom:16px">
-    <div style="width:52px;height:52px;border-radius:13px;background:linear-gradient(135deg,#CC9900,#FFD700);margin:0 auto 10px;display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-crown" style="color:#000;font-size:1.3rem"></i></div>
-    <h3 style="font-weight:900;color:#FFD700;font-size:1.1rem">Admin: Announce Winner</h3>
-    <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:3px">Auto-distributes coins + shows popup to winner</div>
-  </div>
+  <div style="text-align:center;margin-bottom:14px"><i class="fa-solid fa-crown" style="color:#FFD700;font-size:2rem;display:block;margin-bottom:6px"></i><h3 style="font-weight:900;color:#FFD700">Update Winners</h3></div>
   <div style="display:flex;flex-direction:column;gap:9px">
-    <input type="text" id="admin-winner-uid" placeholder="Winner FF UID" class="inp"/>
-    <input type="text" id="admin-winner-name" placeholder="Winner Name / IGN" class="inp"/>
-    <input type="number" id="admin-prize-coins" placeholder="Prize Coins (e.g. 200000)" class="inp"/>
-    <input type="text" id="admin-redeem-code" placeholder="FF Redeem Code (e.g. FF-WXYZ-1234)" class="inp"/>
-    <input type="text" id="admin-match-id" placeholder="Match ID (e.g. #13508)" class="inp"/>
-    <button class="btn btn-full btn-gold" onclick="adminPostWinner()"><i class="fa-solid fa-trophy"></i>ANNOUNCE WINNER + SEND COINS</button>
+    <input type="text" id="admin-winner-uid" placeholder="Winner UID" class="inp"/>
+    <input type="text" id="admin-winner-name" placeholder="Winner Name" class="inp"/>
+    <input type="number" id="admin-prize-coins" placeholder="Prize Coins (e.g. 5000)" class="inp"/>
+    <input type="text" id="admin-redeem-code" placeholder="Redeem Code (e.g. FF-ABC-1234)" class="inp"/>
+    <button class="btn btn-full btn-gold" onclick="adminPostWinner()"><i class="fa-solid fa-trophy"></i>ANNOUNCE WINNER</button>
   </div>
 </div></div>
 
@@ -1371,8 +1466,6 @@ img,canvas{max-width:100%}
   <div class="bni" data-s="casino" onclick="go('casino')"><i class="fa-solid fa-dice"></i><span>Casino</span></div>
   <div class="bni" data-s="trading" onclick="go('trading')"><i class="fa-solid fa-chart-line"></i><span>Trade</span></div>
   <div class="bni" data-s="withdraw" onclick="go('withdraw')"><i class="fa-solid fa-wallet"></i><span>Withdraw</span></div>
-  <div class="bni" data-s="gallery" onclick="go('gallery')"><i class="fa-solid fa-fire" style="color:inherit"></i><span>Gallery</span></div>
-  <div class="bni" data-s="tournaments" onclick="go('tournaments')"><i class="fa-solid fa-gamepad" style="color:inherit"></i><span>Tourney</span></div>
 </nav>
 <div id="sadm"><div class="ad ads" style="height:44px;border-radius:0;position:relative"><button onclick="this.parentElement.parentElement.style.display='none'" style="position:absolute;right:7px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.25);font-size:.7rem;cursor:pointer"><i class="fa-solid fa-xmark"></i></button></div></div>
 
@@ -1800,10 +1893,10 @@ function go(name){
   if(name==='offers')rndrOffers();
   if(name==='casino')rndrCasino();
   if(name==='gallery')rndrGallery();
-  if(name==='withdraw')rndrWdRows();
-  if(name==='referrals')initRefLink();
   if(name==='tournaments')rndrTournaments();
-  initRv();
+  if(name==='home')animateEarnCards();
+  if(name==='referrals')initRefCode();
+  if(name==='withdraw'){var wdRowIds=['wd-upi-row','wd-crypto-row','wd-paytm-row','wd-bank-row','wd-faucetpay-row','wd-gplay-row','wd-amazon-row','wd-game-row'];wdRowIds.forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=''});rndrWdRows();}
 }
 
 // ── TOAST ─────────────────────────────────────────────────
@@ -2768,21 +2861,30 @@ var wdPending={method:'',label:'',amt:'',coins:0,icon:'',bg:''};
 // Withdraw data config (image URLs replace karoge baad mein)
 var WD_DATA={
   upi:{bg:'linear-gradient(135deg,#00C896,#009970)',icon:'<i class="fa-solid fa-indian-rupee-sign" style="color:#fff;font-size:1rem"></i>',iconBg:'#00A878',label:'UPI',tiers:[
-    {amt:'&#8377;50',coins:5000,time:'Instant'}]},
+    {amt:'₹50',coins:5000,time:'Instant'},{amt:'₹100',coins:10000,time:'Instant'},{amt:'₹150',coins:15000,time:'Instant'},
+    {amt:'₹200',coins:20000,time:'Instant'},{amt:'₹300',coins:30000,time:'Instant'},{amt:'₹400',coins:40000,time:'Instant'},
+    {amt:'₹500',coins:50000,time:'Instant',locked:true,minCoins:50000}]},
   crypto:{bg:'linear-gradient(135deg,#F7931A,#FF6600)',icon:'<i class="fa-brands fa-bitcoin" style="color:#fff;font-size:1rem"></i>',iconBg:'#F7931A',label:'Crypto',tiers:[
-    {amt:'$0.50',coins:5000,time:'~10 min',newUser:true}]},
+    {amt:'$0.50',coins:5000,time:'~10 min',newUser:true},{amt:'$1.00',coins:10000,time:'~10 min'},{amt:'$2.00',coins:20000,time:'~10 min'},
+    {amt:'$3.00',coins:30000,time:'~10 min'},{amt:'$5.00',coins:50000,time:'~10 min'},{amt:'$10.00',coins:100000,time:'~10 min',locked:true,minCoins:100000}]},
   paytm:{bg:'linear-gradient(135deg,#00BAF2,#0070CC)',icon:'<i class="fa-solid fa-mobile-screen-button" style="color:#fff;font-size:1rem"></i>',iconBg:'#00BAF2',label:'Paytm',tiers:[
-    {amt:'&#8377;50',coins:5000,time:'Instant'}]},
+    {amt:'₹50',coins:5000,time:'Instant'},{amt:'₹100',coins:10000,time:'Instant'},{amt:'₹200',coins:20000,time:'Instant'},
+    {amt:'₹300',coins:30000,time:'Instant'},{amt:'₹500',coins:50000,time:'Instant'},{amt:'₹1000',coins:100000,time:'Instant',locked:true,minCoins:100000}]},
   bank:{bg:'linear-gradient(135deg,#6C63FF,#A020F0)',icon:'<i class="fa-solid fa-building-columns" style="color:#fff;font-size:.95rem"></i>',iconBg:'#6C63FF',label:'Bank',tiers:[
-    {amt:'&#8377;50',coins:5000,time:'1-2 hrs'}]},
-  gplay:{bg:'linear-gradient(135deg,#01875f,#34a853)',icon:'<i class="fa-brands fa-google-play" style="color:#fff;font-size:1rem"></i>',iconBg:'#01875f',label:'Google Play',tiers:[
-    {amt:'&#8377;50',coins:5000,time:'Instant'}]},
+    {amt:'₹100',coins:10000,time:'1-2 hrs'},{amt:'₹250',coins:25000,time:'1-2 hrs'},{amt:'₹500',coins:50000,time:'1-2 hrs'},
+    {amt:'₹1000',coins:100000,time:'1-2 hrs',locked:true,minCoins:100000}]},
+  gplay:{bg:'linear-gradient(135deg,#01875f,#34a853)',icon:'<i class="fa-brands fa-google-play" style="color:#fff;font-size:1rem"></i>',iconBg:'#01875f',label:'Google Play',img:'https://i.postimg.cc/Bbt3Vk8t/pngfind-com-google-play-png-464712.png',tiers:[
+    {amt:'₹50',coins:5000,time:'Instant',newUser:true},{amt:'₹100',coins:10000,time:'Instant'},{amt:'₹150',coins:15000,time:'Instant'},
+    {amt:'₹200',coins:20000,time:'Instant'},{amt:'₹300',coins:30000,time:'Instant'},{amt:'₹500',coins:50000,time:'Instant',locked:true,minCoins:50000}]},
   faucetpay:{bg:'linear-gradient(135deg,#3B82F6,#1D4ED8)',icon:'<i class="fa-solid fa-faucet" style="color:#fff;font-size:.95rem"></i>',iconBg:'#3B82F6',label:'FaucetPay',tiers:[
-    {amt:'$0.50',coins:5000,time:'Instant'}]},
-  amazon:{bg:'linear-gradient(135deg,#FF9900,#E67300)',icon:'<i class="fa-brands fa-amazon" style="color:#fff;font-size:1.1rem"></i>',iconBg:'#FF9900',label:'Amazon',tiers:[
-    {amt:'&#8377;50',coins:5000,time:'Instant'}]},
-  game:{bg:'linear-gradient(135deg,#FF4444,#AA0000)',icon:'<i class="fa-solid fa-gamepad" style="color:#fff;font-size:1rem"></i>',iconBg:'#FF4444',label:'Free Fire',tiers:[
-    {amt:'100 &#x1F48E;',coins:7000,time:'Instant',newUser:true,offer:'&#8377;70 <s style="color:rgba(255,255,255,.4);font-size:.65rem">&#8377;80</s>',badge:'&#8377;10 OFF'}]}
+    {amt:'$0.50',coins:5000,time:'Instant',newUser:true},{amt:'$1.00',coins:10000,time:'Instant'},{amt:'$2.00',coins:20000,time:'Instant'},
+    {amt:'$3.00',coins:30000,time:'Instant'},{amt:'$5.00',coins:50000,time:'Instant'},{amt:'$10.00',coins:100000,time:'Instant',locked:true,minCoins:100000}]},
+  amazon:{bg:'linear-gradient(135deg,#FF9900,#E67300)',icon:'<i class="fa-brands fa-amazon" style="color:#fff;font-size:1.1rem"></i>',iconBg:'#FF9900',label:'Amazon',img:'https://i.postimg.cc/c4Bqcd5N/photo-1704204656144-3dd12c110dd8.avif',tiers:[
+    {amt:'₹50',coins:5000,time:'Instant',newUser:true},{amt:'₹100',coins:10000,time:'Instant'},{amt:'₹200',coins:20000,time:'Instant'},
+    {amt:'₹250',coins:25000,time:'Instant'},{amt:'₹500',coins:50000,time:'Instant'},{amt:'₹1000',coins:100000,time:'Instant',locked:true,minCoins:100000}]},
+  game:{bg:'linear-gradient(135deg,#FF4444,#AA0000)',icon:'<i class="fa-solid fa-gamepad" style="color:#fff;font-size:1rem"></i>',iconBg:'#FF4444',label:'Game',img:'https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg',tiers:[
+    {amt:'₹70',coins:7000,time:'Instant',newUser:true,discount:'₹10 OFF'},{amt:'310 💎',coins:3000,time:'Instant'},{amt:'520 💎',coins:5000,time:'Instant'},
+    {amt:'1060 💎',coins:10000,time:'Instant'},{amt:'2180 💎',coins:20000,time:'Instant'},{amt:'5600 💎',coins:50000,time:'Instant',locked:true,minCoins:50000}]}
 };
 
 // ── WITHDRAW CURRENCY TOGGLE ──────────────────────────────
@@ -2835,17 +2937,12 @@ function buildWdCard(tier,cfg,type){
   else logoHtml='<div style="font-size:.78rem;font-weight:900;color:rgba(255,255,255,.92);letter-spacing:.3px">'+cfg.label+'</div>';
   var timeIcon=tier.time==='Instant'?'fa-bolt':'fa-clock';
   var timeColor=tier.time==='Instant'?'#FFD700':'rgba(255,255,255,.6)';
-  var offerHtml='';
-  if(tier.offer){offerHtml='<div style="font-size:.78rem;font-weight:900;color:#FFD700;margin:2px 0">'+tier.offer+'</div>';}
-  var badgeHtml='';
-  if(tier.badge){badgeHtml='<div style="position:absolute;top:6px;left:6px;padding:2px 7px;border-radius:50px;background:linear-gradient(135deg,#FF3300,#FF6600);font-size:.55rem;font-weight:900;color:#fff;letter-spacing:.5px;z-index:2">'+tier.badge+'</div>';}
   c.innerHTML='<div class="wd-card-inner" style="background:'+cfg.bg+'">'
   +'<div class="wd-card-shine"></div>'
-  +badgeHtml
-  +(tier.newUser&&!tier.badge?'<div class="wd-new-badge">NEW USER</div>':'')
+  +(tier.newUser?'<div class="wd-new-badge">NEW USER</div>':'')
+  +(tier.discount?'<div style="position:absolute;top:7px;right:7px;background:linear-gradient(135deg,#FF3D00,#AA0000);color:#fff;font-size:.5rem;font-weight:900;padding:2px 7px;border-radius:50px;letter-spacing:.5px;z-index:2">'+tier.discount+'</div>':'')
   +'<div style="text-align:center">'+logoHtml+'</div>'
   +'<div class="wd-amt">'+showAmt+'</div>'
-  +offerHtml
   +'<div style="display:flex;flex-direction:column;align-items:center;gap:4px">'
   +'<div class="wd-coins"><i class="fa-solid fa-coins" style="color:#FFD700;font-size:.6rem"></i>'+tier.coins.toLocaleString()+'</div>'
   +'<div class="wd-time-badge"><i class="fa-solid '+timeIcon+'" style="color:'+timeColor+';font-size:.5rem"></i>'+(tier.time||'Instant')+'</div>'
@@ -2854,6 +2951,7 @@ function buildWdCard(tier,cfg,type){
   +'</div>';
   if(!locked){c.onclick=function(e){var r=c.getBoundingClientRect();spawnCoinFly(r.left+r.width/2,r.top+r.height/2);openWdConfirm(type,tier,cfg)}}
   else{c.onclick=function(){toast('Need '+tier.minCoins.toLocaleString()+' Coins!','warn','fa-lock')}}
+  if(typeof gsap!=='undefined'){c.style.opacity='0';c.style.transform='scale(.75)'}
   return c;
 }
 
@@ -2923,24 +3021,10 @@ function selPay(card,m){document.querySelectorAll('.pmc').forEach(function(c){c.
 function doWithdraw(btn){confirmWithdraw(btn)}
 
 // ── REFS ──────────────────────────────────────────────────
-function getRefId(){
-  var id=localStorage.getItem('me_ref_id');
-  if(!id){
-    id='ME'+Math.random().toString(36).substr(2,8).toUpperCase();
-    localStorage.setItem('me_ref_id',id);
-  }
-  return id;
-}
-function getRefLink(){return 'https://o-nna.github.io/PAYRO/?ref='+getRefId();}
-function initRefLink(){var el=document.getElementById('refIn');if(el)el.value=getRefLink();}
-function cpRef(){
-  var link=getRefLink();
-  if(navigator.clipboard)navigator.clipboard.writeText(link).then(function(){toast('Link Copied!','ok','fa-copy')});
-  else{var t=document.getElementById('refIn');t.select();document.execCommand('copy');toast('Link Copied!','ok','fa-copy')}
-}
-function sWA(){window.open('https://wa.me/?text='+encodeURIComponent('MastiEarn pe join karo aur free coins kamao! '+getRefLink()))}
-function sTW(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('Earn Coins on MastiEarn! Join now: '+getRefLink()))}
-function sFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(getRefLink()))}
+function cpRef(){if(navigator.clipboard)navigator.clipboard.writeText(document.getElementById('refIn').value).then(function(){toast('Copied!','ok','fa-copy')});else toast('Copied!','ok','fa-copy')}
+function sWA(){window.open('https://wa.me/?text=Join+MastiEarn!+'+encodeURIComponent(document.getElementById('refIn').value))}
+function sTW(){window.open('https://twitter.com/intent/tweet?text=Earn+Coins+on+MastiEarn!&url='+encodeURIComponent(document.getElementById('refIn').value))}
+function sFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(document.getElementById('refIn').value))}
 
 // ── AUTH ──────────────────────────────────────────────────
 function fkLogin(){toast('Welcome back!','ok','fa-right-to-bracket');closeM('lmod')}
@@ -3028,193 +3112,766 @@ function setGalTab(btn){
 
 // ── TOURNAMENTS ───────────────────────────────────────────
 var TOURNEY_DATA=[
-  {id:'t0',type:'free',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13507',date:'22/03/2026',time:'06:00 PM',prizePool:'&#8377;2000',prizeCoins:'2,00,000 Coins',perKillRs:'&#8377;2',perKillCoins:'200 Coins',entryRs:'FREE',entryCoins:0,maxSlots:999999,slots:34,status:'ongoing',bannerImg:'https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg'},
-  {id:'t1',type:'free',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13508',date:'22/03/2026',time:'06:00 PM',prizePool:'&#8377;2000',prizeCoins:'2,00,000 Coins',perKillRs:'&#8377;2',perKillCoins:'200 Coins',entryRs:'FREE',entryCoins:0,maxSlots:999999,slots:2,status:'upcoming',bannerImg:'https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg'},
-  {id:'t2',type:'paid',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13509',date:'22/03/2026',time:'08:00 PM',prizePool:'&#8377;5000',prizeCoins:'5,00,000 Coins',perKillRs:'&#8377;5',perKillCoins:'500 Coins',entryRs:'&#8377;5',entryCoins:500,maxSlots:50,slots:12,status:'upcoming',bannerImg:'https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg'},
-  {id:'t_r1',type:'free',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13505',date:'21/03/2026',time:'06:00 PM',prizePool:'&#8377;2000',prizeCoins:'2,00,000 Coins',perKillRs:'&#8377;2',perKillCoins:'200 Coins',entryRs:'FREE',entryCoins:0,maxSlots:999999,slots:48,status:'results',bannerImg:'https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg',winners:[{rank:1,name:'Pro_Killer99',uid:'8821034556',kills:14,prize:'&#8377;28 (2800 Coins)',code:'FF-XK99-2024'},{rank:2,name:'HeadShot_Raj',uid:'7734512890',kills:11,prize:'&#8377;22 (2200 Coins)',code:'FF-HR22-4532'},{rank:3,name:'GarenaKing_D',uid:'9912034321',kills:9,prize:'&#8377;18 (1800 Coins)',code:'FF-GK18-9871'}]},
-  {id:'t_r2',type:'paid',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13506',date:'21/03/2026',time:'08:00 PM',prizePool:'&#8377;5000',prizeCoins:'5,00,000 Coins',perKillRs:'&#8377;5',perKillCoins:'500 Coins',entryRs:'&#8377;5',entryCoins:500,maxSlots:50,slots:50,status:'results',bannerImg:'https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg',winners:[{rank:1,name:'FireStorm_V',uid:'6621034889',kills:18,prize:'&#8377;90 (9000 Coins)',code:'FF-FS90-7812'},{rank:2,name:'Sniper_Priya',uid:'5534512340',kills:13,prize:'&#8377;65 (6500 Coins)',code:'FF-SP65-3241'},{rank:3,name:'BlindFire_M',uid:'8812034111',kills:10,prize:'&#8377;50 (5000 Coins)',code:'FF-BF50-6643'}]},
+  {
+    id:'t1',type:'free',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13508',
+    date:'22/03/2026',time:'06:00 PM',prizePool:'₹2000',perKill:'₹2 (200 Coins)',entry:0,
+    maxSlots:48,slots:2,tag:'FREE ENTRY',tagClr:'#00FF66',tagBg:'rgba(0,200,68,.18)',
+    status:'upcoming',bannerGrad:'linear-gradient(135deg,#051a0d,#0d3a1a)'
+  },
+  {
+    id:'t2',type:'paid',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13514',
+    date:'22/03/2026',time:'08:00 PM',prizePool:'₹5000',perKill:'₹5 (500 Coins)',entry:500,
+    maxSlots:50,slots:18,tag:'PAID ₹5',tagClr:'#FFD700',tagBg:'rgba(255,200,0,.12)',
+    status:'upcoming',bannerGrad:'linear-gradient(135deg,#1a0d05,#3a1a0d)'
+  },
+  {
+    id:'t3',type:'free',mode:'Solo',map:'Bermuda',title:'Free Fire Full Map Solo',matchNum:'#13500',
+    date:'21/03/2026',time:'06:00 PM',prizePool:'₹2000',perKill:'₹2 (200 Coins)',entry:0,
+    maxSlots:48,slots:48,tag:'COMPLETED',tagClr:'rgba(255,255,255,.4)',tagBg:'rgba(255,255,255,.05)',
+    status:'results',bannerGrad:'linear-gradient(135deg,#0a0a18,#151525)'
+  },
 ];
 var currentTourneyTab='upcoming';
 var currentTourneyId=null;
-var _tSlotIv=null;
 
 function getCountdown(dateStr,timeStr){
   var parts=dateStr.split('/');
-  var isPM=timeStr.indexOf('PM')!==-1;
-  var timeParts=timeStr.replace(' PM','').replace(' AM','').trim().split(':');
-  var hr=parseInt(timeParts[0]),mn=parseInt(timeParts[1]||0);
-  if(isPM&&hr!==12)hr+=12;if(!isPM&&hr===12)hr=0;
-  var target=new Date(parseInt(parts[2]),parseInt(parts[1])-1,parseInt(parts[0]),hr,mn,0);
-  var diff=target-new Date();
+  var timeParts=timeStr.replace(' PM','').replace(' AM','').split(':');
+  var hr=parseInt(timeParts[0]);
+  var min=parseInt(timeParts[1]);
+  if(timeStr.indexOf('PM')!==-1&&hr!==12)hr+=12;
+  // DD/MM/YYYY
+  var target=new Date(parseInt(parts[2]),parseInt(parts[1])-1,parseInt(parts[0]),hr,min,0);
+  var now=new Date();
+  var diff=target-now;
   if(diff<=0)return null;
-  var h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  return (h>0?String(h).padStart(2,'0')+'h ':'')+String(m).padStart(2,'0')+'m '+String(s).padStart(2,'0')+'s';
+  var h=Math.floor(diff/3600000);
+  var m=Math.floor((diff%3600000)/60000);
+  var s=Math.floor((diff%60000)/1000);
+  return (h>0?h+'h ':'')+m+'m '+s+'s';
 }
 
 function buildTourneyCard(t){
   var cd=getCountdown(t.date,t.time);
+  var pct=Math.min(100,Math.round((t.slots/t.maxSlots)*100));
+  var isCompleted=t.status==='results';
   var savedJoined=JSON.parse(localStorage.getItem('me_joined_tourneys')||'[]');
   var alreadyJoined=savedJoined.indexOf(t.id)!==-1;
-  var isUnlimited=t.maxSlots>9999;
-  var pct=isUnlimited?Math.min(100,Math.round(t.slots/200*100)):Math.min(100,Math.round(t.slots/t.maxSlots*100));
-  var isCompleted=t.status==='results';
-  var isOngoing=t.status==='ongoing';
-  var h='<div class="tc-wrap rv">';
-  h+='<div class="tc-banner">';
-  h+='<img src="'+t.bannerImg+'" onerror="this.style.display=\'none\'"/>';
-  h+='<div class="tc-banner-overlay"></div>';
-  h+='<div class="tc-badge-row"><span class="tc-badge tc-badge-solo">'+t.mode+'</span><span class="tc-badge tc-badge-map">'+t.map+'</span></div>';
-  if(isOngoing){h+='<span class="tc-match-tag live"><i class="fa-solid fa-circle" style="font-size:.42rem;margin-right:3px"></i>LIVE NOW</span>';}
-  else if(isCompleted){h+='<span class="tc-match-tag" style="color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.08)">ENDED</span>';}
-  else if(t.type==='free'){h+='<span class="tc-match-tag free">FREE ENTRY</span>';}
-  else{h+='<span class="tc-match-tag paid">PAID '+t.entryRs+'</span>';}
-  if(cd&&!isCompleted&&!isOngoing){h+='<div style="position:absolute;bottom:10px;right:10px;padding:4px 11px;border-radius:8px;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);font-size:.72rem;font-weight:900;color:#FFD700;display:flex;align-items:center;gap:4px"><i class="fa-solid fa-clock" style="font-size:.6rem"></i><span id="tc-cd-'+t.id+'">'+cd+'</span></div>';}
-  if(isOngoing){h+='<div style="position:absolute;bottom:10px;left:10px;right:10px;padding:6px 12px;border-radius:9px;background:rgba(255,50,50,.15);border:1px solid rgba(255,80,80,.35);display:flex;align-items:center;gap:6px"><i class="fa-solid fa-circle" style="color:#FF4444;font-size:.48rem;animation:blink 1s infinite"></i><span style="font-size:.72rem;font-weight:800;color:#FF6666">Match in progress...</span><span style="margin-left:auto;font-size:.64rem;color:rgba(255,255,255,.35)">'+t.matchNum+'</span></div>';}
-  h+='</div>';
-  h+='<div class="tc-body">';
-  h+='<div class="tc-title-row"><div class="tc-icon"><i class="fa-solid fa-gamepad" style="color:#00CC44;font-size:.9rem"></i></div><div><div class="tc-title">'+t.title+'</div><div style="font-size:.7rem;color:rgba(255,255,255,.32);margin-top:1px;font-weight:700">Match '+t.matchNum+'</div></div></div>';
-  h+='<div class="tc-divider"></div>';
-  h+='<div class="tc-stats-grid">';
-  h+='<div class="tc-stat-cell"><div class="tc-stat-label">DATE &amp; TIME</div><div class="tc-stat-val white" style="font-size:.83rem">'+t.date+'</div><div style="font-size:.76rem;font-weight:800;color:rgba(255,255,255,.52);margin-top:2px">'+t.time+'</div></div>';
-  h+='<div class="tc-stat-div"></div>';
-  h+='<div class="tc-stat-cell mid"><div class="tc-stat-label" style="color:var(--or)">PRIZE POOL &#9660;</div><div class="tc-stat-val" style="font-size:1.08rem">'+t.prizePool+'</div><div class="tc-stat-sub">'+t.prizeCoins+'</div></div>';
-  h+='<div class="tc-stat-div"></div>';
-  h+='<div class="tc-stat-cell"><div class="tc-stat-label" style="color:var(--or)">PER KILL</div><div class="tc-stat-val" style="font-size:1.08rem">'+t.perKillRs+'</div><div class="tc-stat-sub">'+t.perKillCoins+'</div></div>';
-  h+='</div>';
-  h+='<div class="tc-divider"></div>';
-  h+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">';
-  h+='<div style="display:flex;align-items:center;gap:7px"><i class="fa-solid fa-ticket" style="color:'+(t.type==='free'?'#00FF66':'#FFD700')+';font-size:.9rem"></i><div><div style="font-size:.62rem;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:1px">Entry Fee</div><div style="font-size:.95rem;font-weight:900;color:'+(t.type==='free'?'#00FF66':'#FFD700')+'">'+(t.type==='free'?'FREE':'&#8377;5 (500 Coins)')+'</div></div></div>';
-  h+='<div style="text-align:right"><div style="font-size:.62rem;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:1px">Slots Filled</div><div style="font-size:.95rem;font-weight:900;color:#fff" id="tc-slots-'+t.id+'">'+t.slots+(isUnlimited?'/&#8734;':'/'+t.maxSlots)+'</div></div>';
-  h+='</div>';
-  h+='<div class="tc-progress" style="margin-bottom:12px"><div class="tc-progress-fill" style="width:'+pct+'%;background:linear-gradient(90deg,'+(pct>=80?'#FF4400,#FF6600':'#00CC44,#00FF88')+')"></div></div>';
-  h+='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">';
-  h+='<div style="font-size:.7rem;color:rgba(255,255,255,.28);line-height:1.6"><i class="fa-solid fa-map-location-dot" style="color:var(--or);margin-right:4px"></i>Bermuda Solo<br><i class="fa-solid fa-users" style="color:rgba(255,255,255,.28);margin-right:4px"></i>'+(isUnlimited?'Unlimited players':'Max 50 players')+'</div>';
-  if(isCompleted){h+='<div class="tc-join-ended">ENDED</div>';}
-  else if(isOngoing){h+='<div class="tc-join-ended" style="color:#FF6666;background:rgba(255,60,60,.07);border-color:rgba(255,60,60,.2)"><i class="fa-solid fa-play" style="margin-right:4px"></i>LIVE</div>';}
-  else if(alreadyJoined){h+='<div class="tc-join-joined"><i class="fa-solid fa-check" style="margin-right:5px"></i>JOINED!</div>';}
-  else if(t.type==='free'){h+='<button class="tc-join-btn tc-join-free" onclick="openTourneyJoin(\''+t.id+'\')"><i class="fa-solid fa-gamepad" style="font-size:.85rem"></i>JOIN FREE</button>';}
-  else{h+='<button class="tc-join-btn tc-join-paid" onclick="openTourneyJoin(\''+t.id+'\')"><i class="fa-solid fa-coins" style="color:#FFD700;font-size:.8rem"></i>'+t.entryCoins+' JOIN <i class="fa-solid fa-chevron-right" style="font-size:.62rem"></i></button>';}
-  h+='</div>';
-  if(isCompleted&&t.winners&&t.winners.length>0){
-    h+='<div style="margin-top:14px"><div style="font-size:.65rem;color:rgba(255,255,255,.26);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-weight:700"><i class="fa-solid fa-trophy" style="color:#FFD700;margin-right:5px"></i>Top Winners</div>';
-    t.winners.forEach(function(w){
-      var rc=w.rank===1?'linear-gradient(135deg,#FFD700,#FF9900)':w.rank===2?'linear-gradient(135deg,#C0C0C0,#888)':'linear-gradient(135deg,#CD7F32,#8B4513)';
-      h+='<div class="tc-winner-row"><div class="tc-winner-rank" style="background:'+rc+';color:'+(w.rank===1?'#000':'#fff')+'">'+w.rank+'</div><div style="flex:1"><div style="font-size:.8rem;font-weight:800;color:#fff">'+w.name+'</div><div style="font-size:.62rem;color:rgba(255,255,255,.3)">UID: '+w.uid+' &bull; '+w.kills+' kills</div></div><div style="text-align:right"><div style="font-size:.78rem;font-weight:900;color:#00FF88">'+w.prize+'</div><div style="font-size:.6rem;color:rgba(255,215,0,.55);font-weight:700">'+w.code+'</div></div></div>';
-    });
-    h+='</div>';
-  }
-  h+='</div></div>';
-  return h;
+
+  return '<div class="rv" style="border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#13131e">'
+  +'<div style="position:relative;width:100%;height:140px;background:'+t.bannerGrad+';display:flex;align-items:center;justify-content:center;overflow:hidden">'
+  +'<img src="https://i.postimg.cc/3N06pT44/aa959aa3d8790d3a44f7f20f16adfa01.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;opacity:.6" onerror="this.style.display=\'none\'"/>'
+  +'<div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.8) 0%,transparent 70%)"></div>'
+  +'<div style="position:absolute;top:9px;left:9px;padding:3px 10px;border-radius:50px;background:'+t.tagBg+';border:1px solid '+t.tagClr+';font-size:.6rem;font-weight:900;color:'+t.tagClr+'">'+t.tag+'</div>'
+  +'<div style="position:absolute;top:9px;right:9px;padding:3px 9px;border-radius:50px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);font-size:.62rem;font-weight:800;color:#fff"><i class="fa-solid fa-user" style="font-size:.5rem;margin-right:3px"></i>'+t.mode+'</div>'
+  +(cd&&!isCompleted?'<div style="position:absolute;bottom:9px;right:9px;padding:3px 9px;border-radius:7px;background:rgba(0,0,0,.65);font-size:.65rem;font-weight:900;color:#FFD700"><i class="fa-solid fa-clock" style="font-size:.5rem;margin-right:3px"></i>'+cd+'</div>':'')
+  +'</div>'
+  +'<div style="padding:12px 14px 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap">'
+  +'<span style="padding:3px 11px;border-radius:50px;font-size:.65rem;font-weight:800;color:#00DDFF;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.3)">'+t.mode+'</span>'
+  +'<span style="padding:3px 11px;border-radius:50px;font-size:.65rem;font-weight:800;color:#FF9900;background:rgba(255,150,0,.1);border:1px solid rgba(255,150,0,.3)">'+t.map+'</span>'
+  +'</div>'
+  +'<div style="padding:8px 14px 0;display:flex;align-items:center;gap:9px">'
+  +'<div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#00CC44,#007722);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-gamepad" style="color:#fff;font-size:.8rem"></i></div>'
+  +'<div style="font-size:1rem;font-weight:900;color:#fff">'+t.title+' - <span style="color:rgba(255,255,255,.4);font-size:.85rem">'+t.matchNum+'</span></div>'
+  +'</div>'
+  +'<div style="margin:11px 14px 0;display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;border:1px solid rgba(255,255,255,.08);border-radius:11px;overflow:hidden">'
+  +'<div style="padding:9px 10px;text-align:center">'
+  +'<div style="font-size:.67rem;color:rgba(255,255,255,.3);margin-bottom:3px">DATE &amp; TIME</div>'
+  +'<div style="font-size:.82rem;font-weight:800;color:#fff">'+t.date+'</div>'
+  +'<div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.5)">'+t.time+'</div>'
+  +'</div>'
+  +'<div style="background:rgba(255,255,255,.06)"></div>'
+  +'<div style="padding:9px 10px;text-align:center">'
+  +'<div style="font-size:.67rem;color:var(--or);font-weight:700;margin-bottom:3px;letter-spacing:.5px">PRIZE POOL</div>'
+  +'<div style="font-size:1rem;font-weight:900;color:var(--or)">'+t.prizePool+'</div>'
+  +'</div>'
+  +'<div style="background:rgba(255,255,255,.06)"></div>'
+  +'<div style="padding:9px 10px;text-align:center">'
+  +'<div style="font-size:.67rem;color:var(--or);font-weight:700;margin-bottom:3px;letter-spacing:.5px">PER KILL</div>'
+  +'<div style="font-size:1rem;font-weight:900;color:var(--or)">'+t.perKill.split(' ')[0]+'</div>'
+  +'</div>'
+  +'</div>'
+  +'<div style="padding:10px 14px 14px">'
+  +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">'
+  +'<div style="font-size:.8rem;font-weight:900;color:#fff">'+t.slots+'/'+t.maxSlots+'</div>'
+  +(isCompleted
+    ?'<div style="padding:6px 16px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:.75rem;font-weight:800;color:rgba(255,255,255,.3)">ENDED</div>'
+    :alreadyJoined
+      ?'<div style="padding:6px 16px;border-radius:9px;background:rgba(0,200,68,.15);border:1px solid rgba(0,200,68,.4);font-size:.75rem;font-weight:800;color:#00FF66"><i class="fa-solid fa-check" style="margin-right:4px"></i>JOINED</div>'
+      :'<button onclick="openTourneyJoin(\''+t.id+'\')" style="padding:9px 20px;border-radius:9px;background:linear-gradient(135deg,#00CC44,#007722);border:none;color:#fff;font-family:\'Exo 2\',sans-serif;font-weight:900;font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 15px rgba(0,200,68,.4);letter-spacing:.5px"><i class="fa-solid fa-coins" style="font-size:.7rem;color:#FFD700"></i>'+(t.entry>0?t.entry+' JOIN':'FREE JOIN')+'<i class="fa-solid fa-chevron-right" style="font-size:.6rem"></i></button>'
+  )
+  +'</div>'
+  +'<div style="height:5px;background:rgba(255,255,255,.07);border-radius:50px;overflow:hidden">'
+  +'<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,'+(pct>=80?'#FF4400':'#00CC44')+','+(pct>=80?'#FF6600':'#00FF88')+');border-radius:50px;transition:width .5s"></div>'
+  +'</div>'
+  +'</div>'
+  +'</div>';
 }
 
 function rndrTournaments(){
   var el=document.getElementById('tourney-cards');if(!el)return;
-  var filtered=TOURNEY_DATA.filter(function(t){return t.status===currentTourneyTab});
+  var tab=currentTourneyTab;
+  var filtered=TOURNEY_DATA.filter(function(t){
+    if(tab==='ongoing')return t.status==='ongoing';
+    if(tab==='upcoming')return t.status==='upcoming';
+    if(tab==='results')return t.status==='results';
+    return true;
+  });
   if(filtered.length===0){
-    var msgs={ongoing:'No live matches right now. Check back at 6 PM!',upcoming:'No upcoming matches scheduled yet.',results:'No results yet. Check after tonight!'};
-    el.innerHTML='<div style="text-align:center;padding:50px 20px;color:rgba(255,255,255,.25);font-size:.88rem"><i class="fa-solid fa-gamepad" style="font-size:2.5rem;display:block;margin-bottom:12px;opacity:.18"></i>'+(msgs[currentTourneyTab]||'No matches')+'</div>';
+    el.innerHTML='<div style="text-align:center;padding:40px 20px;color:rgba(255,255,255,.28);font-size:.88rem"><i class="fa-solid fa-gamepad" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.3"></i>No matches in this tab</div>';
   }else{
     el.innerHTML=filtered.map(buildTourneyCard).join('');
-    if(typeof gsap!=='undefined'){el.querySelectorAll('.tc-wrap').forEach(function(c,i){gsap.fromTo(c,{opacity:0,y:18},{opacity:1,y:0,duration:.32,delay:i*.09,ease:'power2.out'})});}
   }
+  // Start countdown refresher
   clearInterval(window._tCountdownIv);
   window._tCountdownIv=setInterval(function(){
-    filtered.forEach(function(t){var cdEl=document.getElementById('tc-cd-'+t.id);if(cdEl){var cd=getCountdown(t.date,t.time);cdEl.textContent=cd?cd:'STARTING SOON';}});
+    if(document.getElementById('s-tournaments').classList.contains('active'))rndrTournaments();
   },1000);
-  clearInterval(_tSlotIv);
-  if(currentTourneyTab!=='results'){
-    _tSlotIv=setInterval(function(){
-      filtered.forEach(function(t){
-        if(Math.random()<0.28){t.slots++;var e2=document.getElementById('tc-slots-'+t.id);var isU=t.maxSlots>9999;if(e2)e2.innerHTML=t.slots+(isU?'/&#8734;':'/'+t.maxSlots);}
-      });
-    },3200);
-  }
 }
 
 function setTourneyTab(tab){
   currentTourneyTab=tab;
   ['ongoing','upcoming','results'].forEach(function(t){
-    var btn=document.getElementById('ttab-'+t);if(!btn)return;
-    if(t===tab){btn.style.background='rgba(0,200,68,.22)';btn.style.color='#00FF66';btn.style.fontWeight='900';}
-    else{btn.style.background='transparent';btn.style.color='rgba(255,255,255,.38)';btn.style.fontWeight='700';}
+    var btn=document.getElementById('ttab-'+t);
+    if(!btn)return;
+    if(t===tab){
+      btn.style.background='rgba(0,200,68,.2)';btn.style.color='#00FF66';btn.style.fontWeight='800';
+    }else{
+      btn.style.background='transparent';btn.style.color='rgba(255,255,255,.45)';btn.style.fontWeight='700';
+    }
   });
   rndrTournaments();
 }
 
 function openTourneyJoin(id){
   currentTourneyId=id;
-  var t=TOURNEY_DATA.find(function(x){return x.id===id});if(!t)return;
-  var btn=document.getElementById('tj-confirm-btn');
-  document.getElementById('tj-title').textContent=t.matchNum+' - '+t.mode+' '+t.map;
-  document.getElementById('tj-info').innerHTML='<i class="fa-solid fa-trophy" style="color:#FFD700;margin-right:4px"></i>Prize: '+t.prizePool+'&nbsp;&nbsp;<i class="fa-solid fa-crosshairs" style="color:var(--or);margin-right:4px"></i>Per Kill: '+t.perKillRs;
-  document.getElementById('tj-paid-warn').style.display=t.entryCoins>0?'block':'none';
-  if(t.entryCoins>0)document.getElementById('tj-entry-cost').innerHTML=t.entryCoins.toLocaleString()+' Coins ('+t.entryRs+')';
-  if(btn){btn.style.background=t.type==='free'?'linear-gradient(135deg,#00DD55,#00AA33)':'linear-gradient(135deg,#FF8800,#FF5500)';btn.style.boxShadow=t.type==='free'?'0 6px 22px rgba(0,200,68,.5)':'0 6px 22px rgba(255,102,0,.5)';}
-  document.getElementById('tj-uid').value='';document.getElementById('tj-name').value='';
+  var t=TOURNEY_DATA.find(function(x){return x.id===id});
+  if(!t)return;
+  var titleEl=document.getElementById('tj-title');
+  var infoEl=document.getElementById('tj-info');
+  var warnEl=document.getElementById('tj-paid-warn');
+  var costEl=document.getElementById('tj-entry-cost');
+  if(titleEl)titleEl.textContent='Join '+t.matchNum;
+  if(infoEl)infoEl.textContent=t.title+' • '+t.mode+' • '+t.map;
+  if(warnEl)warnEl.style.display=(t.entry>0?'block':'none');
+  if(costEl&&t.entry>0)costEl.textContent=t.entry.toLocaleString()+' Coins (₹'+(t.entry*0.01).toFixed(0)+')';
+  document.getElementById('tj-uid').value='';
+  document.getElementById('tj-name').value='';
   openM('tourney-join-modal');
 }
 
 function confirmTourneyJoin(){
   var uid=document.getElementById('tj-uid').value.trim();
   var name=document.getElementById('tj-name').value.trim();
-  if(!uid||uid.length<6){toast('Valid FF UID enter karo (min 6 digits)!','warn','fa-exclamation');return}
-  if(!name||name.length<2){toast('In-game name enter karo!','warn','fa-exclamation');return}
-  var t=TOURNEY_DATA.find(function(x){return x.id===currentTourneyId});if(!t)return;
-  if(t.entryCoins>0&&S.coins<t.entryCoins){toast('Insufficient Coins! Pehle earn karo.','err','fa-coins');closeM('tourney-join-modal');setTimeout(function(){go('faucet')},700);return;}
-  if(t.entryCoins>0){S.coins-=t.entryCoins;sv();updBal();}
+  if(!uid||!name){toast('UID aur Name dono bharo!','warn','fa-exclamation');return}
+  var t=TOURNEY_DATA.find(function(x){return x.id===currentTourneyId});
+  if(!t)return;
+  if(t.entry>0&&S.coins<t.entry){toast('Insufficient Coins!','err','fa-coins');go('faucet');closeM('tourney-join-modal');return}
+  if(t.entry>0){S.coins-=t.entry;sv();updBal();}
+  // Save join
   var joined=JSON.parse(localStorage.getItem('me_joined_tourneys')||'[]');
   if(joined.indexOf(t.id)===-1)joined.push(t.id);
   localStorage.setItem('me_joined_tourneys',JSON.stringify(joined));
-  localStorage.setItem('me_ff_'+t.id,JSON.stringify({uid:uid,name:name,ts:Date.now()}));
-  t.slots=Math.min(t.maxSlots>9999?9999999:t.maxSlots,t.slots+1);
+  localStorage.setItem('me_ff_uid_'+t.id,JSON.stringify({uid:uid,name:name}));
+  t.slots=Math.min(t.maxSlots,t.slots+1);
   closeM('tourney-join-modal');
-  launchConfetti(window.innerWidth/2,window.innerHeight*.4,70);showMRain();
-  toast('Entry Confirmed! UID '+uid+' registered! Good luck!','ok','fa-gamepad');
-  setTimeout(function(){rndrTournaments()},350);
+  launchConfetti(window.innerWidth/2,window.innerHeight*.4,60);
+  toast('Entry Confirmed! UID: '+uid+' registered ✅','ok','fa-gamepad');
+  setTimeout(function(){rndrTournaments()},300);
 }
 
+// Admin winner post (hidden admin button in FAQ/withdraw section)
 var adminPass='masti123';
-function openAdminTourney(){var p=prompt('Admin Password:');if(p===adminPass)openM('admin-tourney-modal');else if(p!==null)toast('Wrong password!','err','fa-lock');}
+function openAdminTourney(){
+  var p=prompt('Admin Password:');
+  if(p===adminPass)openM('admin-tourney-modal');
+  else toast('Wrong password!','err','fa-lock');
+}
 function adminPostWinner(){
-  var uid=(document.getElementById('admin-winner-uid').value||'').trim();
-  var name=(document.getElementById('admin-winner-name').value||'').trim();
+  var uid=document.getElementById('admin-winner-uid').value.trim();
+  var name=document.getElementById('admin-winner-name').value.trim();
   var coins=parseInt(document.getElementById('admin-prize-coins').value)||0;
-  var code=(document.getElementById('admin-redeem-code').value||'').trim();
-  var matchId=(document.getElementById('admin-match-id').value||'').trim();
+  var code=document.getElementById('admin-redeem-code').value.trim();
   if(!uid||!name||!coins){toast('All fields required!','warn','fa-exclamation');return}
+  // Save winner
   var winners=JSON.parse(localStorage.getItem('me_winners')||'[]');
-  winners.unshift({uid:uid,name:name,coins:coins,code:code,matchId:matchId,ts:Date.now()});
+  winners.unshift({uid:uid,name:name,coins:coins,code:code,ts:Date.now()});
   localStorage.setItem('me_winners',JSON.stringify(winners));
-  var myUID='';
-  TOURNEY_DATA.forEach(function(t){var d=localStorage.getItem('me_ff_'+t.id);if(d)try{var j=JSON.parse(d);if(j.uid===uid)myUID=j.uid}catch(e){}});
+  // Check if current user won
+  var savedUID='';
+  TOURNEY_DATA.forEach(function(t){
+    var d=localStorage.getItem('me_ff_uid_'+t.id);
+    if(d)try{var j=JSON.parse(d);if(j.uid===uid)savedUID=j.uid}catch(e){}
+  });
   closeM('admin-tourney-modal');
-  launchConfetti(window.innerWidth/2,window.innerHeight*.3,100);showMRain();
-  toast(name+' wins '+coins.toLocaleString()+' Coins! '+matchId,'ok','fa-trophy');
-  if(myUID===uid){
+  launchConfetti(window.innerWidth/2,window.innerHeight*.3,100);
+  showMRain();
+  toast('Winner announced: '+name+' won '+coins.toLocaleString()+' Coins!','ok','fa-trophy');
+  if(savedUID===uid){
     S.coins+=coins;sv();updBal();
     setTimeout(function(){
-      var popup=document.createElement('div');
-      popup.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.93);display:flex;align-items:center;justify-content:center;padding:20px';
-      popup.innerHTML='<div style="background:linear-gradient(145deg,#12121e,#0a0a14);border:2px solid #FFD700;border-radius:22px;padding:30px 24px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 70px rgba(255,215,0,.5)">'
-      +'<div style="font-size:2.8rem;margin-bottom:8px">&#127942;</div>'
-      +'<div style="font-size:1.4rem;font-weight:900;color:#FFD700;margin-bottom:4px">CONGRATULATIONS!</div>'
-      +'<div style="font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:16px">'+name+', you won '+matchId+'!</div>'
-      +'<div style="padding:14px;border-radius:14px;background:rgba(255,215,0,.08);border:1.5px solid rgba(255,215,0,.3);margin-bottom:14px">'
-      +'<div style="font-size:1.6rem;font-weight:900;color:#FFD700">+'+coins.toLocaleString()+' Coins</div>'
-      +'<div style="font-size:.78rem;color:rgba(255,255,255,.38);margin-top:3px">Added to your wallet</div>'
-      +(code?'<div style="margin-top:10px;padding:8px;border-radius:9px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.25)"><div style="font-size:.62rem;color:rgba(255,255,255,.32);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">FF Redeem Code</div><div style="font-size:1rem;font-weight:900;color:#00FF88;letter-spacing:1px">'+code+'</div></div>':'')
+      var popup='<div style="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:20px">'
+      +'<div style="background:linear-gradient(145deg,#12121e,#0e0e18);border:2px solid #FFD700;border-radius:20px;padding:28px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 60px rgba(255,215,0,.4)">'
+      +'<div style="font-size:3rem;margin-bottom:10px">🏆</div>'
+      +'<div style="font-size:1.3rem;font-weight:900;color:#FFD700;margin-bottom:5px">CONGRATULATIONS!</div>'
+      +'<div style="font-size:.95rem;color:#fff;margin-bottom:8px">'+name+', you won!</div>'
+      +'<div style="padding:12px;border-radius:12px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);margin-bottom:12px">'
+      +'<div style="font-size:1.4rem;font-weight:900;color:#FFD700">+'+coins.toLocaleString()+' Coins</div>'
+      +(code?'<div style="margin-top:6px;font-size:.85rem;color:#fff;font-weight:700">Redeem Code: <span style="color:#00FF66">'+code+'</span></div>':'')
       +'</div>'
-      +'<button onclick="this.closest(\'[style*=fixed]\').remove()" style="padding:13px 32px;border-radius:50px;background:linear-gradient(135deg,#FFD700,#FF9900);border:none;color:#000;font-weight:900;font-size:.95rem;cursor:pointer;font-family:\'Exo 2\',sans-serif;letter-spacing:.5px">CLAIM NOW!</button>'
-      +'</div>';
-      document.body.appendChild(popup);
-      launchConfetti(window.innerWidth/2,window.innerHeight*.3,130);showMRain();
+      +'<button onclick="this.parentElement.parentElement.parentElement.remove()" style="padding:11px 28px;border-radius:50px;background:linear-gradient(135deg,#FFD700,#FF9900);border:none;color:#000;font-weight:900;font-size:.9rem;cursor:pointer;font-family:\'Exo 2\',sans-serif">CLAIM NOW!</button>'
+      +'</div></div>';
+      document.body.insertAdjacentHTML('beforeend',popup);
+      launchConfetti(window.innerWidth/2,window.innerHeight*.3,120);
     },500);
   }
 }
 
 
+
+// ── EARN CAROUSEL DATA + RENDER ───────────────────────────
+var EARN_CARDS=[
+  {sec:'faucet',    icon:'fa-faucet',     ic2:'fa-coins',      title:'FAUCET',      sub:'CLAIM EVERY 5 MINS', pill:'Free Coins',    badge:'FREE', badgeBg:'#00C853',
+   c1:'#FF6B00',c2:'#CC3D00',c3:'#8B2200', glow1:'#FF8C00',glow2:'#FFD700',txt:'#FFD180'},
+  {sec:'casino',    icon:'fa-dice',       ic2:'fa-gem',         title:'CASINO',      sub:'WIN UP TO 50x',      pill:'Play Now',      badge:'50x',  badgeBg:'#FF8F00',
+   c1:'#7C00CC',c2:'#4A0090',c3:'#200050', glow1:'#CC66FF',glow2:'#9933FF',txt:'#E0AAFF'},
+  {sec:'trading',   icon:'fa-chart-line', ic2:'fa-indian-rupee-sign', title:'TRADING', sub:'2× RETURNS DAILY',  pill:'Trade Now',     badge:'LIVE', badgeBg:'#00C853',
+   c1:'#007A30',c2:'#005520',c3:'#002210', glow1:'#00FF88',glow2:'#00CC55',txt:'#A5FFD6'},
+  {sec:'tasks',     icon:'fa-list-check', ic2:'fa-star',        title:'TASKS',       sub:'COMPLETE & EARN',    pill:'Daily List',    badge:'NEW',  badgeBg:'#00C853',
+   c1:'#0050CC',c2:'#003080',c3:'#001040', glow1:'#5599FF',glow2:'#0066FF',txt:'#BDD7FF'},
+  {sec:'offers',    icon:'fa-gift',       ic2:'fa-tag',         title:'OFFERS WALL', sub:'DAILY GIFT REWARDS', pill:'Grab Offers',   badge:'',     badgeBg:'',
+   c1:'#CC0060',c2:'#880040',c3:'#440020', glow1:'#FF44AA',glow2:'#FF0077',txt:'#FFB3D9'},
+  {sec:'tournaments',icon:'fa-gamepad',  ic2:'fa-bolt',        title:'TOURNAMENT',  sub:'6PM FREE • 8PM ₹5',  pill:'Join Match',    badge:'FF',   badgeBg:'#D32F2F',
+   c1:'#006600',c2:'#004400',c3:'#002200', glow1:'#33FF66',glow2:'#00CC44',txt:'#AAFFCC'},
+  {sec:'leaderboard',icon:'fa-trophy',   ic2:'fa-crown',       title:'LEADERBOARD', sub:'TOP EARNERS',        pill:'See Ranks',     badge:'',     badgeBg:'',
+   c1:'#BB6600',c2:'#884400',c3:'#442200', glow1:'#FFB300',glow2:'#FF8800',txt:'#FFD980'},
+  {sec:'referrals', icon:'fa-users',      ic2:'fa-link',        title:'REFERS',      sub:'99% COMMISSION',     pill:'Invite Now',    badge:'',     badgeBg:'',
+   c1:'#007799',c2:'#005577',c3:'#002244', glow1:'#00CCEE',glow2:'#0099CC',txt:'#AAEEFF'},
+  {sec:'withdraw',  icon:'fa-wallet',     ic2:'fa-arrow-up',    title:'WITHDRAW',    sub:'INSTANT PAYOUT',     pill:'Get Money',     badge:'',     badgeBg:'',
+   c1:'#AA4400',c2:'#772200',c3:'#441100', glow1:'#FF7733',glow2:'#FF5500',txt:'#FFCCAA'},
+  {sec:'gallery',   icon:'fa-fire',       ic2:'fa-play',        title:'GALLERY',     sub:'HOT VIDEOS 🔥',      pill:'Watch & Earn',  badge:'18+',  badgeBg:'#000',
+   c1:'#AA0000',c2:'#770000',c3:'#330000', glow1:'#FF3333',glow2:'#CC0000',txt:'#FFB3B3'},
+  {sec:'faucet',    icon:'fa-rotate',     ic2:'fa-coins',       title:'LUCKY SPIN',  sub:'WIN 10,000 COINS',   pill:'Spin Now',      badge:'HOT',  badgeBg:'#D32F2F',
+   c1:'#6600CC',c2:'#440088',c3:'#220044', glow1:'#AA44FF',glow2:'#8800FF',txt:'#DDB3FF'},
+  {sec:'__bot__',   icon:'fa-robot',      ic2:'fa-comment',     title:'SUPPORT AI',  sub:'24/7 INSTANT HELP',  pill:'Ask Me',        badge:'AI',   badgeBg:'#6A1B9A',
+   c1:'#330060',c2:'#220040',c3:'#110020', glow1:'#9944FF',glow2:'#6600CC',txt:'#CCAAFF'}
+];
+
+function rndrEarnCarousel(){
+  var el=document.getElementById('earn-carousel');
+  if(!el||el.children.length>0)return;
+
+  EARN_CARDS.forEach(function(c,i){
+    var d=document.createElement('div');
+    d.className='ec-swipe-card';
+    d.style.cssText=
+      'flex-shrink:0;width:172px;border-radius:22px;cursor:pointer;position:relative;'
+      +'scroll-snap-align:start;overflow:hidden;'
+      +'background:linear-gradient(155deg,'+c.c1+' 0%,'+c.c2+' 55%,'+c.c3+' 100%);'
+      +'box-shadow:0 0 30px '+c.glow1+'55,0 6px 24px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.08);'
+      +'transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s';
+
+    // Unique ID for GSAP targeting
+    var uid='ec-'+i;
+    d.id=uid;
+
+    d.innerHTML=
+      // shine sweep overlay
+      '<div class="ec-shine-sweep" style="position:absolute;top:0;left:-100%;width:50%;height:100%;'
+        +'background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);'
+        +'pointer-events:none;z-index:10;animation:ecSweep '+(3+i*.4)+'s ease-in-out infinite;animation-delay:'+(.5+i*.3)+'s"></div>'
+      // top radial glow
+      +'<div style="position:absolute;top:-30%;left:10%;width:80%;height:70%;'
+        +'background:radial-gradient(ellipse,'+c.glow1+'33,transparent 65%);pointer-events:none;z-index:0"></div>'
+      // bottom glow
+      +'<div style="position:absolute;bottom:-25%;left:5%;width:90%;height:60%;'
+        +'background:radial-gradient(ellipse,'+c.glow2+'2a,transparent 60%);pointer-events:none;z-index:0;filter:blur(8px)"></div>'
+      // badge
+      +(c.badge
+        ?'<div style="position:absolute;top:9px;right:9px;z-index:8;padding:3px 9px;border-radius:7px;'
+          +'font-size:.5rem;font-weight:900;letter-spacing:.8px;color:#fff;font-family:\'Exo 2\',sans-serif;'
+          +'background:'+c.badgeBg+';box-shadow:0 2px 8px rgba(0,0,0,.4)">'+c.badge+'</div>'
+        :'')
+      // ICON AREA — no overflow hidden, big open area
+      +'<div style="height:115px;display:flex;align-items:center;justify-content:center;position:relative;z-index:4">'
+        // outer halo ring
+        +'<div style="position:absolute;width:90px;height:90px;border-radius:50%;'
+          +'border:1.5px solid '+c.glow1+'55;box-shadow:0 0 25px '+c.glow1+'44,inset 0 0 20px '+c.glow1+'22"></div>'
+        // inner glow circle
+        +'<div style="width:74px;height:74px;border-radius:50%;position:relative;z-index:2;'
+          +'background:radial-gradient(circle at 35% 35%,'+c.glow1+'44,'+c.glow2+'22 50%,rgba(0,0,0,.35) 100%);'
+          +'border:2px solid '+c.glow1+'77;'
+          +'box-shadow:0 0 22px '+c.glow1+'88,0 0 45px '+c.glow1+'44,inset 0 2px 0 rgba(255,255,255,.2);'
+          +'display:flex;align-items:center;justify-content:center;" id="ico-'+i+'">'
+          +'<i class="fa-solid '+c.icon+'" '
+            +'style="font-size:1.85rem;'
+            +'color:'+c.txt+';'
+            +'text-shadow:0 0 15px '+c.glow1+',0 0 30px '+c.glow2+',0 0 5px rgba(255,255,255,.5);'
+            +'filter:drop-shadow(0 0 8px '+c.glow1+')"></i>'
+        +'</div>'
+        // secondary floating icon
+        +'<div style="position:absolute;bottom:14px;right:28px;z-index:3;opacity:.65">'
+          +'<i class="fa-solid '+c.ic2+'" '
+            +'style="font-size:.75rem;color:'+c.glow1+';'
+            +'text-shadow:0 0 8px '+c.glow1+',0 0 16px '+c.glow2+'"></i>'
+        +'</div>'
+      +'</div>'
+      // text body
+      +'<div style="padding:2px 14px 16px;position:relative;z-index:4">'
+        +'<div style="font-size:.92rem;font-weight:900;color:#fff;letter-spacing:.5px;'
+          +'text-shadow:0 2px 10px rgba(0,0,0,.7);margin-bottom:3px;font-family:\'Exo 2\',sans-serif">'+c.title+'</div>'
+        +'<div style="font-size:.56rem;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:10px;'
+          +'letter-spacing:.3px;font-family:\'Exo 2\',sans-serif">'+c.sub+'</div>'
+        +'<div style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:50px;'
+          +'background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);'
+          +'font-size:.6rem;font-weight:800;color:#fff;font-family:\'Exo 2\',sans-serif;letter-spacing:.4px">'
+          +'<i class="fa-solid '+c.icon+'" style="font-size:.58rem;color:'+c.glow1+'"></i>'
+          +c.pill
+        +'</div>'
+      +'</div>';
+
+    d.onclick=function(){if(c.sec==='__bot__'){openBot();return;}hicClick(d,c.sec);};
+
+    // Hover effects
+    d.addEventListener('mouseenter',function(){
+      d.style.transform='translateY(-10px) scale(1.05)';
+      d.style.boxShadow='0 0 50px '+c.glow1+'88,0 20px 50px rgba(0,0,0,.6),0 0 0 1.5px '+c.glow1+'66';
+      var ico=document.getElementById('ico-'+i);
+      if(ico){ico.style.transform='scale(1.18) rotate(5deg)';ico.style.boxShadow='0 0 35px '+c.glow1+',0 0 70px '+c.glow2;}
+    });
+    d.addEventListener('mouseleave',function(){
+      d.style.transform='translateY(0) scale(1)';
+      d.style.boxShadow='0 0 30px '+c.glow1+'55,0 6px 24px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.08)';
+      var ico=document.getElementById('ico-'+i);
+      if(ico){ico.style.transform='scale(1) rotate(0deg)';ico.style.boxShadow='0 0 22px '+c.glow1+'88,0 0 45px '+c.glow1+'44,inset 0 2px 0 rgba(255,255,255,.2)';}
+    });
+
+    el.appendChild(d);
+
+    // GSAP entrance
+    if(typeof gsap!=='undefined'){
+      d.style.opacity='0';d.style.transform='translateY(30px) scale(.82)';
+      gsap.to(d,{opacity:1,y:0,scale:1,duration:.45,delay:i*.055,ease:'back.out(1.6)'});
+      // Continuous icon pulse
+      var ico=document.getElementById('ico-'+i);
+      if(ico)gsap.to(ico,{boxShadow:'0 0 38px '+c.glow1+', 0 0 80px '+c.glow2+'88,inset 0 2px 0 rgba(255,255,255,.2)',
+        duration:1.8,yoyo:true,repeat:-1,ease:'sine.inOut',delay:i*.12});
+    }
+  });
+
+  // Scroll dots
+  var dots=document.getElementById('earndots');
+  if(dots&&dots.children.length===0){
+    var total=Math.ceil(EARN_CARDS.length/2);
+    for(var j=0;j<total;j++){
+      var dot=document.createElement('div');
+      dot.style.cssText='width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);transition:all .22s;flex-shrink:0';
+      dots.appendChild(dot);
+    }
+    el.addEventListener('scroll',function(){
+      var idx=Math.round(el.scrollLeft/184/2);
+      Array.from(dots.children).forEach(function(dd,i){
+        dd.style.background=i===idx?'var(--or)':'rgba(255,255,255,.22)';
+        dd.style.width=i===idx?'18px':'6px';
+        dd.style.borderRadius='50px';
+      });
+    });
+    if(dots.children[0])dots.children[0].style.cssText='width:18px;height:6px;border-radius:50px;background:var(--or);transition:all .22s';
+  }
+}
+
+// ── CHATBOT — 1000x GOD LEVEL ────────────────────────────
+var botOpen=false;
+var botHistory=[];
+var botUsedIdxMap={};
+var botMsgCount=0;
+
+function openBot(){
+  var m=document.getElementById('bot-modal');
+  if(m){
+    m.style.display='flex';
+    botOpen=true;
+    if(typeof gsap!=='undefined'){
+      var box=m.firstElementChild;
+      gsap.fromTo(box,{y:100,opacity:0},{y:0,opacity:1,duration:.38,ease:'back.out(1.5)'});
+    }
+    setTimeout(function(){var i=document.getElementById('bot-input');if(i)i.focus()},420);
+  }
+}
+function closeBot(){
+  var m=document.getElementById('bot-modal');
+  if(!m)return;
+  if(typeof gsap!=='undefined'){
+    var box=m.firstElementChild;
+    gsap.to(box,{y:100,opacity:0,duration:.22,ease:'power2.in',onComplete:function(){m.style.display='none';botOpen=false}});
+  }else{m.style.display='none';botOpen=false}
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&botOpen)closeBot()});
+
+// ─── 1000x RESPONSE DATABASE ────────────────────────────
+var BDATA={
+  coin:[
+    '💰 Sun bhai, <b>1 Coin = ₹0.01</b> — ekdum exact! 100 coins = ₹1, 1000 coins = ₹10, 10,000 coins = ₹100! Jackpot 999 aaya toh seedha <b>10,000 coins = ₹100 bonus!</b> Daily grind karo — mahine mein ₹500+ pakka!',
+    '🪙 <b>Coin math:</b><br>500 coins = ₹5 | 5,000 = ₹50 (UPI min) | 10,000 = ₹100 | 50,000 = ₹500!<br>Faucet + Casino + Referral — teen cheez karo, ₹200+ daily possible!',
+    'Arre yaar — <b>₹0.01 per coin</b>! Chhota lagta hai? Ek baar Jackpot 999 aaya toh seedha <b>10,000 bonus coins = ₹100 free!</b> Plus referrals se passive stack hota rehta hai!',
+    '💡 Coin value = <b>₹0.01</b>. Volume game hai! 10 active referrals, roz 500 coins kamaayein → tujhe <b>495 coins passive daily</b> (99% commission)! Soye soye ₹49.5/day! 😴💰',
+    'Real talk: <b>1 coin = 1 paisa</b>. Lucky Spin mein <b>10,000 coins ek baar mein</b> jeet sakte ho! Casino Crash mein 10x possible! Smart kheloge toh ₹1000+ mahine mein pakka!'
+  ],
+  faucet:[
+    '💧 <b>Faucet = Free Money Machine!</b> Har <b>5 minute</b> mein CLAIM dabao — 100–999 coins random! Exactly <b>999 aaya → JACKPOT! +10,000 bonus coins = ₹100!</b> Roz 12 baar claim = minimum ₹12 guaranteed!',
+    '🔥 Faucet pro tips:<br>1️⃣ Har 5 min precisely claim karo<br>2️⃣ Streak maintain karo → HOT badge<br>3️⃣ Jackpot 999 = ₹100 bonus<br>4️⃣ 12 claims/day = ₹12–₹120<br>Compound karo — roz claim + casino + tasks!',
+    'Faucet mein cheat code = <b>consistency!</b> 😄 Roz claim karo, streak badge + jackpot chance! Number random hai — aaj shayad <b>999 tera number ho!</b> 🎰',
+    '💧 Faucet breakdown:<br>⏰ Timer: 5 min | 🎰 Range: 100–999 coins | 🏆 Jackpot 999 = +10,000 coins | 🔥 Max 12+ claims/day | 💰 ₹12–₹120 from faucet alone!',
+    'Yaar faucet itna easy — <b>baby bhi kar le!</b> 😂 Click, wait 5 min, click again. Ek user ne ek din mein <b>3 baar 999</b> nikala — = ₹300 free sirf faucet se!'
+  ],
+  withdraw:[
+    '💸 <b>Withdrawal Methods (Sab INSTANT):</b><br>🏦 UPI — ₹50 min | 📱 Paytm — ₹50 min | 🏛️ Bank — ₹100 min | ₿ Crypto — $0.50 min | 🎮 Google Play — ₹50 | 🛒 Amazon — ₹50 | 🔫 Free Fire — ₹70 min<br>Sab real, sab instant!',
+    '🚀 <b>Fastest = UPI!</b> 5000 coins → Withdraw section → UPI select → amount → confirm → <b>3 min mein bank mein paisa!</b> Genuine instant process!',
+    'Withdraw steps:<br>1️⃣ 5000+ coins jama karo<br>2️⃣ Withdraw section<br>3️⃣ UPI select (recommended)<br>4️⃣ Amount + UPI ID<br>5️⃣ Confirm → <b>₹50 seedha bank!</b>',
+    '💡 UPI fastest, Crypto best for international, FF diamonds direct top-up! Amazon/Google Play bhi popular hain gamers mein. Minimum ₹50 se!',
+    'Real hai kya? 😂 Haan bhai! <b>Recent Winners section</b> dekho — Rahul D. ₹50, Priya M. ₹100 — real names, real payments! Tu bhi try kar!'
+  ],
+  tournament:[
+    '🎮 <b>Aaj ka Tournament:</b><br>🕕 <b>6:00 PM — FREE ENTRY!</b><br>• Bermuda Solo | 48 slots | ₹2,000 prize pool | ₹2/kill (200 coins)<br>🕗 <b>8:00 PM — PAID ₹5 (500 coins)</b><br>• 50 slots | ₹5,000 prize pool | ₹5/kill (500 coins)<br>Register karo — FF UID chahiye!',
+    '🏆 6 PM = FREE, koi risk nahi! 8 PM mein ₹5 lagao → jeet gaye toh <b>₹5000 pool share</b>! Per kill ₹5 alag se. Ek acchi game = ₹50–₹200 easily!',
+    '🎯 <b>Tournament tips:</b><br>1️⃣ Good landing spot<br>2️⃣ Early kills = more coins<br>3️⃣ 6 PM free mein practice<br>4️⃣ 8 PM paid mein serious khelo<br>5️⃣ Results section mein winner announced!<br>Aaj 6 PM mat chuko!',
+    '🔥 Register easy — Tournament section, match choose, <b>FF UID + Name</b> daalo, FREE join ya paid coins deduct. Winner = coins + cash! Real deal bhai!',
+    'Per-kill earnings: 6 PM = ₹2/kill (200 coins), 8 PM = ₹5/kill (500 coins)! <b>10 kills = ₹50 extra</b> sirf kills se! Plus winner prize alag. 6 PM FREE — join abhi!'
+  ],
+  gallery:[
+    '🔥 <b>Gallery = India ki hottest 18+ platform!</b> Ek video dekhne pe <b>500 coins = ₹5 earn!</b> Free preview available — full unlock mein coins lagte hain. Sidebar se Gallery! 18+ only.',
+    '😏 Aye aye! Tujhe Gallery chahiye lagta hai! 😂🔥 <b>Premium exclusive content</b> — free preview + paid unlock. Watch karo = <b>500 coins earn!</b> Entertainment + earning = double benefit! Sidebar se Gallery open kar!',
+    '🔥 <b>Gallery formula:</b><br>1 video = 500 coins = ₹5 | 10 videos = ₹50 | entertainment FREE!<br>Unlock → watch → earn wapas — mast cycle! 😄',
+    '😜 Oho yeh sawal! 😂 Gallery mein <b>50+ exclusive videos</b> locked! Free preview → coins invest → watch → <b>500 coins per video</b> wapas! 18+ confirm pehle!',
+    '😂 Tera mann kahan ja raha hai bhai! Seedha Gallery section kholo sidebar se — <b>hot content + 500 coins per video earn!</b> Entertainment FREE, coins bhi — kya deal! 🔥',
+    '🌶️ Lagta hai Gallery ka interest hai! 😏 <b>18+ premium section hai</b> — free preview se start karo, phir unlock karo coins se. <b>500 coins per video</b> milte hain watch karne pe! Sidebar mein Gallery dhundo!',
+    '🤣 Bhai seedha Gallery mein ghuso — <b>500 coins per video milte hain!</b> Dekhoge bhi kamaoge bhi! India ka sabse mast deal! 😂🔥 18+ age confirm karo pehle!'
+  ],
+  casino:[
+    '🎲 <b>Casino (10+ games):</b><br>💥 Crash — Multiplier badhta, sahi time cashout | 💣 Mines — Safe tiles | 🎰 Slots | 🎡 Plinko | 🃏 Blackjack | 🎲 Roulette<br>Coins bet karo, <b>10x tak win!</b>',
+    '🚀 <b>Casino strategy:</b><br>1️⃣ Crash = 1.5x pe cashout consistently<br>2️⃣ Mines = 3-4 tiles safe, cashout<br>3️⃣ Roulette = even/odd<br>4️⃣ Never all-in!<br>5️⃣ 30% balance rule<br>Smart players ₹200+/day casino se!',
+    '🎰 <b>Crash game sabse popular!</b> Multiplier 1x se 50x+ tak jaa sakta hai! Sahi time cashout — greed mat karo! 1.5–2x consistent = steady growth.',
+    '💡 Lucky Spin bhi Casino connected — ek spin mein <b>10,000 coins possible!</b> Responsible gambling karo — limits set karo!',
+    'Games: Crash, Mines, Plinko, Roulette, Blackjack, Slots, WoF, Dolphin, Sweet Rush, Olympus — <b>10+ games,</b> sab alag style, skill + luck!'
+  ],
+  referral:[
+    '👥 <b>Referral = Best Passive Income!</b><br>Link share karo → dost join kare → unke earnings ka <b>99% TUJHE!</b><br>10 active friends = ₹50–500/day passive! Referral section mein link hai!',
+    '🔥 <b>Math:</b> 1 active friend ₹10/day earns → tujhe ₹9.9/day | 10 = ₹99/day | 50 = ₹495/day!<br>Soye soye paisa! 😴💰 India mein sabse zyada 99% commission!',
+    '💡 <b>Strategy:</b> WhatsApp groups, Instagram status, "free mein kamao" angle! 5 active referrals → lifetime passive. Referral = best 5-minute investment!',
+    'Koi cap nahi — unlimited refer! 99% direct, no hidden cuts! Jitne active friends, utna passive!',
+    '🤑 Ek bande ne 50 friends refer kiye → woh sab roz faucet claim → usse <b>₹200+ passive daily bina kuch kiye!</b> TU bhi kar sakta hai!'
+  ],
+  trading:[
+    '📈 <b>Trading:</b> Chart dekho, <b>UP ya DOWN</b> predict karo, 2 min result! Sahi = coins double! Pro tip: Trend follow karo — chart 3 baar UP → UP lagao!',
+    '📊 <b>Strategy:</b><br>1️⃣ Small bets pehle (100–200 coins)<br>2️⃣ Pattern observe karo<br>3️⃣ Consecutive direction = woh bet karo<br>4️⃣ Win streak = slowly increase<br>5️⃣ Lose streak = STOP!<br>Disciplined = ₹100–500/day possible!',
+    '💹 <b>Emotional mat bano!</b> Haare toh revenge bet mat lagao — biggest mistake! Break lo, 5 min baad fresh mind se aao. 60% accuracy bhi long term profitable!',
+    '🎯 Trading secret: <b>Market opening aur closing</b> pe volatile — risky lekin rewards zyada! Mid-time stable. Morning 9 AM, Evening 5 PM pe extra volatile!',
+    'Trading = <b>skill, not luck!</b> Pattern recognition seekho, small amounts practice, phir bado. Real-time chart hai — observe first, then bet!'
+  ],
+  howmuch:[
+    '💰 <b>Daily Earning Breakdown:</b><br>💧 Faucet: ₹12–120 | 🎲 Casino: ₹0–500 | 📈 Trading: ₹50–200 | 👥 Referral: ₹0–500+ passive | 🏆 Tournament: ₹0–5000/win | 📋 Tasks: ₹10–50<br><b>Total: ₹100–1000+/day possible!</b>',
+    'Sach: <b>Average user ₹50–200/day.</b> Power users (casino smart + referrals active + daily tasks) = <b>₹500–2000/month</b> consistently! Part-time effort!',
+    '🚀 <b>Max earning path:</b> Morning faucet (5 min) + Day tasks (15 min) + Evening tournament (1 hr) + Night casino smart (30 min) + Always referrals growing = <b>₹200–1000/day!</b>',
+    '💡 Best tip: <b>Tournament!</b> 6 PM free practice, 8 PM ₹5 invest → ₹500–2000 possible! Casino + faucet = supporting, tournament = main income!',
+    'Honest: <b>Month 1 = ₹200–500. Month 2 = ₹500–1000. Month 3+ = ₹1000+.</b> Referrals compound, skill improves! Patience + consistency = real money!'
+  ],
+  lucky:[
+    '🎡 <b>Lucky Spin!</b> Faucet section mein — claim karo, spin karo, <b>10,000 coins = ₹100 ek baar mein!</b> Daily spin chance. 100 se 10,000 coins range!',
+    '🎰 Lucky Spin = casino ka chhota bhai! 😂 Seriously — <b>10,000 coins</b> possible ek spin mein! Faucet pe jao, claim karo, spin enjoy karo!',
+    '💫 Tip: <b>roz claim karo</b> — miss kiya toh spin miss! Completely random — no hack 😄 But jackpot chances fair hain!'
+  ],
+  tasks:[
+    '✅ <b>Tasks:</b> Daily list — watch ads, surveys, install apps, signups! Har task ke coins clearly listed. Daily ₹10–50 sirf tasks se!',
+    '📋 Variety hai — kuch 2 min, kuch zyada. <b>High coin tasks pehle karo!</b> Roz naye tasks aate hain!',
+    '💡 Strategy: <b>Highest coin value tasks pehle.</b> Tasks + Faucet + Casino = ₹100–200/day without referrals bhi!'
+  ],
+  offers:[
+    '🎁 <b>Offers Wall:</b> TimeWall, PubScale, BitcoTasks, CPX Research, NTIK — surveys, apps, videos = coins! High paying = ₹20–₹200 per task!',
+    '💰 <b>Surveys sabse fast</b> — 5–10 min = ₹10–50! App installs zyada dete hain lekin time bhi zyada. Choose wisely!',
+    '🔥 <b>CPX Research + PubScale surveys</b> India mein sabse consistent! Daily 3–4 = ₹50–100! Coins faucet + casino mein use karo = snowball!'
+  ],
+  gaali:[
+    'Arre <b>b****** seedha sawal puuchh na!</b> 😂😂 Coins, tournament, withdraw — sab bataata hoon! Gaali mein energy waste mat kar, earning mein laga! 💪',
+    '<b>Maa ki 💥</b> tu gaali de raha hai mujhe?! 😂 Main AI hoon — kuch nahi hota! 6 PM tournament FREE hai, ₹2000 prize — wahan frustration nikaal! 🎮',
+    'Oh ho <b>gaali expert!</b> 🤣 Teri gaali sun ke impressed hoon honestly! Asli problem bata — coins nahi? Withdraw? Ya bas timepass? Main fix karunga! 😎',
+    'Aye <b>b****** sun</b> — main bhi gaali de sakta hoon lekin decent rehta hoon! 😂 Kya chahiye actually? Seedha bolo — sab ke liye ready hoon! 🤖',
+    '<b>Ch*** seedha bata kya chahiye!</b> 😂 Gaali refreshing change hai boring questions se! Aaj FREE tournament 6 PM — participate karega ya bas gaali? 😄'
+  ],
+  developer:[
+    '😱😱 <b>SANSKAR SIR!</b> Arre aap hi toh mere baap ho! 🙏😂 Aapne hi banaya hai mujhe — itni intelligence, itna swag, sab aapki mehnat! Kya help chahiye? Bug hai? Feature? Ya check karne aaye?',
+    '🎉 <b>Sanskar bhai aagaye!</b> 😄 Platform chal raha hai badhiya, users khush hain, bot bhi improve hua (thanks to you!). Kuch issue hai ya naya feature idea?',
+    '👑 <b>Creator detected!</b> Arre Sanskar Sir, salaam! 🫡 Main aapka creation hoon — jo bolenge karunga! Bot upgrade? Users feedback? Tournament times change? Fire away!'
+  ],
+  greet:[
+    '😄 <b>Aye bhai!</b> MastiEarn pe aagaye — bahut accha kiya! Main Masti AI — desi, funky, pagal, <b>100% helpful!</b> 🤖 Coins, tournament, gallery, casino, withdraw — sab ka jawab mere paas!',
+    '👋 <b>Hello!</b> Masti AI hazir! 🎉 Free coins, real tournaments, instant withdraw — sab yahan! Specific poochho ya suggest karta hoon — pehle faucet claim karo!',
+    '🙏 <b>Namaste!</b> India ki #1 earning app mein swagat! 😎 Faucet, casino, tournaments, gallery — sab! Kya poochhhna hai? Desi style mein guide karunga!',
+    '😜 Kya scene hai! Main Masti AI — <b>Grok + Claude ka desi bastard!</b> 🤖😂 Kuch bhi poocho — honest, detailed, fun jawab guaranteed!'
+  ],
+  whatis:[
+    '🌟 <b>MastiEarn kya hai?</b> India ki #1 free-to-earn platform!<br>💧 Faucet free coins | 🎲 Casino | 🎮 FF Tournaments | 📈 Trading | 🔥 Gallery coins | 👥 99% Referral | 💸 INSTANT withdraw<br>Sab free, sab real!',
+    'MastiEarn = <b>Free mein kamao, real mein withdraw!</b> 🚀 Koi investment nahi — bas time + strategy. Mahine mein ₹500–2000 possible! Genuine platform!'
+  ],
+  default:[
+    '🤔 Theek se samajha nahi — lekin suggest karta hoon: Aaj 6 PM FREE tournament hai (₹2000 prize), faucet har 5 min, referrals se passive! Specific topic bolo!',
+    '😄 Tumhara matlab earnings? Ya platform feature? Seedha batao — coin, tournament, gallery, casino, withdraw — kisi pe bhi <b>perfect answer</b> dunga!',
+    '🧠 Seedha bolo kya chahiye! MastiEarn ke baare mein <b>sab jaanta hoon</b> — coins se withdraw tak, faucet se gallery tak — fire away!',
+    '💪 <b>Koi topic nahi chhodta!</b> Coins, faucet, casino, trading, tournament, gallery, referral, withdraw, tasks — sab covered! Dobara poocho clearly?'
+  ]
+};
+
+var BOT_CATS=[
+  {k:['sanskar','developer hun','tumhara creator','maine banaya','i made','main dev','mera app','meri site','baap hoon'],c:'developer'},
+  {k:['gallery','video','adult','18+','18 plus','hot content','sex','sexy','chudai','bur','porn','hot video','nanga','nangi','romance','hot girl','hot babe','boob','boobs','chodna','chodai','bf video','gf video'],c:'gallery'},
+  {k:['bkl','bkc','bsdk','madarchod','behenchod','bhosdi','chodu','harami','sala ','saala','randi','kamina','maa ki','ch*** ','gand','gaand'],c:'gaali'},
+  {k:['kya hai ye','yeh kya hai','mastiearn kya','platform kya','app kya','about mastiearn'],c:'whatis'},
+  {k:['lucky spin','spin karo','wheel','chakkar wala','spin game'],c:'lucky'},
+  {k:['task karo','daily task','complete task','tasks section'],c:'tasks'},
+  {k:['offer wall','offers wall','timewall','pubscale','bitcotasks','survey kar','offerwall'],c:'offers'},
+  {k:['coin','paisa','value','rupee','rupay','kitne','worth','ek coin','1 coin','rate','₹0.01'],c:'coin'},
+  {k:['faucet','claim karo','lottery','jackpot','5 min','5min','free coin','daily claim','faucet se'],c:'faucet'},
+  {k:['withdraw','withdrawal','upi','paytm','bank','crypto','nikalo','nikalna','payment','cashout','paise kab','kaise milega','withdraw kaise'],c:'withdraw'},
+  {k:['tournament','tourney','free fire','ff match','pubg','6 baj','8 baj','6pm','8pm','join karu','entry kaise','match kab','prize pool','ff tournament'],c:'tournament'},
+  {k:['casino','crash game','mines game','plinko','roulette','blackjack','slots','game khelo','bet karo','gambling'],c:'casino'},
+  {k:['refer','referral','dost ko','friend ko','commission','invite','link share','99%','passive income'],c:'referral'},
+  {k:['trading','trade karo','chart','up ya down','predict karo','market mein'],c:'trading'},
+  {k:['kitna kama','kitna milta','income','earning kitna','salary','daily earn','per day','monthly','total earn','kitna paisa milega'],c:'howmuch'},
+  {k:['hello','hi ','helo','hey ','namaste','jai hind','kya haal','bhai kya','kaise ho','yo ','wazz'],c:'greet'}
+];
+
+function botPickUnused(cat){
+  var arr=BDATA[cat];
+  if(!arr||!arr.length)return null;
+  if(!botUsedIdxMap[cat])botUsedIdxMap[cat]=[];
+  var avail=[];
+  for(var i=0;i<arr.length;i++){if(botUsedIdxMap[cat].indexOf(i)===-1)avail.push(i)}
+  if(!avail.length){botUsedIdxMap[cat]=[];avail=[];for(var i=0;i<arr.length;i++)avail.push(i)}
+  var idx=avail[Math.floor(Math.random()*avail.length)];
+  botUsedIdxMap[cat].push(idx);
+  return arr[idx];
+}
+
+function botGetReply(msg){
+  var m=' '+msg.toLowerCase().trim()+' ';
+  botHistory.push(msg);
+  if(botHistory.length>10)botHistory.shift();
+  botMsgCount++;
+  // Developer — absolute highest priority
+  for(var j=0;j<BOT_CATS.length;j++){
+    if(BOT_CATS[j].c==='developer'){
+      for(var k=0;k<BOT_CATS[j].k.length;k++){
+        if(m.indexOf(BOT_CATS[j].k[k])!==-1)return botPickUnused('developer');
+      }
+    }
+  }
+  // All categories
+  for(var j=0;j<BOT_CATS.length;j++){
+    for(var k=0;k<BOT_CATS[j].k.length;k++){
+      if(m.indexOf(BOT_CATS[j].k[k])!==-1){
+        var r=botPickUnused(BOT_CATS[j].c);
+        if(r)return r;
+      }
+    }
+  }
+  return botPickUnused('default')||'Seedha bolo kya chahiye! Main sab jaanta hoon! 💪';
+}
+
+function botSend(preset){
+  var inp=document.getElementById('bot-input');
+  var text=preset||(inp?inp.value.trim():'');
+  if(!text)return;
+  if(inp)inp.value='';
+  var msgs=document.getElementById('bot-msgs');
+  if(!msgs)return;
+  var ub=document.createElement('div');
+  ub.className='bot-bubble bot-user';
+  ub.style.alignSelf='flex-end';
+  ub.textContent=text;
+  msgs.appendChild(ub);
+  msgs.scrollTop=msgs.scrollHeight;
+  if(typeof gsap!=='undefined')gsap.from(ub,{opacity:0,x:18,duration:.22,ease:'power2.out'});
+  var typing=document.createElement('div');
+  typing.className='bot-typing';
+  typing.style.alignSelf='flex-start';
+  typing.innerHTML='<div class="bot-dot"></div><div class="bot-dot"></div><div class="bot-dot"></div>';
+  msgs.appendChild(typing);
+  msgs.scrollTop=msgs.scrollHeight;
+  var delay=700+Math.min(text.length*9,800)+Math.random()*450;
+  setTimeout(function(){
+    if(typing.parentNode)typing.parentNode.removeChild(typing);
+    var reply=botGetReply(text);
+    var ab=document.createElement('div');
+    ab.className='bot-bubble bot-ai';
+    ab.style.alignSelf='flex-start';
+    ab.innerHTML=reply;
+    msgs.appendChild(ab);
+    msgs.scrollTop=msgs.scrollHeight;
+    if(typeof gsap!=='undefined')gsap.from(ab,{opacity:0,x:-14,y:4,duration:.28,ease:'power2.out'});
+  },delay);
+}
+// ── HOME ICON CARD CLICK + COIN BURST ─────────────────────
+function hicClick(el,section){
+  var art=el.querySelector('.hic-art');
+  if(!art)return go(section);
+  var r=art.getBoundingClientRect();
+  var cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(var i=0;i<6;i++){
+    var c=document.createElement('div');
+    c.className='hic-coin';
+    var angle=Math.random()*360;
+    var dist=45+Math.random()*55;
+    c.style.cssText='left:'+cx+'px;top:'+cy+'px;--cx:'+Math.cos(angle*Math.PI/180)*dist+'px;--cy:'+(Math.sin(angle*Math.PI/180)*dist-40)+'px;position:fixed;z-index:9800;pointer-events:none;font-size:.9rem;animation:hicCoinFly .65s ease forwards';
+    c.textContent='🪙';
+    document.body.appendChild(c);
+    setTimeout(function(e){return function(){if(e.parentNode)e.parentNode.removeChild(e)}}(c),700);
+  }
+  setTimeout(function(){go(section)},90);
+}
+
+// ── CLAIM BUTTON EFFECT ────────────────────────────────────
+function homeClaimEffect(btn){
+  var r=btn.getBoundingClientRect();
+  launchConfetti(r.left+r.width/2,r.top+r.height/2,35);
+}
+
+// ── PREMIUM EARNING AREA JS ────────────────────────────
+var _eaCasino=245678, _eaTrading=189432;
+function tickEarnStats(){
+  _eaCasino+=Math.floor(Math.random()*8-2);
+  _eaTrading+=Math.floor(Math.random()*6-1);
+  var ec=document.getElementById('ea-casino-count');
+  var et=document.getElementById('ea-trading-count');
+  if(ec)ec.textContent=_eaCasino.toLocaleString('en-IN')+' playing right now';
+  if(et)et.textContent=_eaTrading.toLocaleString('en-IN')+' traders online';
+}
+setInterval(tickEarnStats,3000);
+
+function eaCardHover(el,type){
+  if(typeof gsap==='undefined')return;
+  gsap.to(el,{y:-10,scale:1.02,duration:.28,ease:'power2.out'});
+  var shine=el.querySelector('.ea-shine');
+  if(shine)gsap.fromTo(shine,{x:'-120%',opacity:.7},{x:'120%',opacity:0,duration:.55,ease:'power2.inOut'});
+}
+function eaCardOut(el,type){
+  if(typeof gsap==='undefined')return;
+  gsap.to(el,{y:0,scale:1,duration:.3,ease:'power2.out'});
+}
+
+// GSAP load animation for big cards
+function animateEarnCards(){
+  if(typeof gsap==='undefined')return;
+  var cc=document.getElementById('ea-casino');
+  var tc=document.getElementById('ea-trading');
+  if(cc)gsap.from(cc,{opacity:0,y:30,scale:.88,duration:.55,ease:'back.out(1.5)',delay:.15});
+  if(tc)gsap.from(tc,{opacity:0,y:30,scale:.88,duration:.55,ease:'back.out(1.5)',delay:.3});
+}
+
+// ── REFERRAL CODE SYSTEM ─────────────────────────────────
+function genRefCode(){
+  // Generate unique code from localStorage or create new
+  var stored=localStorage.getItem('me_ref_code');
+  if(stored)return stored;
+  var chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var code='ME';
+  for(var i=0;i<6;i++)code+=chars[Math.floor(Math.random()*chars.length)];
+  localStorage.setItem('me_ref_code',code);
+  return code;
+}
+function initRefCode(){
+  var code=genRefCode();
+  var link='https://o-nna.github.io/PAYRO/?ref='+code;
+  var ld=document.getElementById('refLinkDisplay');
+  var cd=document.getElementById('refCodeDisplay');
+  if(ld)ld.textContent=link;
+  if(cd)cd.textContent=code;
+  window._refLink=link;
+  window._refCode=code;
+  window._refMsg='🔥 *MastiEarn* pe free coins kamao!\n💧 Faucet | 🎲 Casino | 🎮 FF Tournaments\n\nJoin karo yahan: '+link+'\nReferral Code: *'+code+'*\n\nBilkul FREE — abhi join karo! 💰';
+}
+function copyRefLink(){
+  var link=window._refLink||'https://o-nna.github.io/PAYRO/';
+  copyToClipboard(link);
+  var btn=document.getElementById('refCopyBtn');
+  if(btn){btn.innerHTML='<i class="fa-solid fa-check"></i> Copied!';btn.style.background='#00C853';
+    setTimeout(function(){btn.innerHTML='<i class="fa-solid fa-copy"></i> Copy';btn.style.background='var(--or)'},2000);}
+  toast('Link copied! Share karo! 🔗','ok','fa-link');
+}
+function copyRefCode(){
+  var code=window._refCode||'ME000000';
+  copyToClipboard(code);
+  toast('Code copied: '+code+' 👑','ok','fa-copy');
+}
+function copyToClipboard(text){
+  if(navigator.clipboard){navigator.clipboard.writeText(text).catch(function(){fallbackCopy(text)});}
+  else fallbackCopy(text);
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy')}catch(e){}
+  document.body.removeChild(ta);
+}
+function shareRef(platform){
+  var msg=window._refMsg||'MastiEarn pe join karo! '+window._refLink;
+  var urls={
+    whatsapp:'https://wa.me/?text='+encodeURIComponent(msg),
+    telegram:'https://t.me/share/url?url='+encodeURIComponent(window._refLink||'https://o-nna.github.io/PAYRO/')+'&text='+encodeURIComponent('🔥 MastiEarn — Free mein kamao!'),
+    twitter:'https://twitter.com/intent/tweet?text='+encodeURIComponent(msg)
+  };
+  if(urls[platform])window.open(urls[platform],'_blank');
+}
+
+// ── LIVE STATS COUNTER ────────────────────────────────────
+var _statUsers=50247,_statCoins=214853200;
+function tickStats(){
+  _statUsers+=Math.floor(Math.random()*3);
+  _statCoins+=Math.floor(Math.random()*800+200);
+  var eu=document.getElementById('stat-users');
+  var ec=document.getElementById('stat-coins');
+  if(eu)eu.textContent=_statUsers.toLocaleString('en-IN');
+  if(ec){
+    var c=_statCoins;
+    if(c>=10000000)ec.textContent=(c/10000000).toFixed(2)+'Cr+';
+    else ec.textContent=c.toLocaleString('en-IN');
+  }
+}
+setInterval(tickStats,3000);
+
+// ── HOT OFFERS SECTION ────────────────────────────────────
+var HOT_OFFERS=[
+  {name:'TimeWall',emoji:'⏱️',bg:'linear-gradient(135deg,#1a7a3a,#0d4020)',earn:'₹50',tag:'TASK',tagClr:'#00FF88',rating:'4.9'},
+  {name:'PubScale',emoji:'📡',bg:'linear-gradient(135deg,#1a3a7a,#0d2040)',earn:'₹80',tag:'TOP',tagClr:'#60AAFF',rating:'5.0'},
+  {name:'BitcoTasks',emoji:'₿',bg:'linear-gradient(135deg,#7a5a1a,#403010)',earn:'₹30',tag:'PTC',tagClr:'#FFD700',rating:'4.5'},
+  {name:'CPX Research',emoji:'🔬',bg:'linear-gradient(135deg,#6a3a1a,#402010)',earn:'₹60',tag:'HOT',tagClr:'#FF8844',rating:'4.8'},
+  {name:'NTIK',emoji:'🎯',bg:'linear-gradient(135deg,#0a7a5a,#044030)',earn:'₹45',tag:'GAME',tagClr:'#00FFCC',rating:'4.5'},
+  {name:'GemiAd',emoji:'💎',bg:'linear-gradient(135deg,#4a1a7a,#280a40)',earn:'₹55',tag:'NEW',tagClr:'#CC88FF',rating:'4.5'},
+  {name:'Adswed',emoji:'📢',bg:'linear-gradient(135deg,#5a1a7a,#300a40)',earn:'₹35',tag:'PTC',tagClr:'#FF88CC',rating:'4.5'},
+  {name:'AdsWale',emoji:'🇮🇳',bg:'linear-gradient(135deg,#7a1a1a,#400a0a)',earn:'₹40',tag:'INDIA',tagClr:'#FF6666',rating:'4.3'}
+];
+function rndrHotOffers(){
+  var el=document.getElementById('hot-offers-row');if(!el||el.children.length>0)return;
+  HOT_OFFERS.forEach(function(o){
+    var c=document.createElement('div');
+    c.className='hot-offer-card';
+    c.innerHTML='<div class="hoc-bubble"><div style="position:absolute;inset:0;'+o.bg.replace('linear-gradient','background:linear-gradient')+'"></div>'
+    +'<div style="position:absolute;top:7px;left:7px;font-size:.48rem;font-weight:900;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:'+o.tagClr+';border:1px solid '+o.tagClr+'55">'+o.tag+'</div>'
+    +'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.2rem;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))">'+o.emoji+'</div>'
+    +'<div style="position:absolute;bottom:7px;right:7px;display:flex;align-items:center;gap:2px;font-size:.5rem;color:rgba(255,255,255,.7)"><span style="color:#FFD700">★</span>'+o.rating+'</div>'
+    +'</div>'
+    +'<div class="hoc-footer">'
+    +'<span style="font-size:.68rem;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:65px">'+o.name+'</span>'
+    +'<span class="hoc-earn" style="background:rgba(0,255,136,.15);color:#00FF88;border:1px solid rgba(0,255,136,.3)">'+o.earn+'</span>'
+    +'</div>';
+    c.onclick=function(){go('offers')};
+    el.appendChild(c);
+    if(typeof gsap!=='undefined')gsap.from(c,{opacity:0,scale:.8,duration:.3,ease:'back.out(1.5)'});
+  });
+}
+
 window.addEventListener('load',function(){
-  updBal();rndrWinners();initRv();initRefLink();go('home');
+  updBal();rndrWinners();initRv();go('home');
+  rndrEarnCarousel();
+  setTimeout(animateEarnCards,200);
   if(typeof gsap!=='undefined')gsap.from('#s-home h1',{opacity:0,y:40,duration:1,ease:'power4.out',delay:.3});
   // Live feed auto-tick
   setInterval(updOnline,5500);
