@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neon Stream UI</title>
+  <meta name="referrer" content="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Neon Stream V2.7</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -95,6 +96,85 @@
     @keyframes breathe { 0%,100%{ opacity:1 } 50%{ opacity:.97 } }
     .card-media::before { animation: none !important; }
 
+    /* Lazy-scroll reveal + premium motion */
+    .card,
+    .ph-card,
+    .rec-item{
+      will-change: transform, opacity;
+    }
+    .card{
+      opacity:0;
+      transform: translateY(22px) scale(.97);
+      transition:
+        transform .72s cubic-bezier(.2,.85,.2,1),
+        opacity .72s ease,
+        box-shadow .22s ease,
+        border-color .22s ease,
+        filter .22s ease;
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    .card.revealed,
+    .card.is-visible{
+      opacity:1;
+      transform: translateY(0) scale(1);
+    }
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      pointer-events:none;
+      border-radius:inherit;
+      background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.14) 50%, transparent 80%);
+      opacity:0;
+      transform:translateX(-60%);
+      transition:opacity .25s ease;
+    }
+    .card.revealed::after{
+      opacity:1;
+      animation: sheen 2.8s ease-in-out infinite;
+    }
+    .card:hover{ animation-play-state: paused; }
+    .ph-card{ animation: rise .5s cubic-bezier(.34,1.56,.64,1) both; }
+    .lazy-sentinel{
+      grid-column:1/-1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:18px 14px 28px;
+      color:#7edfff;
+      font-size:12px;
+      letter-spacing:.04em;
+      opacity:.95;
+    }
+    .lazy-loader{
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      border:2px solid rgba(0,229,255,.18);
+      border-top-color:#00e5ff;
+      animation: spin 1s linear infinite;
+      flex:0 0 auto;
+    }
+    @keyframes spin{ to{ transform:rotate(360deg); } }
+    @keyframes sheen{
+      0%{ transform:translateX(-60%); }
+      65%{ transform:translateX(140%); }
+      100%{ transform:translateX(140%); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      *, *::before, *::after{
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:0.01ms !important;
+        scroll-behavior:auto !important;
+      }
+      .card{ opacity:1; transform:none; }
+      .card::after{ display:none; }
+    }
+
     @keyframes navGlow {
       0%,100%{ box-shadow:0 0 18px rgba(0,229,255,.16); }
       50%{ box-shadow:0 0 28px rgba(0,229,255,.28); }
@@ -123,7 +203,13 @@
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
+    html {
+      touch-action: pan-x pan-y;
+      -ms-touch-action: pan-x pan-y;
+    }
     body{
+      touch-action: pan-x pan-y;
+      -ms-touch-action: pan-x pan-y;
       margin:0;
       font-family:'Space Grotesk', Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
@@ -149,6 +235,13 @@
       pointer-events:none;
       mix-blend-mode:screen;
       opacity:.45;
+      animation: drift 14s ease-in-out infinite;
+    }
+
+    body.loaded .banner,
+    body.loaded .panel,
+    body.loaded .topbar{
+      animation: rise .6s cubic-bezier(.34,1.56,.64,1) both;
     }
 
     @keyframes drift{
@@ -318,7 +411,9 @@
 
     .banner{
       position:relative;
-      min-height:220px;
+      min-height:unset;
+      aspect-ratio:9/16;
+      max-height:92vw;
       border-radius:28px;
       overflow:hidden;
       border:1px solid var(--line);
@@ -352,6 +447,7 @@
       position:absolute;
       inset:0;
       padding:28px;
+      padding-top:52px;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
@@ -363,12 +459,12 @@
     .banner-slide.active{opacity:1; transform:scale(1) translateY(0)}
     .banner-slide h2{
       margin:0 0 10px;
-      font-size:clamp(24px, 4vw, 44px);
+      font-size:clamp(13px, 2.2vw, 22px);
       font-family:'Space Grotesk', sans-serif;
-      line-height:1.0;
-      letter-spacing:-.05em;
+      line-height:1.1;
+      letter-spacing:-.03em;
       font-weight:800;
-      max-width:12ch;
+      max-width:16ch;
       text-shadow:0 4px 20px rgba(0,0,0,.55), 0 0 40px rgba(0,229,255,.15);
     }
     .banner-slide p{
@@ -732,159 +828,253 @@
     .textarea{min-height:94px;resize:vertical}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
+    /* Block pinch zoom on player */
+    #playerModal { touch-action: pan-x pan-y; }
+    #playerFrame { touch-action: none; user-select: none; }
+
+    /* ─── CRYSTAL DARK VIDEO PLAYER (original) ─── */
     .player{
       position:fixed;
       inset:0;
       z-index:100;
-      background:rgba(0,0,0,.88);
-      backdrop-filter:blur(12px);
+      background:rgba(0,0,8,.92);
+      backdrop-filter:blur(18px);
       display:none;
       padding:10px;
+      place-items:center;
+      overflow-y:auto;
     }
     .player.open{display:grid}
+
     .modal-shell{
+      width:min(100%, 1540px);
       margin:auto;
-      width:min(100%, 1440px);
-      height:min(100%, 980px);
-      border-radius:26px;
+      border-radius:22px;
       overflow:hidden;
-      border:1px solid rgba(0,200,255,.10);
-      background:linear-gradient(180deg, #040e18, #020a12);
       display:grid;
       grid-template-rows:auto 1fr;
+      background:linear-gradient(160deg,#02020c,#03040e 50%,#020308);
+      border:1px solid rgba(157,77,255,.20);
+      box-shadow:0 32px 100px rgba(0,0,40,.90), 0 0 0 1px rgba(255,255,255,.04) inset, 0 0 60px rgba(157,77,255,.10);
       animation:crystalPop .28s cubic-bezier(.34,1.4,.64,1) both;
     }
+
     .player-top{
       display:flex;
       align-items:center;
       gap:10px;
-      padding:10px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      background:rgba(255,255,255,.03);
+      padding:10px 14px;
+      border-bottom:1px solid rgba(157,77,255,.12);
+      background:rgba(255,255,255,.02);
     }
     .player-top .title{
-      flex:1;
-      min-width:0;
-      font-weight:800;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      flex:1;min-width:0;font-weight:700;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;
+      background:linear-gradient(90deg,#fff 0%,rgba(157,77,255,.95) 60%,rgba(0,245,255,.85) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
+
     .player-body{
       min-height:0;
       display:grid;
-      grid-template-columns:1.4fr .6fr;
+      grid-template-columns:minmax(0,1.75fr) minmax(300px,.9fr);
     }
+
+    /* ── LEFT: video area ── */
     .video-area{
       min-width:0;
-      border-right:1px solid rgba(255,255,255,.06);
-      display:grid;
-      grid-template-rows: 1fr auto auto;
+      border-right:1px solid rgba(157,77,255,.10);
+      display:flex;flex-direction:column;
+      overflow-y:auto;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(157,77,255,.20) transparent;
     }
-    .video-stage{
-      min-height:0;
-      display:grid;
-      place-items:center;
-      padding:18px;
-      background:
-        radial-gradient(circle at 50% 10%, rgba(0,200,255,.16), transparent 36%),
-        linear-gradient(180deg, rgba(0,200,255,.03), transparent);
-    }
-    .fake-video{
-      width:min(100%, 920px);
-      aspect-ratio:16/9;
-      border-radius:24px;
-      overflow:hidden;
-      position:relative;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,200,255,.14), transparent 12%),
-        linear-gradient(135deg, #041520, #020e18 55%, #061825);
-      border:1px solid rgba(0,200,255,.12);
-      box-shadow:0 0 0 1px rgba(0,200,255,.06), 0 0 40px rgba(0,200,255,.11);
-    }
-    .fake-video::before{
-      content:"";
-      position:absolute; inset:0;
-      background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.08) 50%, transparent 100%);
-      transform:translateX(-100%);
-      animation: shine 2.8s linear infinite;
-    }
-    .video-overlay{
-      position:absolute; inset:auto 0 0 0;
-      z-index:2;
-      padding:16px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      background:linear-gradient(180deg, transparent, rgba(0,0,0,.7));
-    }
-    .progress{
-      height:6px;
-      border-radius:999px;
-      overflow:hidden;
-      background:rgba(255,255,255,.12);
-    }
-    .progress > div{
-      width:38%; height:100%;
-      background:linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius:inherit;
-      box-shadow:0 0 18px rgba(0,200,255,.45);
-    }
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-    .chip-row{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{
-      font-size:11px;
-      padding:5px 8px;
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      color:#e7ecf6;
-    }
-    .controls{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-      color:var(--muted);
-      padding:14px 18px;
-      flex-wrap:wrap;
-    }
-    .controls .left,.controls .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .details{
-      padding:0 18px 18px;
-      display:grid;
-      gap:12px;
-    }
-    .stat{
-      border-radius:18px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.07);
-      padding:14px;
-    }
-    .stat .big{font-weight:800;font-size:18px;line-height:1.1}
-    .stat .small{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
 
-    .recommended{
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      padding:14px;
-      overflow:auto;
-    }
-    .rec-item{
-      display:grid;
-      grid-template-columns:110px 1fr;
-      gap:10px;
-      border-radius:18px;
+    /* player-shell inside modal */
+    .player-shell-inner{
+      background:linear-gradient(160deg,rgba(157,77,255,.10),rgba(0,245,255,.05) 60%,rgba(255,0,204,.07));
+      border-bottom:1px solid rgba(157,77,255,.14);
       overflow:hidden;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.07);
+    }
+
+    /* video frame */
+    .video-frame{
+      position:relative;
+      width:100%;
+      height:25.5vh;
+      background:#000;
+      overflow:hidden;
+    }
+    .video-frame::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(0,0,10,.04) 0%,rgba(0,0,0,0) 30%,rgba(0,0,12,.65) 100%);
+      pointer-events:none;z-index:1;
+    }
+    .video-frame::after{
+      content:'';position:absolute;inset:0;
+      border-bottom:2px solid rgba(124,95,255,.22);
+      pointer-events:none;z-index:2;
+    }
+    .video-frame video, .video-frame iframe{
+      width:100%;height:100%;object-fit:fill;display:block;background:#000;border:none;
+    }
+    .big-play{
+      position:absolute;inset:50% auto auto 50%;
+      transform:translate(-50%,-50%);
+      width:88px;height:88px;border-radius:50%;
+      display:grid;place-items:center;z-index:3;
+      background:rgba(4,4,16,.60);
+      backdrop-filter:blur(20px) saturate(200%);
+      border:2px solid rgba(157,77,255,.55);color:#fff;
+      box-shadow:0 0 50px rgba(157,77,255,.55),0 0 20px rgba(0,245,255,.35),0 18px 40px rgba(0,0,0,.55);
+      transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
       cursor:pointer;
     }
-    .rec-thumb{min-height:80px}
-    .rec-content{padding:10px}
-    .rec-content h4{margin:0 0 5px;font-size:14px}
-    .rec-content p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+    .big-play:hover{transform:translate(-50%,-50%) scale(1.08);background:rgba(157,77,255,.28);box-shadow:0 0 80px rgba(157,77,255,.55),0 0 30px rgba(0,245,255,.35),0 20px 50px rgba(0,0,0,.6)}
+    .big-play svg{width:32px;height:32px;margin-left:4px;filter:drop-shadow(0 0 10px rgba(157,77,255,1)) drop-shadow(0 0 20px rgba(0,245,255,.6))}
+    .hidden{display:none!important}
+
+    /* meta stack */
+    .meta-stack{
+      display:flex;flex-direction:column;gap:10px;
+      padding:18px 14px 14px;
+      background:linear-gradient(180deg,rgba(157,77,255,.06),rgba(0,245,255,.03));
+    }
+
+    /* control bar */
+    .control-bar{
+      display:grid;
+      grid-template-columns:auto auto 1fr auto;
+      align-items:center;gap:8px;
+    }
+    .btn{
+      appearance:none;border:none;
+      background:rgba(124,95,255,.12);color:var(--text);
+      border:1px solid rgba(124,95,255,.22);
+      transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
+      cursor:pointer;outline:none;display:grid;place-items:center;
+      box-shadow:0 4px 14px rgba(0,0,20,.22);
+      width:42px;height:42px;border-radius:13px;
+    }
+    .btn:hover{background:rgba(124,95,255,.24);border-color:rgba(124,95,255,.42);transform:translateY(-1px);box-shadow:0 0 14px rgba(157,77,255,.55)}
+    .btn:active{transform:translateY(0) scale(.97)}
+    .btn svg{width:19px;height:19px}
+    .time{font-size:12.5px;color:rgba(200,210,255,.80);white-space:nowrap;user-select:none;font-variant-numeric:tabular-nums;padding:0 2px}
+    .seek-wrap{min-width:0;display:flex;align-items:center}
+    .seek{accent-color:#9d4dff;cursor:pointer;width:100%;height:4px}
+
+    /* action row */
+    .action-row{
+      display:flex;gap:9px;align-items:center;flex-wrap:nowrap;
+      overflow-x:auto;padding:2px 0 3px;scrollbar-width:none;
+    }
+    .action-row::-webkit-scrollbar{display:none}
+    .action{
+      flex:0 0 auto;min-width:52px;height:48px;border-radius:15px;padding:0 13px;
+      background:linear-gradient(160deg,rgba(157,77,255,.18),rgba(0,245,255,.10));
+      border:1px solid rgba(157,77,255,.30);color:var(--text);cursor:pointer;
+      display:flex;align-items:center;gap:7px;
+      transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
+      box-shadow:0 4px 20px rgba(157,77,255,.18),0 0 0 1px rgba(157,77,255,.08) inset;
+    }
+    .action:hover{background:linear-gradient(160deg,rgba(157,77,255,.35),rgba(0,245,255,.18));border-color:rgba(157,77,255,.60);transform:translateY(-1px);box-shadow:0 0 24px rgba(157,77,255,.55),0 0 8px rgba(0,245,255,.35)}
+    .action:active{transform:translateY(0) scale(.97)}
+    .action.active{background:linear-gradient(160deg,rgba(157,77,255,.42),rgba(0,245,255,.22));border-color:rgba(157,77,255,.75);box-shadow:0 0 32px rgba(157,77,255,.55),0 0 12px rgba(0,245,255,.35)}
+    .action svg{width:19px;height:19px;flex-shrink:0}
+    .action .count{font-size:12px;color:rgba(200,210,255,.85);white-space:nowrap;font-weight:500}
+
+    /* ads section */
+    .ads-section{overflow:hidden;border-radius:22px;margin:10px 14px 14px;}
+    .ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 0 10px 0;}
+    .ad-card{
+      min-height:99px;border-radius:16px;padding:12px;
+      display:flex;flex-direction:column;justify-content:space-between;gap:8px;
+      border:1px solid rgba(157,77,255,.35);
+      background:linear-gradient(135deg,rgba(157,77,255,.32),rgba(0,245,255,.10) 52%,rgba(255,0,204,.22)),rgba(6,5,18,.95);
+      position:relative;overflow:hidden;cursor:pointer;
+      transition:transform 200ms cubic-bezier(.2,.8,.2,1),border-color 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
+      box-shadow:0 0 30px rgba(157,77,255,.12),0 8px 24px rgba(0,0,30,.40);
+    }
+    .ad-card:hover{transform:translateY(-2px);border-color:rgba(157,77,255,.65);box-shadow:0 0 40px rgba(157,77,255,.28)}
+    .ad-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(124,95,255,.22),transparent 65%);pointer-events:none;}
+    .ad-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#00f5ff;font-weight:700;text-shadow:0 0 10px rgba(0,245,255,.50);}
+    .ad-copy{font-size:11.7px;line-height:1.4;color:rgba(220,225,255,.92);}
+    .ad-pill{align-self:flex-start;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(157,77,255,.30),rgba(0,245,255,.15));border:1px solid rgba(157,77,255,.55);color:rgba(220,230,255,.96);font-size:10.5px;white-space:nowrap;z-index:1;font-weight:600;box-shadow:0 0 12px rgba(157,77,255,.25);}
+    .ad-banner-wide{border-radius:18px;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,rgba(157,77,255,.28),rgba(0,245,255,.12) 52%,rgba(255,0,204,.20)),rgba(5,4,16,.96);border:1px solid rgba(157,77,255,.38);cursor:pointer;transition:transform 200ms cubic-bezier(.2,.8,.2,1),border-color 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);box-shadow:0 0 35px rgba(157,77,255,.14);}
+    .ad-banner-wide:hover{transform:translateY(-1px);border-color:rgba(157,77,255,.65);box-shadow:0 0 50px rgba(157,77,255,.28)}
+
+    /* right column: recommended */
+    .recommended{
+      min-width:0;display:flex;flex-direction:column;overflow:hidden;
+      background:linear-gradient(160deg,rgba(124,95,255,.06),rgba(0,212,255,.03));
+      border-left:1px solid rgba(124,95,255,.10);
+    }
+    .rec-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 14px 12px;border-bottom:1px solid rgba(124,95,255,.10);flex-shrink:0;
+    }
+    .rec-head-title{
+      font-size:14.5px;font-weight:600;letter-spacing:.02em;
+      background:linear-gradient(90deg,#fff 0%,rgba(157,77,255,.95) 50%,rgba(0,245,255,.85) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .mini-btn{
+      flex:0 0 auto;width:38px;height:38px;border-radius:12px;
+      background:rgba(124,95,255,.12);border:1px solid rgba(124,95,255,.20);color:var(--text);
+      cursor:pointer;display:grid;place-items:center;
+      transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1);
+    }
+    .mini-btn:hover{background:rgba(124,95,255,.24);transform:translateY(-1px)}
+    .mini-btn svg{width:18px;height:18px}
+    .recommendations{
+      display:flex;flex-direction:column;gap:0;
+      max-height:calc(100vh - 120px);overflow-y:auto;
+      scrollbar-width:thin;scrollbar-color:rgba(124,95,255,.25) transparent;
+      flex:1;
+    }
+    .recommendations::-webkit-scrollbar{width:5px}
+    .recommendations::-webkit-scrollbar-thumb{background:rgba(124,95,255,.25);border-radius:999px}
+
+    /* rec-card */
+    .rec-card{
+      display:grid;grid-template-columns:145px 1fr;gap:12px;align-items:center;
+      padding:10px 12px;background:transparent;
+      border-bottom:1px solid rgba(124,95,255,.07);
+      transition:background 200ms cubic-bezier(.2,.8,.2,1);cursor:pointer;
+    }
+    .rec-card:last-child{border-bottom:none}
+    .rec-card:hover{background:rgba(124,95,255,.07)}
+    .thumb{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid rgba(124,95,255,.14);}
+    .thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,20,.03),rgba(0,0,20,.35));z-index:1}
+    .thumb::after{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.10),transparent);pointer-events:none;z-index:2}
+    .duration{position:absolute;right:8px;bottom:8px;z-index:3;font-size:11px;padding:4px 7px;border-radius:999px;background:rgba(0,0,20,.72);color:#fff;border:1px solid rgba(124,95,255,.20);font-weight:500;font-variant-numeric:tabular-nums;}
+    .rec-meta{min-width:0;display:flex;flex-direction:column;gap:5px;}
+    .rec-title{font-size:13.5px;line-height:1.35;color:rgba(230,235,255,.95);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
+    .rec-sub{display:flex;flex-wrap:wrap;gap:6px;color:var(--muted);font-size:11.5px;align-items:center;}
+    .dot{width:3px;height:3px;border-radius:50%;background:rgba(124,95,255,.45)}
+    .chip-row{display:flex;gap:6px;flex-wrap:wrap;}
+    .chip{padding:4px 9px;border-radius:999px;background:rgba(124,95,255,.10);border:1px solid rgba(124,95,255,.18);color:rgba(180,190,255,.80);font-size:10.5px;font-weight:500;}
+
+    /* list-ad inside rec list */
+    .list-ad{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px;background:linear-gradient(135deg,rgba(157,77,255,.20),rgba(0,245,255,.08) 50%,rgba(255,0,204,.14)),rgba(5,4,16,.96);border-top:1px solid rgba(157,77,255,.18);border-bottom:1px solid rgba(157,77,255,.18);cursor:pointer;transition:background 200ms cubic-bezier(.2,.8,.2,1);}
+    .list-ad:hover{background:linear-gradient(135deg,rgba(157,77,255,.32),rgba(0,245,255,.14) 50%,rgba(255,0,204,.20)),rgba(5,4,16,.99)}
+    .list-ad .ad-label{font-size:9.5px}
+    .list-ad .ad-copy{font-size:12px;color:rgba(210,215,255,.88);line-height:1.35}
+    .list-ad .ad-pill{flex-shrink:0;padding:6px 11px;font-size:11px;background:linear-gradient(135deg,rgba(157,77,255,.28),rgba(0,245,255,.14));border:1px solid rgba(157,77,255,.50);border-radius:999px;color:rgba(210,225,255,.95);white-space:nowrap;font-weight:600;box-shadow:0 0 10px rgba(157,77,255,.20);}
+
+    /* rec-item (from state.items) */
+    .rec-item{
+      display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;
+      padding:9px 12px;border-bottom:1px solid rgba(124,95,255,.07);
+      transition:background 200ms cubic-bezier(.2,.8,.2,1);cursor:pointer;
+    }
+    .rec-item:last-child{border-bottom:none}
+    .rec-item:hover{background:rgba(124,95,255,.07)}
+    .rec-thumb{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid rgba(124,95,255,.14);min-height:70px;}
+    .rec-thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,20,.03),rgba(0,0,20,.35));z-index:1}
+    .rec-content{padding:2px 4px 2px 0}
+    .rec-content h4{margin:0 0 4px;font-size:13px;font-weight:500;color:rgba(230,235,255,.95);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .rec-content p{margin:0;color:var(--muted);font-size:11.5px;line-height:1.4}
 
     .toast{
       position:fixed;
@@ -964,7 +1154,7 @@
     @media (max-width: 980px){
       .hero{grid-template-columns:1fr}
       .player-body{grid-template-columns:1fr}
-      .video-area{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+      .video-area{border-right:none;border-bottom:1px solid rgba(157,77,255,.10)}
       .search{display:none}
     }
     @media (max-width: 620px){
@@ -972,7 +1162,7 @@
       .topbar-inner{padding:10px 12px}
       .brand h1{font-size:16px}
       .brand p{font-size:11px}
-      .banner{min-height:220px}
+      .banner{aspect-ratio:9/16;max-height:92vw;}
       .banner-slide{padding:22px}
       .banner-slide h2{max-width:100%}
       .footer-inner{max-width:none}
@@ -1129,6 +1319,14 @@
     }
     .ctx-upload:hover{border-color:rgba(0,200,255,.40);background:rgba(0,200,255,.04);}
 
+    .ctx-size-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+    .ctx-range-row{display:flex;gap:8px;align-items:center;}
+    .ctx-range{flex:1;accent-color:#00c8ff;}
+    .ctx-value{font-size:10px;color:#00c8ff;min-width:56px;text-align:right;}
+    .size-chip-row{display:flex;gap:7px;flex-wrap:wrap;}
+    .size-chip{padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,255,.14);background:rgba(0,200,255,.06);color:#c0eeff;font-size:10px;cursor:pointer;}
+    .size-chip:hover{background:rgba(0,200,255,.18);border-color:rgba(0,200,255,.28);color:#fff;}
+
     .ctx-apply{
       width:100%;padding:9px;border:none;border-radius:14px;cursor:pointer;
       background:linear-gradient(135deg,#00c8ff,#0088cc);
@@ -1177,9 +1375,167 @@
     .adm-empty { text-align:center; color:#3a6a88; font-size:13px; padding:32px 16px; line-height:1.6; }
     .adm-edit-panel { display:none; padding:12px; border-radius:14px; background:rgba(0,200,255,.04); border:1px solid rgba(0,200,255,.12); margin-top:6px; }
     .adm-tag { display:inline-block; font-size:10px; font-weight:900; padding:3px 8px; border-radius:999px; background:rgba(0,200,255,.12); color:#00c8ff; border:1px solid rgba(0,200,255,.2); margin-right:4px; }
-  </style>
+  
+/* CRYSTAL FAST UI PATCH */
+:root{
+--crystal1:#00f0ff;
+--crystal2:#7c3aed;
+--crystal3:#ff00cc;
+}
+
+html{scroll-behavior:smooth;}
+
+.card, .gallery-card, .item{
+transform:translateZ(0);
+will-change:transform;
+transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
+}
+
+.card:hover,.gallery-card:hover,.item:hover{
+transform:scale(1.04);
+box-shadow:0 0 10px rgba(0,240,255,.7),
+0 0 25px rgba(124,58,237,.6),
+0 0 45px rgba(255,0,204,.5);
+}
+
+img{
+image-rendering:auto;
+}
+
+/* crystal glow buttons */
+button,.btn{
+background:linear-gradient(135deg,var(--crystal1),var(--crystal2),var(--crystal3));
+box-shadow:0 0 10px rgba(0,240,255,.6),
+0 0 20px rgba(124,58,237,.5);
+border:none;
+}
+
+/* smooth animations */
+*{
+backface-visibility:hidden;
+}
+
+</style>
+
+<style>
+.gallery-card{transform:scale(1.6); transform-origin:center;}
+.banner-progress{position:absolute;bottom:6px;left:0;right:0;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:3px}
+.banner-progress span{display:block;height:100%;width:0%;background:#00e5ff;animation:bannerProg 5s linear infinite}
+@keyframes bannerProg{from{width:0%}to{width:100%}}
+</style>
+
+
+<style id="smooth-performance-fix">
+  html.smooth-lite { scroll-behavior: auto !important; }
+  body.smooth-lite::before,
+  body.page-hidden::before { animation: none !important; }
+
+  body.smooth-lite .topbar-ad-full,
+  body.smooth-lite .card.revealed::after,
+  body.smooth-lite .card-media::after,
+  body.smooth-lite .banner::after { animation: none !important; }
+
+  body.smooth-lite .card,
+  body.smooth-lite .ph-card,
+  body.smooth-lite .rec-item,
+  body.smooth-lite .banner-slide,
+  body.smooth-lite .btn,
+  body.smooth-lite .tab,
+  body.smooth-lite .icon-btn,
+  body.smooth-lite .nav-item,
+  body.smooth-lite .action,
+  body.smooth-lite .menu-link,
+  body.smooth-lite .mini,
+  body.smooth-lite .mini-btn,
+  body.smooth-lite .load-more-btn,
+  body.smooth-lite .ebar-btn,
+  body.smooth-lite .ctx-opt,
+  body.smooth-lite .ctx-apply,
+  body.smooth-lite .adm-btn {
+    transition: transform .18s ease, opacity .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease !important;
+  }
+
+  body.smooth-lite .card,
+  body.smooth-lite .ph-card,
+  body.smooth-lite .rec-item {
+    will-change: auto !important;
+    content-visibility: auto;
+    contain-intrinsic-size: 220px;
+  }
+
+  body.smooth-lite .card {
+    animation: none !important;
+    opacity: 0;
+    transform: translateY(10px) scale(.985);
+  }
+
+  body.smooth-lite .card.revealed,
+  body.smooth-lite .card.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  body.smooth-lite .ph-card { animation: none !important; }
+
+  body.smooth-lite .card:hover,
+  body.smooth-lite .ph-card:hover,
+  body.smooth-lite .rec-item:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  body.smooth-lite .banner-slide {
+    transition: opacity .35s ease, transform .35s ease !important;
+  }
+
+  body.smooth-lite .topbar,
+  body.smooth-lite .panel,
+  body.smooth-lite .banner,
+  body.smooth-lite .modal-shell,
+  body.smooth-lite .drawer,
+  body.smooth-lite .bot-panel,
+  body.smooth-lite .tools-panel {
+    backdrop-filter: blur(10px);
+  }
+
+  body.page-hidden *,
+  body.page-hidden *::before,
+  body.page-hidden *::after {
+    animation-play-state: paused !important;
+  }
+
+  @media (max-width: 768px) {
+    body.smooth-lite .topbar,
+    body.smooth-lite .panel,
+    body.smooth-lite .banner,
+    body.smooth-lite .modal-shell,
+    body.smooth-lite .drawer,
+    body.smooth-lite .bot-panel,
+    body.smooth-lite .tools-panel {
+      backdrop-filter: none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+
 </head>
 <body>
+  <script>
+    // Block pinch zoom completely
+    document.addEventListener('touchmove', function(e) {
+      if (e.touches.length > 1) e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
+    document.addEventListener('gesturechange', function(e) { e.preventDefault(); });
+    document.addEventListener('gestureend', function(e) { e.preventDefault(); });
+  </script>
   <div class="app">
     <header class="topbar">
       <div class="topbar-inner">
@@ -1200,6 +1556,9 @@
         <span class="ad-text-full">🔥 Premium Unlocked — Tap to Upgrade</span>
         <span class="ad-cta">GET →</span>
       </a>
+      <div id="adProgressBar" style="width:100%;height:2px;background:rgba(0,229,255,.10);overflow:hidden;">
+        <div id="adProgressFill" style="height:100%;width:0%;background:linear-gradient(90deg,#a855f7,#00e5ff,#ff00cc);box-shadow:0 0 6px rgba(168,85,247,.7);transition:width linear;border-radius:0 2px 2px 0;"></div>
+      </div>
     </header>
 
     <aside class="drawer" id="menuDrawer">
@@ -1219,8 +1578,8 @@
         <button class="menu-link" data-open-tab="save">
           <span class="left"><svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 011 1v16l-7-4-7 4V4a1 1 0 011-1z"/></svg><span>Save</span></span><small>permanent</small>
         </button>
-        <button class="menu-link" data-open-tab="movie">
-          <span class="left"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 9h18M8 5v14M16 5v14"/></svg><span>Movie</span></span><small>15 cards</small>
+        <button class="menu-link" data-open-tab="anime">
+          <span class="left"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M8 9c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z" fill="currentColor"/><path d="M14 9c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z" fill="currentColor"/><path d="M8 15s1.5 3 4 3 4-3 4-3"/></svg><span>Anime</span></span><small>20+ anime</small>
         </button>
       </div>
     </aside>
@@ -1252,70 +1611,113 @@
 
     <aside class="tools-panel right-panel" id="toolsPanel">
       <div class="panel-head">
-        <h3>Control Room</h3>
+        <h3>⚙️ Settings</h3>
         <button class="icon-btn" data-close="toolsPanel" aria-label="Close tools">
           <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </div>
       <div class="panel-body" id="toolsBody">
-        <div class="stat">
-          <div class="big">Locked</div>
-          <div class="small">Use the secret code inside the bot to unlock this area.</div>
+        <!-- Playback Speed -->
+        <div style="background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.12);border-radius:16px;padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:#7edfff;margin-bottom:10px;letter-spacing:.04em;">PLAYBACK SPEED</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;" id="speedBtns">
+            <button onclick="setPlayerSpeed(0.5)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.20);background:rgba(0,200,255,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">0.5x</button>
+            <button onclick="setPlayerSpeed(1)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.40);background:rgba(0,200,255,.18);border-radius:10px;color:#00e5ff;font-size:12px;font-weight:700;cursor:pointer;" id="spd1x">1x ✓</button>
+            <button onclick="setPlayerSpeed(1.5)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.20);background:rgba(0,200,255,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">1.5x</button>
+            <button onclick="setPlayerSpeed(2)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.20);background:rgba(0,200,255,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">2x</button>
+          </div>
         </div>
-        <input class="input" id="secretPass" placeholder="Code" type="password" />
-        <button class="btn btn-primary" id="unlockTools">Unlock</button>
+        <!-- Quality Info -->
+        <div style="background:rgba(157,77,255,.06);border:1px solid rgba(157,77,255,.14);border-radius:16px;padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:#c084fc;margin-bottom:8px;letter-spacing:.04em;">QUALITY</div>
+          <div style="font-size:13px;color:#e0d0ff;">Auto (Best Available)</div>
+          <div style="font-size:11px;color:#a080cc;margin-top:4px;">Video quality adjusts automatically based on your connection speed.</div>
+        </div>
+        <!-- Player Gestures Info -->
+        <div style="background:rgba(0,245,255,.04);border:1px solid rgba(0,245,255,.10);border-radius:16px;padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:#00c8c8;margin-bottom:10px;letter-spacing:.04em;">GESTURE CONTROLS</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#a0d8e8;">
+              <span style="font-size:16px;">👆</span> Tap = Show/Hide controls
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#a0d8e8;">
+              <span style="font-size:16px;">⬅️</span> Double-tap left = -10 sec
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#a0d8e8;">
+              <span style="font-size:16px;">➡️</span> Double-tap right = +10 sec
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#a0d8e8;">
+              <span style="font-size:16px;">🔊</span> Volume button = Mute/Unmute
+            </div>
+          </div>
+        </div>
+        <!-- Clear Data -->
+        <div style="background:rgba(255,60,60,.05);border:1px solid rgba(255,60,60,.14);border-radius:16px;padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:#ff8888;margin-bottom:8px;letter-spacing:.04em;">DATA</div>
+          <button onclick="if(confirm('Sab saved/liked data clear karo?')){localStorage.clear();location.reload();}" style="width:100%;padding:10px;border:1px solid rgba(255,60,60,.30);background:rgba(255,60,60,.08);border-radius:12px;color:#ff8888;font-size:12px;font-weight:700;cursor:pointer;">🗑️ Clear All Saved Data</button>
+        </div>
+        <!-- Admin Unlock -->
+        <div style="background:rgba(255,180,0,.04);border:1px solid rgba(255,180,0,.14);border-radius:16px;padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:#ffd060;margin-bottom:8px;letter-spacing:.04em;">🔐 ADMIN</div>
+          <input class="input" id="secretPass" placeholder="Enter admin code" type="password" style="margin-bottom:8px;" />
+          <button class="btn btn-primary" id="unlockTools" style="width:100%;">Unlock Admin Panel</button>
+        </div>
       </div>
     </aside>
 
     <main class="content">
-      <section class="hero" style="grid-template-columns:1fr;">
-        <div class="banner">
-          <div class="banner-label">Featured</div>
-          <div class="banner-slide active" data-banner="0">
-            <div class="banner-tag">🔥 HOT</div>
+      <section class="hero" id="heroSection" style="display:flex;align-items:flex-end;gap:8px;">
+
+        <!-- SINGLE FULL-WIDTH BANNER — all 10 slides -->
+        <div class="banner" id="bannerLeft" style="flex:1 1 100%;width:100%;">
+          <div class="banner-slide active" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/wv1LLVdS/Hot_Chinese_girl.jpg') center top/115% auto no-repeat;">
             <h2>Feel the Heat.</h2>
             <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Watch Now</button></div>
           </div>
-          <div class="banner-slide" data-banner="1">
-            <div class="banner-tag">🔞 EXCLUSIVE</div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/Y9vYY3wP/6d92d046_5ce4_47c3_80d8_b215b11447e8.jpg') center top/115% auto no-repeat;">
             <h2>Unlock It All.</h2>
-            <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Tap In 👀</button></div>
+            <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Tap In</button></div>
           </div>
-          <div class="banner-slide" data-banner="2">
-            <div class="banner-tag">💎 CRYSTAL HD</div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/XJtF8CVm/acd33457_4636_4318_bb96_631221b483e4.jpg') center top/115% auto no-repeat;">
             <h2>Zero Blur.</h2>
             <div class="banner-actions"><button class="btn btn-primary" data-scroll="movie">Stream Now</button></div>
           </div>
-          <div class="banner-slide" data-banner="3">
-            <div class="banner-tag">🥵 TOP PICKS</div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/Y9vYY3HK/081e89e7_3d4f_4c64_93a7_9627af89cebf.jpg') center top/115% auto no-repeat;">
             <h2>Tonight's Best.</h2>
-            <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Open Hot 🔥</button></div>
+            <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Open Hot</button></div>
           </div>
-          <div class="banner-slide" data-banner="4">
-            <div class="banner-tag">⚡ INSTANT</div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/DZSLLgTV/485085a3_9277_43a8_8d7f_d6185bfa1bb4.jpg') center top/115% auto no-repeat;">
             <h2>Tap. Play. Done.</h2>
-            <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Play ▶</button></div>
+            <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Play</button></div>
           </div>
-          <div class="banner-slide" data-banner="5">
-            <div class="banner-tag">🎬 DAILY DROPS</div>
-            <h2>Fresh Every Day.</h2>
-            <div class="banner-actions"><button class="btn btn-primary" id="openBotFromBanner">Open Bot 🤖</button><button class="btn btn-secondary" data-scroll="save">Saved</button></div>
+
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/C1RkkNgY/c23fdc5cd6b9922150a8d7437d559adc.jpg') center top/115% auto no-repeat;">
+            <h2>All New Drops.</h2>
+            <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Watch</button></div>
+          </div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/qRWnL3k5/e13b0179_4c89_43df_8467_b14c08023347.jpg') center top/115% auto no-repeat;">
+            <h2>Crystal Clear.</h2>
+            <div class="banner-actions"><button class="btn btn-primary" data-scroll="movie">Stream</button></div>
+          </div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/XJtF8CVh/image.jpg') center top/115% auto no-repeat;">
+            <h2>Go Premium.</h2>
+            <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Start</button></div>
           </div>
         </div>
+
       </section>
 
       <section>
         <div class="section-head">
           <div>
-            <h2 id="sectionTitle">Hot</h2>
-            <span id="sectionSub">50 premium cards</span>
+            <h2 id="sectionTitle">Gallery</h2>
+            <span id="sectionSub"></span>
           </div>
-          <div class="tabs">
-            <button class="tab active" data-tab="hot">Hot</button>
-            <button class="tab" data-tab="gallery">Gallery</button>
-            <button class="tab" data-tab="save">Save</button>
-            <button class="tab" data-tab="movie">Movie</button>
-          </div>
+        </div>
+        <!-- Gallery ratio tabs — compact pill style -->
+        <div id="galRatioTabs" style="display:none;padding:0 16px 10px;display:flex;gap:8px;">
+          <button id="galTab916" onclick="setGalRatio('9:16')" style="flex:1;padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.04em;transition:all .25s;background:linear-gradient(90deg,#a855f7,#7c3aed);color:#fff;box-shadow:0 0 14px rgba(168,85,247,.45);">📱 9:16</button>
+          <button id="galTab169" onclick="setGalRatio('16:9')" style="flex:1;padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.04em;transition:all .25s;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.30);color:#c084fc;">🖥️ 16:9</button>
         </div>
       </section>
 
@@ -1343,8 +1745,8 @@
         <svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 011 1v16l-7-4-7 4V4a1 1 0 011-1z"/></svg>
         <span>Save</span>
       </button>
-      <button class="nav-item" data-tab="movie">
-        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 9h18M8 5v14M16 5v14"/></svg>
+      <button class="nav-item" data-tab="anime">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M8 4v16M16 4v16M2 10h20M2 14h20"/></svg>
         <span>Movie</span>
       </button>
     </div>
@@ -1352,73 +1754,145 @@
 
   <div class="player" id="playerModal">
     <div class="modal-shell">
-      <div class="player-top">
+      <div class="player-top" style="padding:6px 10px;">
         <button class="icon-btn" id="closePlayer" aria-label="Close player">
           <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <div class="title" id="playerTitle">Video</div>
-        <button class="icon-btn" id="playerLike" aria-label="Like">
-          <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1 7.8 7.8 7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg>
-        </button>
-        <button class="icon-btn" id="playerSave" aria-label="Save">
-          <svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 011 1v16l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-        </button>
       </div>
       <div class="player-body">
+        <!-- LEFT: ads first (top), then video + controls (bottom) -->
         <section class="video-area">
-          <div class="video-stage">
-            <div class="fake-video" id="videoStage">
-              <div class="video-overlay">
-                <div class="progress"><div></div></div>
-                <div class="row">
-                  <div class="chip-row" id="playerChips"></div>
-                  <div class="chip-row">
-                    <span class="chip">Like</span>
-                    <span class="chip">Save</span>
-                    <span class="chip">Share</span>
-                    <span class="chip">Comments</span>
+
+          <!-- Ads Section — UPAR (pehle) -->
+          <section class="ads-section">
+            <div class="ad-grid">
+              <div class="ad-card">
+                <div class="ad-label">Ad</div>
+                <div class="ad-copy">Premium stream placement for creators and brands.</div>
+                <div class="ad-pill">Learn More →</div>
+              </div>
+              <div class="ad-card">
+                <div class="ad-copy">High-visibility dark premium advertising spot.</div>
+                <div class="ad-pill">Explore →</div>
+              </div>
+            </div>
+            <div class="ad-banner-wide">
+              <div>
+                <div class="ad-label">Sponsored</div>
+                <div class="ad-copy">One full-width premium banner — maximum visibility for your brand across all screens.</div>
+              </div>
+              <div class="ad-pill">Get Started →</div>
+            </div>
+          </section>
+
+          <!-- Video Player — NEECHE (baad mein) -->
+          <div class="player-shell-inner">
+            <div class="video-frame" id="playerFrame">
+              <video id="playerVideo" playsinline preload="metadata"></video>
+
+              <!-- ══ CUSTOM OVERLAY CONTROLS ══ -->
+              <div id="vcOverlay" style="
+                position:absolute;inset:0;z-index:5;
+                display:flex;flex-direction:column;justify-content:space-between;
+                opacity:0;transition:opacity .25s ease;pointer-events:none;
+                background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,transparent 30%,transparent 65%,rgba(0,0,0,.70) 100%);
+              ">
+                <!-- TOP: title row -->
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;">
+                  <span id="vcTitle" style="flex:1;font-size:13px;font-weight:700;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></span>
+                </div>
+
+                <!-- CENTER: double-tap zones + big play -->
+                <div style="display:flex;flex:1;pointer-events:all;" id="vcCenterRow">
+                  <!-- Left zone: double tap = -10s -->
+                  <div id="vcLeft10" style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;">
+                    <div id="vcLeftRipple" style="opacity:0;transition:opacity .25s;font-size:11px;font-weight:800;color:#fff;background:rgba(0,0,0,.55);padding:6px 12px;border-radius:999px;pointer-events:none;">-10s</div>
+                  </div>
+                  <!-- Center zone: play/pause -->
+                  <div id="vcPlayPause" style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:60px;">
+                    <div id="vcPlayBtn" style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);box-shadow:0 0 20px rgba(0,0,0,.5);cursor:pointer;">
+                      <svg id="vcPlayIcon" viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                  </div>
+                  <!-- Right zone: double tap = +10s -->
+                  <div id="vcRight10" style="flex:1;display:flex;align-items:center;justify-content:center;">
+                    <div id="vcRightRipple" style="opacity:0;transition:opacity .25s;font-size:11px;font-weight:800;color:#fff;background:rgba(0,0,0,.55);padding:6px 12px;border-radius:999px;pointer-events:none;">+10s</div>
+                  </div>
+                </div>
+
+                <!-- BOTTOM: seekbar + time + [ad box left | volume] + actions -->
+                <div style="display:flex;flex-direction:column;gap:0;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.5) 100%);padding:6px 10px 8px;">
+                  <!-- Slim seekbar -->
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+                    <span id="vcCurTime" style="font-size:10px;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;white-space:nowrap;">0:00</span>
+                    <div id="vcSeekTrack" style="flex:1;height:3px;border-radius:999px;background:rgba(255,255,255,.22);cursor:pointer;position:relative;touch-action:none;">
+                      <div id="vcSeekFill" style="height:100%;border-radius:999px;background:linear-gradient(90deg,#9d4dff,#00f5ff);width:0%;transition:width .1s linear;"></div>
+                      <div id="vcSeekThumb" style="position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(157,77,255,.8);"></div>
+                    </div>
+                    <span id="vcDuration" style="font-size:10px;color:rgba(255,255,255,.6);font-variant-numeric:tabular-nums;white-space:nowrap;">0:00</span>
+                    <button id="vcVolBtn" style="background:none;border:none;cursor:pointer;padding:2px;display:flex;align-items:center;color:rgba(255,255,255,.85);">
+                      <svg id="vcVolIcon" viewBox="0 0 24 24" width="15" height="15" fill="white"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path id="vcVolWave" d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14" stroke="white" stroke-width="1.5" fill="none"/></svg>
+                    </button>
+                  </div>
+                  <!-- AD box (left, compact) + Action buttons row -->
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <!-- AD compact left box -->
+                    <div id="vcAdStrip" style="flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:5px 8px;background:linear-gradient(135deg,rgba(157,77,255,.28),rgba(0,245,255,.14));border:1px solid rgba(157,77,255,.35);border-radius:10px;cursor:pointer;min-width:72px;max-width:88px;" onclick="void(0)">
+                      <span style="font-size:8px;font-weight:900;color:#00f5ff;letter-spacing:.14em;">AD</span>
+                      <span id="vcAdText" style="font-size:8.5px;color:rgba(220,230,255,.88);line-height:1.3;white-space:normal;word-break:break-word;">Premium stream</span>
+                      <span style="font-size:8px;font-weight:800;color:#00e5ff;margin-top:1px;">GET →</span>
+                    </div>
+                    <!-- Action buttons: Like Dislike Share Save — 50% smaller -->
+                    <div style="display:flex;gap:4px;align-items:center;flex:1;min-width:0;">
+                      <button id="vcLikeBtn" style="flex:1;height:17px;border-radius:6px;border:1px solid rgba(157,77,255,.35);background:rgba(157,77,255,.15);color:#fff;font-size:8px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:2px;transition:background .15s;">
+                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M1 21h4V9H1v12zm22-10a3 3 0 0 0-3-3h-6l1-4.5V3a2 2 0 0 0-2-2L8 9v12h10a3 3 0 0 0 3-2.3l1.4-8A3 3 0 0 0 23 11z"/></svg>
+                        <span id="vcLikeCount">Like</span>
+                      </button>
+                      <button id="vcDislikeBtn" style="flex:0 0 17px;height:17px;border-radius:6px;border:1px solid rgba(157,77,255,.25);background:rgba(157,77,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M23 3h-4v12h4V3zM1 13a3 3 0 0 0 3 3h6l-1 4.5V21a2 2 0 0 0 2 2l5-12V1H6a3 3 0 0 0-3 2.3l-1.4 8A3 3 0 0 0 1 13z"/></svg>
+                      </button>
+                      <button id="vcShareBtn" style="flex:1;height:17px;border-radius:6px;border:1px solid rgba(0,245,255,.25);background:rgba(0,245,255,.08);color:#fff;font-size:8px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:2px;">
+                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M18 16a3 3 0 0 0-2.39 1.19L8.91 13.4a3.1 3.1 0 0 0 0-2.8l6.7-3.79A3 3 0 1 0 15 5a2.97 2.97 0 0 0 .09.71l-6.7 3.79a3 3 0 1 0 0 4.9l6.7 3.79A3 3 0 1 0 18 16z"/></svg>
+                        Share
+                      </button>
+                      <button id="vcSaveBtn" style="flex:1;height:17px;border-radius:6px;border:1px solid rgba(0,245,255,.25);background:rgba(0,245,255,.08);color:#fff;font-size:8px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:2px;">
+                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M5 3a2 2 0 0 0-2 2v16l9-5 9 5V5a2 2 0 0 0-2-2H5z"/></svg>
+                        Save
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
+              <!-- /vcOverlay -->
+            </div>
+            <div class="meta-stack" style="padding:8px 12px 4px;">
+              <!-- action-row removed — now inside player overlay -->
             </div>
           </div>
-          <div class="controls">
-            <div class="left">
-              <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M11 19l-7-7 7-7"/><path d="M20 19l-7-7 7-7"/></svg></button>
-              <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-              <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M13 5l-7 7 7 7"/><path d="M20 5l-7 7 7 7"/></svg></button>
-              <span>1080p • Fullscreen player</span>
-            </div>
-            <div class="right"><span>Fixed scroll</span></div>
-          </div>
-          <div class="details">
-            <div class="stat">
-              <div class="big">Details</div>
-              <div class="small" id="playerDesc"></div>
-            </div>
-            <div class="stat">
-              <div class="big">Comments</div>
-              <div class="small">Fast loading, smooth motion, and dark premium playback.</div>
-            </div>
-          </div>
+
         </section>
+
+        <!-- RIGHT: Recommended -->
         <aside class="recommended">
-          <div class="section-head" style="margin:0 0 2px;">
-            <div>
-              <h2 style="font-size:18px;margin:0;">Recommended</h2>
-              <span>10 items</span>
-            </div>
+          <div class="rec-head">
+            <div class="rec-head-title">Recommended</div>
+            <button class="mini-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3V6zm0 5h12v2H3v-2zm0 5h7v2H3v-2zm15-2 3 2-3 2v-4z"/></svg>
+            </button>
           </div>
-          <div id="recommendedList" style="display:grid; gap:10px;"></div>
+          <div class="recommendations" id="recommendedList"></div>
         </aside>
       </div>
     </div>
   </div>
 
+  <!-- ANIME PLAYER MODAL -->
+  <div id="animePlayerModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,8,.95);backdrop-filter:blur(18px);padding:10px;align-items:flex-start;justify-content:center;overflow-y:auto;"></div>
+
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = 'neon_stream_items_v1';
+    const STORAGE_KEY = 'neon_stream_items_v2';
     const SAVED_KEY = 'neon_stream_saved_v1';
     const LIKES_KEY = 'neon_stream_likes_v1';
     const ACTIVE_KEY = 'neon_stream_active_v1';
@@ -1427,22 +1901,70 @@
     const $$ = (s) => Array.from(document.querySelectorAll(s));
 
     const defaultItems = (() => {
-      const make = (type, i) => ({
-        id: `${type}-${i}`,
-        title: `${type === 'hot' ? 'Hot' : 'Movie'} Card ${i + 1}`,
-        type,
+      const hotCards = Array.from({length: 20}, (_, i) => ({
+        id: `hot-${i}`,
+        num: i + 1,
+        title: `Hot #${i + 1}`,
+        type: 'hot',
         quality: 'HD',
-        meta: type === 'hot' ? 'Fast • Smooth • Glow' : 'Cinema • Fullscreen • Clean',
-        desc: 'Premium streaming card with neon styling, compact meta, and one-tap actions.',
+        meta: 'Hot • HD',
+        desc: 'Premium streaming card.',
         thumb: `linear-gradient(135deg, hsl(${(i * 18 + 185) % 60 + 170} 90% 55% / .72), hsl(${(i * 22 + 195) % 40 + 175} 85% 70% / .32))`,
-        tags: ['HD', type === 'hot' ? 'Hot' : 'Movie', 'Neon'],
+        tags: ['HD', 'Hot'],
+        driveId: '1QqueW7Yomd22zRB55KLIK9wTKzeHbOMt',
+        videoUrl: 'https://drive.google.com/file/d/1QqueW7Yomd22zRB55KLIK9wTKzeHbOMt/preview',
         createdAt: Date.now() - i * 1000
-      });
-      return [];
+      }));
+
+      const animeList = [
+        { title: 'Solo Leveling', thumb: 'https://cdn.myanimelist.net/images/anime/1347/142292l.jpg', desc: 'Ek kamzor hunter duniya ka strongest ban jaata hai.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:12},{name:'Season 2', episodes:13}] },
+        { title: 'Demon Slayer', thumb: 'https://cdn.myanimelist.net/images/anime/1286/99889l.jpg', desc: 'Tanjiro apni behan ko bachane ke liye demons se ladhta hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Season 1', episodes:26},{name:'Season 2', episodes:18},{name:'Season 3', episodes:11}] },
+        { title: 'Attack on Titan', thumb: 'https://cdn.myanimelist.net/images/anime/10/47347l.jpg', desc: 'Humans giants se bachne ke liye walls ke andar rehte hain.', tags: ['Action','Dark','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:12},{name:'Season 3', episodes:22},{name:'Season 4', episodes:29}] },
+        { title: 'Jujutsu Kaisen', thumb: 'https://cdn.myanimelist.net/images/anime/1171/109222l.jpg', desc: 'Yuji ek cursed finger kha leta hai aur sorcerer ban jaata hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:23}] },
+        { title: 'Black Clover', thumb: 'https://cdn.myanimelist.net/images/anime/2/74798l.jpg', desc: 'Asta bina magic ke Wizard King banna chahta hai.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:170}] },
+        { title: 'Naruto Shippuden', thumb: 'https://cdn.myanimelist.net/images/anime/5/17407l.jpg', desc: 'Naruto Hokage banne ka sapna dekhta hai.', tags: ['Action','Adventure','Hindi'], seasons: [{name:'Part 1', episodes:220},{name:'Shippuden', episodes:500}] },
+        { title: 'Dragon Ball Super', thumb: 'https://cdn.myanimelist.net/images/anime/7/74606l.jpg', desc: 'Goku naye enemies aur naye powers discover karta hai.', tags: ['Action','Power','Hindi'], seasons: [{name:'Season 1', episodes:131}] },
+        { title: 'One Piece', thumb: 'https://cdn.myanimelist.net/images/anime/6/73245l.jpg', desc: 'Luffy pirate king banne ke liye ocean explore karta hai.', tags: ['Adventure','Comedy','Hindi'], seasons: [{name:'Classic', episodes:1000}] },
+        { title: 'My Hero Academia', thumb: 'https://cdn.myanimelist.net/images/anime/10/78745l.jpg', desc: 'Deku bina power ke world ka greatest hero banna chahta hai.', tags: ['Action','School','Hindi'], seasons: [{name:'Season 1', episodes:13},{name:'Season 2', episodes:25},{name:'Season 3', episodes:25},{name:'Season 4', episodes:25},{name:'Season 5', episodes:25}] },
+        { title: 'Vinland Saga', thumb: 'https://cdn.myanimelist.net/images/anime/1775/99659l.jpg', desc: 'Viking warrior apne baap ka badla lene ki journey par hai.', tags: ['Action','Historical','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:24}] },
+        { title: 'Tokyo Revengers', thumb: 'https://cdn.myanimelist.net/images/anime/1839/110491l.jpg', desc: 'Takemichi time travel se apni girlfriend ko bachata hai.', tags: ['Action','Time Travel','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:13},{name:'Season 3', episodes:13}] },
+        { title: 'Chainsaw Man', thumb: 'https://cdn.myanimelist.net/images/anime/1806/126216l.jpg', desc: 'Denji ek devil hunter ki tarah kaam karta hai chainsaw powers ke saath.', tags: ['Action','Dark','Hindi'], seasons: [{name:'Season 1', episodes:12}] },
+        { title: 'Spy x Family', thumb: 'https://cdn.myanimelist.net/images/anime/1441/122795l.jpg', desc: 'Ek spy, assassin aur telepathic bachchi ki fake family.', tags: ['Comedy','Action','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:13}] },
+        { title: 'Fullmetal Alchemist Brotherhood', thumb: 'https://cdn.myanimelist.net/images/anime/1223/96541l.jpg', desc: 'Do bhai alchemy se apni maa ko wapas laane ki koshish karte hain.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:64}] },
+        { title: 'Hunter x Hunter', thumb: 'https://cdn.myanimelist.net/images/anime/11/33657l.jpg', desc: 'Gon apne Hunter baap ko dhundne ke liye journey par jaata hai.', tags: ['Action','Adventure','Hindi'], seasons: [{name:'Season 1', episodes:148}] },
+        { title: 'Overlord', thumb: 'https://cdn.myanimelist.net/images/anime/7/88003l.jpg', desc: 'Gamer ek MMORPG world mein phans jaata hai as undead king.', tags: ['Fantasy','Dark','Hindi'], seasons: [{name:'Season 1', episodes:13},{name:'Season 2', episodes:13},{name:'Season 3', episodes:13},{name:'Season 4', episodes:13}] },
+        { title: 'That Time I Got Reincarnated as a Slime', thumb: 'https://cdn.myanimelist.net/images/anime/1694/93337l.jpg', desc: 'Banda ek slime ban kar isekai world build karta hai.', tags: ['Fantasy','Comedy','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:24}] },
+        { title: 'Re:Zero', thumb: 'https://cdn.myanimelist.net/images/anime/1522/128219l.jpg', desc: 'Subaru ek fantasy world mein death se restart karta rehta hai.', tags: ['Fantasy','Dark','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:25}] },
+        { title: 'Sword Art Online', thumb: 'https://cdn.myanimelist.net/images/anime/11/39717l.jpg', desc: 'Players ek VR game mein trap ho jaate hain.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:24},{name:'Alicization', episodes:50}] },
+        { title: 'The Rising of the Shield Hero', thumb: 'https://cdn.myanimelist.net/images/anime/1245/95017l.jpg', desc: 'Naofumi ek betrayed shield hero se legend ban jaata hai.', tags: ['Fantasy','Action','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:13},{name:'Season 3', episodes:12}] },
+        { title: 'Mushoku Tensei', thumb: 'https://cdn.myanimelist.net/images/anime/1530/117776l.jpg', desc: 'NEET apni doosri zindagi mein sab kuch theek karna chahta hai.', tags: ['Fantasy','Adventure','Hindi'], seasons: [{name:'Season 1', episodes:23},{name:'Season 2', episodes:25}] },
+        { title: 'Bleach: Thousand-Year Blood War', thumb: 'https://cdn.myanimelist.net/images/anime/1764/119988l.jpg', desc: 'Ichigo Soul Society ko ek nayi taakat se bachata hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Part 1', episodes:13},{name:'Part 2', episodes:13},{name:'Part 3', episodes:13}] },
+        { title: 'Oshi no Ko', thumb: 'https://cdn.myanimelist.net/images/anime/1812/134736l.jpg', desc: 'Doctor idol ke baby ke roop mein reincarnate hota hai.', tags: ['Drama','Mystery','Hindi'], seasons: [{name:'Season 1', episodes:11},{name:'Season 2', episodes:13}] },
+        { title: 'Frieren: Beyond Journeys End', thumb: 'https://cdn.myanimelist.net/images/anime/1015/138006l.jpg', desc: 'Elf mage demons ko harane ke baad world explore karti hai.', tags: ['Fantasy','Adventure','Hindi'], seasons: [{name:'Season 1', episodes:28}] },
+        { title: 'Blue Lock', thumb: 'https://cdn.myanimelist.net/images/anime/1458/126427l.jpg', desc: 'Japan ka best striker dhundne ke liye 300 strikers ko compete karaya jaata hai.', tags: ['Sports','Action','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:13}] },
+      ];
+
+      const animeCards = animeList.map((a, i) => ({
+        id: `anime-${i}`,
+        num: i + 1,
+        title: a.title,
+        type: 'anime',
+        quality: 'HD',
+        meta: `Anime • Hindi • ${(a.tags||[]).join(' • ')}`,
+        desc: a.desc,
+        thumb: a.thumb,
+        tags: a.tags || ['Anime','Hindi'],
+        videoUrl: null,
+        seasons: a.seasons || [{name:'Season 1', episodes: [{title:'Episode 1', videoUrl:null}]}],
+        createdAt: Date.now() - i * 1000
+      }));
+
+      return [...hotCards, ...animeCards];
     })();
 
-    const state = {
+    window.state = {
       tab: localStorage.getItem(ACTIVE_KEY) || 'hot',
+      galRatio: '9:16',
       items: loadItems(),
       likes: JSON.parse(localStorage.getItem(LIKES_KEY) || '{}'),
       saved: JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'),
@@ -1453,13 +1975,17 @@
     function loadItems() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) : defaultItems;
+        if (!raw) return defaultItems;
+        const parsed = JSON.parse(raw);
+        // Agar purana empty array stored hai to defaultItems use karo
+        if (!Array.isArray(parsed) || parsed.length === 0) return defaultItems;
+        return parsed;
       } catch {
         return defaultItems;
       }
     }
 
-    function persist() {
+    window.persist = function persist() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items));
       localStorage.setItem(SAVED_KEY, JSON.stringify(state.saved));
       localStorage.setItem(LIKES_KEY, JSON.stringify(state.likes));
@@ -1467,7 +1993,7 @@
       updateCounts();
     }
 
-    function toast(msg) {
+    window.toast = function toast(msg) {
       const el = $('#toast');
       el.textContent = msg;
       el.classList.add('show');
@@ -1489,22 +2015,218 @@
     }
 
     function galleryCardHTML(item) {
-      const liked = !!state.likes[item.id];
       const num = item.num || 1;
-      const isImg = item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http'));
-      const thumbStyle = isImg
-        ? 'background-image:url(' + item.thumb + ');background-size:cover;background-position:center top;'
-        : 'background:rgba(0,100,200,.4);';
+      const ratio = item.ratio || '9:16'; // default portrait
+
+      // 9:16 portrait photo
+      const isImg916 = item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http'));
+      // 16:9 landscape photo
+      const isImg169 = item.thumb16 && (item.thumb16.startsWith('data:') || item.thumb16.startsWith('http'));
+
+      const activeThumb = ratio === '16:9' ? (item.thumb16 || item.thumb || '') : (item.thumb || item.thumb16 || '');
+      const activeType = ratio === '16:9' ? (item.mediaType16 || item.mediaType || 'image') : (item.mediaType || item.mediaType16 || 'image');
+      const hasPhoto = !!activeThumb;
+      const thumbStyle = hasPhoto ? 'background-image:url(' + activeThumb + ');background-size:cover;background-position:center center;' : '';
+      const mediaMarkup = hasPhoto
+        ? (activeType === 'video'
+            ? '<video src="' + activeThumb + '" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;"></video>'
+            : '<img src="' + activeThumb + '" alt="gallery media" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;filter:contrast(1.02) saturate(1.08);">')
+        : '';
+
+      // Card height based on ratio — full width single column
+      const cardH = ratio === '16:9' ? '56vw' : '133vw';
+      const cardMaxH = ratio === '16:9' ? '440px' : '620px';
+
       return `
-        <article class="card gal-photo-card" data-id="${item.id}" style="min-height:200px;cursor:pointer;">
-          <div class="card-top">${String(num).padStart(2,'0')}</div>
-          <div class="card-media" style="${thumbStyle}height:100%;"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 8px;background:linear-gradient(transparent,rgba(0,0,0,.7));display:flex;justify-content:space-between;align-items:center;z-index:3;">
-            <span style="font-size:9px;color:#c0ffff;font-weight:700;">${item.title||''}</span>
-            <button class="mini" data-like="${item.id}" aria-label="Like" style="width:22px;height:22px;">${liked?heartFull():heartLine()}</button>
+        <article class="card revealed is-visible" data-id="${item.id}" style="grid-column:1/-1;height:${cardH};max-height:${cardMaxH};cursor:default;border-radius:22px;overflow:hidden;position:relative;display:block;margin-bottom:4px;transition:height .3s ease;">
+          <!-- Number badge -->
+          <div style="position:absolute;top:12px;left:12px;z-index:5;font-size:11px;font-weight:800;letter-spacing:.08em;color:#c0ffff;padding:5px 10px;border-radius:999px;background:rgba(0,15,25,.75);border:1px solid rgba(0,200,255,.25);">${String(num).padStart(2,'0')}</div>
+          <!-- Photo area — full inset, no click to player -->
+          <div id="galMedia_${item.id}" style="position:absolute;inset:0;${thumbStyle}background-size:cover;background-position:center center;background-color:rgba(0,20,40,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .2s;cursor:${hasPhoto?'default':'pointer'};" ${hasPhoto ? '' : 'onclick="galUploadClick(\''+item.id+'\')"'}>
+            ${hasPhoto ? mediaMarkup : '<div style="font-size:44px;opacity:.4;">📷</div><div style="font-size:13px;color:#5dd8ff;font-weight:800;letter-spacing:.06em;">Upload ' + ratio + ' Photo</div>'}
+            <input type="file" id="galFile_${item.id}" accept="image/*" style="display:none;" onchange="galHandleUpload(event,'${item.id}')">
+          </div>
+          <!-- Footer — compact 2-col -->
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 14px 18px;background:linear-gradient(transparent,rgba(0,0,0,.92));z-index:3;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:${hasPhoto?'8px':'0'};">
+              <span style="font-size:13px;color:#c0ffff;font-weight:700;">${item.title||''}</span>
+              ${hasPhoto ? '<button onclick="event.stopPropagation();galUploadClick(\''+item.id+'\')" style="padding:3px 6px;border:none;border-radius:999px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:9px;cursor:pointer;">🔄</button>' : ''}
+            </div>
+            ${hasPhoto ? `<button onclick="event.stopPropagation();galDownload('${item.id}')" style="width:100%;padding:11px;border:none;border-radius:14px;background:linear-gradient(90deg,rgba(0,229,255,.22),rgba(0,180,255,.18));border:1px solid rgba(0,229,255,.35);color:#00e5ff;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:8px;">⬇️ Download</button>` : ''}
           </div>
         </article>
       `;
+    }
+
+    function galSetRatio(id, ratio) {
+      let item = state.items.find(x => x.id === id);
+      if (!item) {
+        // placeholder slot — create it
+        const num = parseInt(id.split('_').pop()) || 1;
+        item = { id, type:'gallery', num, title:'Photo #'+num, desc:'', quality:'HD', meta:'Gallery', thumb:null, thumb16:null, videoUrl:null, tags:['Gallery'], createdAt:Date.now() };
+        state.items.push(item);
+      }
+      item.ratio = ratio;
+      persist();
+      render();
+    }
+
+    function galUploadClick(id) {
+      const f = document.getElementById('galFile_' + id);
+      if (!f) return;
+      if (!document.body.contains(f)) document.body.appendChild(f);
+      f.click();
+    }
+
+    async function galHandleUpload(event, id) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const media = document.getElementById('galMedia_' + id);
+      if (media) media.innerHTML = '<div style="font-size:11px;color:#00e5ff;font-weight:700;">⬆️ Uploading…</div>';
+      toast('⬆️ ImgBB pe upload…');
+      try {
+        const url = await uploadToCloud(file);
+        let item = state.items.find(x => x.id === id);
+        const ratio = item ? (item.ratio || (id.startsWith('gal16_') ? '16:9' : '9:16')) : (id.startsWith('gal16_') ? '16:9' : '9:16');
+        if (item) {
+          item.ratio = ratio;
+          if (ratio === '16:9') {
+            item.thumb16 = url;
+            item.mediaType16 = 'image';
+          } else {
+            item.thumb = url;
+            item.mediaType = 'image';
+          }
+        } else {
+          const num = parseInt(id.split('_').pop()) || 1;
+          const newItem = { id, type:'gallery', num, title:'Photo #'+num, desc:'', quality:'HD', meta:'Gallery', thumb:null, thumb16:null, ratio, videoUrl:null, tags:['Gallery'], createdAt:Date.now(), mediaType:'image', mediaType16:'image' };
+          if (ratio === '16:9') newItem.thumb16 = url; else newItem.thumb = url;
+          state.items.push(newItem);
+          item = newItem;
+        }
+        persist();
+        saveChange('gal_img_' + id, url);
+        saveChange('gal_ratio_' + id, ratio);
+        syncFirebase();
+        render();
+        toast('✅ Photo save! Sabko dikhegi 🎉');
+      } catch(err) {
+        if (media) media.innerHTML = '<div style="font-size:10px;color:#ff7777;">❌ Retry</div>';
+        toast('❌ Upload failed');
+      }
+      event.target.value = '';
+    }
+
+    function galDownload(id) {
+      const item = state.items.find(x => x.id === id);
+      if (!item) return;
+      const ratio = item.ratio || '9:16';
+      const url = ratio === '16:9' ? item.thumb16 : item.thumb;
+      if (!url) return;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = (item.title||'photo') + '.jpg';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      toast('⬇️ Download shuru…');
+    }
+
+    // ── Placeholder upload cards (Hot/Movie when empty or shown always) ───
+    function placeholderCardHTML(type, num) {
+      const pid = 'ph_' + type + '_' + num;
+      const gradients = [
+        'linear-gradient(135deg,rgba(0,229,255,.18),rgba(128,0,255,.22))',
+        'linear-gradient(135deg,rgba(128,0,255,.22),rgba(255,0,180,.18))',
+        'linear-gradient(135deg,rgba(0,180,255,.20),rgba(0,255,180,.14))',
+        'linear-gradient(135deg,rgba(255,100,0,.18),rgba(255,0,100,.20))',
+        'linear-gradient(135deg,rgba(0,255,200,.16),rgba(0,100,255,.22))',
+      ];
+      const bg = gradients[(num - 1) % gradients.length];
+      return `
+        <article class="card ph-card" data-phid="${pid}" data-lazy-card="1" style="min-height:219px;cursor:default;position:relative;overflow:hidden;">
+          <div class="card-top">${String(num).padStart(2,'0')}</div>
+          <div class="card-media ph-media" id="phMedia_${pid}" style="background:${bg};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background .2s;" onclick="phUpload('${pid}','${type}')">
+            <svg viewBox="0 0 24 24" style="width:32px;height:32px;opacity:.5;" fill="none" stroke="rgba(0,229,255,.8)" stroke-width="1.5"><path d="M3 16.5V19a2 2 0 002 2h14a2 2 0 002-2v-2.5M16 8l-4-4-4 4M12 4v12"/></svg>
+            <div style="font-size:10px;color:#00e5ff;font-weight:700;letter-spacing:.04em;">Upload Image</div>
+            <input type="file" id="phFile_${pid}" accept="image/*" style="display:none;" onchange="phHandleUpload(event,'${pid}','${type}',${num})">
+          </div>
+          <div class="card-footer">
+            <h3 class="card-title">${type === 'hot' ? 'Hot' : 'Movie'} #${num}</h3>
+            <div class="card-meta"><span style="color:var(--muted);">Tap to upload</span></div>
+          </div>
+        </article>
+      `;
+    }
+
+    async function phUpload(pid, type) {
+      const f = document.getElementById('phFile_' + pid);
+      if (f) { if(!document.body.contains(f)) document.body.appendChild(f); f.click(); }
+    }
+
+    async function phHandleUpload(event, pid, type, num) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const media = document.getElementById('phMedia_' + pid);
+      if (media) { media.innerHTML = '<div style="font-size:11px;color:#00e5ff;">⬆️ Uploading…</div>'; }
+      toast('⬆️ ImgBB pe upload ho rahi hai…');
+      try {
+        const url = await uploadToCloud(file);
+        // Save permanently — same as editor does
+        const changeKey = 'phimg_' + pid;
+        saveChange(changeKey, url);
+        syncFirebase();
+        // Update card visually
+        if (media) {
+          media.style.backgroundImage = 'url(' + url + ')';
+          media.style.backgroundSize = 'cover';
+          media.style.backgroundPosition = 'center';
+          media.style.filter = 'contrast(1.05) saturate(1.1)';
+          media.innerHTML = '';
+          media.onclick = null;
+          media.style.cursor = 'default';
+        }
+        // Also save to state.items so it persists in render
+        const existingIdx = state.items.findIndex(x => x.id === pid);
+        if (existingIdx >= 0) {
+          state.items[existingIdx].thumb = url;
+        } else {
+          state.items.push({
+            id: pid, type, num, title: (type==='hot'?'Hot':'Movie')+' #'+num,
+            desc:'', quality:'HD', meta: type==='hot'?'Hot • HD':'Movie • HD',
+            thumb: url, videoUrl: null, tags:[type==='hot'?'Hot':'Movie','HD'], createdAt: Date.now()
+          });
+        }
+        persist();
+        toast('✅ Image save ho gayi! Sabko dikhegi 🎉');
+      } catch(err) {
+        if (media) media.innerHTML = '<div style="font-size:10px;color:#ff7777;">❌ Failed. Retry karo.</div>';
+        toast('❌ Upload failed');
+      }
+      event.target.value = '';
+    }
+
+    // Restore placeholder images from saved changes
+    function restorePlaceholderImages() {
+      const allChanges = JSON.parse(localStorage.getItem(CHANGES_KEY) || '{}');
+      if (window._fbEdChanges) Object.assign(allChanges, window._fbEdChanges);
+      document.querySelectorAll('.ph-card[data-phid]').forEach(card => {
+        const pid = card.dataset.phid;
+        const url = allChanges['phimg_' + pid] || (state.items.find(x=>x.id===pid)||{}).thumb;
+        if (url && (url.startsWith('http') || url.startsWith('data:'))) {
+          const media = document.getElementById('phMedia_' + pid);
+          if (media && !media.style.backgroundImage) {
+            media.style.backgroundImage = 'url(' + url + ')';
+            media.style.backgroundSize = 'cover';
+            media.style.backgroundPosition = 'center';
+            media.style.filter = 'contrast(1.05) saturate(1.1)';
+            media.innerHTML = '';
+            media.onclick = null;
+            media.style.cursor = 'default';
+          }
+        }
+      });
     }
 
     function cardHTML(item) {
@@ -1516,14 +2238,24 @@
       const thumbStyle = isImg
         ? 'background-image:url(' + item.thumb + ');background-size:cover;background-position:center;filter:contrast(1.05) saturate(1.1);'
         : 'background:' + (item.thumb || 'rgba(0,100,200,.4)') + ';';
+
+      const isAnime = item.type === 'anime';
+      const seasons = item.seasons || [];
+      const totalEps = seasons.reduce((a, s) => a + (Array.isArray(s.episodes) ? s.episodes.length : (typeof s.episodes === 'number' ? s.episodes : 0)), 0);
+      const seasonBadge = isAnime && seasons.length
+        ? `<div style="position:absolute;top:10px;right:10px;z-index:3;font-size:9px;font-weight:900;color:#fff;background:linear-gradient(135deg,#a855f7,#7c3aed);padding:3px 7px;border-radius:999px;letter-spacing:.04em;">${seasons.length}S • ${totalEps}EP</div>`
+        : '';
+      const cardBorder = isAnime ? 'rgba(168,85,247,.22)' : 'rgba(0,229,255,.10)';
+
       return `
-        <article class="card" data-id="${item.id}">
+        <article class="card" data-id="${item.id}" data-lazy-card="1" style="border-color:${cardBorder};">
           <div class="card-top">${String(num).padStart(2, '0')}</div>
+          ${seasonBadge}
           <div class="card-media" style="${thumbStyle}"></div>
           <div class="card-footer">
             <h3 class="card-title">${item.title}</h3>
             <div class="card-meta">
-              <span>${item.meta}</span>
+              <span style="color:${isAnime?'#c084fc':'var(--muted)'};">${isAnime ? '🎌 Anime' : item.meta}</span>
               <div class="mini-actions">
                 <button class="mini" data-like="${item.id}" aria-label="Like card">${liked ? heartFull() : heartLine()}</button>
                 <button class="mini" data-save="${item.id}" aria-label="Save card">${saved ? saveFull() : saveLine()}</button>
@@ -1548,35 +2280,70 @@
     const PAGE_SIZE = 25;
     let currentPage = 1;
 
-    function render(resetPage = true) {
+    window.render = function render(resetPage = true) {
       if (resetPage) currentPage = 1;
       const grid = $('#cardGrid');
       const list = getFilteredItems();
-      $('#sectionTitle').textContent = state.tab[0].toUpperCase() + state.tab.slice(1);
+      $('#sectionTitle').textContent = state.tab === 'anime' ? 'Movie' : state.tab[0].toUpperCase() + state.tab.slice(1);
       const galCount = state.items.filter(i => i.type === 'gallery').length;
-      $('#sectionSub').textContent = state.tab === 'hot' ? state.items.filter(i=>i.type==='hot').length + ' videos' : state.tab === 'movie' ? state.items.filter(i=>i.type==='movie').length + ' movies' : state.tab === 'save' ? `${state.saved.length} saved items` : state.tab === 'gallery' ? galCount + ' photos' : '';
+      $('#sectionSub').textContent = state.tab === 'hot' ? state.items.filter(i=>i.type==='hot').length + ' videos' : state.tab === 'anime' ? state.items.filter(i=>i.type==='anime').length + ' movies' : state.tab === 'save' ? `${state.saved.length} saved items` : state.tab === 'gallery' ? galCount + ' photos' : '';
 
       let items;
       if (state.tab === 'gallery') {
-        // Show actual gallery type photos, NOT liked items
-        items = state.items.filter(i => i.type === 'gallery');
-        if (!items.length) { grid.innerHTML = emptyState('Koi photo nahi. Admin se gallery photos add karo.'); attachCardEvents(); return; }
-        // 3-column photo grid for gallery
-        grid.style.gridTemplateColumns = 'repeat(3, minmax(0,1fr))';
-        grid.style.gap = '8px';
-        const visible = items.slice(0, currentPage * PAGE_SIZE);
-        const hasMore = visible.length < items.length;
-        grid.innerHTML = visible.map(galleryCardHTML).join('') +
-          (hasMore ? `<button class="load-more-btn" style="grid-column:1/-1" id="loadMoreBtn">⬇ Load More (${items.length - visible.length} remaining)</button>` : '');
-        if (hasMore) {
-          $('#loadMoreBtn').onclick = () => { currentPage++; render(false); };
+        grid.style.gridTemplateColumns = '1fr';
+        grid.style.gap = '14px';
+        const ratio = state.galRatio || '9:16';
+        const prefix = ratio === '16:9' ? 'gal16_slot_' : 'gal_slot_';
+        const galItems = state.items.filter(i => i.type === 'gallery');
+        const slots = [];
+        for (let n = 1; n <= 100; n++) {
+          const slotId = prefix + n;
+          const existing = galItems.find(x =>
+            x.id === slotId ||
+            (x.num === n && (ratio === '9:16' ? !x.id.startsWith('gal16_') : x.id.startsWith('gal16_'))) ||
+            (ratio === '9:16' && x.num === n && x.id.startsWith('gallery-'))
+          );
+          if (existing) {
+            // Force ratio on existing item for display
+            const clone = Object.assign({}, existing, { ratio, id: slotId });
+            slots.push(clone);
+          } else {
+            slots.push({ id: slotId, type: 'gallery', num: n, title: 'Photo #' + n, thumb: null, thumb16: null, ratio });
+          }
         }
+        // 2-column grid: show filled slots + next 2 empty slots (pair)
+        const filledSlots = slots.filter(s => s.thumb);
+        const visibleSlots = filledSlots; // only filled photos
+
+        const t916 = document.getElementById('galTab916');
+        const t169 = document.getElementById('galTab169');
+        if (t916) { t916.style.background = ratio==='9:16'?'linear-gradient(90deg,#a855f7,#7c3aed)':'rgba(168,85,247,.12)'; t916.style.color = ratio==='9:16'?'#fff':'#c084fc'; t916.style.boxShadow = ratio==='9:16'?'0 0 14px rgba(168,85,247,.45)':'none'; t916.style.border = ratio==='9:16'?'none':'1px solid rgba(168,85,247,.30)'; }
+        if (t169) { t169.style.background = ratio==='16:9'?'linear-gradient(90deg,#a855f7,#7c3aed)':'rgba(168,85,247,.12)'; t169.style.color = ratio==='16:9'?'#fff':'#c084fc'; t169.style.boxShadow = ratio==='16:9'?'0 0 14px rgba(168,85,247,.45)':'none'; t169.style.border = ratio==='16:9'?'none':'1px solid rgba(168,85,247,.30)'; }
+        const galRatioDiv = document.getElementById('galRatioTabs');
+        if (galRatioDiv) galRatioDiv.style.display = 'flex';
+        grid.innerHTML = visibleSlots.map((slot, idx) => {
+          const cardHtml = galleryCardHTML(slot);
+          const isAfter5 = (idx + 1) % 5 === 0 && idx + 1 < slots.length;
+          const bannerHtml = isAfter5 ? `
+            <div style="grid-column:1/-1;width:100%;padding:6px 0 10px;">
+              <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:linear-gradient(90deg,rgba(0,229,255,.12),rgba(128,0,255,.10),rgba(255,0,180,.08));border:1px solid rgba(0,229,255,.18);border-radius:16px;color:#80ffff;font-size:14px;font-weight:800;letter-spacing:.05em;box-shadow:0 0 24px rgba(0,229,255,.08);">
+                <span style="font-size:22px;">🔥</span>
+                <span style="flex:1;">Premium Unlocked — Watch Exclusive Content</span>
+                <span style="font-size:12px;font-weight:900;color:#00e5ff;background:rgba(0,229,255,.14);border:1px solid rgba(0,229,255,.28);padding:6px 16px;border-radius:999px;flex-shrink:0;">GET →</span>
+              </div>
+            </div>
+          ` : '';
+          return cardHtml + bannerHtml;
+        }).join('');
         attachCardEvents();
         updateCounts();
+        if (typeof applySavedSectionStyles === 'function') applySavedSectionStyles();
         return;
       } else {
         grid.style.gridTemplateColumns = '';
         grid.style.gap = '';
+        const _grt = document.getElementById('galRatioTabs');
+        if (_grt) _grt.style.display = 'none';
       }
 
       if (state.tab === 'save') {
@@ -1590,19 +2357,61 @@
       const hasMore = visible.length < items.length;
 
       grid.innerHTML = visible.map(cardHTML).join('') +
-        (hasMore ? `<button class="load-more-btn" id="loadMoreBtn">⬇ Load More (${items.length - visible.length} remaining)</button>` : '');
-
-      if (hasMore) {
-        $('#loadMoreBtn').onclick = () => {
-          currentPage++;
-          render(false);
-          window.scrollTo({ top: document.body.scrollHeight - 900, behavior: 'smooth' });
-        };
-      }
+        (hasMore ? `<div class="lazy-sentinel" id="lazySentinel"><div class="lazy-loader"></div><span>Lazy loading… aur cards niche se aa rahe hain</span></div>` : '');
 
       attachCardEvents();
       updateCounts();
       applyCardPhotos();
+      if (typeof applySavedSectionStyles === 'function') applySavedSectionStyles();
+      setTimeout(restorePlaceholderImages, 100);
+      setTimeout(() => setupLazyReveal(), 0);
+      setTimeout(() => setupInfiniteScroll(hasMore), 0);
+    }
+
+    let lazyRevealObserver = null;
+    let infiniteObserver = null;
+    let lazyLoadLock = false;
+
+    function setupLazyReveal() {
+      const cards = Array.from(document.querySelectorAll('.card[data-lazy-card="1"]'));
+      if (!cards.length) return;
+
+      if (lazyRevealObserver) lazyRevealObserver.disconnect();
+      lazyRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed', 'is-visible');
+            lazyRevealObserver.unobserve(entry.target);
+          }
+        });
+      }, { root: null, rootMargin: '120px 0px 160px 0px', threshold: 0.12 });
+
+      cards.forEach((card, i) => {
+        card.style.setProperty('--reveal-delay', `${Math.min(i, 18) * 28}ms`);
+        requestAnimationFrame(() => lazyRevealObserver.observe(card));
+      });
+    }
+
+    function setupInfiniteScroll(hasMore) {
+      const sentinel = document.getElementById('lazySentinel');
+      if (!hasMore || !sentinel) {
+        if (infiniteObserver) infiniteObserver.disconnect();
+        infiniteObserver = null;
+        return;
+      }
+
+      if (infiniteObserver) infiniteObserver.disconnect();
+      infiniteObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || lazyLoadLock) return;
+          lazyLoadLock = true;
+          currentPage++;
+          render(false);
+          setTimeout(() => { lazyLoadLock = false; }, 260);
+        });
+      }, { root: null, rootMargin: '700px 0px 900px 0px', threshold: 0.01 });
+
+      infiniteObserver.observe(sentinel);
     }
 
     function applyCardPhotos() {
@@ -1626,6 +2435,8 @@
       $$('.card[data-id]').forEach(card => {
         card.onclick = (e) => {
           if (e.target.closest('button')) return;
+          // Gallery mein player nahi kholna
+          if (state.tab === 'gallery') return;
           openPlayer(card.dataset.id);
         };
       });
@@ -1633,61 +2444,687 @@
       $$('[data-save]').forEach(btn => btn.onclick = (e) => { e.stopPropagation(); toggleSave(btn.dataset.save); });
     }
 
-    function setTab(tab) {
+    window.setTab = function setTab(tab) {
       state.tab = tab;
       localStorage.setItem(ACTIVE_KEY, tab);
       $$('.tab, .nav-item').forEach(el => el.classList.toggle('active', el.dataset.tab === tab));
+      // Show/hide ratio tabs only for gallery
+      const galRatioDiv = document.getElementById('galRatioTabs');
+      if (galRatioDiv) galRatioDiv.style.display = tab === 'gallery' ? 'flex' : 'none';
+      // Show hero banner only in Hot tab
+      const heroSection = document.getElementById('heroSection');
+      if (heroSection) heroSection.style.display = tab === 'hot' ? 'flex' : 'none';
       render();
+    }
+
+    function setGalRatio(ratio) {
+      state.galRatio = ratio;
+      render();
+    }
+
+    // ── ANIME EPISODE SELECTOR + HOT PLAYER ──────────────────
+    function openAnimePlayer(id) {
+      const item = state.items.find(x => x.id === id);
+      if (!item) return;
+
+      // Normalize seasons
+      const rawSeasons = item.seasons || [{name:'Season 1', episodes:[{title:'Episode 1', videoUrl:null}]}];
+      const normalizedSeasons = rawSeasons.map((s, si) => {
+        let eps = s.episodes;
+        if (typeof eps === 'number') {
+          eps = Array.from({length: eps}, (_, ei) => ({
+            title: s.name + ' Ep ' + (ei+1),
+            videoUrl: (s.episodeVideos && s.episodeVideos[ei]) || null
+          }));
+        }
+        return { name: s.name || 'Season '+(si+1), episodes: eps };
+      });
+
+      // Remove old selector if any
+      const oldSel = document.getElementById('animeSelectorOverlay');
+      if (oldSel) oldSel.remove();
+
+      let selSeason = 0;
+
+      // Build selector overlay (bottom sheet style)
+      function buildSelector() {
+        const existing = document.getElementById('animeSelectorOverlay');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'animeSelectorOverlay';
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(0,0,10,.88);backdrop-filter:blur(14px);display:flex;align-items:flex-end;justify-content:center;animation:selectorFadeIn .22s ease;touch-action:pan-y;';
+
+        const thumbBg = item.thumb && (item.thumb.startsWith('http')||item.thumb.startsWith('data:'))
+          ? 'url(' + item.thumb + ') center/cover' : (item.thumb || 'rgba(0,10,30,.9)');
+
+        const seasonTabsHTML = normalizedSeasons.map((s, i) =>
+          '<button onclick="window._animeSelSeason(' + i + ')" style="padding:7px 16px;border:none;border-radius:999px;cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.02em;transition:all .2s;flex:0 0 auto;' +
+          (i === selSeason
+            ? 'background:linear-gradient(135deg,#a855f7,#00e5ff);color:#fff;box-shadow:0 0 14px rgba(168,85,247,.45);'
+            : 'background:rgba(168,85,247,.1);color:#c084fc;border:1px solid rgba(168,85,247,.22);') +
+          '">' + s.name + '</button>'
+        ).join('');
+
+        const curEps = normalizedSeasons[selSeason].episodes;
+        const epRowsHTML = curEps.map((e, i) => {
+          const hasVid = !!e.videoUrl;
+          return '<div onclick="window._animeSelPlay(' + i + ')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:14px;cursor:pointer;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:7px;transition:background .15s;active-background:rgba(168,85,247,.15);" onpointerdown="this.style.background=\'rgba(168,85,247,.13)\'" onpointerup="this.style.background=\'rgba(255,255,255,.03)\'" onpointerleave="this.style.background=\'rgba(255,255,255,.03)\'">' +
+            '<div style="width:38px;height:38px;border-radius:10px;background:' + (hasVid ? 'linear-gradient(135deg,#a855f7,#00e5ff)' : 'rgba(168,85,247,.15)') + ';display:flex;align-items:center;justify-content:center;flex:0 0 auto;">' +
+              (hasVid
+                ? '<svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>'
+                : '<span style="font-size:12px;font-weight:900;color:#c084fc;">' + String(i+1).padStart(2,'0') + '</span>') +
+            '</div>' +
+            '<div style="flex:1;min-width:0;">' +
+              '<div style="font-size:13px;font-weight:700;color:#d8f0ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + e.title + '</div>' +
+              '<div style="font-size:10px;font-weight:700;color:' + (hasVid ? '#00e5ff' : '#4a6a88') + ';margin-top:2px;">' + (hasVid ? '▶ Play' : '⏳ Coming Soon') + '</div>' +
+            '</div>' +
+            '<div style="font-size:18px;color:rgba(168,85,247,.6);flex:0 0 auto;">›</div>' +
+          '</div>';
+        }).join('');
+
+        overlay.innerHTML =
+          '<style>@keyframes selectorFadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}</style>' +
+          '<div style="width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;background:linear-gradient(170deg,#07091a,#090c1e);border-radius:24px 24px 0 0;border:1px solid rgba(168,85,247,.18);border-bottom:none;overflow:hidden;box-shadow:0 -20px 60px rgba(0,0,30,.8);">' +
+            // Drag handle
+            '<div style="display:flex;justify-content:center;padding:10px 0 0;"><div style="width:40px;height:4px;border-radius:99px;background:rgba(255,255,255,.18);"></div></div>' +
+            // Header with poster
+            '<div style="display:flex;align-items:center;gap:14px;padding:12px 16px 10px;">' +
+              '<div style="width:52px;height:70px;border-radius:10px;flex:0 0 auto;background:' + thumbBg + ';background-size:cover!important;box-shadow:0 4px 18px rgba(0,0,0,.5);"></div>' +
+              '<div style="flex:1;min-width:0;">' +
+                '<div style="font-size:16px;font-weight:900;color:#eaffff;letter-spacing:-.02em;">' + item.title + '</div>' +
+                '<div style="font-size:11px;color:#5dd8ff;margin-top:3px;">' + (item.tags||[]).join(' • ') + '</div>' +
+              '</div>' +
+              '<button onclick="document.getElementById(\'animeSelectorOverlay\').remove()" style="width:32px;height:32px;border:none;border-radius:10px;background:rgba(255,255,255,.08);color:#aac;cursor:pointer;font-size:16px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;">✕</button>' +
+            '</div>' +
+            // Season tabs
+            '<div style="padding:0 16px 10px;">' +
+              '<div style="font-size:10px;color:#7a9ab8;font-weight:700;letter-spacing:.08em;margin-bottom:8px;">SEASON CHUNIYE</div>' +
+              '<div id="animeSelSeasonTabs" style="display:flex;gap:8px;flex-wrap:wrap;">' + seasonTabsHTML + '</div>' +
+            '</div>' +
+            // Episode list
+            '<div style="flex:1;overflow-y:auto;padding:0 16px 20px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(168,85,247,.2) transparent;">' +
+              '<div style="font-size:10px;color:#7a9ab8;font-weight:700;letter-spacing:.08em;margin-bottom:10px;">EPISODE CHUNIYE — ' + normalizedSeasons[selSeason].name + '</div>' +
+              '<div id="animeSelEpList">' + epRowsHTML + '</div>' +
+            '</div>' +
+          '</div>';
+
+        // Close on backdrop tap
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) overlay.remove();
+        });
+
+        document.body.appendChild(overlay);
+      }
+
+      // Season tab click
+      window._animeSelSeason = function(si) {
+        selSeason = si;
+        buildSelector();
+      };
+
+      // Episode play click → close selector → open hot player
+      window._animeSelPlay = function(ei) {
+        const sel = normalizedSeasons[selSeason];
+        const ep = sel.episodes[ei];
+        const overlay = document.getElementById('animeSelectorOverlay');
+        if (overlay) overlay.remove();
+        // Play in hot player
+        _playAnimeInHotPlayer(item, sel, ei, ep);
+      };
+
+      buildSelector();
+    }
+
+    // Play anime episode using the main hot player (#playerModal)
+    function _playAnimeInHotPlayer(item, season, epIdx, ep) {
+      state.current = item;
+
+      // Set title
+      const _pt1 = $('#playerTitle'); if(_pt1) _pt1.textContent = item.title + ' — ' + season.name + ' Ep ' + (epIdx+1);
+
+      // Like / Save state
+      const likeBtn = $('#playerLike');
+      const saveBtn = $('#playerSave');
+      if (likeBtn) likeBtn.innerHTML = state.likes[item.id] ? heartFull() : heartLine();
+      if (saveBtn) saveBtn.innerHTML = state.saved.includes(item.id) ? saveFull() : saveLine();
+
+      const lc = $('#playerLikeCount');
+      if (lc) lc.textContent = (Math.floor(Math.random() * 180) + 12) + 'K';
+
+      const vid = $('#playerVideo');
+      const frame = $('#playerFrame');
+      const bigPlay = $('#playerBigPlay') || {classList:{add:function(){},remove:function(){}}};
+
+      // Clear old iframe
+      const oldIfrm = frame.querySelector('iframe');
+      if (oldIfrm) oldIfrm.remove();
+
+      const videoSrc = ep.videoUrl || '';
+
+      if (videoSrc) {
+        const isYT = /youtu/.test(videoSrc);
+        const isDrive = /drive\.google|docs\.google/.test(videoSrc);
+
+        const isStreamtape = /streamtape\.com/.test(videoSrc);
+        if (isStreamtape) {
+          const stId = videoSrc.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/)?.[1] || '';
+          vid.style.display = 'none';
+          bigPlay.classList.add('hidden');
+          const ifrm = document.createElement('iframe');
+          ifrm.src = 'https://streamtape.com/e/' + stId + '/';
+          ifrm.style.cssText = 'position:absolute;top:-58px;left:-2px;width:calc(100% + 4px);height:calc(100% + 116px);border:none;z-index:1;';
+          ifrm.setAttribute('allowfullscreen','');
+          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media');
+          frame.style.overflow = 'hidden';
+          frame.appendChild(ifrm);
+        } else if (isYT) {
+          const ytMatch = videoSrc.match(/(?:youtu\.be\/|[?&]v=|embed\/)([A-Za-z0-9_-]{11})/);
+          const ytId = ytMatch ? ytMatch[1] : videoSrc.split('/').pop();
+          vid.style.display = 'none';
+          bigPlay.classList.add('hidden');
+          const ifrm = document.createElement('iframe');
+          ifrm.src = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1&playsinline=1';
+          ifrm.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;z-index:1;';
+          ifrm.setAttribute('allowfullscreen','');
+          ifrm.setAttribute('allow','autoplay; encrypted-media; fullscreen');
+          frame.appendChild(ifrm);
+        } else if (isDrive) {
+          const driveId = videoSrc.match(/\/d\/([^/?]+)/)?.[1] || videoSrc.match(/id=([^&]+)/)?.[1] || '';
+          const directUrl = 'https://drive.google.com/uc?export=download&id=' + driveId + '&confirm=t';
+          vid.style.display = 'block';
+          vid.style.cssText += ';position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;background:#000;';
+          vid.src = directUrl;
+          vid.load();
+          vid.play().catch(function(){});
+          bigPlay.classList.remove('hidden');
+          frame.style.overflow = '';
+        } else {
+          // Direct video URL
+          vid.style.display = 'block';
+          vid.style.cssText += ';position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;';
+          vid.src = videoSrc;
+          vid.load();
+          vid.play().catch(function(){});
+          bigPlay.classList.remove('hidden');
+        }
+        // Reset frame bg
+        frame.style.backgroundImage = '';
+        frame.style.background = '#000';
+      } else {
+        // No video — show poster as bg, big play button visible (cosmetic)
+        vid.pause(); vid.src = ''; vid.style.display = 'block';
+        bigPlay.classList.remove('hidden');
+        if (item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http'))) {
+          frame.style.backgroundImage = 'url(' + item.thumb + ')';
+          frame.style.backgroundSize = 'cover';
+          frame.style.backgroundPosition = 'center';
+        } else {
+          frame.style.backgroundImage = '';
+          frame.style.background = item.thumb || 'rgba(0,0,20,.9)';
+        }
+      }
+
+      // Recommended: other anime
+      const recListEl = $('#recommendedList');
+      const recItems = state.items.filter(function(x){ return x.id !== item.id && x.type === 'anime'; }).slice(0, 12);
+      let html = '';
+      recItems.forEach(function(v) {
+        const bg = v.thumb && (v.thumb.startsWith('data:') || v.thumb.startsWith('http'))
+          ? 'url(' + v.thumb + ') center/cover'
+          : (v.thumb || 'linear-gradient(135deg,rgba(168,85,247,.25),rgba(0,229,255,.12))');
+        html += '<div class="rec-card" data-rec-id="' + v.id + '">' +
+          '<div class="thumb" style="background:' + bg + ';"></div>' +
+          '<div class="rec-meta">' +
+            '<div class="rec-title">' + v.title + '</div>' +
+            '<div class="rec-sub"><span>' + (v.meta||'Anime') + '</span></div>' +
+            '<div class="chip-row">' + (v.tags||[]).slice(0,2).map(function(t){ return '<span class="chip">'+t+'</span>'; }).join('') + '</div>' +
+          '</div></div>';
+      });
+      recListEl.innerHTML = html;
+      setTimeout(function() {
+        var nodes = document.querySelectorAll('#recommendedList [data-rec-id]');
+        nodes.forEach(function(node) {
+          node.onclick = function() { openPlayer(node.dataset.recId); };
+        });
+      }, 0);
+
+      $('#playerModal').classList.add('open');
     }
 
     function openPlayer(id) {
       const item = state.items.find(x => x.id === id);
       if (!item) return;
+      // Anime items → anime player
+      if (item.type === 'anime') { openAnimePlayer(id); return; }
       state.current = item;
-      $('#playerTitle').textContent = item.title;
-      $('#playerDesc').textContent = item.desc || '';
-      $('#playerLike').innerHTML = state.likes[id] ? heartFull() : heartLine();
-      $('#playerSave').innerHTML = state.saved.includes(id) ? saveFull() : saveLine();
-      // Embed real video or restore fake UI
-      const stage = $('#videoStage');
+      const _pt2 = $('#playerTitle'); if(_pt2) _pt2.textContent = item.title;
+      const _plike = $('#playerLike'); if(_plike) _plike.innerHTML = state.likes[id] ? heartFull() : heartLine();
+      const _psave = $('#playerSave'); if(_psave) _psave.innerHTML = state.saved.includes(id) ? saveFull() : saveLine();
+
+      // Like count random
+      const lc = $('#playerLikeCount');
+      if (lc) lc.textContent = (Math.floor(Math.random() * 180) + 12) + 'K';
+
+      const vid = $('#playerVideo');
+      const frame = $('#playerFrame');
+      const bigPlay = {classList:{add:function(){},remove:function(){}}};
+
+      // Remove old iframe
+      const oldIframe = frame.querySelector('iframe');
+      if (oldIframe) oldIframe.remove();
+
       if (item.videoUrl) {
-        stage.innerHTML = '<iframe src="' + item.videoUrl + '" style="width:100%;height:100%;border:none;border-radius:20px;" allowfullscreen allow="autoplay; encrypted-media"></iframe>';
-        stage.style.backgroundImage = '';
+        const ytMatch = item.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
+        const driveMatch = item.videoUrl.includes('drive.google') || item.videoUrl.includes('docs.google');
+        const stMatch = item.videoUrl.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/);
+        if (stMatch) {
+          vid.style.display = 'none';
+          bigPlay.classList.add('hidden');
+          const ifrm = document.createElement('iframe');
+          ifrm.src = 'https://streamtape.com/e/' + stMatch[1] + '/';
+          ifrm.style.cssText = 'position:absolute;top:-58px;left:-2px;width:calc(100% + 4px);height:calc(100% + 116px);border:none;z-index:1;';
+          ifrm.setAttribute('allowfullscreen','');
+          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media');
+          frame.style.overflow = 'hidden';
+          frame.appendChild(ifrm);
+        } else if (ytMatch) {
+          vid.style.display = 'none';
+          bigPlay.classList.add('hidden');
+          const ifrm = document.createElement('iframe');
+          ifrm.src = 'https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1';
+          ifrm.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;z-index:1;';
+          ifrm.setAttribute('allowfullscreen','');
+          ifrm.setAttribute('allow','autoplay; encrypted-media');
+          frame.appendChild(ifrm);
+        } else if (driveMatch) {
+          vid.style.display = 'none';
+          bigPlay.classList.add('hidden');
+          const driveId = item.driveId || item.videoUrl.match(/\/d\/([^/?]+)/)?.[1] || item.videoUrl.match(/id=([^&]+)/)?.[1] || '';
+          const ifrm = document.createElement('iframe');
+          ifrm.src = 'https://drive.google.com/file/d/' + driveId + '/preview';
+          ifrm.style.cssText = 'position:absolute;top:-62px;left:0;width:100%;height:calc(100% + 124px);border:none;z-index:1;';
+          ifrm.setAttribute('allowfullscreen','');
+          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture');
+          frame.style.overflow = 'hidden';
+          frame.appendChild(ifrm);
+        } else {
+          vid.style.display = 'block';
+          vid.src = item.videoUrl;
+          vid.load();
+          vid.play().catch(()=>{});
+          bigPlay.classList.remove('hidden');
+        }
       } else {
-        stage.innerHTML = '<div class="video-overlay"><div class="progress"><div></div></div><div class="row"><div class="chip-row" id="playerChips"></div><div class="chip-row"><span class="chip">Like</span><span class="chip">Save</span><span class="chip">Share</span><span class="chip">Comments</span></div></div></div>';
-        const chips = document.getElementById('playerChips');
-        if (chips) chips.innerHTML = (item.tags || []).map(t => '<span class="chip">' + t + '</span>').join('');
+        vid.pause(); vid.src = ''; vid.style.display = 'block';
+        bigPlay.classList.remove('hidden');
         if (item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http'))) {
-          stage.style.backgroundImage = 'url(' + item.thumb + ')';
-          stage.style.backgroundSize = 'cover'; stage.style.backgroundPosition = 'center';
+          frame.style.backgroundImage = 'url(' + item.thumb + ')';
+          frame.style.backgroundSize = 'cover';
+          frame.style.backgroundPosition = 'center';
+        } else {
+          frame.style.backgroundImage = '';
+          frame.style.background = item.thumb || 'rgba(0,0,20,.8)';
         }
       }
-      $('#recommendedList').innerHTML = state.items.filter(x => x.id !== id && x.type === item.type).slice(0, 10).map(recHTML).join('');
-      $('#playerModal').classList.add('open');
+
+      const recListEl = $('#recommendedList');
+      const recItems = state.items.filter(x => x.id !== id && x.type === item.type).slice(0, 12);
+
+      const inlineAds = [
+        {copy:'Upgrade to Premium — zero ads, 4K streams.', pill:'Try Free →'},
+        {copy:'Creator tools for the next generation of video makers.', pill:'Explore →'},
+        {copy:'Fastest CDN for video streaming platforms worldwide.', pill:'Learn More →'},
+      ];
+
+      let html = '';
+      let adIdx = 0;
+      recItems.forEach((v, i) => {
+        if (i > 0 && i % 4 === 0 && adIdx < inlineAds.length) {
+          const ad = inlineAds[adIdx++];
+          html += `<div class="list-ad"><div><div class="ad-label">Sponsored</div><div class="ad-copy">${ad.copy}</div></div><div class="ad-pill">${ad.pill}</div></div>`;
+        }
+        const bg = v.thumb && (v.thumb.startsWith('data:') || v.thumb.startsWith('http'))
+          ? 'url(' + v.thumb + ') center/cover'
+          : v.thumb || 'linear-gradient(135deg,rgba(157,77,255,.25),rgba(0,245,255,.12))';
+        html += `
+          <div class="rec-card" data-rec-id="${v.id}">
+            <div class="thumb" style="background:${bg};"></div>
+            <div class="rec-meta">
+              <div class="rec-title">${v.title}</div>
+              <div class="rec-sub"><span>${v.meta||''}</span></div>
+              <div class="chip-row">${(v.tags||[]).slice(0,2).map(t=>'<span class="chip">'+t+'</span>').join('')}</div>
+            </div>
+          </div>`;
+      });
+      recListEl.innerHTML = html;
       setTimeout(() => {
         $$('#recommendedList [data-rec-id]').forEach(node => node.onclick = () => openPlayer(node.dataset.recId));
       }, 0);
+
+      $('#playerModal').classList.add('open');
+      setTimeout(() => { if (window.initVCOverlay) initVCOverlay(item); }, 60);
     }
 
-    function recHTML(item) {
-      return `
-        <div class="rec-item" data-rec-id="${item.id}">
-          <div class="rec-thumb" style="background:${item.thumb};"></div>
-          <div class="rec-content">
-            <h4>${item.title}</h4>
-            <p>${item.meta}</p>
-          </div>
-        </div>
-      `;
+    function closePlayer() {
+      $('#playerModal').classList.remove('open');
+      const vid = $('#playerVideo');
+      if (vid) vid.pause();
+      const ifrm = $('#playerFrame iframe');
+      if (ifrm) ifrm.remove();
+      // Hide controls
+      const ov = $('#vcOverlay');
+      if (ov) { ov.style.opacity = '0'; ov.style.pointerEvents = 'none'; }
     }
 
-    function closePlayer() { $('#playerModal').classList.remove('open'); }
+    // ══ CUSTOM VIDEO CONTROLS LOGIC ══
+    (function initVideoControls() {
+      let controlsTimer = null;
+      let isMuted = false;
+      let lastTap = 0, tapCount = 0, tapTimer = null;
+      let seeking = false;
+
+      const vid = () => $('#playerVideo');
+      const ov = () => $('#vcOverlay');
+      const frame = () => $('#playerFrame');
+
+      function showControls() {
+        const o = ov();
+        if (!o) return;
+        o.style.opacity = '1';
+        o.style.pointerEvents = 'all';
+        clearTimeout(controlsTimer);
+        controlsTimer = setTimeout(hideControls, 3200);
+      }
+      function hideControls() {
+        const o = ov();
+        if (!o) return;
+        o.style.opacity = '0';
+        o.style.pointerEvents = 'none';
+      }
+
+      function fmtTime(s) {
+        s = Math.floor(s || 0);
+        const m = Math.floor(s / 60);
+        const sec = s % 60;
+        return m + ':' + (sec < 10 ? '0' : '') + sec;
+      }
+
+      function updateSeek() {
+        const v = vid();
+        if (!v || !v.duration) return;
+        const pct = (v.currentTime / v.duration) * 100;
+        const fill = $('#vcSeekFill');
+        const thumb = $('#vcSeekThumb');
+        if (fill) fill.style.width = pct + '%';
+        if (thumb) thumb.style.left = pct + '%';
+        const cur = $('#vcCurTime');
+        const dur = $('#vcDuration');
+        if (cur) cur.textContent = fmtTime(v.currentTime);
+        if (dur) dur.textContent = fmtTime(v.duration);
+        // Update play icon
+        const icon = $('#vcPlayIcon');
+        if (icon) {
+          if (v.paused) icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+          else icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        }
+      }
+
+      function showRipple(side, txt) {
+        const el = side === 'L' ? $('#vcLeftRipple') : $('#vcRightRipple');
+        if (!el) return;
+        el.textContent = txt;
+        el.style.opacity = '1';
+        setTimeout(() => { el.style.opacity = '0'; }, 700);
+      }
+
+      function skip(sec) {
+        const v = vid();
+        if (!v) return;
+        v.currentTime = Math.max(0, Math.min(v.duration || 0, v.currentTime + sec));
+        showRipple(sec < 0 ? 'L' : 'R', (sec < 0 ? '' : '+') + sec + 's');
+        updateSeek();
+      }
+
+      function togglePlay() {
+        const v = vid();
+        if (!v) return;
+        if (v.paused) v.play().catch(()=>{});
+        else v.pause();
+        updateSeek();
+      }
+
+      // Tap handler on frame for controls show/hide + double tap zones
+      function handleFrameTap(e) {
+        // Ignore if clicking overlay buttons directly
+        if (e.target.closest('button') || e.target.closest('#vcSeekTrack') || e.target.closest('#vcAdStrip')) return;
+        const now = Date.now();
+        const fr = frame();
+        if (!fr) return;
+        const rect = fr.getBoundingClientRect();
+        const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        const zone = x < rect.width * 0.33 ? 'L' : x > rect.width * 0.67 ? 'R' : 'C';
+
+        clearTimeout(tapTimer);
+
+        if (now - lastTap < 350 && tapCount === 1) {
+          // ── DOUBLE TAP ──
+          tapCount = 0;
+          lastTap = 0;
+          if (zone === 'L') skip(-10);
+          else if (zone === 'R') skip(10);
+          else togglePlay();
+          showControls();
+        } else {
+          // ── SINGLE TAP (wait to confirm not double) ──
+          tapCount = 1;
+          lastTap = now;
+          tapTimer = setTimeout(() => {
+            tapCount = 0;
+            // Single tap = just toggle controls visibility
+            const o = ov();
+            if (!o) return;
+            if (o.style.opacity === '1') hideControls();
+            else showControls();
+          }, 360);
+        }
+      }
+
+      // Seekbar touch/click
+      function setupSeek() {
+        const track = $('#vcSeekTrack');
+        if (!track) return;
+
+        function seekTo(clientX) {
+          const v = vid();
+          if (!v || !v.duration) return;
+          const rect = track.getBoundingClientRect();
+          const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+          v.currentTime = pct * v.duration;
+          updateSeek();
+        }
+
+        track.addEventListener('click', e => { seekTo(e.clientX); showControls(); });
+        track.addEventListener('touchstart', e => {
+          seeking = true;
+          seekTo(e.touches[0].clientX);
+          showControls();
+          e.preventDefault();
+        }, { passive: false });
+        track.addEventListener('touchmove', e => {
+          if (!seeking) return;
+          seekTo(e.touches[0].clientX);
+          e.preventDefault();
+        }, { passive: false });
+        track.addEventListener('touchend', () => { seeking = false; });
+      }
+
+      // Volume toggle
+      function setupVol() {
+        const btn = $('#vcVolBtn');
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const v = vid();
+          if (!v) return;
+          isMuted = !isMuted;
+          v.muted = isMuted;
+          const icon = $('#vcVolIcon');
+          if (icon) {
+            const wave = icon.querySelector('#vcVolWave');
+            if (isMuted) {
+              if (wave) wave.style.display = 'none';
+              icon.querySelector('path').setAttribute('d', 'M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6');
+            } else {
+              if (wave) wave.style.display = '';
+              icon.querySelector('path').setAttribute('d', 'M11 5L6 9H2v6h4l5 4V5z');
+            }
+          }
+          showControls();
+        });
+      }
+
+      // Play/pause center button
+      function setupPlayBtn() {
+        const btn = $('#vcPlayBtn');
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          togglePlay();
+          showControls();
+        });
+      }
+
+      // Like/Dislike/Share/Save inside overlay
+      function setupActionBtns() {
+        const likeBtn = $('#vcLikeBtn');
+        const dislikeBtn = $('#vcDislikeBtn');
+        const shareBtn = $('#vcShareBtn');
+        const saveBtn = $('#vcSaveBtn');
+
+        if (likeBtn) likeBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          const id = state.current && state.current.id;
+          if (!id) return;
+          toggleLike(id);
+          const liked = state.likes[id];
+          likeBtn.style.background = liked ? 'rgba(157,77,255,.45)' : 'rgba(157,77,255,.15)';
+          const cnt = $('#vcLikeCount');
+          if (cnt) cnt.textContent = liked ? '👍 Liked' : 'Like';
+          showControls();
+        });
+
+        if (dislikeBtn) dislikeBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          toast('Disliked');
+          dislikeBtn.style.background = 'rgba(255,60,60,.25)';
+          setTimeout(() => { dislikeBtn.style.background = ''; }, 800);
+          showControls();
+        });
+
+        if (shareBtn) shareBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          const item = state.current;
+          if (navigator.share && item) {
+            navigator.share({ title: item.title, text: item.desc || '', url: window.location.href }).catch(()=>{});
+          } else {
+            navigator.clipboard && navigator.clipboard.writeText(window.location.href).then(() => toast('Link copied!'));
+          }
+          showControls();
+        });
+
+        if (saveBtn) saveBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          const id = state.current && state.current.id;
+          if (!id) return;
+          toggleSave(id);
+          const saved = state.saved.includes(id);
+          saveBtn.style.background = saved ? 'rgba(0,245,255,.25)' : 'rgba(0,245,255,.08)';
+          showControls();
+        });
+      }
+
+      // Block zoom on player frame (prevent pinch-zoom)
+      function blockZoom() {
+        const fr = frame();
+        if (!fr) return;
+        fr.addEventListener('touchstart', e => {
+          if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
+        fr.addEventListener('touchmove', e => {
+          if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
+      }
+
+      // Wire up frame tap
+      function wireFrame() {
+        const fr = frame();
+        if (!fr) return;
+        fr.addEventListener('touchstart', handleFrameTap, { passive: true });
+        fr.addEventListener('click', handleFrameTap);
+        blockZoom();
+      }
+
+      // Called every time player opens to refresh state
+      window.initVCOverlay = function(item) {
+        setupSeek();
+        setupVol();
+        setupPlayBtn();
+        setupActionBtns();
+        wireFrame();
+
+        const v = vid();
+        if (v) {
+          v.removeEventListener('timeupdate', updateSeek);
+          v.addEventListener('timeupdate', updateSeek);
+          v.addEventListener('loadedmetadata', updateSeek);
+        }
+
+        const title = $('#vcTitle');
+        if (title && item) title.textContent = item.title || '';
+
+        // Rotating ad text
+        const adTexts = [
+          'Premium stream — Tap to upgrade 🔥',
+          'Zero ads with Premium — Get it now',
+          'HD streaming, unlimited access →',
+          '4K quality unlocked for Premium users',
+        ];
+        let adIdx = 0;
+        const adEl = document.getElementById('vcAdText');
+        if (adEl) {
+          adEl.textContent = adTexts[0];
+          setInterval(() => {
+            adIdx = (adIdx + 1) % adTexts.length;
+            if (adEl) adEl.textContent = adTexts[adIdx];
+          }, 4000);
+        }
+
+        // Sync like/save button state
+        if (item) {
+          const likeBtn = $('#vcLikeBtn');
+          const saveBtn = $('#vcSaveBtn');
+          if (likeBtn) {
+            const liked = state.likes[item.id];
+            likeBtn.style.background = liked ? 'rgba(157,77,255,.45)' : 'rgba(157,77,255,.15)';
+            const cnt = $('#vcLikeCount');
+            if (cnt) cnt.textContent = liked ? '👍 Liked' : 'Like';
+          }
+          if (saveBtn) {
+            saveBtn.style.background = state.saved.includes(item.id) ? 'rgba(0,245,255,.25)' : 'rgba(0,245,255,.08)';
+          }
+        }
+
+        // Show controls initially then auto-hide
+        showControls();
+      };
+    })();
     function toggleLike(id) {
       state.likes[id] = !state.likes[id];
       if (!state.likes[id]) delete state.likes[id];
       persist();
       render();
-      if (state.current && state.current.id === id) $('#playerLike').innerHTML = state.likes[id] ? heartFull() : heartLine();
+      if (state.current && state.current.id === id) { const _el = $('#playerLike'); if(_el) _el.innerHTML = state.likes[id] ? heartFull() : heartLine(); }
       toast(state.likes[id] ? 'Liked' : 'Like removed');
     }
     function toggleSave(id) {
@@ -1696,7 +3133,7 @@
       else state.saved.unshift(id);
       persist();
       render();
-      if (state.current && state.current.id === id) $('#playerSave').innerHTML = state.saved.includes(id) ? saveFull() : saveLine();
+      if (state.current && state.current.id === id) { const _el = $('#playerSave'); if(_el) _el.innerHTML = state.saved.includes(id) ? saveFull() : saveLine(); }
       toast(state.saved.includes(id) ? 'Saved' : 'Removed from saved');
     }
 
@@ -1721,7 +3158,7 @@
       }
       if (q.includes('open') || q.includes('card')) return 'Tap any card to open the player view.';
       if (q.includes('save') || q.includes('like')) return 'Use the icons on the card or inside the player to like and save.';
-      if (q.includes('movie')) return 'Switch to Movie from the bottom bar or the menu.';
+      if (q.includes('anime')) return 'Switch to Anime tab from the bottom bar or menu.';
       return 'Bot is ready. Try a card, like, save, or the secret code.';
     }
 
@@ -1744,7 +3181,8 @@
     function renderTools() {
       const list = $('#manageList');
       if (!list) return;
-      $('#toolStats').textContent = `${state.items.length} total items • ${state.items.filter(i => i.type === 'hot').length} hot • ${state.items.filter(i => i.type === 'movie').length} movie`;
+      const stats = $('#toolStats');
+      if (stats) stats.textContent = `${state.items.length} total items • ${state.items.filter(i => i.type === 'hot').length} hot • ${state.items.filter(i => i.type === 'anime').length} anime`;
       list.innerHTML = state.items.slice(0, 20).map(item => `
         <div class="menu-link" style="cursor:default;">
           <div style="display:grid;gap:2px;min-width:0;">
@@ -1818,7 +3256,7 @@
 
     // Wiring
     $('#menuBtn').onclick = () => openDrawer('menuDrawer');
-    $('#openBotFromBanner').onclick = () => openDrawer('botPanel');
+    const _obfb = $('#openBotFromBanner'); if(_obfb) _obfb.onclick = () => openDrawer('botPanel');
     $('#sendChat').onclick = sendChat;
     $('#chatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
     $('#unlockTools').onclick = unlockTools;
@@ -1917,8 +3355,15 @@
       });
     })();
     $('#closePlayer').onclick = closePlayer;
-    $('#playerLike').onclick = () => state.current && toggleLike(state.current.id);
-    $('#playerSave').onclick = () => state.current && toggleSave(state.current.id);
+    const _pl = $('#playerLike'); if(_pl) _pl.onclick = () => state.current && toggleLike(state.current.id);
+    const _ps = $('#playerSave'); if(_ps) _ps.onclick = () => state.current && toggleSave(state.current.id);
+
+    // ── Video controls (legacy cleanup — new controls in vcOverlay) ──
+    (function initPlayerControls() {
+      const vid = document.getElementById('playerVideo');
+      if (!vid) return;
+      vid.volume = 0.9;
+    })();
 
     $$('[data-close]').forEach(btn => btn.onclick = () => closeDrawer(btn.dataset.close));
     $$('[data-bot]').forEach(btn => btn.onclick = () => {
@@ -1938,14 +3383,45 @@
     // Bot welcome
     botMessage('Hello. Tap a quick reply or type a message.', 'bot');
 
-    // Banner rotation
-    const slides = $$('.banner-slide');
-    let activeBanner = 0;
+    // Player speed control
+    window.setPlayerSpeed = function(speed) {
+      const v = $('#playerVideo');
+      if (v) v.playbackRate = speed;
+      // Update button highlights
+      document.querySelectorAll('#speedBtns button').forEach(btn => {
+        const isActive = btn.textContent.startsWith(speed + 'x') || btn.textContent.startsWith(speed.toString());
+        btn.style.background = isActive ? 'rgba(0,200,255,.20)' : 'rgba(0,200,255,.06)';
+        btn.style.borderColor = isActive ? 'rgba(0,200,255,.45)' : 'rgba(0,200,255,.20)';
+        btn.style.color = isActive ? '#00e5ff' : '#c0eeff';
+      });
+      toast('Speed: ' + speed + 'x');
+    };
+
+    // Single banner rotation — 10 slides
+    const BANNER_INTERVAL = 4000;
+    const slidesL = Array.from(document.querySelectorAll('.banner-slide[data-side="L"]'));
+    let activeL = 0;
+    const adFill = document.getElementById('adProgressFill');
+
+    function startAdProgress() {
+      if (!adFill) return;
+      adFill.style.transition = 'none';
+      adFill.style.width = '0%';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          adFill.style.transition = `width ${BANNER_INTERVAL}ms linear`;
+          adFill.style.width = '100%';
+        });
+      });
+    }
+
+    startAdProgress();
     setInterval(() => {
-      slides[activeBanner].classList.remove('active');
-      activeBanner = (activeBanner + 1) % slides.length;
-      slides[activeBanner].classList.add('active');
-    }, 3500);
+      slidesL[activeL].classList.remove('active');
+      activeL = (activeL + 1) % slidesL.length;
+      slidesL[activeL].classList.add('active');
+      startAdProgress();
+    }, BANNER_INTERVAL);
 
     // Keep the tools list fresh
     const observer = new MutationObserver(() => {
@@ -2003,6 +3479,7 @@
       <div class="ctx-opt" data-sub="color">🎨 Color</div>
       <div class="ctx-opt" data-sub="photo">📷 Photo</div>
       <div class="ctx-opt" data-sub="video">🎬 Video</div>
+      <div class="ctx-opt" data-sub="size">📐 Size</div>
       <div class="ctx-opt" data-sub="shape">⬤ Shape</div>
       <div class="ctx-opt del" data-sub="delete">🗑️ Delete</div>
     </div>
@@ -2059,6 +3536,31 @@
       <button class="ctx-apply" onclick="applyCtxVideo()">Apply Video</button>
     </div>
 
+    <!-- SIZE sub-panel -->
+    <div class="ctx-panel" id="sub-size">
+      <div class="size-chip-row">
+        <button class="size-chip" type="button" onclick="presetSize('card')">Card</button>
+        <button class="size-chip" type="button" onclick="presetSize('wide')">Wide</button>
+        <button class="size-chip" type="button" onclick="presetSize('full')">Full</button>
+        <button class="size-chip" type="button" onclick="presetSize('reset')">Reset</button>
+      </div>
+      <div class="ctx-size-grid">
+        <input class="ctx-input" id="ctxWidth" placeholder="Width: 100%, 320px">
+        <input class="ctx-input" id="ctxHeight" placeholder="Height: auto, 220px">
+      </div>
+      <div class="ctx-range-row">
+        <span style="font-size:10px;color:#7ab8d4;white-space:nowrap;">Zoom</span>
+        <input type="range" class="ctx-range" id="ctxScale" min="0.5" max="2.5" step="0.01" value="1">
+        <span class="ctx-value" id="ctxScaleVal">100%</span>
+      </div>
+      <div class="ctx-range-row">
+        <span style="font-size:10px;color:#7ab8d4;white-space:nowrap;">Radius</span>
+        <input type="range" class="ctx-range" id="ctxRadius" min="0" max="56" step="1" value="22">
+        <span class="ctx-value" id="ctxRadiusVal">22px</span>
+      </div>
+      <button class="ctx-apply" onclick="applyCtxSize()">Apply Size</button>
+    </div>
+
     <!-- SHAPE sub-panel -->
     <div class="ctx-panel" id="sub-shape">
       <div style="display:flex;gap:6px;flex-wrap:wrap;">
@@ -2100,12 +3602,190 @@
       <button class="adm-nav" data-atab="all" onclick="adminTab('all')">📹<span>All</span></button>
       <button class="adm-nav" data-atab="hot" onclick="adminTab('hot')">🔥<span>Hot</span></button>
       <button class="adm-nav" data-atab="gallery" onclick="adminTab('gallery')">🖼️<span>Gallery</span></button>
-      <button class="adm-nav" data-atab="movie" onclick="adminTab('movie')">🎬<span>Movie</span></button>
+      <button class="adm-nav" data-atab="anime" onclick="adminTab('anime')">🎬<span>Movie</span></button>
       <button class="adm-nav" data-atab="settings" onclick="adminTab('settings')">⚙️<span>Settings</span></button>
     </div>
   </div>
 
-</body>
+
+<script>
+/* === CARD TOUCH RESIZE + SECTION SYNC SYSTEM === */
+(function(){
+  const grids = document.querySelectorAll('.grid');
+
+  grids.forEach((grid,gi)=>{
+    grid.dataset.sectionId = "section_"+gi;
+
+    grid.addEventListener('click',e=>{
+      const card = e.target.closest('.card');
+      if(!card) return;
+
+      activateCard(card,grid);
+    });
+  });
+
+  function activateCard(card,grid){ if(!document.body.classList.contains('editor-mode')) return;
+    if(card.querySelector('.resize-handle')) return;
+
+    const handle = document.createElement('div');
+    handle.className="resize-handle";
+    Object.assign(handle.style,{
+      position:"absolute",
+      width:"26px",
+      height:"26px",
+      right:"4px",
+      bottom:"4px",
+      background:"linear-gradient(135deg,#00e5ff,#80ffff)",
+      borderRadius:"8px",
+      cursor:"nwse-resize",
+      zIndex:"20",
+      touchAction:"none"
+    });
+    card.appendChild(handle);
+
+    let startX,startY,startW,startH;
+
+    handle.addEventListener("pointerdown",(e)=>{
+      e.stopPropagation();
+      startX=e.clientX;
+      startY=e.clientY;
+      startW=card.offsetWidth;
+      startH=card.offsetHeight;
+
+      document.addEventListener("pointermove",resize);
+      document.addEventListener("pointerup",stop);
+    });
+
+    function resize(e){
+      const w=startW+(e.clientX-startX);
+      const h=startH+(e.clientY-startY);
+
+      const sectionId = grid.dataset.sectionId;
+      const cards = document.querySelectorAll('.grid[data-section-id="'+sectionId+'"] .card');
+
+      cards.forEach(c=>{
+        c.style.width=w+"px";
+        c.style.height=h+"px";
+      });
+    }
+
+    function stop(){
+      document.removeEventListener("pointermove",resize);
+      document.removeEventListener("pointerup",stop);
+    }
+  }
+})();
+
+/* EDITOR MODE CONTROL */
+window.enableEditorMode=function(){document.body.classList.add('editor-mode');};
+window.disableEditorMode=function(){document.body.classList.remove('editor-mode');};
+
+/* === SIMPLE REAL MEDIA UPLOAD (LOCAL PREVIEW + FIREBASE IF CONFIGURED) === */
+(function(){
+  document.querySelectorAll('.card-media').forEach(media=>{
+    media.addEventListener('dblclick',()=>{
+      const input=document.createElement('input');
+      input.type='file';
+      input.accept='image/*,video/*';
+      input.onchange=e=>{
+        const file=e.target.files[0];
+        if(!file) return;
+        const url=URL.createObjectURL(file);
+
+        media.innerHTML='';
+        if(file.type.startsWith("video")){
+          const v=document.createElement("video");
+          v.src=url;
+          v.controls=true;
+          v.style.width="100%";
+          v.style.height="100%";
+          v.style.objectFit="cover";
+          media.appendChild(v);
+        }else{
+          const img=document.createElement("img");
+          img.src=url;
+          img.style.width="100%";
+          img.style.height="100%";
+          img.style.objectFit="cover";
+          media.appendChild(img);
+        }
+      };
+      input.click();
+    });
+  });
+})();
+</script>
+<style>
+.resize-handle::after{
+  content:"↘";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  color:#001828;
+  font-weight:900;
+}
+</style>
+
+
+<script>
+function ensureCards(sectionSelector,count){
+  const sec=document.querySelector(sectionSelector);
+  if(!sec) return;
+  const grid=sec.querySelector('.grid,.cards,.row')||sec;
+  const cards=grid.children.length;
+  for(let i=cards;i<count;i++){
+    const c=document.createElement('div');
+    c.className='card auto-card';
+    c.innerHTML='<div class="thumb"></div><div class="title">Card '+(i+1)+'</div>';
+    grid.appendChild(c);
+  }
+}
+
+window.addEventListener('load',()=>{
+  ensureCards('#hot-section',20);
+  ensureCards('#movie-section',20);
+
+  const banner=document.querySelector('.banner,.hero,.top-banner');
+  if(banner){
+    const p=document.createElement('div');
+    p.className='banner-progress';
+    p.innerHTML='<span></span>';
+    banner.appendChild(p);
+  }
+});
+</script>
+
+
+<script>
+(function () {
+  const ua = navigator.userAgent || '';
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add('smooth-lite');
+  document.body.classList.add('smooth-lite');
+  if (reduce || /Android/i.test(ua)) {
+    document.documentElement.classList.add('smooth-lite');
+    document.body.classList.add('smooth-lite');
+  }
+  document.addEventListener('visibilitychange', () => {
+    document.body.classList.toggle('page-hidden', document.hidden);
+  }, { passive: true });
+})();
+</script>
+
+<script>
+/* GALLERY FIX */
+document.addEventListener("DOMContentLoaded",()=>{
+const imgs=document.querySelectorAll("img");
+imgs.forEach(img=>{
+if(!img.getAttribute("src")||img.getAttribute("src")===""){
+img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
+}
+});
+});
+</script></body>
   <script>
   /* ============================================================
      INLINE EDIT ENGINE v2
@@ -2162,7 +3842,7 @@
       '.banner-slide h2','.banner-slide p','.btn','.brand h1','.brand p',
       '.section-head h2','.chip','.stat .big','.stat .small',
       '.title','.subtitle','.caption','.tag','.badge','.label',
-      '.card-name','.card-desc','.card-price','.card-cat'
+      '.card','.ph-card','.rec-item','.card-name','.card-desc','.card-price','.card-cat'
     ];
     document.querySelectorAll(sel.join(',')).forEach(el => {
       if (!el.closest('#ctxPop') && !el.closest('#editBar') &&
@@ -2202,6 +3882,17 @@
         el.style.backgroundSize = 'cover';
         el.style.backgroundPosition = 'center';
       }
+      const skipSizeKeys = !!el.closest('#cardGrid') && !!el.closest('.card');
+      if (!skipSizeKeys) {
+        if (edChanges['w_' + k] !== undefined) el.style.width = edChanges['w_' + k];
+        if (edChanges['h_' + k] !== undefined) el.style.height = edChanges['h_' + k];
+        if (edChanges['sc_' + k]) {
+          el.dataset.editScale = edChanges['sc_' + k];
+          el.style.transformOrigin = 'center center';
+          el.style.transform = 'scale(' + edChanges['sc_' + k] + ')';
+        }
+        if (edChanges['br_' + k] !== undefined && edChanges['br_' + k] !== '') el.style.borderRadius = edChanges['br_' + k] + 'px';
+      }
       if (edChanges['vid_' + k]) {
         const url = edChanges['vid_' + k];
         if (url.includes('youtube') || url.includes('youtu.be')) {
@@ -2213,6 +3904,8 @@
       }
       if (edChanges['del_' + k] === 'none') el.style.display = 'none';
     });
+
+    applySavedSectionStyles();
 
     // Restore shapes — only restore ones that have a text/color (real shapes, not accidental)
     keys.forEach(k => {
@@ -2332,13 +4025,33 @@
     ).join('');
 
     // Determine which options make sense
-    const isMedia = el.classList.contains('card-media') || el.classList.contains('banner') || el.classList.contains('logo');
+    const isMedia = el.classList.contains('card-media') || el.classList.contains('banner') || el.classList.contains('logo') || el.tagName.toLowerCase() === 'img' || el.tagName.toLowerCase() === 'video';
     document.querySelectorAll('.ctx-opt[data-sub="text"]').forEach(o => o.style.display = isMedia ? 'none' : '');
     document.querySelector('.ctx-opt[data-sub="photo"]').style.display = '';
     document.querySelector('.ctx-opt[data-sub="video"]').style.display = isMedia ? '' : 'none';
+    document.querySelector('.ctx-opt[data-sub="size"]').style.display = '';
 
-    // Show text panel by default (or photo for media)
-    showSub(isMedia ? 'photo' : 'text');
+    // Prefill size values
+    const widthInput = document.getElementById('ctxWidth');
+    const heightInput = document.getElementById('ctxHeight');
+    const scaleInput = document.getElementById('ctxScale');
+    const radiusInput = document.getElementById('ctxRadius');
+    const scaleVal = document.getElementById('ctxScaleVal');
+    const radiusVal = document.getElementById('ctxRadiusVal');
+    if (widthInput && heightInput && scaleInput && radiusInput) {
+      widthInput.value = el.style.width || (cs.width && cs.width !== 'auto' ? cs.width : '');
+      heightInput.value = el.style.height || (cs.height && cs.height !== 'auto' ? cs.height : '');
+      const inlineScale = (el.dataset.editScale || '').trim();
+      scaleInput.value = inlineScale || '1';
+      scaleVal.textContent = Math.round(parseFloat(scaleInput.value) * 100) + '%';
+      const curRadius = Math.round(parseFloat(cs.borderRadius)) || 22;
+      radiusInput.value = curRadius;
+      radiusVal.textContent = curRadius + 'px';
+    }
+
+    // Show the most useful panel first
+    const isCardLike = el.classList.contains('card') || el.classList.contains('ph-card') || el.classList.contains('rec-item');
+    showSub(isMedia ? 'photo' : (isCardLike ? 'size' : 'text'));
 
     // Position popup
     const vw = window.innerWidth, vh = window.innerHeight;
@@ -2543,6 +4256,64 @@
     syncFirebase();
   }
 
+  function applyCtxSize() {
+    if (!currentTarget) return;
+    const w = document.getElementById('ctxWidth').value.trim();
+    const h = document.getElementById('ctxHeight').value.trim();
+    const sc = document.getElementById('ctxScale').value;
+    const br = document.getElementById('ctxRadius').value;
+    const keyBase = getElKey(currentTarget);
+    const isSectionCard = !!currentTarget.closest('#cardGrid') && !!currentTarget.closest('.card');
+    pushUndo(currentTarget, 'size', currentTarget.getAttribute('style') || '');
+
+    if (isSectionCard) {
+      applyToCurrentSectionCards(card => {
+        if (w) card.style.width = w; else card.style.width = '';
+        if (h) card.style.height = h; else card.style.height = '';
+        card.style.transformOrigin = 'center center';
+        card.style.transform = 'scale(' + sc + ')';
+        card.dataset.editScale = sc;
+        card.style.borderRadius = br + 'px';
+      });
+
+      saveSectionStyle('w', w);
+      saveSectionStyle('h', h);
+      saveSectionStyle('sc', sc);
+      saveSectionStyle('br', br);
+    } else {
+      if (w) { currentTarget.style.width = w; saveChange('w_' + keyBase, w); }
+      else { currentTarget.style.width = ''; saveChange('w_' + keyBase, ''); }
+
+      if (h) { currentTarget.style.height = h; saveChange('h_' + keyBase, h); }
+      else { currentTarget.style.height = ''; saveChange('h_' + keyBase, ''); }
+
+      currentTarget.style.transformOrigin = 'center center';
+      currentTarget.style.transform = 'scale(' + sc + ')';
+      currentTarget.dataset.editScale = sc;
+      currentTarget.style.borderRadius = br + 'px';
+      saveChange('sc_' + keyBase, sc);
+      saveChange('br_' + keyBase, br);
+    }
+
+    closeCtx();
+    toast('📐 Size saved!');
+    syncFirebase();
+  }
+
+  function presetSize(mode) {
+    const w = document.getElementById('ctxWidth');
+    const h = document.getElementById('ctxHeight');
+    const sc = document.getElementById('ctxScale');
+    const br = document.getElementById('ctxRadius');
+    if (!w || !h || !sc || !br) return;
+    if (mode === 'card') { w.value = ''; h.value = '260px'; sc.value = '1'; br.value = '22'; }
+    else if (mode === 'wide') { w.value = ''; h.value = '320px'; sc.value = '1'; br.value = '24'; }
+    else if (mode === 'full') { w.value = '100%'; h.value = 'auto'; sc.value = '1'; br.value = '22'; }
+    else if (mode === 'reset') { w.value = ''; h.value = ''; sc.value = '1'; br.value = '22'; }
+    document.getElementById('ctxScaleVal').textContent = Math.round(parseFloat(sc.value) * 100) + '%';
+    document.getElementById('ctxRadiusVal').textContent = br.value + 'px';
+  }
+
   function handleCtxVid(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -2692,11 +4463,19 @@
     location.reload();
   };
 
-  // ── Publish (Apply to All) ────────────────────────────────
-  document.getElementById('ebPublish').onclick = () => {
+  // ── Publish (Apply to All) — permanent Firebase + local save ────
+  document.getElementById('ebPublish').onclick = async () => {
     localStorage.setItem(CHANGES_KEY, JSON.stringify(edChanges));
-    pushAllToFirebase();
-    toast('✓ Sab save ho gaya — sabko dikh raha hai!');
+    if (fbDb) {
+      try {
+        await fbDb.ref('crystal_v2/changes').set(edChanges);
+        toast('✅ Sab permanent save! Har device pe dikhega.');
+      } catch(e) {
+        toast('✓ Local save ho gaya (Firebase error)');
+      }
+    } else {
+      toast('✓ Local save ho gaya!');
+    }
   };
 
   // ── Exit ──────────────────────────────────────────────────
@@ -2715,6 +4494,47 @@
   // ── Save / apply changes ──────────────────────────────────
   function saveChange(k, v) { edChanges[k] = v; localStorage.setItem(CHANGES_KEY, JSON.stringify(edChanges)); }
 
+  // ── Section-scoped card edits (gallery / hot / movie) ─────
+  function getEditScope() {
+    return state.tab === 'gallery' ? 'gallery_' + (state.galRatio || '9:16') : state.tab;
+  }
+
+  function getCurrentSectionCards() {
+    const grid = document.getElementById('cardGrid');
+    if (!grid) return [];
+    return Array.from(grid.querySelectorAll('.card'));
+  }
+
+  function applyToCurrentSectionCards(fn) {
+    getCurrentSectionCards().forEach((card, idx) => fn(card, idx));
+  }
+
+  function saveSectionStyle(part, value) {
+    saveChange('sec_' + getEditScope() + '_' + part, value);
+  }
+
+  function applySavedSectionStyles() {
+    const scope = getEditScope();
+    const cards = getCurrentSectionCards();
+    if (!cards.length) return;
+
+    const w = edChanges['sec_' + scope + '_w'];
+    const h = edChanges['sec_' + scope + '_h'];
+    const sc = edChanges['sec_' + scope + '_sc'];
+    const br = edChanges['sec_' + scope + '_br'];
+
+    cards.forEach(card => {
+      if (w !== undefined) card.style.width = w;
+      if (h !== undefined) card.style.height = h;
+      if (sc !== undefined && sc !== '') {
+        card.dataset.editScale = sc;
+        card.style.transformOrigin = 'center center';
+        card.style.transform = 'scale(' + sc + ')';
+      }
+      if (br !== undefined && br !== '') card.style.borderRadius = br + 'px';
+    });
+  }
+
   // ── Firebase ──────────────────────────────────────────────
   function setFbStatus(ok, msg) {
     document.querySelectorAll('.fb-dot').forEach(d => { d.className = 'fb-dot' + (ok ? ' connected' : ''); });
@@ -2728,16 +4548,8 @@
       fbApp = firebase.initializeApp(cfg, 'ce_' + Date.now());
       fbDb = fbApp.database();
       setFbStatus(true,'Connected ✓');
-      fbDb.ref('crystal_v2/changes').on('value', snap => {
-        const d = snap.val();
-        if (d) {
-          edChanges = {...edChanges, ...d};
-          window._fbEdChanges = d;
-          localStorage.setItem(CHANGES_KEY, JSON.stringify(edChanges));
-          // Re-apply card photos when Firebase pushes new data
-          if (typeof applyCardPhotos === 'function') applyCardPhotos();
-        }
-      });
+      // Firebase live listener DISABLED — local data overwrite nahi hoga
+      // fbDb.ref('crystal_v2/changes').on('value', snap => { ... });
     } catch(e) { setFbStatus(false, e.message); }
   }
 
@@ -2780,6 +4592,7 @@
 
   // ── Init ──────────────────────────────────────────────────
   window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
     // Assign stable index to every element FIRST — this never changes
     Array.from(document.querySelectorAll('*')).forEach((el, idx) => {
       el.dataset.eidx = idx;
@@ -2787,6 +4600,7 @@
 
     // Now apply saved changes
     applyAllChanges();
+    applySavedSectionStyles();
 
     // Font size slider live preview
     const fsSlider = document.getElementById('ctxFontSize');
@@ -2794,6 +4608,19 @@
     fsSlider.addEventListener('input', () => {
       fsVal.textContent = fsSlider.value + 'px';
       if (currentTarget) currentTarget.style.fontSize = fsSlider.value + 'px';
+    });
+    const scaleSlider = document.getElementById('ctxScale');
+    const scaleReadout = document.getElementById('ctxScaleVal');
+    const radiusSlider = document.getElementById('ctxRadius');
+    const radiusReadout = document.getElementById('ctxRadiusVal');
+    if (scaleSlider) scaleSlider.addEventListener('input', () => {
+      scaleReadout.textContent = Math.round(parseFloat(scaleSlider.value) * 100) + '%';
+      if (currentTarget) currentTarget.style.transform = 'scale(' + scaleSlider.value + ')';
+      if (currentTarget) currentTarget.dataset.editScale = scaleSlider.value;
+    });
+    if (radiusSlider) radiusSlider.addEventListener('input', () => {
+      radiusReadout.textContent = radiusSlider.value + 'px';
+      if (currentTarget) currentTarget.style.borderRadius = radiusSlider.value + 'px';
     });
 
     // ── Hardcoded Firebase config (permanent) ─────────────────
@@ -2810,11 +4637,13 @@
     localStorage.setItem(FB_KEY, JSON.stringify(HARDCODED_FB));
     startFirebase(HARDCODED_FB);
     setTimeout(() => {
-      pullFromFirebase();
+      // pullFromFirebase() — DISABLED: auto-pull band, data safe rahega
       setTimeout(applyAllChanges, 800);
       setTimeout(applyCardPhotos, 1200);
+      setTimeout(restorePlaceholderImages, 1500);
     }, 1500);
   });
+  
   
   /* ═══════════════════════════════════════════════════════════════
      FULL-SCREEN ADMIN PANEL v1
@@ -2823,14 +4652,6 @@
 
   // ── Open / Close ──────────────────────────────────────────────
   function openAdmin() {
-    // First-time setup: clear all default demo items
-    if (!localStorage.getItem('neon_admin_setup_v1')) {
-      state.items = [];
-      state.likes = {};
-      state.saved = [];
-      persist();
-      localStorage.setItem('neon_admin_setup_v1', '1');
-    }
     const panel = document.getElementById('adminPanel');
     panel.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -2854,7 +4675,7 @@
     if (tab === 'all') renderAdminAll();
     else if (tab === 'hot') renderAdminHot();
     else if (tab === 'gallery') renderAdminGallery();
-    else if (tab === 'movie') renderAdminMovie();
+    else if (tab === 'anime') renderAdminAnime();
     else if (tab === 'settings') renderAdminSettings();
   }
 
@@ -2978,7 +4799,7 @@
   function renderAdminAll() {
     const c = document.getElementById('adminContent');
     const items = state.items;
-    const typeIcon = {hot:'🔥', gallery:'🖼️', movie:'🎬'};
+    const typeIcon = {hot:'🔥', gallery:'🖼️', movie:'🎬', anime:'🎌'};
     c.innerHTML = '';
     if (!items.length) {
       c.innerHTML = '<div class="adm-empty">📭 Abhi koi content nahi.<br><br>Hot, Gallery ya Movie tab se add karo.</div>';
@@ -3213,98 +5034,312 @@
   }
 
   // ── MOVIE tab ─────────────────────────────────────────────────
-  function renderAdminMovie() {
+  function renderAdminAnime() {
     const c = document.getElementById('adminContent');
-    const items = state.items.filter(i => i.type === 'movie');
-    const next = items.length + 1;
+    const items = state.items.filter(i => i.type === 'anime');
     c.innerHTML = '';
 
+    // ── ADD NEW ANIME form ──
     const h1 = document.createElement('div');
     h1.className = 'adm-section-head';
-    h1.textContent = '🎬 Movie Add Karo';
+    h1.textContent = '🎌 Naya Anime Add Karo';
     c.appendChild(h1);
 
     const form = document.createElement('div');
     form.style.cssText = 'display:grid;gap:10px;margin-bottom:20px;';
 
+    // Poster upload
     const thumbBox = document.createElement('div');
     thumbBox.className = 'adm-thumb-upload';
-    thumbBox.id = 'movThumbBox';
+    thumbBox.id = 'aniThumbBox';
     thumbBox.style.cursor = 'pointer';
-
     const thumbLabel = document.createElement('div');
-    thumbLabel.id = 'movThumbLabel';
+    thumbLabel.id = 'aniThumbLabel';
     thumbLabel.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;';
-    thumbLabel.innerHTML = '<span style="font-size:32px;">📷</span><span>Movie thumbnail upload karo</span>';
-
+    thumbLabel.innerHTML = '<span style="font-size:32px;">🎌</span><span>Anime poster upload karo</span>';
     const thumbFile = document.createElement('input');
-    thumbFile.type = 'file';
-    thumbFile.id = 'movThumbFile';
-    thumbFile.accept = 'image/*';
-    thumbFile.style.display = 'none';
-
+    thumbFile.type = 'file'; thumbFile.id = 'aniThumbFile'; thumbFile.accept = 'image/*'; thumbFile.style.display = 'none';
     const thumbData = document.createElement('input');
-    thumbData.type = 'hidden';
-    thumbData.id = 'movThumbData';
-
-    thumbBox.onclick = () => {
-      if (!document.getElementById('movThumbFile')) document.body.appendChild(thumbFile);
-      thumbFile.click();
-    };
-    thumbFile.onchange = (e) => adminHandleThumb(e, 'movThumbBox', 'movThumbLabel', 'movThumbData');
-
-    thumbBox.appendChild(thumbLabel);
-    thumbBox.appendChild(thumbFile);
-    thumbBox.appendChild(thumbData);
+    thumbData.type = 'hidden'; thumbData.id = 'aniThumbData';
+    thumbBox.onclick = () => { if (!document.body.contains(thumbFile)) document.body.appendChild(thumbFile); thumbFile.click(); };
+    thumbFile.onchange = (e) => adminHandleThumb(e, 'aniThumbBox', 'aniThumbLabel', 'aniThumbData');
+    thumbBox.appendChild(thumbLabel); thumbBox.appendChild(thumbFile); thumbBox.appendChild(thumbData);
     form.appendChild(thumbBox);
 
     const titleInput = document.createElement('input');
-    titleInput.className = 'adm-input';
-    titleInput.id = 'movTitle';
-    titleInput.placeholder = 'Movie Title #' + next;
+    titleInput.className = 'adm-input'; titleInput.id = 'aniTitle'; titleInput.placeholder = 'Anime Title (e.g. Solo Leveling)';
     form.appendChild(titleInput);
 
-    const driveInput = document.createElement('input');
-    driveInput.className = 'adm-input';
-    driveInput.id = 'movDriveLink';
-    driveInput.placeholder = 'Google Drive video link…';
-    driveInput.oninput = () => adminCheckDrive(driveInput.value, 'movDriveStatus');
-    form.appendChild(driveInput);
-
-    const driveStatus = document.createElement('div');
-    driveStatus.id = 'movDriveStatus';
-    form.appendChild(driveStatus);
-
     const descEl = document.createElement('textarea');
-    descEl.className = 'adm-input';
-    descEl.id = 'movDesc';
-    descEl.placeholder = 'Movie description…';
+    descEl.className = 'adm-input'; descEl.id = 'aniDesc'; descEl.placeholder = 'Description / Story…';
     descEl.style.cssText = 'min-height:60px;resize:vertical;';
     form.appendChild(descEl);
 
-    const addBtn = document.createElement('button');
-    addBtn.className = 'adm-btn';
-    addBtn.textContent = '➕ Add Movie';
-    addBtn.onclick = adminAddMovie;
-    form.appendChild(addBtn);
+    const tagsInput = document.createElement('input');
+    tagsInput.className = 'adm-input'; tagsInput.id = 'aniTags'; tagsInput.placeholder = 'Tags: Action, Hindi, Fantasy';
+    form.appendChild(tagsInput);
 
+    // Season count
+    const seasonRow = document.createElement('div');
+    seasonRow.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;';
+    const seasonCountInput = document.createElement('input');
+    seasonCountInput.className = 'adm-input'; seasonCountInput.id = 'aniSeasonCount'; seasonCountInput.type = 'number';
+    seasonCountInput.placeholder = 'Kitne seasons? (e.g. 2)'; seasonCountInput.min = '1'; seasonCountInput.value = '1';
+    const epCountInput = document.createElement('input');
+    epCountInput.className = 'adm-input'; epCountInput.id = 'aniEpCount'; epCountInput.type = 'number';
+    epCountInput.placeholder = 'Episodes per season'; epCountInput.min = '1'; epCountInput.value = '12';
+    seasonRow.appendChild(seasonCountInput); seasonRow.appendChild(epCountInput);
+    form.appendChild(seasonRow);
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'adm-btn'; addBtn.textContent = '➕ Add Anime';
+    addBtn.onclick = adminAddAnime;
+    form.appendChild(addBtn);
     c.appendChild(form);
 
+    // ── EXISTING ANIME list ──
     const h2 = document.createElement('div');
     h2.className = 'adm-section-head';
-    h2.textContent = '🎬 Movies (' + items.length + ')';
+    h2.textContent = '🎌 Anime List (' + items.length + ')';
     c.appendChild(h2);
 
-    const listWrap = document.createElement('div');
-    listWrap.style.cssText = 'display:grid;gap:8px;margin-top:10px;';
     if (!items.length) {
-      listWrap.innerHTML = '<div class="adm-empty">Abhi koi movie nahi</div>';
-    } else {
-      items.forEach((it, i) => {
-        listWrap.appendChild(adminBuildItemRow(it, i + 1));
-      });
+      const empty = document.createElement('div');
+      empty.className = 'adm-empty';
+      empty.textContent = 'Abhi koi anime nahi. Upar se add karo!';
+      c.appendChild(empty);
+      return;
     }
-    c.appendChild(listWrap);
+
+    items.forEach((item, idx) => {
+      const card = document.createElement('div');
+      card.style.cssText = 'border-radius:16px;background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.15);overflow:hidden;margin-bottom:10px;';
+
+      // Card header
+      const header = document.createElement('div');
+      header.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;';
+      header.onclick = () => {
+        const body = document.getElementById('aniBody_' + item.id);
+        if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
+      };
+
+      const thumb = document.createElement('div');
+      thumb.style.cssText = 'width:48px;height:64px;border-radius:8px;flex:0 0 auto;' + adminThumbStyle(item.thumb);
+
+      const info = document.createElement('div');
+      info.style.cssText = 'flex:1;min-width:0;';
+      const seasons = item.seasons || [];
+      const totalEps = seasons.reduce((a, s) => a + (Array.isArray(s.episodes) ? s.episodes.length : (typeof s.episodes === 'number' ? s.episodes : 0)), 0);
+      const filledEps = seasons.reduce((a, s) => a + (Array.isArray(s.episodes) ? s.episodes.filter(e => e.videoUrl).length : 0), 0);
+      info.innerHTML = `<div style="font-size:13px;font-weight:800;color:#eaffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.title}</div>
+        <div style="font-size:10px;color:#a855f7;margin-top:2px;">${seasons.length} season • ${totalEps} episodes</div>
+        <div style="font-size:10px;color:${filledEps>0?'#00e5ff':'#4a6a88'};margin-top:1px;">📤 ${filledEps}/${totalEps} videos uploaded</div>`;
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'adm-del-btn'; delBtn.textContent = '🗑️';
+      delBtn.onclick = (e) => { e.stopPropagation(); adminDeleteItem(item.id); };
+
+      const expandIcon = document.createElement('span');
+      expandIcon.textContent = '▼';
+      expandIcon.style.cssText = 'font-size:10px;color:#a855f7;flex:0 0 auto;';
+
+      header.appendChild(thumb); header.appendChild(info); header.appendChild(delBtn); header.appendChild(expandIcon);
+      card.appendChild(header);
+
+      // Card body (episodes editor)
+      const body = document.createElement('div');
+      body.id = 'aniBody_' + item.id;
+      body.style.cssText = 'display:none;padding:12px;border-top:1px solid rgba(168,85,247,.12);';
+
+      // Poster update
+      const posterRow = document.createElement('div');
+      posterRow.style.cssText = 'display:flex;gap:10px;align-items:center;margin-bottom:10px;';
+      const posterThumb = document.createElement('div');
+      posterThumb.style.cssText = 'width:48px;height:64px;border-radius:8px;flex:0 0 auto;cursor:pointer;position:relative;' + adminThumbStyle(item.thumb);
+      posterThumb.title = 'Poster change karo';
+      const posterFile = document.createElement('input');
+      posterFile.type = 'file'; posterFile.accept = 'image/*'; posterFile.style.display = 'none';
+      const posterData = document.createElement('input');
+      posterData.type = 'hidden'; posterData.id = 'aniPosterData_' + item.id;
+      posterThumb.onclick = () => posterFile.click();
+      posterFile.onchange = async (e) => {
+        const f = e.target.files[0]; if (!f) return;
+        toast('⬆️ Poster upload…');
+        try {
+          const url = await uploadToCloud(f);
+          item.thumb = url; persist();
+          posterThumb.style.backgroundImage = 'url(' + url + ')';
+          posterThumb.style.backgroundSize = 'cover';
+          toast('✅ Poster updated!');
+        } catch(err) { toast('❌ Upload failed'); }
+      };
+      posterThumb.appendChild(posterFile); posterThumb.appendChild(posterData);
+      const posterInfo = document.createElement('div');
+      posterInfo.style.cssText = 'flex:1;font-size:11px;color:#7a9ab8;';
+      posterInfo.textContent = 'Poster tap karo update karne ke liye';
+      posterRow.appendChild(posterThumb); posterRow.appendChild(posterInfo);
+      body.appendChild(posterRow);
+
+      // Add season button
+      const addSeasonBtn = document.createElement('button');
+      addSeasonBtn.style.cssText = 'width:100%;padding:8px;border:1px dashed rgba(168,85,247,.35);border-radius:10px;background:rgba(168,85,247,.06);color:#c084fc;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:10px;';
+      addSeasonBtn.textContent = '➕ Naya Season Add Karo';
+      addSeasonBtn.onclick = () => {
+        const sName = prompt('Season name?', 'Season ' + (item.seasons.length + 1));
+        if (!sName) return;
+        const epCount = parseInt(prompt('Kitne episodes?', '12')) || 12;
+        if (!item.seasons) item.seasons = [];
+        item.seasons.push({
+          name: sName,
+          episodes: Array.from({length: epCount}, (_, ei) => ({ title: sName + ' Ep ' + (ei+1), videoUrl: null }))
+        });
+        persist();
+        adminTab('anime');
+        toast('✅ Season add!');
+      };
+      body.appendChild(addSeasonBtn);
+
+      // Each season's episodes
+      (item.seasons || []).forEach((season, si) => {
+        const seasonDiv = document.createElement('div');
+        seasonDiv.style.cssText = 'margin-bottom:14px;';
+
+        const seasonHead = document.createElement('div');
+        seasonHead.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;';
+        seasonHead.innerHTML = `<span style="font-size:12px;font-weight:900;color:#a855f7;letter-spacing:.04em;">${season.name}</span>`;
+
+        const addEpBtn = document.createElement('button');
+        addEpBtn.style.cssText = 'padding:4px 10px;border:1px solid rgba(168,85,247,.25);border-radius:8px;background:rgba(168,85,247,.08);color:#c084fc;font-size:10px;font-weight:700;cursor:pointer;';
+        addEpBtn.textContent = '+ Ep';
+        addEpBtn.onclick = () => {
+          const epTitle = prompt('Episode title?', season.name + ' Ep ' + (season.episodes.length + 1));
+          if (!epTitle) return;
+          if (!Array.isArray(season.episodes)) season.episodes = [];
+          season.episodes.push({ title: epTitle, videoUrl: null });
+          persist(); adminTab('anime'); toast('✅ Episode add!');
+        };
+        seasonHead.appendChild(addEpBtn);
+        seasonDiv.appendChild(seasonHead);
+
+        // Normalize episodes
+        let eps = season.episodes;
+        if (typeof eps === 'number') {
+          eps = Array.from({length: eps}, (_, ei) => ({ title: season.name + ' Ep ' + (ei+1), videoUrl: null }));
+          season.episodes = eps;
+        }
+
+        eps.forEach((ep, ei) => {
+          const epRow = document.createElement('div');
+          epRow.style.cssText = 'display:grid;gap:6px;padding:10px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid rgba(168,85,247,.10);margin-bottom:6px;';
+
+          const epTitle = document.createElement('div');
+          epTitle.style.cssText = 'display:flex;align-items:center;gap:8px;';
+          epTitle.innerHTML = `<span style="font-size:11px;font-weight:900;color:#a855f7;flex:0 0 auto;">${String(ei+1).padStart(2,'0')}</span>
+            <span style="font-size:12px;color:${ep.videoUrl?'#eaffff':'#7a9ab8'};flex:1;">${ep.title}</span>
+            <span style="font-size:9px;color:${ep.videoUrl?'#00e5ff':'#4a6a88'};font-weight:700;">${ep.videoUrl?'✅':'⏳'}</span>`;
+          epRow.appendChild(epTitle);
+
+          // Video URL input
+          const urlRow = document.createElement('div');
+          urlRow.style.cssText = 'display:flex;gap:6px;align-items:center;';
+
+          const urlInput = document.createElement('input');
+          urlInput.className = 'adm-input';
+          urlInput.placeholder = 'Google Drive ya YouTube link…';
+          urlInput.value = ep.videoUrl || '';
+          urlInput.style.cssText = 'flex:1;font-size:11px;padding:7px 10px;';
+
+          const saveUrlBtn = document.createElement('button');
+          saveUrlBtn.style.cssText = 'padding:7px 12px;border:none;border-radius:10px;background:linear-gradient(135deg,#a855f7,#00e5ff);color:#fff;font-size:11px;font-weight:800;cursor:pointer;flex:0 0 auto;';
+          saveUrlBtn.textContent = '✓ Save';
+          saveUrlBtn.onclick = () => {
+            let val = urlInput.value.trim();
+            if (!val) { ep.videoUrl = null; persist(); toast('❌ URL hata diya'); epTitle.querySelector('span:last-child').textContent = '⏳'; epTitle.querySelector('span:last-child').style.color = '#4a6a88'; return; }
+            // Auto-convert Drive link
+            const driveId = adminExtractDriveId(val);
+            if (driveId) val = 'https://drive.google.com/file/d/' + driveId + '/preview';
+            ep.videoUrl = val;
+            persist();
+            toast('✅ Video link saved!');
+            epTitle.querySelector('span:last-child').textContent = '✅';
+            epTitle.querySelector('span:last-child').style.color = '#00e5ff';
+            epTitle.querySelector('span:nth-child(2)').style.color = '#eaffff';
+          };
+
+          // Gallery/local MP4 upload
+          const fileBtn = document.createElement('button');
+          fileBtn.style.cssText = 'padding:7px 12px;border:1px solid rgba(168,85,247,.25);border-radius:10px;background:rgba(168,85,247,.08);color:#c084fc;font-size:11px;font-weight:800;cursor:pointer;flex:0 0 auto;';
+          fileBtn.textContent = '📁';
+          fileBtn.title = 'Gallery se MP4 upload karo';
+
+          const fileInput = document.createElement('input');
+          fileInput.type = 'file'; fileInput.accept = 'video/*,video/mp4'; fileInput.style.display = 'none';
+          fileInput.onchange = async (e) => {
+            const f = e.target.files[0]; if (!f) return;
+            toast('⬆️ Video upload ho rahi hai…');
+            fileBtn.textContent = '⏳';
+            try {
+              // Try Google Drive or direct blob URL
+              const blobUrl = URL.createObjectURL(f);
+              ep.videoUrl = blobUrl;
+              urlInput.value = blobUrl;
+              persist();
+              toast('✅ Video ready! (Local — Drive pe bhi upload karo)');
+              fileBtn.textContent = '✅';
+              epTitle.querySelector('span:last-child').textContent = '✅';
+              epTitle.querySelector('span:last-child').style.color = '#00e5ff';
+            } catch(err) { toast('❌ Failed'); fileBtn.textContent = '📁'; }
+          };
+          fileBtn.onclick = () => fileInput.click();
+
+          urlRow.appendChild(urlInput); urlRow.appendChild(saveUrlBtn); urlRow.appendChild(fileBtn); urlRow.appendChild(fileInput);
+          epRow.appendChild(urlRow);
+
+          // Delete episode btn
+          const delEpBtn = document.createElement('button');
+          delEpBtn.style.cssText = 'padding:4px 8px;border:1px solid rgba(255,80,80,.18);border-radius:8px;background:rgba(255,80,80,.06);color:#ff7777;font-size:10px;cursor:pointer;width:fit-content;';
+          delEpBtn.textContent = '🗑️ Delete Episode';
+          delEpBtn.onclick = () => {
+            season.episodes.splice(ei, 1);
+            persist(); adminTab('anime'); toast('Episode deleted');
+          };
+          epRow.appendChild(delEpBtn);
+
+          seasonDiv.appendChild(epRow);
+        });
+        body.appendChild(seasonDiv);
+      });
+
+      card.appendChild(body);
+      c.appendChild(card);
+    });
+  }
+
+  function adminAddAnime() {
+    const title = (document.getElementById('aniTitle')?.value || '').trim() || 'New Anime';
+    const desc = (document.getElementById('aniDesc')?.value || '').trim() || '';
+    const tagsRaw = (document.getElementById('aniTags')?.value || '').trim() || 'Anime,Hindi';
+    const tags = tagsRaw.split(',').map(s => s.trim()).filter(Boolean);
+    const thumb = (document.getElementById('aniThumbData')?.value || '').trim() || 'linear-gradient(135deg,rgba(168,85,247,.5),rgba(0,229,255,.3))';
+    const seasonCount = parseInt(document.getElementById('aniSeasonCount')?.value || '1') || 1;
+    const epCount = parseInt(document.getElementById('aniEpCount')?.value || '12') || 12;
+
+    const seasons = Array.from({length: seasonCount}, (_, si) => ({
+      name: 'Season ' + (si + 1),
+      episodes: Array.from({length: epCount}, (_, ei) => ({
+        title: 'Season ' + (si+1) + ' Ep ' + (ei+1),
+        videoUrl: null
+      }))
+    }));
+
+    const id = 'anime-' + Date.now();
+    state.items.unshift({
+      id, title, type: 'anime', quality: 'HD',
+      meta: 'Anime • Hindi • ' + tags.join(' • '),
+      desc, thumb, tags, seasons,
+      videoUrl: null, createdAt: Date.now()
+    });
+    persist(); adminTab('anime'); toast('✅ Anime added — episodes mein video daalo!');
   }
 
   // ── SETTINGS tab ──────────────────────────────────────────────
@@ -3312,7 +5347,7 @@
     const c = document.getElementById('adminContent');
     const hot = state.items.filter(i => i.type === 'hot');
     const gal = state.items.filter(i => i.type === 'gallery');
-    const mov = state.items.filter(i => i.type === 'movie');
+    const mov = state.items.filter(i => i.type === 'anime');
     c.innerHTML = '';
     if (!hot.length && !gal.length && !mov.length) {
       c.innerHTML = '<div class="adm-empty">Koi content nahi. Add karo pehle.</div>'; return;
@@ -3363,8 +5398,8 @@
     if (mov.length) {
       const h = document.createElement('div');
       h.className = 'adm-section-head';
-      h.style.cssText = 'color:#44aaff;font-size:12px;margin-top:12px;';
-      h.textContent = '🎬 Movie (' + mov.length + ')';
+      h.style.cssText = 'color:#a855f7;font-size:12px;margin-top:12px;';
+      h.textContent = '🎌 Anime (' + mov.length + ')';
       c.appendChild(h);
       const wrap = document.createElement('div');
       wrap.style.cssText = 'display:grid;gap:8px;margin-top:8px;';
@@ -3511,6 +5546,23 @@
     saveBtn.textContent = '\u{1F4BE} Save Changes';
     saveBtn.onclick = () => adminSaveEdit(id);
     panel.appendChild(saveBtn);
+
+    const permDelBtn = document.createElement('button');
+    permDelBtn.className = 'adm-btn';
+    permDelBtn.style.cssText = 'font-size:12px;padding:11px;margin-top:7px;width:100%;background:linear-gradient(135deg,rgba(255,30,30,.22),rgba(180,0,0,.28));border:1px solid rgba(255,60,60,.40);color:#ff6060;font-weight:800;letter-spacing:.03em;';
+    permDelBtn.textContent = '🗑️ PERMANENT DELETE';
+    permDelBtn.onclick = () => {
+      if (!confirm('⚠️ PERMANENT DELETE?\n\nYe item hamesha ke liye delete ho jayega.\nKoi undo nahi hoga!\n\nPakka delete karna hai?')) return;
+      state.items = state.items.filter(x => x.id !== id);
+      delete state.likes[id];
+      state.saved = (state.saved || []).filter(x => x !== id);
+      persist();
+      panel.innerHTML = '';
+      panel.style.display = 'none';
+      toast('🗑️ Permanently deleted!');
+      adminTab(adminCurrent);
+    };
+    panel.appendChild(permDelBtn);
   }
 
   function adminSaveEdit(id) {
@@ -3568,15 +5620,29 @@
   function adminAddGallery() {
     const thumb = document.getElementById('galPhotoData').value;
     if (!thumb) { toast('Pehle photo upload karo!'); return; }
-    const num = state.items.filter(i => i.type === 'gallery').length + 1;
+    // Find next available slot number for both 9:16 and 16:9
+    const galItems = state.items.filter(i => i.type === 'gallery');
+    // Find next free gal_slot_N
+    let num = 1;
+    while (galItems.find(x => x.id === 'gal_slot_' + num)) num++;
+    const slotId = 'gal_slot_' + num;
+    // Remove any old placeholder with same id if exists
+    state.items = state.items.filter(x => x.id !== slotId);
     state.items.unshift({
-      id: 'gallery-' + Date.now(), type: 'gallery', num,
+      id: slotId, type: 'gallery', num,
       title: 'Photo #' + num, desc: '', quality: 'HD',
-      meta: 'Gallery', thumb, videoUrl: null, tags: ['Gallery'], createdAt: Date.now()
+      meta: 'Gallery', thumb, thumb16: null, ratio: '9:16',
+      videoUrl: null, tags: ['Gallery'], createdAt: Date.now()
     });
     persist();
     document.getElementById('galPhotoData').value = '';
-    toast('✅ Photo add ho gaya!');
+    // Clear preview
+    const box = document.getElementById('galPhotoBox');
+    const prev = box && box.querySelector('.adm-prev-img');
+    if (prev) prev.remove();
+    const lbl = document.getElementById('galPhotoLabel');
+    if (lbl) lbl.style.display = 'flex';
+    toast('✅ Photo add ho gaya! Gallery mein dikh rahi hai 🎉');
     renderAdminGallery();
   }
 
