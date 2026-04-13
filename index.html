@@ -13,26 +13,26 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <style>
     :root{
-      --bg:#010814;
-      --panel:#050f1c;
-      --panel2:#071422;
-      --text:#e8f8ff;
-      --muted:#5dd8ff;
-      --accent:#00e5ff;
-      --accent2:#80ffff;
-      --gold:#b8ffff;
-      --line:rgba(0,229,255,.12);
-      --shadow:0 16px 50px rgba(0,0,0,.60);
-      --shadow2:0 0 0 1px rgba(0,229,255,.10), 0 20px 50px rgba(0,0,0,.45);
+      --bg:#0f0f0f;
+      --panel:#1a1a1a;
+      --panel2:#222222;
+      --text:#f5f5f5;
+      --muted:#999999;
+      --accent:#ff6600;
+      --accent2:#ff8800;
+      --gold:#ffaa33;
+      --line:rgba(255,102,0,.15);
+      --shadow:0 16px 50px rgba(0,0,0,.70);
+      --shadow2:0 0 0 1px rgba(255,102,0,.12), 0 20px 50px rgba(0,0,0,.55);
       --radius:22px;
       --radius2:16px;
-      --crystal1:#00e5ff;
-      --crystal2:#80ffff;
-      --crystal3:#c0ffff;
-      --ice:#eaffff;
-      --prism1:#ff00ff;
-      --prism2:#00ffcc;
-      --prism3:#7b2fff;
+      --crystal1:#ff6600;
+      --crystal2:#ff8800;
+      --crystal3:#ffaa33;
+      --ice:#ffffff;
+      --prism1:#ff6600;
+      --prism2:#ff8800;
+      --prism3:#cc4400;
     }
 
     .topbar-ad{ display:none; }
@@ -42,10 +42,10 @@
       gap:10px;
       width:100%;
       padding:5px 16px;
-      background:linear-gradient(90deg, rgba(128,0,255,.18), rgba(0,229,255,.14), rgba(255,0,180,.12));
-      border-top:1px solid rgba(0,229,255,.10);
-      border-bottom:1px solid rgba(128,0,255,.10);
-      color:#c0ffff;
+      background:linear-gradient(90deg, rgba(255,102,0,.18), rgba(255,102,0,.14), rgba(255,102,0,.12));
+      border-top:1px solid rgba(255,102,0,.10);
+      border-bottom:1px solid rgba(255,102,0,.10);
+      color:#ff8800;
       font-size:11px;
       font-weight:700;
       text-decoration:none;
@@ -54,8 +54,8 @@
     }
     .ad-text-full{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .ad-cta{
-      font-size:10px; font-weight:900; color:#00e5ff;
-      background:rgba(0,229,255,.12); border:1px solid rgba(0,229,255,.22);
+      font-size:10px; font-weight:900; color:#ff6600;
+      background:rgba(255,102,0,.12); border:1px solid rgba(255,102,0,.22);
       padding:2px 8px; border-radius:999px; flex-shrink:0;
     }
     @keyframes adShimmer{
@@ -63,8 +63,8 @@
       50%{ opacity:1; }
     }
     @keyframes adPulse{
-      0%,100%{ box-shadow:0 0 14px rgba(0,229,255,.15); }
-      50%{ box-shadow:0 0 26px rgba(0,229,255,.30); }
+      0%,100%{ box-shadow:0 0 14px rgba(255,102,0,.15); }
+      50%{ box-shadow:0 0 26px rgba(255,102,0,.30); }
     }
 
     .banner-tag{
@@ -72,14 +72,14 @@
       font-size:10px;
       font-weight:900;
       letter-spacing:.18em;
-      color:#00e5ff;
-      border:1px solid rgba(0,229,255,.30);
-      background:rgba(0,10,30,.55);
+      color:#ff6600;
+      border:1px solid rgba(255,102,0,.30);
+      background:rgba(15,15,15,.55);
       padding:5px 11px;
       border-radius:999px;
       backdrop-filter:blur(8px);
       margin-bottom:10px;
-      text-shadow:0 0 12px rgba(0,229,255,.6);
+      text-shadow:0 0 12px rgba(255,102,0,.6);
     }
 
     /* ── PERFORMANCE: GPU scroll optimization ── */
@@ -96,44 +96,18 @@
     @keyframes breathe { 0%,100%{ opacity:1 } 50%{ opacity:.97 } }
     .card-media::before { animation: none !important; }
 
-    /* Lazy-scroll reveal + premium motion */
-    .card,
-    .ph-card,
-    .rec-item{
-      will-change: transform, opacity;
+    .card{ opacity:1; transform:none; }
+    .card.revealed, .card.is-visible{ opacity:1; transform:none; }
+    .card::after{ display:none; }
+
+    /* Smooth card entrance — GPU only, no layout thrash */
+    @keyframes cardIn{
+      from{ opacity:0; transform:translateY(14px); }
+      to{ opacity:1; transform:translateY(0); }
     }
     .card{
-      opacity:0;
-      transform: translateY(22px) scale(.97);
-      transition:
-        transform .72s cubic-bezier(.2,.85,.2,1),
-        opacity .72s ease,
-        box-shadow .22s ease,
-        border-color .22s ease,
-        filter .22s ease;
-      transition-delay: var(--reveal-delay, 0ms);
+      animation: cardIn .32s ease both;
     }
-    .card.revealed,
-    .card.is-visible{
-      opacity:1;
-      transform: translateY(0) scale(1);
-    }
-    .card::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      pointer-events:none;
-      border-radius:inherit;
-      background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.14) 50%, transparent 80%);
-      opacity:0;
-      transform:translateX(-60%);
-      transition:opacity .25s ease;
-    }
-    .card.revealed::after{
-      opacity:1;
-      animation: sheen 2.8s ease-in-out infinite;
-    }
-    .card:hover{ animation-play-state: paused; }
     .ph-card{ animation: rise .5s cubic-bezier(.34,1.56,.64,1) both; }
     .lazy-sentinel{
       grid-column:1/-1;
@@ -151,8 +125,8 @@
       width:16px;
       height:16px;
       border-radius:50%;
-      border:2px solid rgba(0,229,255,.18);
-      border-top-color:#00e5ff;
+      border:2px solid rgba(255,102,0,.18);
+      border-top-color:#ff6600;
       animation: spin 1s linear infinite;
       flex:0 0 auto;
     }
@@ -176,21 +150,21 @@
     }
 
     @keyframes navGlow {
-      0%,100%{ box-shadow:0 0 18px rgba(0,229,255,.16); }
-      50%{ box-shadow:0 0 28px rgba(0,229,255,.28); }
+      0%,100%{ box-shadow:0 0 18px rgba(255,102,0,.16); }
+      50%{ box-shadow:0 0 28px rgba(255,102,0,.28); }
     }
     @keyframes titleGlow {
-      0%,100%{ text-shadow:0 0 20px rgba(0,229,255,.30), 0 4px 20px rgba(0,0,0,.5); }
-      50%{ text-shadow:0 0 35px rgba(0,229,255,.55), 0 4px 20px rgba(0,0,0,.5); }
+      0%,100%{ text-shadow:0 0 20px rgba(255,102,0,.30), 0 4px 20px rgba(0,0,0,.5); }
+      50%{ text-shadow:0 0 35px rgba(255,102,0,.55), 0 4px 20px rgba(0,0,0,.5); }
     }
 
     .load-more-btn {
       grid-column: 1/-1;
       padding: 14px;
-      border: 1px solid rgba(0,229,255,.22);
+      border: 1px solid rgba(255,102,0,.22);
       border-radius: 16px;
-      background: rgba(0,229,255,.06);
-      color: #00e5ff;
+      background: rgba(255,102,0,.06);
+      color: #ff6600;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
@@ -199,7 +173,7 @@
       transition: background .18s ease;
       margin-top: 4px;
     }
-    .load-more-btn:active { background: rgba(0,229,255,.18); }
+    .load-more-btn:active { background: rgba(255,102,0,.18); }
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -214,29 +188,16 @@
       font-family:'Space Grotesk', Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at 12% 10%, rgba(0,229,255,.18), transparent 22%),
-        radial-gradient(circle at 88% 0%, rgba(128,0,255,.14), transparent 22%),
-        radial-gradient(circle at 50% 100%, rgba(0,255,204,.10), transparent 26%),
-        radial-gradient(circle at 30% 55%, rgba(255,0,200,.06), transparent 18%),
-        linear-gradient(180deg, #010814 0%, #020d18 52%, #010814 100%);
+        radial-gradient(circle at 12% 10%, rgba(255,102,0,.05), transparent 22%),
+        radial-gradient(circle at 88% 0%, rgba(255,102,0,.04), transparent 22%),
+        linear-gradient(180deg, #0f0f0f 0%, #111111 52%, #0f0f0f 100%);
       overflow-x:hidden;
       overscroll-behavior:none;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:-20% -10%;
-      background:
-        linear-gradient(120deg, transparent 0%, rgba(0,200,255,.06) 20%, transparent 40%),
-        linear-gradient(240deg, transparent 0%, rgba(127,255,255,.05) 18%, transparent 40%);
-      pointer-events:none;
-      mix-blend-mode:screen;
-      opacity:.45;
-      animation: drift 14s ease-in-out infinite;
-    }
+    body::before{ display:none; }
 
     body.loaded .banner,
     body.loaded .panel,
@@ -263,8 +224,8 @@
       top:0;
       z-index:50;
       backdrop-filter:blur(18px);
-      background:rgba(2,10,18,.82);
-      border-bottom:1px solid rgba(0,200,255,.08);
+      background:rgba(15,15,15,.92);
+      border-bottom:1px solid rgba(255,102,0,.08);
     }
     .topbar-inner{
       max-width:1600px;
@@ -289,7 +250,7 @@
       box-shadow:var(--shadow2);
       transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
-    .icon-btn:hover{transform:translateY(-1px); border-color:rgba(0,200,255,.30); box-shadow:0 14px 38px rgba(0,0,0,.4), 0 0 24px rgba(0,200,255,.12)}
+    .icon-btn:hover{transform:translateY(-1px); border-color:rgba(255,102,0,.30); box-shadow:0 14px 38px rgba(0,0,0,.4), 0 0 24px rgba(255,102,0,.12)}
     .icon-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
     .brand{
@@ -305,7 +266,7 @@
       border-radius:11px;
       position:relative;
       background:conic-gradient(from 220deg, var(--accent), var(--accent2), var(--crystal3), var(--accent));
-      box-shadow:0 0 0 1px rgba(0,200,255,.12), 0 0 14px rgba(0,200,255,.30), 0 0 28px rgba(127,255,255,.15);
+      box-shadow:0 0 0 1px rgba(255,102,0,.12), 0 0 14px rgba(255,102,0,.30), 0 0 28px rgba(255,136,0,.15);
       overflow:hidden;
       flex:0 0 auto;
     }
@@ -334,7 +295,7 @@
       font-weight:800;
       line-height:1.05;
       letter-spacing:-.03em;
-      color:#eaffff;
+      color:#f5f5f5;
     }
     .brand p{
       margin:1px 0 0;
@@ -412,15 +373,15 @@
     .banner{
       position:relative;
       min-height:unset;
-      aspect-ratio:9/16;
-      max-height:92vw;
-      border-radius:28px;
+      aspect-ratio:16/10;
+      max-height:62vw;
+      border-radius:20px;
       overflow:hidden;
       border:1px solid var(--line);
       background:
-        radial-gradient(circle at 14% 18%, rgba(0,200,255,.22), transparent 22%),
-        radial-gradient(circle at 84% 10%, rgba(127,255,255,.16), transparent 20%),
-        linear-gradient(135deg, #061520, #020c14 60%, #040e18);
+        radial-gradient(circle at 14% 18%, rgba(255,102,0,.22), transparent 22%),
+        radial-gradient(circle at 84% 10%, rgba(255,136,0,.16), transparent 20%),
+        linear-gradient(135deg, #141414, #0f0f0f 60%, #111111);
     }
     .banner::after{
       content:"";
@@ -436,18 +397,18 @@
       letter-spacing:.2em;
       text-transform:uppercase;
       color:var(--crystal3);
-      border:1px solid rgba(0,200,255,.22);
-      background:rgba(0,10,20,.52);
+      border:1px solid rgba(255,102,0,.22);
+      background:rgba(10,10,10,.52);
       padding:8px 11px;
       border-radius:999px;
       backdrop-filter:blur(8px);
-      box-shadow:0 0 12px rgba(0,200,255,.10);
+      box-shadow:0 0 12px rgba(255,102,0,.10);
     }
     .banner-slide{
       position:absolute;
       inset:0;
-      padding:28px;
-      padding-top:52px;
+      padding:16px 20px;
+      padding-top:20px;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
@@ -458,38 +419,43 @@
     }
     .banner-slide.active{opacity:1; transform:scale(1) translateY(0)}
     .banner-slide h2{
-      margin:0 0 10px;
-      font-size:clamp(13px, 2.2vw, 22px);
+      margin:0 0 6px;
+      font-size:clamp(14px, 3.5vw, 24px);
       font-family:'Space Grotesk', sans-serif;
-      line-height:1.1;
-      letter-spacing:-.03em;
+      line-height:1.15;
+      letter-spacing:-.02em;
       font-weight:800;
-      max-width:16ch;
-      text-shadow:0 4px 20px rgba(0,0,0,.55), 0 0 40px rgba(0,229,255,.15);
+      max-width:22ch;
+      text-shadow:0 2px 12px rgba(0,0,0,.7);
     }
     .banner-slide p{
       margin:0;
-      color:rgba(255,255,255,.72);
+      color:rgba(255,255,255,.70);
       max-width:44ch;
-      font-size:13px;
-      line-height:1.6;
+      font-size:11px;
+      line-height:1.5;
       font-weight:400;
       letter-spacing:.01em;
     }
-    .banner-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .banner-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    /* Responsive banner sizing */
+    @media(min-width:480px){.banner{aspect-ratio:16/8;max-height:52vw;}}
+    @media(min-width:768px){.banner{aspect-ratio:21/9;max-height:44vw;}}
+    @media(min-width:1024px){.banner{aspect-ratio:21/8;max-height:38vw;}}
     .btn{
       border:none;
       cursor:pointer;
-      border-radius:16px;
-      padding:13px 16px;
+      border-radius:12px;
+      padding:9px 14px;
+      font-size:13px;
       font-weight:700;
       color:#fff;
       transition:transform .16s ease, filter .16s ease, box-shadow .16s ease;
     }
     .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:linear-gradient(135deg, var(--accent), #0088cc); box-shadow:0 10px 26px rgba(0,200,255,.28)}
-    .btn-secondary{background:linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.04)); border:1px solid rgba(0,200,255,.12)}
-    .btn-gold{background:linear-gradient(135deg, var(--crystal3), var(--accent)); color:#001828}
+    .btn-primary{background:linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow:0 10px 26px rgba(255,102,0,.28)}
+    .btn-secondary{background:linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.04)); border:1px solid rgba(255,102,0,.12)}
+    .btn-gold{background:linear-gradient(135deg, var(--crystal3), var(--accent)); color:#0f0f0f}
 
     .panel{
       border-radius:28px;
@@ -531,7 +497,7 @@
       font-family:'Space Grotesk', sans-serif;
       font-weight:800;
       letter-spacing:-.03em;
-      color:#eaffff;
+      color:#f5f5f5;
     }
     .section-head span{display:block;color:var(--muted);font-size:11px;margin-top:2px;font-weight:500;letter-spacing:.02em;}
 
@@ -547,7 +513,7 @@
       padding:7px 12px;
       border-radius:999px;
       color:var(--muted);
-      background:rgba(0,200,255,.04);
+      background:rgba(255,102,0,.04);
       border:1px solid var(--line);
       font-weight:700;
       font-size:11px;
@@ -557,120 +523,88 @@
     }
     .tab.active{
       color:#fff;
-      background:linear-gradient(135deg, rgba(0,200,255,.28), rgba(127,255,255,.14));
-      border-color:rgba(0,200,255,.35);
-      box-shadow:0 0 0 1px rgba(0,200,255,.12), 0 8px 22px rgba(0,200,255,.12);
+      background:linear-gradient(135deg, rgba(255,102,0,.28), rgba(255,136,0,.14));
+      border-color:rgba(255,102,0,.35);
+      box-shadow:0 0 0 1px rgba(255,102,0,.12), 0 8px 22px rgba(255,102,0,.12);
     }
 
     .grid{
       display:grid;
-      gap:14px;
+      gap:10px;
       grid-template-columns:repeat(2, minmax(0,1fr));
     }
     @media (min-width: 768px){.grid{grid-template-columns:repeat(4, minmax(0,1fr));}}
     @media (min-width: 1200px){.grid{grid-template-columns:repeat(6, minmax(0,1fr));}}
 
-    @keyframes breathe{
-      0%,100%{transform:scale(1)}
-      50%{transform:scale(1.01)}
-    }
     .card{
       position:relative;
-      min-height:219px;
-      border-radius:18px;
+      min-height:190px;
+      border-radius:10px;
       overflow:hidden;
       cursor:pointer;
-      border:1px solid rgba(0,229,255,.10);
-      background:linear-gradient(180deg, rgba(0,229,255,.06), rgba(0,229,255,.02));
-      transition:transform .22s cubic-bezier(.34,1.56,.64,1), border-color .2s ease, box-shadow .2s ease;
-      animation: rise .4s cubic-bezier(.34,1.56,.64,1) both, breathe 4s ease-in-out infinite;
-    }
-    .card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(0,200,255,.38);
-      box-shadow:0 18px 42px rgba(0,0,0,.56), 0 0 28px rgba(0,200,255,.16);
+      border:1px solid rgba(255,255,255,.07);
+      background:#1a1a1a;
     }
     .card-top{
       position:absolute;
-      left:10px;
-      top:10px;
-      z-index:2;
-      font-size:11px;
+      left:7px;
+      top:7px;
+      z-index:3;
+      font-size:10px;
       font-weight:800;
-      letter-spacing:.08em;
-      color:var(--crystal3);
-      padding:6px 9px;
+      color:#f5f5f5;
+      padding:3px 7px;
       border-radius:999px;
-      background:rgba(0,15,25,.66);
-      border:1px solid rgba(0,200,255,.22);
-      backdrop-filter:blur(8px);
+      background:rgba(0,0,0,.65);
     }
     .card-media{
-      height:72%;
+      height:70%;
       position:relative;
       overflow:hidden;
-      background:linear-gradient(135deg, rgba(0,160,200,.52), rgba(127,255,255,.2));
+      background:linear-gradient(160deg, #1e1e1e 0%, #141414 100%);
     }
-    .card-media::before,
-    .card-media::after{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(circle at 20% 24%, rgba(255,255,255,.18), transparent 12%),
-        radial-gradient(circle at 82% 18%, rgba(255,255,255,.1), transparent 10%),
-        linear-gradient(180deg, transparent 0%, rgba(0,0,0,.35) 82%, rgba(0,0,0,.68) 100%);
+    .card-media img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block;
     }
-    .card-media::after{
-      inset:auto -30px -30px -30px;
-      height:74px;
-      filter:blur(16px);
-      background:linear-gradient(90deg, rgba(0,200,255,.38), rgba(127,255,255,.24), rgba(184,248,255,.18));
-      opacity:.8;
-    }
+    .card-media::before{ display:none; }
+    .card-media::after{ display:none; }
     .card-footer{
-      height:28%;
-      padding:8px 10px;
+      height:30%;
+      padding:6px 8px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      gap:5px;
-      background:linear-gradient(180deg, rgba(2,14,22,.97), rgba(1,10,16,.99));
-      border-top:1px solid rgba(0,200,255,.06);
+      gap:3px;
+      background:#1a1a1a;
     }
     .card-title{
       margin:0;
-      font-size:11.5px;
+      font-size:11px;
       font-weight:700;
       line-height:1.2;
-      min-height:auto;
-      color:var(--ice);
-      letter-spacing:-.01em;
-      font-family:'Space Grotesk', sans-serif;
+      color:#f5f5f5;
     }
     .card-meta{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:6px;
-      font-size:9.5px;
-      color:var(--muted);
+      gap:4px;
+      font-size:9px;
+      color:#999999;
       font-weight:500;
-      letter-spacing:.02em;
     }
-    .mini-actions{display:flex;gap:5px}
+    .mini-actions{display:flex;gap:4px}
     .mini{
-      width:24px;height:24px;
+      width:22px;height:22px;
       border:none;
-      border-radius:8px;
+      border-radius:7px;
       cursor:pointer;
-      background:rgba(0,200,255,.06);
+      background:rgba(255,255,255,.07);
       color:#c0eeff;
       display:grid;
       place-items:center;
-      transition:background .15s ease, transform .15s ease;
     }
-    .mini:hover{background:rgba(0,200,255,.14);transform:scale(1.1)}
-    .mini svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .mini svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
     .footer-nav{
       position:fixed;
@@ -678,7 +612,7 @@
       z-index:60;
       background:rgba(2,10,18,.95);
       backdrop-filter:blur(20px);
-      border-top:1px solid rgba(0,200,255,.10);
+      border-top:1px solid rgba(255,102,0,.10);
     }
     .footer-inner{
       max-width:920px;
@@ -704,9 +638,9 @@
       transition:all .15s ease;
     }
     .nav-item.active{
-      color:#00e5ff;
-      background:rgba(0,200,255,.10);
-      border-color:rgba(0,200,255,.18);
+      color:#ff6600;
+      background:rgba(255,102,0,.10);
+      border-color:rgba(255,102,0,.18);
     }
     .nav-item svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
     .nav-item span{font-size:9px;font-weight:700;letter-spacing:.01em}
@@ -717,8 +651,8 @@
       position:fixed;
       top:0;bottom:0;
       width:min(370px, 90vw);
-      background:linear-gradient(180deg, #040e18, #020a12);
-      border-right:1px solid rgba(0,200,255,.10);
+      background:linear-gradient(180deg, #111111, #0a0a0a);
+      border-right:1px solid rgba(255,102,0,.10);
       z-index:90;
       transform:translateX(-102%);
       transition:transform .26s cubic-bezier(.34,1.2,.64,1);
@@ -731,7 +665,7 @@
       right:0; left:auto;
       transform:translateX(102%);
       border-right:none;
-      border-left:1px solid rgba(0,200,255,.10);
+      border-left:1px solid rgba(255,102,0,.10);
     }
     .right-panel.open{transform:translateX(0)}
 
@@ -752,14 +686,14 @@
       gap:10px;
       padding:14px 14px;
       border-radius:16px;
-      border:1px solid rgba(0,200,255,.07);
-      background:rgba(0,200,255,.04);
+      border:1px solid rgba(255,102,0,.07);
+      background:rgba(255,102,0,.04);
       color:var(--text);
       cursor:pointer;
       text-align:left;
       transition:background .18s ease, border-color .18s ease, transform .18s ease;
     }
-    .menu-link:hover{background:rgba(0,200,255,.09);border-color:rgba(0,200,255,.18);transform:translateX(3px)}
+    .menu-link:hover{background:rgba(255,102,0,.09);border-color:rgba(255,102,0,.18);transform:translateX(3px)}
     .menu-link small{color:var(--muted)}
     .menu-link .left{
       display:flex;align-items:center;gap:10px;min-width:0;
@@ -796,8 +730,8 @@
       border:1px solid rgba(255,255,255,.06);
       word-break:break-word;
     }
-    .msg.bot{background:rgba(0,200,255,.06);color:#e0f8ff;align-self:flex-start;border-color:rgba(0,200,255,.10)}
-    .msg.user{background:linear-gradient(135deg, rgba(0,200,255,.22), rgba(127,255,255,.12));align-self:flex-end}
+    .msg.bot{background:rgba(255,102,0,.06);color:#e0f8ff;align-self:flex-start;border-color:rgba(255,102,0,.10)}
+    .msg.user{background:linear-gradient(135deg, rgba(255,102,0,.22), rgba(255,136,0,.12));align-self:flex-end}
     .chat-input-row{
       display:flex;
       gap:10px;
@@ -837,7 +771,7 @@
       position:fixed;
       inset:0;
       z-index:100;
-      background:rgba(0,0,8,.92);
+      background:rgba(8,8,8,.92);
       backdrop-filter:blur(18px);
       display:none;
       padding:10px;
@@ -845,6 +779,10 @@
       overflow-y:auto;
     }
     .player.open{display:grid}
+    @media(min-width:981px){
+      .player{ padding:16px 32px; align-items:flex-start; }
+      .recommended{ overflow-y:auto; max-height:90vh; }
+    }
 
     .modal-shell{
       width:min(100%, 1540px);
@@ -852,10 +790,10 @@
       border-radius:22px;
       overflow:hidden;
       display:grid;
-      grid-template-rows:auto 1fr;
-      background:linear-gradient(160deg,#02020c,#03040e 50%,#020308);
-      border:1px solid rgba(157,77,255,.20);
-      box-shadow:0 32px 100px rgba(0,0,40,.90), 0 0 0 1px rgba(255,255,255,.04) inset, 0 0 60px rgba(157,77,255,.10);
+      grid-template-rows:auto auto;
+      background:linear-gradient(160deg,#0a0a0a,#0f0f0f 50%,#080808);
+      border:1px solid rgba(255,102,0,.20);
+      box-shadow:0 32px 100px rgba(0,0,0,.90), 0 0 0 1px rgba(255,255,255,.04) inset, 0 0 60px rgba(255,102,0,.10);
       animation:crystalPop .28s cubic-bezier(.34,1.4,.64,1) both;
     }
 
@@ -864,36 +802,33 @@
       align-items:center;
       gap:10px;
       padding:10px 14px;
-      border-bottom:1px solid rgba(157,77,255,.12);
+      border-bottom:1px solid rgba(255,102,0,.12);
       background:rgba(255,255,255,.02);
     }
     .player-top .title{
       flex:1;min-width:0;font-weight:700;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;
-      background:linear-gradient(90deg,#fff 0%,rgba(157,77,255,.95) 60%,rgba(0,245,255,.85) 100%);
+      background:linear-gradient(90deg,#fff 0%,rgba(255,102,0,.95) 60%,rgba(255,102,0,.85) 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
 
     .player-body{
-      min-height:0;
       display:grid;
-      grid-template-columns:minmax(0,1.75fr) minmax(300px,.9fr);
+      grid-template-columns:minmax(0,2.6fr) minmax(260px,.7fr);
     }
 
     /* ── LEFT: video area ── */
     .video-area{
       min-width:0;
-      border-right:1px solid rgba(157,77,255,.10);
+      border-right:1px solid rgba(255,102,0,.10);
       display:flex;flex-direction:column;
-      overflow-y:auto;
-      scrollbar-width:thin;
-      scrollbar-color:rgba(157,77,255,.20) transparent;
+      overflow-y:visible;
     }
 
     /* player-shell inside modal */
     .player-shell-inner{
-      background:linear-gradient(160deg,rgba(157,77,255,.10),rgba(0,245,255,.05) 60%,rgba(255,0,204,.07));
-      border-bottom:1px solid rgba(157,77,255,.14);
+      background:linear-gradient(160deg,rgba(255,102,0,.10),rgba(255,102,0,.05) 60%,rgba(255,0,204,.07));
+      border-bottom:1px solid rgba(255,102,0,.14);
       overflow:hidden;
     }
 
@@ -901,7 +836,8 @@
     .video-frame{
       position:relative;
       width:100%;
-      height:25.5vh;
+      aspect-ratio:16/9;
+      height:auto;
       background:#000;
       overflow:hidden;
     }
@@ -912,7 +848,7 @@
     }
     .video-frame::after{
       content:'';position:absolute;inset:0;
-      border-bottom:2px solid rgba(124,95,255,.22);
+      border-bottom:2px solid rgba(255,102,0,.22);
       pointer-events:none;z-index:2;
     }
     .video-frame video, .video-frame iframe{
@@ -925,20 +861,20 @@
       display:grid;place-items:center;z-index:3;
       background:rgba(4,4,16,.60);
       backdrop-filter:blur(20px) saturate(200%);
-      border:2px solid rgba(157,77,255,.55);color:#fff;
-      box-shadow:0 0 50px rgba(157,77,255,.55),0 0 20px rgba(0,245,255,.35),0 18px 40px rgba(0,0,0,.55);
+      border:2px solid rgba(255,102,0,.55);color:#fff;
+      box-shadow:0 0 50px rgba(255,102,0,.55),0 0 20px rgba(255,102,0,.35),0 18px 40px rgba(0,0,0,.55);
       transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
       cursor:pointer;
     }
-    .big-play:hover{transform:translate(-50%,-50%) scale(1.08);background:rgba(157,77,255,.28);box-shadow:0 0 80px rgba(157,77,255,.55),0 0 30px rgba(0,245,255,.35),0 20px 50px rgba(0,0,0,.6)}
-    .big-play svg{width:32px;height:32px;margin-left:4px;filter:drop-shadow(0 0 10px rgba(157,77,255,1)) drop-shadow(0 0 20px rgba(0,245,255,.6))}
+    .big-play:hover{transform:translate(-50%,-50%) scale(1.08);background:rgba(255,102,0,.28);box-shadow:0 0 80px rgba(255,102,0,.55),0 0 30px rgba(255,102,0,.35),0 20px 50px rgba(0,0,0,.6)}
+    .big-play svg{width:32px;height:32px;margin-left:4px;filter:drop-shadow(0 0 10px rgba(255,102,0,1)) drop-shadow(0 0 20px rgba(255,102,0,.6))}
     .hidden{display:none!important}
 
     /* meta stack */
     .meta-stack{
       display:flex;flex-direction:column;gap:10px;
       padding:18px 14px 14px;
-      background:linear-gradient(180deg,rgba(157,77,255,.06),rgba(0,245,255,.03));
+      background:linear-gradient(180deg,rgba(255,102,0,.06),rgba(255,102,0,.03));
     }
 
     /* control bar */
@@ -949,19 +885,19 @@
     }
     .btn{
       appearance:none;border:none;
-      background:rgba(124,95,255,.12);color:var(--text);
-      border:1px solid rgba(124,95,255,.22);
+      background:rgba(255,102,0,.12);color:var(--text);
+      border:1px solid rgba(255,102,0,.22);
       transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
       cursor:pointer;outline:none;display:grid;place-items:center;
-      box-shadow:0 4px 14px rgba(0,0,20,.22);
+      box-shadow:0 4px 14px rgba(10,10,10,.22);
       width:42px;height:42px;border-radius:13px;
     }
-    .btn:hover{background:rgba(124,95,255,.24);border-color:rgba(124,95,255,.42);transform:translateY(-1px);box-shadow:0 0 14px rgba(157,77,255,.55)}
+    .btn:hover{background:rgba(255,102,0,.24);border-color:rgba(255,102,0,.42);transform:translateY(-1px);box-shadow:0 0 14px rgba(255,102,0,.55)}
     .btn:active{transform:translateY(0) scale(.97)}
     .btn svg{width:19px;height:19px}
     .time{font-size:12.5px;color:rgba(200,210,255,.80);white-space:nowrap;user-select:none;font-variant-numeric:tabular-nums;padding:0 2px}
     .seek-wrap{min-width:0;display:flex;align-items:center}
-    .seek{accent-color:#9d4dff;cursor:pointer;width:100%;height:4px}
+    .seek{accent-color:#ff6600;cursor:pointer;width:100%;height:4px}
 
     /* action row */
     .action-row{
@@ -971,15 +907,15 @@
     .action-row::-webkit-scrollbar{display:none}
     .action{
       flex:0 0 auto;min-width:52px;height:48px;border-radius:15px;padding:0 13px;
-      background:linear-gradient(160deg,rgba(157,77,255,.18),rgba(0,245,255,.10));
-      border:1px solid rgba(157,77,255,.30);color:var(--text);cursor:pointer;
+      background:linear-gradient(160deg,rgba(255,102,0,.18),rgba(255,102,0,.10));
+      border:1px solid rgba(255,102,0,.30);color:var(--text);cursor:pointer;
       display:flex;align-items:center;gap:7px;
       transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
-      box-shadow:0 4px 20px rgba(157,77,255,.18),0 0 0 1px rgba(157,77,255,.08) inset;
+      box-shadow:0 4px 20px rgba(255,102,0,.18),0 0 0 1px rgba(255,102,0,.08) inset;
     }
-    .action:hover{background:linear-gradient(160deg,rgba(157,77,255,.35),rgba(0,245,255,.18));border-color:rgba(157,77,255,.60);transform:translateY(-1px);box-shadow:0 0 24px rgba(157,77,255,.55),0 0 8px rgba(0,245,255,.35)}
+    .action:hover{background:linear-gradient(160deg,rgba(255,102,0,.35),rgba(255,102,0,.18));border-color:rgba(255,102,0,.60);transform:translateY(-1px);box-shadow:0 0 24px rgba(255,102,0,.55),0 0 8px rgba(255,102,0,.35)}
     .action:active{transform:translateY(0) scale(.97)}
-    .action.active{background:linear-gradient(160deg,rgba(157,77,255,.42),rgba(0,245,255,.22));border-color:rgba(157,77,255,.75);box-shadow:0 0 32px rgba(157,77,255,.55),0 0 12px rgba(0,245,255,.35)}
+    .action.active{background:linear-gradient(160deg,rgba(255,102,0,.42),rgba(255,102,0,.22));border-color:rgba(255,102,0,.75);box-shadow:0 0 32px rgba(255,102,0,.55),0 0 12px rgba(255,102,0,.35)}
     .action svg{width:19px;height:19px;flex-shrink:0}
     .action .count{font-size:12px;color:rgba(200,210,255,.85);white-space:nowrap;font-weight:500}
 
@@ -989,89 +925,89 @@
     .ad-card{
       min-height:99px;border-radius:16px;padding:12px;
       display:flex;flex-direction:column;justify-content:space-between;gap:8px;
-      border:1px solid rgba(157,77,255,.35);
-      background:linear-gradient(135deg,rgba(157,77,255,.32),rgba(0,245,255,.10) 52%,rgba(255,0,204,.22)),rgba(6,5,18,.95);
+      border:1px solid rgba(255,102,0,.35);
+      background:linear-gradient(135deg,rgba(255,102,0,.32),rgba(255,102,0,.10) 52%,rgba(255,0,204,.22)),rgba(6,5,18,.95);
       position:relative;overflow:hidden;cursor:pointer;
       transition:transform 200ms cubic-bezier(.2,.8,.2,1),border-color 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);
-      box-shadow:0 0 30px rgba(157,77,255,.12),0 8px 24px rgba(0,0,30,.40);
+      box-shadow:0 0 30px rgba(255,102,0,.12),0 8px 24px rgba(0,0,0,.40);
     }
-    .ad-card:hover{transform:translateY(-2px);border-color:rgba(157,77,255,.65);box-shadow:0 0 40px rgba(157,77,255,.28)}
-    .ad-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(124,95,255,.22),transparent 65%);pointer-events:none;}
-    .ad-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#00f5ff;font-weight:700;text-shadow:0 0 10px rgba(0,245,255,.50);}
+    .ad-card:hover{transform:translateY(-2px);border-color:rgba(255,102,0,.65);box-shadow:0 0 40px rgba(255,102,0,.28)}
+    .ad-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,102,0,.22),transparent 65%);pointer-events:none;}
+    .ad-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#ff6600;font-weight:700;text-shadow:0 0 10px rgba(255,102,0,.50);}
     .ad-copy{font-size:11.7px;line-height:1.4;color:rgba(220,225,255,.92);}
-    .ad-pill{align-self:flex-start;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(157,77,255,.30),rgba(0,245,255,.15));border:1px solid rgba(157,77,255,.55);color:rgba(220,230,255,.96);font-size:10.5px;white-space:nowrap;z-index:1;font-weight:600;box-shadow:0 0 12px rgba(157,77,255,.25);}
-    .ad-banner-wide{border-radius:18px;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,rgba(157,77,255,.28),rgba(0,245,255,.12) 52%,rgba(255,0,204,.20)),rgba(5,4,16,.96);border:1px solid rgba(157,77,255,.38);cursor:pointer;transition:transform 200ms cubic-bezier(.2,.8,.2,1),border-color 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);box-shadow:0 0 35px rgba(157,77,255,.14);}
-    .ad-banner-wide:hover{transform:translateY(-1px);border-color:rgba(157,77,255,.65);box-shadow:0 0 50px rgba(157,77,255,.28)}
+    .ad-pill{align-self:flex-start;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(255,102,0,.30),rgba(255,102,0,.15));border:1px solid rgba(255,102,0,.55);color:rgba(220,230,255,.96);font-size:10.5px;white-space:nowrap;z-index:1;font-weight:600;box-shadow:0 0 12px rgba(255,102,0,.25);}
+    .ad-banner-wide{border-radius:18px;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,rgba(255,102,0,.28),rgba(255,102,0,.12) 52%,rgba(255,0,204,.20)),rgba(5,4,16,.96);border:1px solid rgba(255,102,0,.38);cursor:pointer;transition:transform 200ms cubic-bezier(.2,.8,.2,1),border-color 200ms cubic-bezier(.2,.8,.2,1),box-shadow 200ms cubic-bezier(.2,.8,.2,1);box-shadow:0 0 35px rgba(255,102,0,.14);}
+    .ad-banner-wide:hover{transform:translateY(-1px);border-color:rgba(255,102,0,.65);box-shadow:0 0 50px rgba(255,102,0,.28)}
 
     /* right column: recommended */
     .recommended{
       min-width:0;display:flex;flex-direction:column;overflow:hidden;
-      background:linear-gradient(160deg,rgba(124,95,255,.06),rgba(0,212,255,.03));
-      border-left:1px solid rgba(124,95,255,.10);
+      background:linear-gradient(160deg,rgba(255,102,0,.06),rgba(255,102,0,.03));
+      border-left:1px solid rgba(255,102,0,.10);
     }
     .rec-head{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:14px 14px 12px;border-bottom:1px solid rgba(124,95,255,.10);flex-shrink:0;
+      padding:14px 14px 12px;border-bottom:1px solid rgba(255,102,0,.10);flex-shrink:0;
     }
     .rec-head-title{
       font-size:14.5px;font-weight:600;letter-spacing:.02em;
-      background:linear-gradient(90deg,#fff 0%,rgba(157,77,255,.95) 50%,rgba(0,245,255,.85) 100%);
+      background:linear-gradient(90deg,#fff 0%,rgba(255,102,0,.95) 50%,rgba(255,102,0,.85) 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
     .mini-btn{
       flex:0 0 auto;width:38px;height:38px;border-radius:12px;
-      background:rgba(124,95,255,.12);border:1px solid rgba(124,95,255,.20);color:var(--text);
+      background:rgba(255,102,0,.12);border:1px solid rgba(255,102,0,.20);color:var(--text);
       cursor:pointer;display:grid;place-items:center;
       transition:transform 200ms cubic-bezier(.2,.8,.2,1),background 200ms cubic-bezier(.2,.8,.2,1);
     }
-    .mini-btn:hover{background:rgba(124,95,255,.24);transform:translateY(-1px)}
+    .mini-btn:hover{background:rgba(255,102,0,.24);transform:translateY(-1px)}
     .mini-btn svg{width:18px;height:18px}
     .recommendations{
       display:flex;flex-direction:column;gap:0;
       max-height:calc(100vh - 120px);overflow-y:auto;
-      scrollbar-width:thin;scrollbar-color:rgba(124,95,255,.25) transparent;
+      scrollbar-width:thin;scrollbar-color:rgba(255,102,0,.25) transparent;
       flex:1;
     }
     .recommendations::-webkit-scrollbar{width:5px}
-    .recommendations::-webkit-scrollbar-thumb{background:rgba(124,95,255,.25);border-radius:999px}
+    .recommendations::-webkit-scrollbar-thumb{background:rgba(255,102,0,.25);border-radius:999px}
 
     /* rec-card */
     .rec-card{
       display:grid;grid-template-columns:145px 1fr;gap:12px;align-items:center;
       padding:10px 12px;background:transparent;
-      border-bottom:1px solid rgba(124,95,255,.07);
+      border-bottom:1px solid rgba(255,102,0,.07);
       transition:background 200ms cubic-bezier(.2,.8,.2,1);cursor:pointer;
     }
     .rec-card:last-child{border-bottom:none}
-    .rec-card:hover{background:rgba(124,95,255,.07)}
-    .thumb{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid rgba(124,95,255,.14);}
-    .thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,20,.03),rgba(0,0,20,.35));z-index:1}
+    .rec-card:hover{background:rgba(255,102,0,.07)}
+    .thumb{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid rgba(255,102,0,.14);}
+    .thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.03),rgba(10,10,10,.35));z-index:1}
     .thumb::after{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.10),transparent);pointer-events:none;z-index:2}
-    .duration{position:absolute;right:8px;bottom:8px;z-index:3;font-size:11px;padding:4px 7px;border-radius:999px;background:rgba(0,0,20,.72);color:#fff;border:1px solid rgba(124,95,255,.20);font-weight:500;font-variant-numeric:tabular-nums;}
+    .duration{position:absolute;right:8px;bottom:8px;z-index:3;font-size:11px;padding:4px 7px;border-radius:999px;background:rgba(10,10,10,.72);color:#fff;border:1px solid rgba(255,102,0,.20);font-weight:500;font-variant-numeric:tabular-nums;}
     .rec-meta{min-width:0;display:flex;flex-direction:column;gap:5px;}
     .rec-title{font-size:13.5px;line-height:1.35;color:rgba(230,235,255,.95);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
     .rec-sub{display:flex;flex-wrap:wrap;gap:6px;color:var(--muted);font-size:11.5px;align-items:center;}
-    .dot{width:3px;height:3px;border-radius:50%;background:rgba(124,95,255,.45)}
+    .dot{width:3px;height:3px;border-radius:50%;background:rgba(255,102,0,.45)}
     .chip-row{display:flex;gap:6px;flex-wrap:wrap;}
-    .chip{padding:4px 9px;border-radius:999px;background:rgba(124,95,255,.10);border:1px solid rgba(124,95,255,.18);color:rgba(180,190,255,.80);font-size:10.5px;font-weight:500;}
+    .chip{padding:4px 9px;border-radius:999px;background:rgba(255,102,0,.10);border:1px solid rgba(255,102,0,.18);color:rgba(200,200,200,.80);font-size:10.5px;font-weight:500;}
 
     /* list-ad inside rec list */
-    .list-ad{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px;background:linear-gradient(135deg,rgba(157,77,255,.20),rgba(0,245,255,.08) 50%,rgba(255,0,204,.14)),rgba(5,4,16,.96);border-top:1px solid rgba(157,77,255,.18);border-bottom:1px solid rgba(157,77,255,.18);cursor:pointer;transition:background 200ms cubic-bezier(.2,.8,.2,1);}
-    .list-ad:hover{background:linear-gradient(135deg,rgba(157,77,255,.32),rgba(0,245,255,.14) 50%,rgba(255,0,204,.20)),rgba(5,4,16,.99)}
+    .list-ad{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px;background:linear-gradient(135deg,rgba(255,102,0,.20),rgba(255,102,0,.08) 50%,rgba(255,0,204,.14)),rgba(5,4,16,.96);border-top:1px solid rgba(255,102,0,.18);border-bottom:1px solid rgba(255,102,0,.18);cursor:pointer;transition:background 200ms cubic-bezier(.2,.8,.2,1);}
+    .list-ad:hover{background:linear-gradient(135deg,rgba(255,102,0,.32),rgba(255,102,0,.14) 50%,rgba(255,0,204,.20)),rgba(5,4,16,.99)}
     .list-ad .ad-label{font-size:9.5px}
     .list-ad .ad-copy{font-size:12px;color:rgba(210,215,255,.88);line-height:1.35}
-    .list-ad .ad-pill{flex-shrink:0;padding:6px 11px;font-size:11px;background:linear-gradient(135deg,rgba(157,77,255,.28),rgba(0,245,255,.14));border:1px solid rgba(157,77,255,.50);border-radius:999px;color:rgba(210,225,255,.95);white-space:nowrap;font-weight:600;box-shadow:0 0 10px rgba(157,77,255,.20);}
+    .list-ad .ad-pill{flex-shrink:0;padding:6px 11px;font-size:11px;background:linear-gradient(135deg,rgba(255,102,0,.28),rgba(255,102,0,.14));border:1px solid rgba(255,102,0,.50);border-radius:999px;color:rgba(210,225,255,.95);white-space:nowrap;font-weight:600;box-shadow:0 0 10px rgba(255,102,0,.20);}
 
     /* rec-item (from state.items) */
     .rec-item{
       display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;
-      padding:9px 12px;border-bottom:1px solid rgba(124,95,255,.07);
+      padding:9px 12px;border-bottom:1px solid rgba(255,102,0,.07);
       transition:background 200ms cubic-bezier(.2,.8,.2,1);cursor:pointer;
     }
     .rec-item:last-child{border-bottom:none}
-    .rec-item:hover{background:rgba(124,95,255,.07)}
-    .rec-thumb{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid rgba(124,95,255,.14);min-height:70px;}
-    .rec-thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,20,.03),rgba(0,0,20,.35));z-index:1}
+    .rec-item:hover{background:rgba(255,102,0,.07)}
+    .rec-thumb{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid rgba(255,102,0,.14);min-height:70px;}
+    .rec-thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.03),rgba(10,10,10,.35));z-index:1}
     .rec-content{padding:2px 4px 2px 0}
     .rec-content h4{margin:0 0 4px;font-size:13px;font-weight:500;color:rgba(230,235,255,.95);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .rec-content p{margin:0;color:var(--muted);font-size:11.5px;line-height:1.4}
@@ -1105,9 +1041,9 @@
       border:none;
       border-radius:10px;
       cursor:grab;
-      background:linear-gradient(135deg, rgba(0,180,240,.96), rgba(127,255,255,.86));
-      color:#001828;
-      box-shadow:0 8px 20px rgba(0,0,0,.38), 0 0 16px rgba(0,200,255,.30);
+      background:linear-gradient(135deg, rgba(255,102,0,.96), rgba(255,136,0,.86));
+      color:#0f0f0f;
+      box-shadow:0 8px 20px rgba(0,0,0,.38), 0 0 16px rgba(255,102,0,.30);
       display:grid;
       place-items:center;
       touch-action:none;
@@ -1115,14 +1051,14 @@
       transition:box-shadow .2s ease, transform .15s ease;
     }
     .fab-bot:active{ cursor:grabbing; transform:scale(1.08); }
-    .fab-bot.dragging{ transition:none; box-shadow:0 12px 28px rgba(0,0,0,.5), 0 0 22px rgba(0,200,255,.40); }
+    .fab-bot.dragging{ transition:none; box-shadow:0 12px 28px rgba(0,0,0,.5), 0 0 22px rgba(255,102,0,.40); }
     .fab-bot svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
     .fab-bot::after{
       content:"";
       position:absolute;
       inset:-5px;
       border-radius:14px;
-      border:1px solid rgba(127,255,255,.20);
+      border:1px solid rgba(255,136,0,.20);
       animation:pulse 1.8s ease-out infinite;
     }
 
@@ -1147,22 +1083,24 @@
       100%{transform:scale(1);opacity:1;filter:brightness(1)}
     }
     @keyframes crystalGlow{
-      0%,100%{box-shadow:0 0 18px rgba(0,200,255,.18), 0 0 40px rgba(0,200,255,.06)}
-      50%{box-shadow:0 0 28px rgba(0,200,255,.32), 0 0 60px rgba(127,255,255,.10)}
+      0%,100%{box-shadow:0 0 18px rgba(255,102,0,.18), 0 0 40px rgba(255,102,0,.06)}
+      50%{box-shadow:0 0 28px rgba(255,102,0,.32), 0 0 60px rgba(255,136,0,.10)}
     }
 
     @media (max-width: 980px){
       .hero{grid-template-columns:1fr}
       .player-body{grid-template-columns:1fr}
-      .video-area{border-right:none;border-bottom:1px solid rgba(157,77,255,.10)}
+      .video-area{border-right:none;border-bottom:1px solid rgba(255,102,0,.10)}
       .search{display:none}
+      .video-frame{ aspect-ratio:unset; height:23.5vh; }
+      .video-frame video, .video-frame iframe{ transform:scale(1.25); transform-origin:center center; width:100%; height:100%; }
     }
     @media (max-width: 620px){
       .content{padding:12px}
       .topbar-inner{padding:10px 12px}
       .brand h1{font-size:16px}
       .brand p{font-size:11px}
-      .banner{aspect-ratio:9/16;max-height:92vw;}
+      .banner{aspect-ratio:16/10;max-height:64vw;}
       .banner-slide{padding:22px}
       .banner-slide h2{max-width:100%}
       .footer-inner{max-width:none}
@@ -1176,21 +1114,21 @@
       content:"✏️ EDIT MODE ON";
       position:fixed;top:0;left:50%;transform:translateX(-50%);
       z-index:9000;
-      background:linear-gradient(90deg,#00c8ff,#7fffff);
-      color:#001828;font-size:11px;font-weight:900;letter-spacing:.12em;
+      background:linear-gradient(90deg,#ff6600,#7fffff);
+      color:#0f0f0f;font-size:11px;font-weight:900;letter-spacing:.12em;
       padding:4px 16px;border-radius:0 0 12px 12px;
-      box-shadow:0 4px 20px rgba(0,200,255,.4);
+      box-shadow:0 4px 20px rgba(255,102,0,.4);
       pointer-events:none;
     }
 
     /* Hover outline in edit mode */
     body.edit-mode .editable-el:hover{
-      outline:2px solid rgba(0,200,255,.7)!important;
+      outline:2px solid rgba(255,102,0,.7)!important;
       outline-offset:3px;
       cursor:cell!important;
     }
     body.edit-mode .editable-el.selected{
-      outline:2px solid #00c8ff!important;
+      outline:2px solid #ff6600!important;
       outline-offset:3px;
     }
 
@@ -1199,11 +1137,11 @@
       position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(120px);
       z-index:8000;
       display:flex;align-items:center;gap:8px;
-      background:rgba(0,10,20,.95);
-      border:1px solid rgba(0,200,255,.20);
+      background:rgba(10,10,10,.95);
+      border:1px solid rgba(255,102,0,.20);
       border-radius:999px;
       padding:8px 14px;
-      box-shadow:0 12px 40px rgba(0,0,0,.7),0 0 30px rgba(0,200,255,.15);
+      box-shadow:0 12px 40px rgba(0,0,0,.7),0 0 30px rgba(255,102,0,.15);
       backdrop-filter:blur(20px);
       transition:transform .3s cubic-bezier(.34,1.4,.64,1),opacity .3s ease;
       opacity:0;pointer-events:none;
@@ -1213,30 +1151,30 @@
       width:40px;height:40px;border:none;border-radius:50%;cursor:pointer;
       display:grid;place-items:center;font-size:16px;
       transition:transform .15s ease,background .15s ease;
-      background:rgba(0,200,255,.08);color:#c0eeff;
-      border:1px solid rgba(0,200,255,.12);
+      background:rgba(255,102,0,.08);color:#c0eeff;
+      border:1px solid rgba(255,102,0,.12);
     }
-    .ebar-btn:hover{transform:scale(1.15);background:rgba(0,200,255,.18);}
+    .ebar-btn:hover{transform:scale(1.15);background:rgba(255,102,0,.18);}
     .ebar-btn.danger{background:rgba(255,60,60,.08);border-color:rgba(255,60,60,.18);color:#ff8888;}
     .ebar-btn.danger:hover{background:rgba(255,60,60,.20);}
     .ebar-btn.publish{
       width:auto;padding:0 16px;border-radius:999px;
-      background:linear-gradient(135deg,#00c8ff,#0088cc);
-      color:#001828;font-weight:900;font-size:12px;letter-spacing:.04em;
-      border:none;box-shadow:0 4px 16px rgba(0,200,255,.30);
+      background:linear-gradient(135deg,#ff6600,#cc4400);
+      color:#0f0f0f;font-weight:900;font-size:12px;letter-spacing:.04em;
+      border:none;box-shadow:0 4px 16px rgba(255,102,0,.30);
     }
     .ebar-btn.publish:hover{filter:brightness(1.1);}
-    .ebar-sep{width:1px;height:24px;background:rgba(0,200,255,.15);}
+    .ebar-sep{width:1px;height:24px;background:rgba(255,102,0,.15);}
 
     /* Context popup - appears near touched element */
     #ctxPop{
       position:fixed;z-index:9500;
       background:rgba(0,10,22,.97);
-      border:1px solid rgba(0,200,255,.22);
+      border:1px solid rgba(255,102,0,.22);
       border-radius:20px;
       padding:11px;
       min-width:208px;max-width:74vw;
-      box-shadow:0 24px 60px rgba(0,0,0,.8),0 0 40px rgba(0,200,255,.12);
+      box-shadow:0 24px 60px rgba(0,0,0,.8),0 0 40px rgba(255,102,0,.12);
       display:none;flex-direction:column;gap:8px;
       backdrop-filter:blur(24px);
       animation:popIn .2s cubic-bezier(.34,1.5,.64,1) both;
@@ -1251,16 +1189,16 @@
     #ctxDragHandle::before{
       content:'';display:block;
       width:36px;height:4px;border-radius:99px;
-      background:rgba(0,200,255,.30);
+      background:rgba(255,102,0,.30);
     }
     #ctxPop.show{display:flex;}
     @keyframes popIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
 
     .ctx-head{
       display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid rgba(0,200,255,.10);padding-bottom:8px;
+      border-bottom:1px solid rgba(255,102,0,.10);padding-bottom:8px;
     }
-    .ctx-tag{font-size:10px;color:#00c8ff;letter-spacing:.1em;text-transform:uppercase;}
+    .ctx-tag{font-size:10px;color:#ff6600;letter-spacing:.1em;text-transform:uppercase;}
     .ctx-close{
       width:26px;height:26px;border:none;border-radius:8px;cursor:pointer;
       background:rgba(255,255,255,.06);color:#fff;font-size:14px;
@@ -1271,13 +1209,13 @@
     .ctx-opt{
       display:flex;align-items:center;gap:4px;
       padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(0,200,255,.14);
-      background:rgba(0,200,255,.06);
+      border:1px solid rgba(255,102,0,.14);
+      background:rgba(255,102,0,.06);
       color:#c0eeff;font-size:10px;cursor:pointer;
       transition:all .14s ease;white-space:nowrap;
     }
-    .ctx-opt:hover{background:rgba(0,200,255,.18);border-color:rgba(0,200,255,.28);color:#fff;}
-    .ctx-opt.active{background:rgba(0,200,255,.22);border-color:rgba(0,200,255,.40);color:#7fffff;}
+    .ctx-opt:hover{background:rgba(255,102,0,.18);border-color:rgba(255,102,0,.28);color:#fff;}
+    .ctx-opt.active{background:rgba(255,102,0,.22);border-color:rgba(255,102,0,.40);color:#7fffff;}
     .ctx-opt.del{border-color:rgba(255,60,60,.18);background:rgba(255,60,60,.06);color:#ff9999;}
     .ctx-opt.del:hover{background:rgba(255,60,60,.18);}
 
@@ -1286,14 +1224,14 @@
     .ctx-panel.show{display:flex;}
 
     .ctx-input{
-      width:100%;background:rgba(0,200,255,.06);
-      border:1px solid rgba(0,200,255,.14);border-radius:12px;
+      width:100%;background:rgba(255,102,0,.06);
+      border:1px solid rgba(255,102,0,.14);border-radius:12px;
       padding:7px 10px;color:#e0faff;font:inherit;font-size:11px;outline:none;
     }
-    .ctx-input:focus{border-color:rgba(0,200,255,.35);box-shadow:0 0 0 2px rgba(0,200,255,.08);}
+    .ctx-input:focus{border-color:rgba(255,102,0,.35);box-shadow:0 0 0 2px rgba(255,102,0,.08);}
     .ctx-textarea{
-      width:100%;background:rgba(0,200,255,.06);
-      border:1px solid rgba(0,200,255,.14);border-radius:12px;
+      width:100%;background:rgba(255,102,0,.06);
+      border:1px solid rgba(255,102,0,.14);border-radius:12px;
       padding:7px 10px;color:#e0faff;font:inherit;font-size:11px;outline:none;
       resize:vertical;min-height:52px;
     }
@@ -1307,30 +1245,30 @@
     .ctx-swatch:hover{transform:scale(1.2);border-color:rgba(255,255,255,.5);}
     .ctx-color-pick{display:flex;align-items:center;gap:8px;}
     input.ctx-cpick{
-      width:44px;height:36px;border:2px solid rgba(0,200,255,.18);
+      width:44px;height:36px;border:2px solid rgba(255,102,0,.18);
       border-radius:10px;cursor:pointer;padding:2px;background:transparent;
     }
 
     /* Upload area in popup */
     .ctx-upload{
-      border:2px dashed rgba(0,200,255,.22);border-radius:14px;
+      border:2px dashed rgba(255,102,0,.22);border-radius:14px;
       padding:18px;text-align:center;cursor:pointer;color:#5a98b8;font-size:13px;
       transition:all .16s ease;
     }
-    .ctx-upload:hover{border-color:rgba(0,200,255,.40);background:rgba(0,200,255,.04);}
+    .ctx-upload:hover{border-color:rgba(255,102,0,.40);background:rgba(255,102,0,.04);}
 
     .ctx-size-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
     .ctx-range-row{display:flex;gap:8px;align-items:center;}
-    .ctx-range{flex:1;accent-color:#00c8ff;}
-    .ctx-value{font-size:10px;color:#00c8ff;min-width:56px;text-align:right;}
+    .ctx-range{flex:1;accent-color:#ff6600;}
+    .ctx-value{font-size:10px;color:#ff6600;min-width:56px;text-align:right;}
     .size-chip-row{display:flex;gap:7px;flex-wrap:wrap;}
-    .size-chip{padding:6px 10px;border-radius:999px;border:1px solid rgba(0,200,255,.14);background:rgba(0,200,255,.06);color:#c0eeff;font-size:10px;cursor:pointer;}
-    .size-chip:hover{background:rgba(0,200,255,.18);border-color:rgba(0,200,255,.28);color:#fff;}
+    .size-chip{padding:6px 10px;border-radius:999px;border:1px solid rgba(255,102,0,.14);background:rgba(255,102,0,.06);color:#c0eeff;font-size:10px;cursor:pointer;}
+    .size-chip:hover{background:rgba(255,102,0,.18);border-color:rgba(255,102,0,.28);color:#fff;}
 
     .ctx-apply{
       width:100%;padding:9px;border:none;border-radius:14px;cursor:pointer;
-      background:linear-gradient(135deg,#00c8ff,#0088cc);
-      color:#001828;font-weight:900;font-size:12px;
+      background:linear-gradient(135deg,#ff6600,#cc4400);
+      color:#0f0f0f;font-weight:900;font-size:12px;
       transition:filter .15s ease,transform .15s ease;
     }
     .ctx-apply:hover{filter:brightness(1.1);transform:translateY(-1px);}
@@ -1339,7 +1277,7 @@
     #undoBar{
       position:fixed;bottom:150px;left:50%;transform:translateX(-50%) translateY(30px);
       z-index:9100;
-      background:rgba(0,10,20,.96);border:1px solid rgba(0,200,255,.20);
+      background:rgba(10,10,10,.96);border:1px solid rgba(255,102,0,.20);
       border-radius:14px;padding:10px 18px;
       display:flex;align-items:center;gap:12px;
       opacity:0;pointer-events:none;transition:all .25s ease;font-size:13px;color:#c0eeff;
@@ -1347,67 +1285,51 @@
     #undoBar.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all;}
     #undoBar button{
       padding:6px 14px;border:none;border-radius:10px;cursor:pointer;
-      background:rgba(0,200,255,.16);color:#00c8ff;font-weight:700;font-size:12px;
+      background:rgba(255,102,0,.16);color:#ff6600;font-weight:700;font-size:12px;
     }
 
     /* ═══ ADMIN PANEL ═══ */
-    #adminPanel { display:none; position:fixed; inset:0; z-index:300; background:#010814; flex-direction:column; overflow:hidden; }
-    .adm-nav { border:none; background:transparent; color:#5dd8ff; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 2px; border-radius:12px; font-size:20px; transition:all .15s ease; border:1px solid transparent; width:100%; }
+    #adminPanel { display:none; position:fixed; inset:0; z-index:300; background:#0f0f0f; flex-direction:column; overflow:hidden; }
+    .adm-nav { border:none; background:transparent; color:#999999; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 2px; border-radius:12px; font-size:20px; transition:all .15s ease; border:1px solid transparent; width:100%; }
     .adm-nav span { font-size:10px; font-weight:700; }
-    .adm-nav.active { color:#fff; background:rgba(0,200,255,.18); border-color:rgba(0,200,255,.25); }
-    .adm-thumb-upload { width:100%; aspect-ratio:16/9; border:2px dashed rgba(0,200,255,.25); border-radius:16px; display:grid; place-items:center; cursor:pointer; background:rgba(0,200,255,.04); color:#5dd8ff; font-size:13px; transition:all .16s ease; overflow:hidden; position:relative; }
-    .adm-thumb-upload:hover { border-color:rgba(0,200,255,.45); background:rgba(0,200,255,.08); }
-    .adm-input { width:100%; background:rgba(0,200,255,.05); border:1px solid rgba(0,200,255,.14); border-radius:12px; padding:10px 12px; color:#e0faff; font-size:13px; outline:none; font-family:inherit; }
-    .adm-input:focus { border-color:rgba(0,200,255,.35); }
-    .adm-btn { width:100%; padding:13px; border:none; border-radius:14px; cursor:pointer; background:linear-gradient(135deg,#00c8ff,#0088cc); color:#001828; font-weight:900; font-size:13px; letter-spacing:.02em; transition:filter .15s,transform .15s; }
+    .adm-nav.active { color:#fff; background:rgba(255,102,0,.18); border-color:rgba(255,102,0,.25); }
+    .adm-thumb-upload { width:100%; aspect-ratio:16/9; border:2px dashed rgba(255,102,0,.25); border-radius:16px; display:grid; place-items:center; cursor:pointer; background:rgba(255,102,0,.04); color:#999999; font-size:13px; transition:all .16s ease; overflow:hidden; position:relative; }
+    .adm-thumb-upload:hover { border-color:rgba(255,102,0,.45); background:rgba(255,102,0,.08); }
+    .adm-input { width:100%; background:rgba(255,102,0,.05); border:1px solid rgba(255,102,0,.14); border-radius:12px; padding:10px 12px; color:#e0faff; font-size:13px; outline:none; font-family:inherit; }
+    .adm-input:focus { border-color:rgba(255,102,0,.35); }
+    .adm-btn { width:100%; padding:13px; border:none; border-radius:14px; cursor:pointer; background:linear-gradient(135deg,#ff6600,#cc4400); color:#0f0f0f; font-weight:900; font-size:13px; letter-spacing:.02em; transition:filter .15s,transform .15s; }
     .adm-btn:active { filter:brightness(.9); transform:scale(.98); }
-    .adm-card-row { display:flex; gap:10px; align-items:center; padding:10px; border-radius:14px; background:rgba(0,200,255,.04); border:1px solid rgba(0,200,255,.08); }
-    .adm-card-thumb { width:54px; height:54px; border-radius:10px; flex:0 0 auto; background:rgba(0,200,255,.15); background-size:cover; background-position:center; }
-    .adm-edit-btn { padding:6px 10px; border:1px solid rgba(0,200,255,.2); border-radius:10px; background:rgba(0,200,255,.08); color:#00c8ff; font-size:11px; font-weight:700; cursor:pointer; flex:0 0 auto; }
+    .adm-card-row { display:flex; gap:10px; align-items:center; padding:10px; border-radius:14px; background:rgba(255,102,0,.04); border:1px solid rgba(255,102,0,.08); }
+    .adm-card-thumb { width:54px; height:54px; border-radius:10px; flex:0 0 auto; background:rgba(255,102,0,.15); background-size:cover; background-position:center; }
+    .adm-edit-btn { padding:6px 10px; border:1px solid rgba(255,102,0,.2); border-radius:10px; background:rgba(255,102,0,.08); color:#ff6600; font-size:11px; font-weight:700; cursor:pointer; flex:0 0 auto; }
     .adm-del-btn { width:30px; height:30px; border:1px solid rgba(255,80,80,.2); border-radius:8px; background:rgba(255,80,80,.06); color:#ff7777; font-size:12px; cursor:pointer; flex:0 0 auto; display:grid; place-items:center; }
     .adm-drive-ok { color:#00ff88; font-size:11px; margin-top:4px; font-weight:700; }
     .adm-drive-err { color:#ff7777; font-size:11px; margin-top:4px; }
-    .adm-section-head { font-size:13px; font-weight:900; color:#00c8ff; margin:16px 0 8px; letter-spacing:.04em; }
+    .adm-section-head { font-size:13px; font-weight:900; color:#ff6600; margin:16px 0 8px; letter-spacing:.04em; }
     .adm-gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-    .adm-gal-item { aspect-ratio:1; border-radius:12px; overflow:hidden; position:relative; border:1px solid rgba(0,200,255,.1); background:rgba(0,200,255,.08); }
+    .adm-gal-item { aspect-ratio:1; border-radius:12px; overflow:hidden; position:relative; border:1px solid rgba(255,102,0,.1); background:rgba(255,102,0,.08); }
     .adm-gal-item img { width:100%; height:100%; object-fit:cover; filter:contrast(1.1) saturate(1.15) brightness(1.04); }
-    .adm-gal-num { position:absolute; top:4px; left:4px; background:rgba(0,10,20,.75); color:#00c8ff; font-size:9px; font-weight:900; padding:2px 5px; border-radius:5px; }
+    .adm-gal-num { position:absolute; top:4px; left:4px; background:rgba(10,10,10,.75); color:#ff6600; font-size:9px; font-weight:900; padding:2px 5px; border-radius:5px; }
     .adm-empty { text-align:center; color:#3a6a88; font-size:13px; padding:32px 16px; line-height:1.6; }
-    .adm-edit-panel { display:none; padding:12px; border-radius:14px; background:rgba(0,200,255,.04); border:1px solid rgba(0,200,255,.12); margin-top:6px; }
-    .adm-tag { display:inline-block; font-size:10px; font-weight:900; padding:3px 8px; border-radius:999px; background:rgba(0,200,255,.12); color:#00c8ff; border:1px solid rgba(0,200,255,.2); margin-right:4px; }
+    .adm-edit-panel { display:none; padding:12px; border-radius:14px; background:rgba(255,102,0,.04); border:1px solid rgba(255,102,0,.12); margin-top:6px; }
+    .adm-tag { display:inline-block; font-size:10px; font-weight:900; padding:3px 8px; border-radius:999px; background:rgba(255,102,0,.12); color:#ff6600; border:1px solid rgba(255,102,0,.2); margin-right:4px; }
   
-/* CRYSTAL FAST UI PATCH */
-:root{
---crystal1:#00f0ff;
---crystal2:#7c3aed;
---crystal3:#ff00cc;
-}
-
+/* CLEAN UI PATCH */
 html{scroll-behavior:smooth;}
 
 .card, .gallery-card, .item{
 transform:translateZ(0);
 will-change:transform;
-transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
+transition:transform .2s ease, box-shadow .2s ease;
 }
 
 .card:hover,.gallery-card:hover,.item:hover{
-transform:scale(1.04);
-box-shadow:0 0 10px rgba(0,240,255,.7),
-0 0 25px rgba(124,58,237,.6),
-0 0 45px rgba(255,0,204,.5);
+transform:scale(1.03);
+box-shadow:0 4px 24px rgba(0,0,0,.6);
 }
 
 img{
 image-rendering:auto;
-}
-
-/* crystal glow buttons */
-button,.btn{
-background:linear-gradient(135deg,var(--crystal1),var(--crystal2),var(--crystal3));
-box-shadow:0 0 10px rgba(0,240,255,.6),
-0 0 20px rgba(124,58,237,.5);
-border:none;
 }
 
 /* smooth animations */
@@ -1420,7 +1342,7 @@ backface-visibility:hidden;
 <style>
 .gallery-card{transform:scale(1.6); transform-origin:center;}
 .banner-progress{position:absolute;bottom:6px;left:0;right:0;height:3px;background:rgba(255,255,255,.15);overflow:hidden;border-radius:3px}
-.banner-progress span{display:block;height:100%;width:0%;background:#00e5ff;animation:bannerProg 5s linear infinite}
+.banner-progress span{display:block;height:100%;width:0%;background:#ff6600;animation:bannerProg 5s linear infinite}
 @keyframes bannerProg{from{width:0%}to{width:100%}}
 </style>
 
@@ -1459,14 +1381,12 @@ backface-visibility:hidden;
   body.smooth-lite .ph-card,
   body.smooth-lite .rec-item {
     will-change: auto !important;
-    content-visibility: auto;
-    contain-intrinsic-size: 220px;
   }
 
   body.smooth-lite .card {
     animation: none !important;
-    opacity: 0;
-    transform: translateY(10px) scale(.985);
+    opacity: 1;
+    transform: none;
   }
 
   body.smooth-lite .card.revealed,
@@ -1551,14 +1471,7 @@ backface-visibility:hidden;
           <input id="searchInput" placeholder="Search cards, movies, saved..." />
         </div>
       </div>
-      <a href="#" class="topbar-ad-full" onclick="return false;">
-        <span class="ad-badge">AD</span>
-        <span class="ad-text-full">🔥 Premium Unlocked — Tap to Upgrade</span>
-        <span class="ad-cta">GET →</span>
-      </a>
-      <div id="adProgressBar" style="width:100%;height:2px;background:rgba(0,229,255,.10);overflow:hidden;">
-        <div id="adProgressFill" style="height:100%;width:0%;background:linear-gradient(90deg,#a855f7,#00e5ff,#ff00cc);box-shadow:0 0 6px rgba(168,85,247,.7);transition:width linear;border-radius:0 2px 2px 0;"></div>
-      </div>
+
     </header>
 
     <aside class="drawer" id="menuDrawer">
@@ -1618,24 +1531,24 @@ backface-visibility:hidden;
       </div>
       <div class="panel-body" id="toolsBody">
         <!-- Playback Speed -->
-        <div style="background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.12);border-radius:16px;padding:14px;">
+        <div style="background:rgba(255,102,0,.06);border:1px solid rgba(255,102,0,.12);border-radius:16px;padding:14px;">
           <div style="font-size:12px;font-weight:700;color:#7edfff;margin-bottom:10px;letter-spacing:.04em;">PLAYBACK SPEED</div>
           <div style="display:flex;gap:7px;flex-wrap:wrap;" id="speedBtns">
-            <button onclick="setPlayerSpeed(0.5)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.20);background:rgba(0,200,255,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">0.5x</button>
-            <button onclick="setPlayerSpeed(1)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.40);background:rgba(0,200,255,.18);border-radius:10px;color:#00e5ff;font-size:12px;font-weight:700;cursor:pointer;" id="spd1x">1x ✓</button>
-            <button onclick="setPlayerSpeed(1.5)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.20);background:rgba(0,200,255,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">1.5x</button>
-            <button onclick="setPlayerSpeed(2)" style="flex:1;padding:8px 4px;border:1px solid rgba(0,200,255,.20);background:rgba(0,200,255,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">2x</button>
+            <button onclick="setPlayerSpeed(0.5)" style="flex:1;padding:8px 4px;border:1px solid rgba(255,102,0,.20);background:rgba(255,102,0,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">0.5x</button>
+            <button onclick="setPlayerSpeed(1)" style="flex:1;padding:8px 4px;border:1px solid rgba(255,102,0,.40);background:rgba(255,102,0,.18);border-radius:10px;color:#ff6600;font-size:12px;font-weight:700;cursor:pointer;" id="spd1x">1x ✓</button>
+            <button onclick="setPlayerSpeed(1.5)" style="flex:1;padding:8px 4px;border:1px solid rgba(255,102,0,.20);background:rgba(255,102,0,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">1.5x</button>
+            <button onclick="setPlayerSpeed(2)" style="flex:1;padding:8px 4px;border:1px solid rgba(255,102,0,.20);background:rgba(255,102,0,.06);border-radius:10px;color:#c0eeff;font-size:12px;font-weight:700;cursor:pointer;">2x</button>
           </div>
         </div>
         <!-- Quality Info -->
-        <div style="background:rgba(157,77,255,.06);border:1px solid rgba(157,77,255,.14);border-radius:16px;padding:14px;">
-          <div style="font-size:12px;font-weight:700;color:#c084fc;margin-bottom:8px;letter-spacing:.04em;">QUALITY</div>
+        <div style="background:rgba(255,102,0,.06);border:1px solid rgba(255,102,0,.14);border-radius:16px;padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:#ff8800;margin-bottom:8px;letter-spacing:.04em;">QUALITY</div>
           <div style="font-size:13px;color:#e0d0ff;">Auto (Best Available)</div>
           <div style="font-size:11px;color:#a080cc;margin-top:4px;">Video quality adjusts automatically based on your connection speed.</div>
         </div>
         <!-- Player Gestures Info -->
-        <div style="background:rgba(0,245,255,.04);border:1px solid rgba(0,245,255,.10);border-radius:16px;padding:14px;">
-          <div style="font-size:12px;font-weight:700;color:#00c8c8;margin-bottom:10px;letter-spacing:.04em;">GESTURE CONTROLS</div>
+        <div style="background:rgba(255,102,0,.04);border:1px solid rgba(255,102,0,.10);border-radius:16px;padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:#ff8800;margin-bottom:10px;letter-spacing:.04em;">GESTURE CONTROLS</div>
           <div style="display:flex;flex-direction:column;gap:7px;">
             <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#a0d8e8;">
               <span style="font-size:16px;">👆</span> Tap = Show/Hide controls
@@ -1716,8 +1629,8 @@ backface-visibility:hidden;
         </div>
         <!-- Gallery ratio tabs — compact pill style -->
         <div id="galRatioTabs" style="display:none;padding:0 16px 10px;display:flex;gap:8px;">
-          <button id="galTab916" onclick="setGalRatio('9:16')" style="flex:1;padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.04em;transition:all .25s;background:linear-gradient(90deg,#a855f7,#7c3aed);color:#fff;box-shadow:0 0 14px rgba(168,85,247,.45);">📱 9:16</button>
-          <button id="galTab169" onclick="setGalRatio('16:9')" style="flex:1;padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.04em;transition:all .25s;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.30);color:#c084fc;">🖥️ 16:9</button>
+          <button id="galTab916" onclick="setGalRatio('9:16')" style="flex:1;padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.04em;transition:all .25s;background:linear-gradient(90deg,#ff6600,#cc4400);color:#fff;box-shadow:0 0 14px rgba(255,102,0,.45);">📱 9:16</button>
+          <button id="galTab169" onclick="setGalRatio('16:9')" style="flex:1;padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.04em;transition:all .25s;background:rgba(255,102,0,.12);border:1px solid rgba(255,102,0,.30);color:#ff8800;">🖥️ 16:9</button>
         </div>
       </section>
 
@@ -1804,8 +1717,8 @@ backface-visibility:hidden;
                   <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
                     <span id="vcCurTime" style="font-size:10px;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;white-space:nowrap;">0:00</span>
                     <div id="vcSeekTrack" style="flex:1;height:3px;border-radius:999px;background:rgba(255,255,255,.22);cursor:pointer;position:relative;touch-action:none;">
-                      <div id="vcSeekFill" style="height:100%;border-radius:999px;background:linear-gradient(90deg,#9d4dff,#00f5ff);width:0%;transition:width .1s linear;"></div>
-                      <div id="vcSeekThumb" style="position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(157,77,255,.8);"></div>
+                      <div id="vcSeekFill" style="height:100%;border-radius:999px;background:linear-gradient(90deg,#ff6600,#ffaa33);width:0%;transition:width .1s linear;"></div>
+                      <div id="vcSeekThumb" style="position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(255,102,0,.8);"></div>
                     </div>
                     <span id="vcDuration" style="font-size:10px;color:rgba(255,255,255,.6);font-variant-numeric:tabular-nums;white-space:nowrap;">0:00</span>
                     <button id="vcVolBtn" style="background:none;border:none;cursor:pointer;padding:2px;display:flex;align-items:center;color:rgba(255,255,255,.85);">
@@ -1814,24 +1727,7 @@ backface-visibility:hidden;
                   </div>
                   <!-- AD box (left, compact) + Action buttons row -->
                   <div style="display:flex;align-items:center;gap:6px;">
-                    <!-- Action buttons: Like Dislike Share Save — 50% smaller -->
-                    <div style="display:flex;gap:4px;align-items:center;flex:1;min-width:0;">
-                      <button id="vcLikeBtn" style="flex:1;height:17px;border-radius:6px;border:1px solid rgba(157,77,255,.35);background:rgba(157,77,255,.15);color:#fff;font-size:8px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:2px;transition:background .15s;">
-                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M1 21h4V9H1v12zm22-10a3 3 0 0 0-3-3h-6l1-4.5V3a2 2 0 0 0-2-2L8 9v12h10a3 3 0 0 0 3-2.3l1.4-8A3 3 0 0 0 23 11z"/></svg>
-                        <span id="vcLikeCount">Like</span>
-                      </button>
-                      <button id="vcDislikeBtn" style="flex:0 0 17px;height:17px;border-radius:6px;border:1px solid rgba(157,77,255,.25);background:rgba(157,77,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M23 3h-4v12h4V3zM1 13a3 3 0 0 0 3 3h6l-1 4.5V21a2 2 0 0 0 2 2l5-12V1H6a3 3 0 0 0-3 2.3l-1.4 8A3 3 0 0 0 1 13z"/></svg>
-                      </button>
-                      <button id="vcShareBtn" style="flex:1;height:17px;border-radius:6px;border:1px solid rgba(0,245,255,.25);background:rgba(0,245,255,.08);color:#fff;font-size:8px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:2px;">
-                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M18 16a3 3 0 0 0-2.39 1.19L8.91 13.4a3.1 3.1 0 0 0 0-2.8l6.7-3.79A3 3 0 1 0 15 5a2.97 2.97 0 0 0 .09.71l-6.7 3.79a3 3 0 1 0 0 4.9l6.7 3.79A3 3 0 1 0 18 16z"/></svg>
-                        Share
-                      </button>
-                      <button id="vcSaveBtn" style="flex:1;height:17px;border-radius:6px;border:1px solid rgba(0,245,255,.25);background:rgba(0,245,255,.08);color:#fff;font-size:8px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:2px;">
-                        <svg viewBox="0 0 24 24" width="7" height="7" fill="currentColor"><path d="M5 3a2 2 0 0 0-2 2v16l9-5 9 5V5a2 2 0 0 0-2-2H5z"/></svg>
-                        Save
-                      </button>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -1881,15 +1777,17 @@ backface-visibility:hidden;
   </div>
 
   <!-- ANIME PLAYER MODAL -->
-  <div id="animePlayerModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,8,.95);backdrop-filter:blur(18px);padding:10px;align-items:flex-start;justify-content:center;overflow-y:auto;"></div>
+  <div id="animePlayerModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(8,8,8,.95);backdrop-filter:blur(18px);padding:10px;align-items:flex-start;justify-content:center;overflow-y:auto;"></div>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = 'neon_stream_items_v2';
+    const STORAGE_KEY = 'neon_stream_items_v3';
     const SAVED_KEY = 'neon_stream_saved_v1';
     const LIKES_KEY = 'neon_stream_likes_v1';
     const ACTIVE_KEY = 'neon_stream_active_v1';
+    // Auto-flush old teal-gradient cache
+    (function(){const old=['neon_stream_items_v2','neon_stream_items_v1'];old.forEach(k=>localStorage.removeItem(k));})();
 
     const $ = (s) => document.querySelector(s);
     const $$ = (s) => Array.from(document.querySelectorAll(s));
@@ -1903,7 +1801,7 @@ backface-visibility:hidden;
         quality: 'HD',
         meta: 'Hot • HD',
         desc: 'Premium streaming card.',
-        thumb: `linear-gradient(135deg, hsl(${(i * 18 + 185) % 60 + 170} 90% 55% / .72), hsl(${(i * 22 + 195) % 40 + 175} 85% 70% / .32))`,
+        thumb: '',
         tags: ['HD', 'Hot'],
         driveId: '1QqueW7Yomd22zRB55KLIK9wTKzeHbOMt',
         videoUrl: 'https://drive.google.com/file/d/1QqueW7Yomd22zRB55KLIK9wTKzeHbOMt/preview',
@@ -1911,31 +1809,31 @@ backface-visibility:hidden;
       }));
 
       const animeList = [
-        { title: 'Solo Leveling', thumb: 'https://cdn.myanimelist.net/images/anime/1347/142292l.jpg', desc: 'Ek kamzor hunter duniya ka strongest ban jaata hai.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:12},{name:'Season 2', episodes:13}] },
-        { title: 'Demon Slayer', thumb: 'https://cdn.myanimelist.net/images/anime/1286/99889l.jpg', desc: 'Tanjiro apni behan ko bachane ke liye demons se ladhta hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Season 1', episodes:26},{name:'Season 2', episodes:18},{name:'Season 3', episodes:11}] },
-        { title: 'Attack on Titan', thumb: 'https://cdn.myanimelist.net/images/anime/10/47347l.jpg', desc: 'Humans giants se bachne ke liye walls ke andar rehte hain.', tags: ['Action','Dark','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:12},{name:'Season 3', episodes:22},{name:'Season 4', episodes:29}] },
-        { title: 'Jujutsu Kaisen', thumb: 'https://cdn.myanimelist.net/images/anime/1171/109222l.jpg', desc: 'Yuji ek cursed finger kha leta hai aur sorcerer ban jaata hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:23}] },
-        { title: 'Black Clover', thumb: 'https://cdn.myanimelist.net/images/anime/2/74798l.jpg', desc: 'Asta bina magic ke Wizard King banna chahta hai.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:170}] },
-        { title: 'Naruto Shippuden', thumb: 'https://cdn.myanimelist.net/images/anime/5/17407l.jpg', desc: 'Naruto Hokage banne ka sapna dekhta hai.', tags: ['Action','Adventure','Hindi'], seasons: [{name:'Part 1', episodes:220},{name:'Shippuden', episodes:500}] },
-        { title: 'Dragon Ball Super', thumb: 'https://cdn.myanimelist.net/images/anime/7/74606l.jpg', desc: 'Goku naye enemies aur naye powers discover karta hai.', tags: ['Action','Power','Hindi'], seasons: [{name:'Season 1', episodes:131}] },
-        { title: 'One Piece', thumb: 'https://cdn.myanimelist.net/images/anime/6/73245l.jpg', desc: 'Luffy pirate king banne ke liye ocean explore karta hai.', tags: ['Adventure','Comedy','Hindi'], seasons: [{name:'Classic', episodes:1000}] },
-        { title: 'My Hero Academia', thumb: 'https://cdn.myanimelist.net/images/anime/10/78745l.jpg', desc: 'Deku bina power ke world ka greatest hero banna chahta hai.', tags: ['Action','School','Hindi'], seasons: [{name:'Season 1', episodes:13},{name:'Season 2', episodes:25},{name:'Season 3', episodes:25},{name:'Season 4', episodes:25},{name:'Season 5', episodes:25}] },
-        { title: 'Vinland Saga', thumb: 'https://cdn.myanimelist.net/images/anime/1775/99659l.jpg', desc: 'Viking warrior apne baap ka badla lene ki journey par hai.', tags: ['Action','Historical','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:24}] },
-        { title: 'Tokyo Revengers', thumb: 'https://cdn.myanimelist.net/images/anime/1839/110491l.jpg', desc: 'Takemichi time travel se apni girlfriend ko bachata hai.', tags: ['Action','Time Travel','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:13},{name:'Season 3', episodes:13}] },
-        { title: 'Chainsaw Man', thumb: 'https://cdn.myanimelist.net/images/anime/1806/126216l.jpg', desc: 'Denji ek devil hunter ki tarah kaam karta hai chainsaw powers ke saath.', tags: ['Action','Dark','Hindi'], seasons: [{name:'Season 1', episodes:12}] },
-        { title: 'Spy x Family', thumb: 'https://cdn.myanimelist.net/images/anime/1441/122795l.jpg', desc: 'Ek spy, assassin aur telepathic bachchi ki fake family.', tags: ['Comedy','Action','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:13}] },
-        { title: 'Fullmetal Alchemist Brotherhood', thumb: 'https://cdn.myanimelist.net/images/anime/1223/96541l.jpg', desc: 'Do bhai alchemy se apni maa ko wapas laane ki koshish karte hain.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:64}] },
-        { title: 'Hunter x Hunter', thumb: 'https://cdn.myanimelist.net/images/anime/11/33657l.jpg', desc: 'Gon apne Hunter baap ko dhundne ke liye journey par jaata hai.', tags: ['Action','Adventure','Hindi'], seasons: [{name:'Season 1', episodes:148}] },
-        { title: 'Overlord', thumb: 'https://cdn.myanimelist.net/images/anime/7/88003l.jpg', desc: 'Gamer ek MMORPG world mein phans jaata hai as undead king.', tags: ['Fantasy','Dark','Hindi'], seasons: [{name:'Season 1', episodes:13},{name:'Season 2', episodes:13},{name:'Season 3', episodes:13},{name:'Season 4', episodes:13}] },
-        { title: 'That Time I Got Reincarnated as a Slime', thumb: 'https://cdn.myanimelist.net/images/anime/1694/93337l.jpg', desc: 'Banda ek slime ban kar isekai world build karta hai.', tags: ['Fantasy','Comedy','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:24}] },
-        { title: 'Re:Zero', thumb: 'https://cdn.myanimelist.net/images/anime/1522/128219l.jpg', desc: 'Subaru ek fantasy world mein death se restart karta rehta hai.', tags: ['Fantasy','Dark','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:25}] },
-        { title: 'Sword Art Online', thumb: 'https://cdn.myanimelist.net/images/anime/11/39717l.jpg', desc: 'Players ek VR game mein trap ho jaate hain.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:24},{name:'Alicization', episodes:50}] },
-        { title: 'The Rising of the Shield Hero', thumb: 'https://cdn.myanimelist.net/images/anime/1245/95017l.jpg', desc: 'Naofumi ek betrayed shield hero se legend ban jaata hai.', tags: ['Fantasy','Action','Hindi'], seasons: [{name:'Season 1', episodes:25},{name:'Season 2', episodes:13},{name:'Season 3', episodes:12}] },
-        { title: 'Mushoku Tensei', thumb: 'https://cdn.myanimelist.net/images/anime/1530/117776l.jpg', desc: 'NEET apni doosri zindagi mein sab kuch theek karna chahta hai.', tags: ['Fantasy','Adventure','Hindi'], seasons: [{name:'Season 1', episodes:23},{name:'Season 2', episodes:25}] },
-        { title: 'Bleach: Thousand-Year Blood War', thumb: 'https://cdn.myanimelist.net/images/anime/1764/119988l.jpg', desc: 'Ichigo Soul Society ko ek nayi taakat se bachata hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Part 1', episodes:13},{name:'Part 2', episodes:13},{name:'Part 3', episodes:13}] },
-        { title: 'Oshi no Ko', thumb: 'https://cdn.myanimelist.net/images/anime/1812/134736l.jpg', desc: 'Doctor idol ke baby ke roop mein reincarnate hota hai.', tags: ['Drama','Mystery','Hindi'], seasons: [{name:'Season 1', episodes:11},{name:'Season 2', episodes:13}] },
-        { title: 'Frieren: Beyond Journeys End', thumb: 'https://cdn.myanimelist.net/images/anime/1015/138006l.jpg', desc: 'Elf mage demons ko harane ke baad world explore karti hai.', tags: ['Fantasy','Adventure','Hindi'], seasons: [{name:'Season 1', episodes:28}] },
-        { title: 'Blue Lock', thumb: 'https://cdn.myanimelist.net/images/anime/1458/126427l.jpg', desc: 'Japan ka best striker dhundne ke liye 300 strikers ko compete karaya jaata hai.', tags: ['Sports','Action','Hindi'], seasons: [{name:'Season 1', episodes:24},{name:'Season 2', episodes:13}] },
+        { title: 'Chainsaw Man', thumb: 'https://img.allanime.day/animes_portal/images/0/000/058/575/coverImage/16831638443.jpg', desc: 'Denji chainsaw devil ki powers se hunter ban jaata hai.', tags: ['Action','Dark','Hindi'], seasons: [{name:'Season 1', episodes:12}] },
+        { title: 'Frieren: Beyond Journey\'s End', thumb: 'https://img.allanime.day/animes_portal/images/0/000/102/067/coverImage/17012781992.jpg', desc: 'Elf mage duniya explore karti hai heroes ke jaane ke baad.', tags: ['Fantasy','Adventure','Hindi'], seasons: [{name:'Season 1', episodes:28}] },
+        { title: 'Oshi no Ko', thumb: 'https://img.allanime.day/animes_portal/images/0/000/085/475/coverImage/16838797892.jpg', desc: 'Doctor idol ke baby ke roop mein reincarnate hota hai.', tags: ['Drama','Mystery','Hindi'], seasons: [{name:'Season 1', episodes:11}] },
+        { title: 'Fullmetal Alchemist Brotherhood', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/565/coverImage/NHK.jpg', desc: 'Do bhai apni maa ko wapas laane ke liye alchemy use karte hain.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Complete', episodes:64}] },
+        { title: 'Death Note', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/240/coverImage/death_note.jpg', desc: 'Light ek magical notebook se duniya ke criminals ko marta hai.', tags: ['Thriller','Supernatural','Hindi'], seasons: [{name:'Complete', episodes:37}] },
+        { title: 'Code Geass', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/355/coverImage/code_geass.jpg', desc: 'Lelouch supernatural power se world order badalne ki koshish karta hai.', tags: ['Action','Mecha','Hindi'], seasons: [{name:'Complete', episodes:25}] },
+        { title: 'Steins;Gate', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/574/coverImage/steinsgate.jpg', desc: 'Scientists accidentally time travel discover karte hain aur consequences face karte hain.', tags: ['Sci-Fi','Thriller','Hindi'], seasons: [{name:'Complete', episodes:24}] },
+        { title: 'No Game No Life', thumb: 'https://img.allanime.day/animes_portal/images/0/000/002/009/coverImage/ngnl.jpg', desc: 'Sibling gamers ek fantasy world mein challenges accept karte hain.', tags: ['Fantasy','Comedy','Hindi'], seasons: [{name:'Season 1', episodes:12}] },
+        { title: 'Parasyte: The Maxim', thumb: 'https://img.allanime.day/animes_portal/images/0/000/002/354/coverImage/parasyte.jpg', desc: 'Alien parasite ek student ke haath mein rehta hai unke saath.', tags: ['Sci-Fi','Horror','Hindi'], seasons: [{name:'Complete', episodes:24}] },
+        { title: 'Your Lie in April', thumb: 'https://img.allanime.day/animes_portal/images/0/000/002/208/coverImage/yourlie.jpg', desc: 'Ek pianist ek violinist se milta hai jo uski zindagi badal deti hai.', tags: ['Romance','Drama','Hindi'], seasons: [{name:'Complete', episodes:22}] },
+        { title: 'Mob Psycho 100', thumb: 'https://img.allanime.day/animes_portal/images/0/000/005/011/coverImage/mob.jpg', desc: 'Ek powerful psychic teen apni powers ko control karne ki koshish karta hai.', tags: ['Action','Comedy','Hindi'], seasons: [{name:'Season 1', episodes:12}] },
+        { title: 'Assassination Classroom', thumb: 'https://img.allanime.day/animes_portal/images/0/000/002/420/coverImage/ansatsu.jpg', desc: 'Students ek alien teacher ko kill karne ki training lete hain.', tags: ['Action','Comedy','Hindi'], seasons: [{name:'Season 1', episodes:22}] },
+        { title: 'Classroom of the Elite', thumb: 'https://img.allanime.day/animes_portal/images/0/000/007/058/coverImage/cote.jpg', desc: 'Genius student ek elite school ke dark secrets discover karta hai.', tags: ['Thriller','School','Hindi'], seasons: [{name:'Season 1', episodes:13}] },
+        { title: 'The Devil is a Part-Timer', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/991/coverImage/devil.jpg', desc: 'Satan lord modern Tokyo mein part-time job karta hai.', tags: ['Comedy','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:13}] },
+        { title: 'Anohana', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/559/coverImage/anohana.jpg', desc: 'Ek group ke bachpan ki dost ka ghost unke paas wapas aata hai.', tags: ['Drama','Supernatural','Hindi'], seasons: [{name:'Complete', episodes:11}] },
+        { title: 'Sword Art Online', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/789/coverImage/sao.jpg', desc: 'Players ek virtual reality game mein permanently trap ho jaate hain.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:25}] },
+        { title: 'Angel Beats', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/428/coverImage/angelbeats.jpg', desc: 'Students afterlife mein ek mysterious girl se fight karte hain.', tags: ['Drama','Action','Hindi'], seasons: [{name:'Complete', episodes:13}] },
+        { title: 'Hunter x Hunter', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/790/coverImage/hxh.jpg', desc: 'Gon apne baap ko dhundne ke liye hunter banta hai.', tags: ['Action','Adventure','Hindi'], seasons: [{name:'Complete', episodes:148}] },
+        { title: 'One Punch Man', thumb: 'https://img.allanime.day/animes_portal/images/0/000/003/033/coverImage/opm.jpg', desc: 'Saitama ek punch se sabko maar deta hai aur bored ho jaata hai.', tags: ['Action','Comedy','Hindi'], seasons: [{name:'Season 1', episodes:12}] },
+        { title: 'Demon Slayer', thumb: 'https://img.allanime.day/animes_portal/images/0/000/010/736/coverImage/demonslayer.jpg', desc: 'Tanjiro apni behan ko bachane ke liye demons se ladhta hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Season 1', episodes:26}] },
+        { title: 'Attack on Titan', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/592/coverImage/aot.jpg', desc: 'Humans giants se bachne ke liye walls ke andar rehte hain.', tags: ['Action','Dark','Hindi'], seasons: [{name:'Season 1', episodes:25}] },
+        { title: 'Jujutsu Kaisen', thumb: 'https://img.allanime.day/animes_portal/images/0/000/017/989/coverImage/jjk.jpg', desc: 'Yuji ek cursed finger kha leta hai aur sorcerer ban jaata hai.', tags: ['Action','Supernatural','Hindi'], seasons: [{name:'Season 1', episodes:24}] },
+        { title: 'Solo Leveling', thumb: 'https://img.allanime.day/animes_portal/images/0/000/109/791/coverImage/solo.jpg', desc: 'Ek kamzor hunter duniya ka strongest ban jaata hai.', tags: ['Action','Fantasy','Hindi'], seasons: [{name:'Season 1', episodes:12}] },
+        { title: 'Blue Lock', thumb: 'https://img.allanime.day/animes_portal/images/0/000/062/164/coverImage/bluelock.jpg', desc: 'Japan ka best striker dhundne ke liye 300 strikers compete karte hain.', tags: ['Sports','Action','Hindi'], seasons: [{name:'Season 1', episodes:24}] },
+        { title: 'Naruto', thumb: 'https://img.allanime.day/animes_portal/images/0/000/000/225/coverImage/naruto.jpg', desc: 'Naruto Hokage banne ka sapna dekhta hai aur dosto ke liye ladhta hai.', tags: ['Action','Adventure','Hindi'], seasons: [{name:'Classic', episodes:220}] },
       ];
 
       const animeCards = animeList.map((a, i) => ({
@@ -1966,14 +1864,43 @@ backface-visibility:hidden;
       search: ''
     };
 
+    // Fetch real anime posters from AniList API
+    async function fetchAnimePosters() {
+      const titles = state.items.filter(i=>i.type==='anime').map(i=>i.title);
+      if(!titles.length) return;
+      const query = `query($titles:[String]){` + titles.map((t,i)=>`a${i}:Media(search:"${t.replace(/"/g,'')}",type:ANIME){id coverImage{large}}`).join(' ') + `}`;
+      try {
+        const res = await fetch('https://graphql.anilist.co', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({query})
+        });
+        const data = await res.json();
+        if(!data.data) return;
+        state.items = state.items.map(item => {
+          if(item.type !== 'anime') return item;
+          const idx = titles.indexOf(item.title);
+          const key = 'a' + idx;
+          const img = data.data[key]?.coverImage?.large;
+          if(img) return {...item, thumb: img};
+          return item;
+        });
+        render();
+      } catch(e){ console.log('AniList fetch failed', e); }
+    }
+
     function loadItems() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) return defaultItems;
         const parsed = JSON.parse(raw);
-        // Agar purana empty array stored hai to defaultItems use karo
         if (!Array.isArray(parsed) || parsed.length === 0) return defaultItems;
-        return parsed;
+        // Strip ALL old gradient placeholder thumbs so dark card-media shows
+        return parsed.map(item => {
+          if (item.thumb && typeof item.thumb === 'string' && item.thumb.startsWith('linear-gradient')) {
+            return Object.assign({}, item, { thumb: '' });
+          }
+          return item;
+        });
       } catch {
         return defaultItems;
       }
@@ -2040,19 +1967,19 @@ backface-visibility:hidden;
       return `
         <article class="card revealed is-visible" data-id="${item.id}" style="grid-column:1/-1;height:${cardH};max-height:${cardMaxH};cursor:default;border-radius:22px;overflow:hidden;position:relative;display:block;margin-bottom:4px;transition:height .3s ease;">
           <!-- Number badge -->
-          <div style="position:absolute;top:12px;left:12px;z-index:5;font-size:11px;font-weight:800;letter-spacing:.08em;color:#c0ffff;padding:5px 10px;border-radius:999px;background:rgba(0,15,25,.75);border:1px solid rgba(0,200,255,.25);">${String(num).padStart(2,'0')}</div>
+          <div style="position:absolute;top:12px;left:12px;z-index:5;font-size:11px;font-weight:800;letter-spacing:.08em;color:#ff8800;padding:5px 10px;border-radius:999px;background:rgba(10,10,10,.75);border:1px solid rgba(255,102,0,.25);">${String(num).padStart(2,'0')}</div>
           <!-- Photo area — full inset, no click to player -->
-          <div id="galMedia_${item.id}" style="position:absolute;inset:0;${thumbStyle}background-size:cover;background-position:center center;background-color:rgba(0,20,40,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .2s;cursor:${hasPhoto?'default':'pointer'};" ${hasPhoto ? '' : 'onclick="galUploadClick(\''+item.id+'\')"'}>
-            ${hasPhoto ? mediaMarkup : '<div style="font-size:44px;opacity:.4;">📷</div><div style="font-size:13px;color:#5dd8ff;font-weight:800;letter-spacing:.06em;">Upload ' + ratio + ' Photo</div>'}
+          <div id="galMedia_${item.id}" style="position:absolute;inset:0;${thumbStyle}background-size:cover;background-position:center center;background-color:rgba(15,15,15,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .2s;cursor:${hasPhoto?'default':'pointer'};" ${hasPhoto ? '' : 'onclick="galUploadClick(\''+item.id+'\')"'}>
+            ${hasPhoto ? mediaMarkup : '<div style="font-size:44px;opacity:.4;">📷</div><div style="font-size:13px;color:#999999;font-weight:800;letter-spacing:.06em;">Upload ' + ratio + ' Photo</div>'}
             <input type="file" id="galFile_${item.id}" accept="image/*" style="display:none;" onchange="galHandleUpload(event,'${item.id}')">
           </div>
           <!-- Footer — compact 2-col -->
           <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 14px 18px;background:linear-gradient(transparent,rgba(0,0,0,.92));z-index:3;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:${hasPhoto?'8px':'0'};">
-              <span style="font-size:13px;color:#c0ffff;font-weight:700;">${item.title||''}</span>
+              <span style="font-size:13px;color:#ff8800;font-weight:700;">${item.title||''}</span>
               ${hasPhoto ? '<button onclick="event.stopPropagation();galUploadClick(\''+item.id+'\')" style="padding:3px 6px;border:none;border-radius:999px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:9px;cursor:pointer;">🔄</button>' : ''}
             </div>
-            ${hasPhoto ? `<button onclick="event.stopPropagation();galDownload('${item.id}')" style="width:100%;padding:11px;border:none;border-radius:14px;background:linear-gradient(90deg,rgba(0,229,255,.22),rgba(0,180,255,.18));border:1px solid rgba(0,229,255,.35);color:#00e5ff;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:8px;">⬇️ Download</button>` : ''}
+            ${hasPhoto ? `<button onclick="event.stopPropagation();galDownload('${item.id}')" style="width:100%;padding:11px;border:none;border-radius:14px;background:linear-gradient(90deg,rgba(255,102,0,.22),rgba(255,102,0,.18));border:1px solid rgba(255,102,0,.35);color:#ff6600;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:8px;">⬇️ Download</button>` : ''}
           </div>
         </article>
       `;
@@ -2082,7 +2009,7 @@ backface-visibility:hidden;
       const file = event.target.files[0];
       if (!file) return;
       const media = document.getElementById('galMedia_' + id);
-      if (media) media.innerHTML = '<div style="font-size:11px;color:#00e5ff;font-weight:700;">⬆️ Uploading…</div>';
+      if (media) media.innerHTML = '<div style="font-size:11px;color:#ff6600;font-weight:700;">⬆️ Uploading…</div>';
       toast('⬆️ ImgBB pe upload…');
       try {
         const url = await uploadToCloud(file);
@@ -2137,19 +2064,19 @@ backface-visibility:hidden;
     function placeholderCardHTML(type, num) {
       const pid = 'ph_' + type + '_' + num;
       const gradients = [
-        'linear-gradient(135deg,rgba(0,229,255,.18),rgba(128,0,255,.22))',
-        'linear-gradient(135deg,rgba(128,0,255,.22),rgba(255,0,180,.18))',
-        'linear-gradient(135deg,rgba(0,180,255,.20),rgba(0,255,180,.14))',
-        'linear-gradient(135deg,rgba(255,100,0,.18),rgba(255,0,100,.20))',
-        'linear-gradient(135deg,rgba(0,255,200,.16),rgba(0,100,255,.22))',
+        'linear-gradient(160deg,#1c1c1c,#131313)',
+        'linear-gradient(160deg,#1e1a18,#141210)',
+        'linear-gradient(160deg,#1a1a1a,#111111)',
+        'linear-gradient(160deg,#1d1b19,#131110)',
+        'linear-gradient(160deg,#1e1c1a,#121110)',
       ];
       const bg = gradients[(num - 1) % gradients.length];
       return `
         <article class="card ph-card" data-phid="${pid}" data-lazy-card="1" style="min-height:219px;cursor:default;position:relative;overflow:hidden;">
           <div class="card-top">${String(num).padStart(2,'0')}</div>
           <div class="card-media ph-media" id="phMedia_${pid}" style="background:${bg};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background .2s;" onclick="phUpload('${pid}','${type}')">
-            <svg viewBox="0 0 24 24" style="width:32px;height:32px;opacity:.5;" fill="none" stroke="rgba(0,229,255,.8)" stroke-width="1.5"><path d="M3 16.5V19a2 2 0 002 2h14a2 2 0 002-2v-2.5M16 8l-4-4-4 4M12 4v12"/></svg>
-            <div style="font-size:10px;color:#00e5ff;font-weight:700;letter-spacing:.04em;">Upload Image</div>
+            <svg viewBox="0 0 24 24" style="width:32px;height:32px;opacity:.5;" fill="none" stroke="rgba(255,102,0,.8)" stroke-width="1.5"><path d="M3 16.5V19a2 2 0 002 2h14a2 2 0 002-2v-2.5M16 8l-4-4-4 4M12 4v12"/></svg>
+            <div style="font-size:10px;color:#ff6600;font-weight:700;letter-spacing:.04em;">Upload Image</div>
             <input type="file" id="phFile_${pid}" accept="image/*" style="display:none;" onchange="phHandleUpload(event,'${pid}','${type}',${num})">
           </div>
           <div class="card-footer">
@@ -2169,7 +2096,7 @@ backface-visibility:hidden;
       const file = event.target.files[0];
       if (!file) return;
       const media = document.getElementById('phMedia_' + pid);
-      if (media) { media.innerHTML = '<div style="font-size:11px;color:#00e5ff;">⬆️ Uploading…</div>'; }
+      if (media) { media.innerHTML = '<div style="font-size:11px;color:#ff6600;">⬆️ Uploading…</div>'; }
       toast('⬆️ ImgBB pe upload ho rahi hai…');
       try {
         const url = await uploadToCloud(file);
@@ -2235,18 +2162,28 @@ backface-visibility:hidden;
       const index = item.id.split('-').pop();
       const num = item.num || (Number(index) + 1) || 1;
       const isImg = item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http'));
-      const thumbBgStyle = isImg ? '' : 'background:' + (item.thumb || 'rgba(0,100,200,.4)') + ';';
+      // Subtle per-card dark gradient variation (PornHub style - dark, clean, slight warmth)
+      const _ph = [
+        'linear-gradient(160deg,#1c1c1c,#131313)',
+        'linear-gradient(160deg,#1e1a18,#141210)',
+        'linear-gradient(160deg,#1a1a1a,#111111)',
+        'linear-gradient(160deg,#1d1b19,#131110)',
+        'linear-gradient(160deg,#1c1c1c,#141414)',
+        'linear-gradient(160deg,#1e1c1a,#121110)',
+      ];
+      const _idx = (num - 1) % _ph.length;
+      const thumbBgStyle = isImg ? '' : 'background:' + (item.thumb || _ph[_idx]) + ';';
       const thumbImgTag = isImg
-        ? `<img src="${item.thumb}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" onerror="this.style.display='none'" loading="lazy"/>`
+        ? `<img src="${item.thumb}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity .3s ease;" onload="this.style.opacity=1" onerror="this.style.display='none'"/>`
         : '';
 
       const isAnime = item.type === 'anime';
       const seasons = item.seasons || [];
       const totalEps = seasons.reduce((a, s) => a + (Array.isArray(s.episodes) ? s.episodes.length : (typeof s.episodes === 'number' ? s.episodes : 0)), 0);
       const seasonBadge = isAnime && seasons.length
-        ? `<div style="position:absolute;top:10px;right:10px;z-index:3;font-size:9px;font-weight:900;color:#fff;background:linear-gradient(135deg,#a855f7,#7c3aed);padding:3px 7px;border-radius:999px;letter-spacing:.04em;">${seasons.length}S • ${totalEps}EP</div>`
+        ? `<div style="position:absolute;top:10px;right:10px;z-index:3;font-size:9px;font-weight:900;color:#fff;background:linear-gradient(135deg,#ff6600,#cc4400);padding:3px 7px;border-radius:999px;letter-spacing:.04em;">${seasons.length}S • ${totalEps}EP</div>`
         : '';
-      const cardBorder = isAnime ? 'rgba(168,85,247,.22)' : 'rgba(0,229,255,.10)';
+      const cardBorder = isAnime ? 'rgba(255,102,0,.22)' : 'rgba(255,102,0,.10)';
 
       return `
         <article class="card" data-id="${item.id}" data-lazy-card="1" style="border-color:${cardBorder};">
@@ -2256,7 +2193,7 @@ backface-visibility:hidden;
           <div class="card-footer">
             <h3 class="card-title">${item.title}</h3>
             <div class="card-meta">
-              <span style="color:${isAnime?'#c084fc':'var(--muted)'};">${isAnime ? '🎌 Anime' : item.meta}</span>
+              <span style="color:${isAnime?'#ff8800':'var(--muted)'};">${isAnime ? '🎌 Anime' : item.meta}</span>
               <div class="mini-actions">
                 <button class="mini" data-like="${item.id}" aria-label="Like card">${liked ? heartFull() : heartLine()}</button>
                 <button class="mini" data-save="${item.id}" aria-label="Save card">${saved ? saveFull() : saveLine()}</button>
@@ -2318,8 +2255,8 @@ backface-visibility:hidden;
 
         const t916 = document.getElementById('galTab916');
         const t169 = document.getElementById('galTab169');
-        if (t916) { t916.style.background = ratio==='9:16'?'linear-gradient(90deg,#a855f7,#7c3aed)':'rgba(168,85,247,.12)'; t916.style.color = ratio==='9:16'?'#fff':'#c084fc'; t916.style.boxShadow = ratio==='9:16'?'0 0 14px rgba(168,85,247,.45)':'none'; t916.style.border = ratio==='9:16'?'none':'1px solid rgba(168,85,247,.30)'; }
-        if (t169) { t169.style.background = ratio==='16:9'?'linear-gradient(90deg,#a855f7,#7c3aed)':'rgba(168,85,247,.12)'; t169.style.color = ratio==='16:9'?'#fff':'#c084fc'; t169.style.boxShadow = ratio==='16:9'?'0 0 14px rgba(168,85,247,.45)':'none'; t169.style.border = ratio==='16:9'?'none':'1px solid rgba(168,85,247,.30)'; }
+        if (t916) { t916.style.background = ratio==='9:16'?'linear-gradient(90deg,#ff6600,#cc4400)':'rgba(255,102,0,.12)'; t916.style.color = ratio==='9:16'?'#fff':'#ff8800'; t916.style.boxShadow = ratio==='9:16'?'0 0 14px rgba(255,102,0,.45)':'none'; t916.style.border = ratio==='9:16'?'none':'1px solid rgba(255,102,0,.30)'; }
+        if (t169) { t169.style.background = ratio==='16:9'?'linear-gradient(90deg,#ff6600,#cc4400)':'rgba(255,102,0,.12)'; t169.style.color = ratio==='16:9'?'#fff':'#ff8800'; t169.style.boxShadow = ratio==='16:9'?'0 0 14px rgba(255,102,0,.45)':'none'; t169.style.border = ratio==='16:9'?'none':'1px solid rgba(255,102,0,.30)'; }
         const galRatioDiv = document.getElementById('galRatioTabs');
         if (galRatioDiv) galRatioDiv.style.display = 'flex';
         grid.innerHTML = visibleSlots.map((slot, idx) => {
@@ -2327,10 +2264,10 @@ backface-visibility:hidden;
           const isAfter5 = (idx + 1) % 5 === 0 && idx + 1 < slots.length;
           const bannerHtml = isAfter5 ? `
             <div style="grid-column:1/-1;width:100%;padding:6px 0 10px;">
-              <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:linear-gradient(90deg,rgba(0,229,255,.12),rgba(128,0,255,.10),rgba(255,0,180,.08));border:1px solid rgba(0,229,255,.18);border-radius:16px;color:#80ffff;font-size:14px;font-weight:800;letter-spacing:.05em;box-shadow:0 0 24px rgba(0,229,255,.08);">
+              <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:linear-gradient(90deg,rgba(255,102,0,.12),rgba(255,102,0,.10),rgba(255,102,0,.08));border:1px solid rgba(255,102,0,.18);border-radius:16px;color:#ff8800;font-size:14px;font-weight:800;letter-spacing:.05em;box-shadow:0 0 24px rgba(255,102,0,.08);">
                 <span style="font-size:22px;">🔥</span>
                 <span style="flex:1;">Premium Unlocked — Watch Exclusive Content</span>
-                <span style="font-size:12px;font-weight:900;color:#00e5ff;background:rgba(0,229,255,.14);border:1px solid rgba(0,229,255,.28);padding:6px 16px;border-radius:999px;flex-shrink:0;">GET →</span>
+                <span style="font-size:12px;font-weight:900;color:#ff6600;background:rgba(255,102,0,.14);border:1px solid rgba(255,102,0,.28);padding:6px 16px;border-radius:999px;flex-shrink:0;">GET →</span>
               </div>
             </div>
           ` : '';
@@ -2498,55 +2435,55 @@ backface-visibility:hidden;
         overlay.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(0,0,10,.88);backdrop-filter:blur(14px);display:flex;align-items:flex-end;justify-content:center;animation:selectorFadeIn .22s ease;touch-action:pan-y;';
 
         const thumbBg = item.thumb && (item.thumb.startsWith('http')||item.thumb.startsWith('data:'))
-          ? 'url(' + item.thumb + ') center/cover' : (item.thumb || 'rgba(0,10,30,.9)');
+          ? 'url(' + item.thumb + ') center/cover' : (item.thumb || 'rgba(15,15,15,.9)');
 
         const seasonTabsHTML = normalizedSeasons.map((s, i) =>
           '<button onclick="window._animeSelSeason(' + i + ')" style="padding:7px 16px;border:none;border-radius:999px;cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.02em;transition:all .2s;flex:0 0 auto;' +
           (i === selSeason
-            ? 'background:linear-gradient(135deg,#a855f7,#00e5ff);color:#fff;box-shadow:0 0 14px rgba(168,85,247,.45);'
-            : 'background:rgba(168,85,247,.1);color:#c084fc;border:1px solid rgba(168,85,247,.22);') +
+            ? 'background:linear-gradient(135deg,#ff6600,#ff6600);color:#fff;box-shadow:0 0 14px rgba(255,102,0,.45);'
+            : 'background:rgba(255,102,0,.1);color:#ff8800;border:1px solid rgba(255,102,0,.22);') +
           '">' + s.name + '</button>'
         ).join('');
 
         const curEps = normalizedSeasons[selSeason].episodes;
         const epRowsHTML = curEps.map((e, i) => {
           const hasVid = !!e.videoUrl;
-          return '<div onclick="window._animeSelPlay(' + i + ')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:14px;cursor:pointer;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:7px;transition:background .15s;active-background:rgba(168,85,247,.15);" onpointerdown="this.style.background=\'rgba(168,85,247,.13)\'" onpointerup="this.style.background=\'rgba(255,255,255,.03)\'" onpointerleave="this.style.background=\'rgba(255,255,255,.03)\'">' +
-            '<div style="width:38px;height:38px;border-radius:10px;background:' + (hasVid ? 'linear-gradient(135deg,#a855f7,#00e5ff)' : 'rgba(168,85,247,.15)') + ';display:flex;align-items:center;justify-content:center;flex:0 0 auto;">' +
+          return '<div onclick="window._animeSelPlay(' + i + ')" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:14px;cursor:pointer;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:7px;transition:background .15s;active-background:rgba(255,102,0,.15);" onpointerdown="this.style.background=\'rgba(255,102,0,.13)\'" onpointerup="this.style.background=\'rgba(255,255,255,.03)\'" onpointerleave="this.style.background=\'rgba(255,255,255,.03)\'">' +
+            '<div style="width:38px;height:38px;border-radius:10px;background:' + (hasVid ? 'linear-gradient(135deg,#ff6600,#ff6600)' : 'rgba(255,102,0,.15)') + ';display:flex;align-items:center;justify-content:center;flex:0 0 auto;">' +
               (hasVid
                 ? '<svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>'
-                : '<span style="font-size:12px;font-weight:900;color:#c084fc;">' + String(i+1).padStart(2,'0') + '</span>') +
+                : '<span style="font-size:12px;font-weight:900;color:#ff8800;">' + String(i+1).padStart(2,'0') + '</span>') +
             '</div>' +
             '<div style="flex:1;min-width:0;">' +
               '<div style="font-size:13px;font-weight:700;color:#d8f0ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + e.title + '</div>' +
-              '<div style="font-size:10px;font-weight:700;color:' + (hasVid ? '#00e5ff' : '#4a6a88') + ';margin-top:2px;">' + (hasVid ? '▶ Play' : '⏳ Coming Soon') + '</div>' +
+              '<div style="font-size:10px;font-weight:700;color:' + (hasVid ? '#ff6600' : '#555555') + ';margin-top:2px;">' + (hasVid ? '▶ Play' : '⏳ Coming Soon') + '</div>' +
             '</div>' +
-            '<div style="font-size:18px;color:rgba(168,85,247,.6);flex:0 0 auto;">›</div>' +
+            '<div style="font-size:18px;color:rgba(255,102,0,.6);flex:0 0 auto;">›</div>' +
           '</div>';
         }).join('');
 
         overlay.innerHTML =
           '<style>@keyframes selectorFadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}</style>' +
-          '<div style="width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;background:linear-gradient(170deg,#07091a,#090c1e);border-radius:24px 24px 0 0;border:1px solid rgba(168,85,247,.18);border-bottom:none;overflow:hidden;box-shadow:0 -20px 60px rgba(0,0,30,.8);">' +
+          '<div style="width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;background:linear-gradient(170deg,#111111,#0f0f0f);border-radius:24px 24px 0 0;border:1px solid rgba(255,102,0,.18);border-bottom:none;overflow:hidden;box-shadow:0 -20px 60px rgba(0,0,0,.8);">' +
             // Drag handle
             '<div style="display:flex;justify-content:center;padding:10px 0 0;"><div style="width:40px;height:4px;border-radius:99px;background:rgba(255,255,255,.18);"></div></div>' +
             // Header with poster
             '<div style="display:flex;align-items:center;gap:14px;padding:12px 16px 10px;">' +
               '<div style="width:52px;height:70px;border-radius:10px;flex:0 0 auto;background:' + thumbBg + ';background-size:cover!important;box-shadow:0 4px 18px rgba(0,0,0,.5);"></div>' +
               '<div style="flex:1;min-width:0;">' +
-                '<div style="font-size:16px;font-weight:900;color:#eaffff;letter-spacing:-.02em;">' + item.title + '</div>' +
-                '<div style="font-size:11px;color:#5dd8ff;margin-top:3px;">' + (item.tags||[]).join(' • ') + '</div>' +
+                '<div style="font-size:16px;font-weight:900;color:#f5f5f5;letter-spacing:-.02em;">' + item.title + '</div>' +
+                '<div style="font-size:11px;color:#999999;margin-top:3px;">' + (item.tags||[]).join(' • ') + '</div>' +
               '</div>' +
               '<button onclick="document.getElementById(\'animeSelectorOverlay\').remove()" style="width:32px;height:32px;border:none;border-radius:10px;background:rgba(255,255,255,.08);color:#aac;cursor:pointer;font-size:16px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;">✕</button>' +
             '</div>' +
             // Season tabs
             '<div style="padding:0 16px 10px;">' +
-              '<div style="font-size:10px;color:#7a9ab8;font-weight:700;letter-spacing:.08em;margin-bottom:8px;">SEASON CHUNIYE</div>' +
+              '<div style="font-size:10px;color:#777777;font-weight:700;letter-spacing:.08em;margin-bottom:8px;">SEASON CHUNIYE</div>' +
               '<div id="animeSelSeasonTabs" style="display:flex;gap:8px;flex-wrap:wrap;">' + seasonTabsHTML + '</div>' +
             '</div>' +
             // Episode list
-            '<div style="flex:1;overflow-y:auto;padding:0 16px 20px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(168,85,247,.2) transparent;">' +
-              '<div style="font-size:10px;color:#7a9ab8;font-weight:700;letter-spacing:.08em;margin-bottom:10px;">EPISODE CHUNIYE — ' + normalizedSeasons[selSeason].name + '</div>' +
+            '<div style="flex:1;overflow-y:auto;padding:0 16px 20px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(255,102,0,.2) transparent;">' +
+              '<div style="font-size:10px;color:#777777;font-weight:700;letter-spacing:.08em;margin-bottom:10px;">EPISODE CHUNIYE — ' + normalizedSeasons[selSeason].name + '</div>' +
               '<div id="animeSelEpList">' + epRowsHTML + '</div>' +
             '</div>' +
           '</div>';
@@ -2665,7 +2602,7 @@ backface-visibility:hidden;
           frame.style.backgroundPosition = 'center';
         } else {
           frame.style.backgroundImage = '';
-          frame.style.background = item.thumb || 'rgba(0,0,20,.9)';
+          frame.style.background = item.thumb || 'rgba(10,10,10,.9)';
         }
       }
 
@@ -2676,7 +2613,7 @@ backface-visibility:hidden;
       recItems.forEach(function(v) {
         const bg = v.thumb && (v.thumb.startsWith('data:') || v.thumb.startsWith('http'))
           ? 'url(' + v.thumb + ') center/cover'
-          : (v.thumb || 'linear-gradient(135deg,rgba(168,85,247,.25),rgba(0,229,255,.12))');
+          : (v.thumb || 'linear-gradient(135deg,rgba(255,102,0,.25),rgba(255,102,0,.12))');
         html += '<div class="rec-card" data-rec-id="' + v.id + '">' +
           '<div class="thumb" style="background:' + bg + ';"></div>' +
           '<div class="rec-meta">' +
@@ -2769,7 +2706,7 @@ backface-visibility:hidden;
           frame.style.backgroundPosition = 'center';
         } else {
           frame.style.backgroundImage = '';
-          frame.style.background = item.thumb || 'rgba(0,0,20,.8)';
+          frame.style.background = item.thumb || 'rgba(10,10,10,.8)';
         }
       }
 
@@ -2791,7 +2728,7 @@ backface-visibility:hidden;
         }
         const bg = v.thumb && (v.thumb.startsWith('data:') || v.thumb.startsWith('http'))
           ? 'url(' + v.thumb + ') center/cover'
-          : v.thumb || 'linear-gradient(135deg,rgba(157,77,255,.25),rgba(0,245,255,.12))';
+          : v.thumb || 'linear-gradient(135deg,rgba(255,102,0,.25),rgba(255,102,0,.12))';
         html += `
           <div class="rec-card" data-rec-id="${v.id}">
             <div class="thumb" style="background:${bg};"></div>
@@ -3013,7 +2950,7 @@ backface-visibility:hidden;
           if (!id) return;
           toggleLike(id);
           const liked = state.likes[id];
-          likeBtn.style.background = liked ? 'rgba(157,77,255,.45)' : 'rgba(157,77,255,.15)';
+          likeBtn.style.background = liked ? 'rgba(255,102,0,.45)' : 'rgba(255,102,0,.15)';
           const cnt = $('#vcLikeCount');
           if (cnt) cnt.textContent = liked ? '👍 Liked' : 'Like';
           showControls();
@@ -3044,7 +2981,7 @@ backface-visibility:hidden;
           if (!id) return;
           toggleSave(id);
           const saved = state.saved.includes(id);
-          saveBtn.style.background = saved ? 'rgba(0,245,255,.25)' : 'rgba(0,245,255,.08)';
+          saveBtn.style.background = saved ? 'rgba(255,102,0,.25)' : 'rgba(255,102,0,.08)';
           showControls();
         });
       }
@@ -3111,12 +3048,12 @@ backface-visibility:hidden;
           const saveBtn = $('#vcSaveBtn');
           if (likeBtn) {
             const liked = state.likes[item.id];
-            likeBtn.style.background = liked ? 'rgba(157,77,255,.45)' : 'rgba(157,77,255,.15)';
+            likeBtn.style.background = liked ? 'rgba(255,102,0,.45)' : 'rgba(255,102,0,.15)';
             const cnt = $('#vcLikeCount');
             if (cnt) cnt.textContent = liked ? '👍 Liked' : 'Like';
           }
           if (saveBtn) {
-            saveBtn.style.background = state.saved.includes(item.id) ? 'rgba(0,245,255,.25)' : 'rgba(0,245,255,.08)';
+            saveBtn.style.background = state.saved.includes(item.id) ? 'rgba(255,102,0,.25)' : 'rgba(255,102,0,.08)';
           }
         }
 
@@ -3395,9 +3332,9 @@ backface-visibility:hidden;
       // Update button highlights
       document.querySelectorAll('#speedBtns button').forEach(btn => {
         const isActive = btn.textContent.startsWith(speed + 'x') || btn.textContent.startsWith(speed.toString());
-        btn.style.background = isActive ? 'rgba(0,200,255,.20)' : 'rgba(0,200,255,.06)';
-        btn.style.borderColor = isActive ? 'rgba(0,200,255,.45)' : 'rgba(0,200,255,.20)';
-        btn.style.color = isActive ? '#00e5ff' : '#c0eeff';
+        btn.style.background = isActive ? 'rgba(255,102,0,.20)' : 'rgba(255,102,0,.06)';
+        btn.style.borderColor = isActive ? 'rgba(255,102,0,.45)' : 'rgba(255,102,0,.20)';
+        btn.style.color = isActive ? '#ff6600' : '#c0eeff';
       });
       toast('Speed: ' + speed + 'x');
     };
@@ -3447,9 +3384,11 @@ backface-visibility:hidden;
 
     // Initial render
     setTab(state.tab);
+    // Fetch real anime posters from AniList
+    fetchAnimePosters();
   </script>
   <!-- HOLD RING -->
-  <div class="hold-ring" id="holdRing" style="position:fixed;pointer-events:none;z-index:9200;width:56px;height:56px;border-radius:50%;border:3px solid rgba(0,200,255,.7);transform:translate(-50%,-50%) scale(0);transition:transform .8s cubic-bezier(.2,0,.8,1),opacity .8s ease;opacity:0;"></div>
+  <div class="hold-ring" id="holdRing" style="position:fixed;pointer-events:none;z-index:9200;width:56px;height:56px;border-radius:50%;border:3px solid rgba(255,102,0,.7);transform:translate(-50%,-50%) scale(0);transition:transform .8s cubic-bezier(.2,0,.8,1),opacity .8s ease;opacity:0;"></div>
 
   <!-- FLOATING EDIT BAR (bottom) -->
   <div id="editBar">
@@ -3494,12 +3433,12 @@ backface-visibility:hidden;
       <textarea class="ctx-textarea" id="ctxTextVal" placeholder="Edit text here…"></textarea>
       <div style="display:flex;gap:6px;align-items:center;margin-top:2px;">
         <span style="font-size:10px;color:#7ab8d4;white-space:nowrap;">Font size:</span>
-        <input type="range" id="ctxFontSize" min="8" max="120" value="16" style="flex:1;accent-color:#00c8ff;">
-        <span id="ctxFontSizeVal" style="font-size:10px;color:#00c8ff;min-width:28px;">16px</span>
+        <input type="range" id="ctxFontSize" min="8" max="120" value="16" style="flex:1;accent-color:#ff6600;">
+        <span id="ctxFontSizeVal" style="font-size:10px;color:#ff6600;min-width:28px;">16px</span>
       </div>
       <div style="display:flex;gap:6px;align-items:center;">
         <span style="font-size:10px;color:#7ab8d4;white-space:nowrap;">Weight:</span>
-        <select id="ctxFontWeight" style="flex:1;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:8px;color:#e0faff;padding:4px 6px;font-size:11px;">
+        <select id="ctxFontWeight" style="flex:1;background:rgba(255,102,0,.08);border:1px solid rgba(255,102,0,.2);border-radius:8px;color:#e0faff;padding:4px 6px;font-size:11px;">
           <option value="400">Normal</option>
           <option value="600">Semi Bold</option>
           <option value="700">Bold</option>
@@ -3512,7 +3451,7 @@ backface-visibility:hidden;
     <!-- COLOR sub-panel -->
     <div class="ctx-panel" id="sub-color">
       <div class="ctx-color-pick">
-        <input type="color" class="ctx-cpick" id="ctxColorPick" value="#00c8ff">
+        <input type="color" class="ctx-cpick" id="ctxColorPick" value="#ff6600">
         <span style="font-size:12px;color:#7ab8d4;">Custom color</span>
         <button class="ctx-apply" style="padding:8px 14px;width:auto;" onclick="applyCtxColor()">Apply</button>
       </div>
@@ -3526,7 +3465,7 @@ backface-visibility:hidden;
         📤 Tap to upload from device
       </div>
       <input type="file" id="ctxFileImg" accept="image/*" style="display:none" onchange="handleCtxImg(event)">
-      <div id="ctxImgProgress" style="display:none;font-size:11px;color:#00c8ff;text-align:center;padding:4px;">Uploading…</div>
+      <div id="ctxImgProgress" style="display:none;font-size:11px;color:#ff6600;text-align:center;padding:4px;">Uploading…</div>
       <button class="ctx-apply" onclick="applyCtxPhoto()">Apply Photo</button>
     </div>
 
@@ -3537,7 +3476,7 @@ backface-visibility:hidden;
         📤 Tap to upload video
       </div>
       <input type="file" id="ctxFileVid" accept="video/*" style="display:none" onchange="handleCtxVid(event)">
-      <div id="ctxVidProgress" style="display:none;font-size:11px;color:#00c8ff;text-align:center;padding:4px;">Loading…</div>
+      <div id="ctxVidProgress" style="display:none;font-size:11px;color:#ff6600;text-align:center;padding:4px;">Loading…</div>
       <button class="ctx-apply" onclick="applyCtxVideo()">Apply Video</button>
     </div>
 
@@ -3569,13 +3508,13 @@ backface-visibility:hidden;
     <!-- SHAPE sub-panel -->
     <div class="ctx-panel" id="sub-shape">
       <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <button onclick="addShape('circle')" style="flex:1;padding:8px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);border-radius:10px;color:#00c8ff;font-size:12px;cursor:pointer;">⬤ Circle</button>
-        <button onclick="addShape('rect')" style="flex:1;padding:8px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);border-radius:10px;color:#00c8ff;font-size:12px;cursor:pointer;">▬ Rect</button>
-        <button onclick="addShape('badge')" style="flex:1;padding:8px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);border-radius:10px;color:#00c8ff;font-size:12px;cursor:pointer;">🏷️ Badge</button>
+        <button onclick="addShape('circle')" style="flex:1;padding:8px;background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.2);border-radius:10px;color:#ff6600;font-size:12px;cursor:pointer;">⬤ Circle</button>
+        <button onclick="addShape('rect')" style="flex:1;padding:8px;background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.2);border-radius:10px;color:#ff6600;font-size:12px;cursor:pointer;">▬ Rect</button>
+        <button onclick="addShape('badge')" style="flex:1;padding:8px;background:rgba(255,102,0,.1);border:1px solid rgba(255,102,0,.2);border-radius:10px;color:#ff6600;font-size:12px;cursor:pointer;">🏷️ Badge</button>
       </div>
       <div style="display:flex;gap:6px;align-items:center;margin-top:4px;">
         <span style="font-size:10px;color:#7ab8d4;">Color:</span>
-        <input type="color" id="shapeColor" value="#00c8ff" style="width:36px;height:28px;border:none;border-radius:6px;background:transparent;cursor:pointer;">
+        <input type="color" id="shapeColor" value="#ff6600" style="width:36px;height:28px;border:none;border-radius:6px;background:transparent;cursor:pointer;">
         <span style="font-size:10px;color:#7ab8d4;">Text:</span>
         <input class="ctx-input" id="shapeText" placeholder="Label…" style="flex:1;padding:5px 8px;">
       </div>
@@ -3595,15 +3534,15 @@ backface-visibility:hidden;
   <!-- ═══════════════════════════════════════════════ -->
   <div id="adminPanel">
     <!-- Header -->
-    <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(0,10,20,.96);border-bottom:1px solid rgba(0,200,255,.18);flex:0 0 auto;backdrop-filter:blur(12px);">
-      <div style="flex:1;font-size:17px;font-weight:900;color:#00e5ff;letter-spacing:-.01em;">🛡️ Admin Panel</div>
-      <div id="adminItemCount" style="font-size:11px;color:#5dd8ff;"></div>
+    <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(10,10,10,.96);border-bottom:1px solid rgba(255,102,0,.18);flex:0 0 auto;backdrop-filter:blur(12px);">
+      <div style="flex:1;font-size:17px;font-weight:900;color:#ff6600;letter-spacing:-.01em;">🛡️ Admin Panel</div>
+      <div id="adminItemCount" style="font-size:11px;color:#999999;"></div>
       <button onclick="closeAdmin()" style="width:36px;height:36px;border:none;border-radius:10px;background:rgba(255,255,255,.06);color:#fff;font-size:16px;cursor:pointer;">✕</button>
     </div>
     <!-- Scrollable content -->
     <div id="adminContent" style="flex:1;overflow-y:auto;padding:16px;padding-bottom:90px;-webkit-overflow-scrolling:touch;"></div>
     <!-- Bottom Nav (5 tabs) -->
-    <div style="position:fixed;bottom:0;left:0;right:0;z-index:10;background:rgba(2,10,18,.97);border-top:1px solid rgba(0,200,255,.14);backdrop-filter:blur(20px);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 4px;gap:4px;">
+    <div style="position:fixed;bottom:0;left:0;right:0;z-index:10;background:rgba(2,10,18,.97);border-top:1px solid rgba(255,102,0,.14);backdrop-filter:blur(20px);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 4px;gap:4px;">
       <button class="adm-nav" data-atab="all" onclick="adminTab('all')">📹<span>All</span></button>
       <button class="adm-nav" data-atab="hot" onclick="adminTab('hot')">🔥<span>Hot</span></button>
       <button class="adm-nav" data-atab="gallery" onclick="adminTab('gallery')">🖼️<span>Gallery</span></button>
@@ -3640,7 +3579,7 @@ backface-visibility:hidden;
       height:"26px",
       right:"4px",
       bottom:"4px",
-      background:"linear-gradient(135deg,#00e5ff,#80ffff)",
+      background:"linear-gradient(135deg,#ff6600,#ff8800)",
       borderRadius:"8px",
       cursor:"nwse-resize",
       zIndex:"20",
@@ -3729,7 +3668,7 @@ window.disableEditorMode=function(){document.body.classList.remove('editor-mode'
   align-items:center;
   justify-content:center;
   font-size:14px;
-  color:#001828;
+  color:#0f0f0f;
   font-weight:900;
 }
 </style>
@@ -3807,8 +3746,8 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
   let edChanges = JSON.parse(localStorage.getItem(CHANGES_KEY) || '{}');
 
   const COLOR_PRESETS = [
-    '#00c8ff','#7fffff','#8a5cff','#ff3cac','#ff9500',
-    '#00ff88','#ff4444','#ffd700','#ff6b35','#a855f7',
+    '#ff6600','#7fffff','#8a5cff','#ff3cac','#ff9500',
+    '#00ff88','#ff4444','#ffd700','#ff6b35','#ff6600',
     '#22d3ee','#f472b6','#4ade80','#fb923c','#818cf8',
     '#ffffff','#000000','#001828',
   ];
@@ -4394,7 +4333,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
   function restoreShape(data, shapeId) {
     const parent = document.body;
     let el = document.createElement('div');
-    const c = data.color || '#00c8ff';
+    const c = data.color || '#ff6600';
     const t = data.text || '';
     if (data.type === 'circle') {
       el.style.cssText = 'position:fixed;z-index:999;cursor:move;width:60px;height:60px;border-radius:50%;background:'+c+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;text-align:center;box-shadow:0 0 20px '+c+'88;left:20px;top:100px;';
@@ -4740,7 +4679,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
   }
 
   function adminThumbStyle(thumb) {
-    if (!thumb) return 'background:rgba(0,100,200,.3);';
+    if (!thumb) return 'background:rgba(30,30,30,.8);';
     if (thumb.startsWith('data:') || thumb.startsWith('http'))
       return 'background-image:url(' + thumb + ');background-size:cover;background-position:center;filter:contrast(1.05) saturate(1.1);';
     return 'background:' + thumb + ';';
@@ -4766,8 +4705,8 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     }
     const loadDiv = document.createElement('div');
     loadDiv.id = boxId + '_loading';
-    loadDiv.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(0,10,30,.82);border-radius:14px;z-index:2;';
-    loadDiv.innerHTML = '<div style="width:36px;height:36px;border:3px solid rgba(0,229,255,.2);border-top-color:#00e5ff;border-radius:50%;animation:spin .8s linear infinite;"></div><span style="font-size:11px;color:#00e5ff;" id="' + boxId + '_status">⬆️ ImgBB pe upload…</span>';
+    loadDiv.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(15,15,15,.82);border-radius:14px;z-index:2;';
+    loadDiv.innerHTML = '<div style="width:36px;height:36px;border:3px solid rgba(255,102,0,.2);border-top-color:#ff6600;border-radius:50%;animation:spin .8s linear infinite;"></div><span style="font-size:11px;color:#ff6600;" id="' + boxId + '_status">⬆️ ImgBB pe upload…</span>';
     box.appendChild(loadDiv);
     toast('⬆️ Cloud upload ho rahi hai…');
 
@@ -4835,7 +4774,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
       info.style.cssText = 'flex:1;min-width:0;';
       info.innerHTML = '<div style="font-size:12px;font-weight:700;color:#e0faff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">#'
         + String(i+1).padStart(2,'0') + ' ' + (item.title || 'Untitled') + '</div>'
-        + '<div style="font-size:10px;color:#5dd8ff;margin-top:2px;">'
+        + '<div style="font-size:10px;color:#999999;margin-top:2px;">'
         + (typeIcon[item.type] || '') + ' ' + (item.type||'').toUpperCase()
         + (item.videoUrl ? ' • 🎥 Video' : '') + '</div>';
       const delBtn = document.createElement('button');
@@ -4900,7 +4839,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
       if (!val) { st.innerHTML = ''; return; }
       const ok = val.includes('cloudinary.com') || val.includes('.mp4') || val.includes('.m3u8') || val.includes('youtube') || val.includes('streamtape');
       st.innerHTML = ok
-        ? '<span style="color:#00e5ff;font-size:11px;">✅ Valid video URL!</span>'
+        ? '<span style="color:#ff6600;font-size:11px;">✅ Valid video URL!</span>'
         : '<span style="color:#ff9944;font-size:11px;">⚠️ Cloudinary URL hona chahiye (.mp4)</span>';
     };
     form.appendChild(driveInput);
@@ -5092,7 +5031,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
 
     items.forEach((item, idx) => {
       const card = document.createElement('div');
-      card.style.cssText = 'border-radius:16px;background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.15);overflow:hidden;margin-bottom:10px;';
+      card.style.cssText = 'border-radius:16px;background:rgba(255,102,0,.06);border:1px solid rgba(255,102,0,.15);overflow:hidden;margin-bottom:10px;';
 
       // Card header
       const header = document.createElement('div');
@@ -5110,9 +5049,9 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
       const seasons = item.seasons || [];
       const totalEps = seasons.reduce((a, s) => a + (Array.isArray(s.episodes) ? s.episodes.length : (typeof s.episodes === 'number' ? s.episodes : 0)), 0);
       const filledEps = seasons.reduce((a, s) => a + (Array.isArray(s.episodes) ? s.episodes.filter(e => e.videoUrl).length : 0), 0);
-      info.innerHTML = `<div style="font-size:13px;font-weight:800;color:#eaffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.title}</div>
-        <div style="font-size:10px;color:#a855f7;margin-top:2px;">${seasons.length} season • ${totalEps} episodes</div>
-        <div style="font-size:10px;color:${filledEps>0?'#00e5ff':'#4a6a88'};margin-top:1px;">📤 ${filledEps}/${totalEps} videos uploaded</div>`;
+      info.innerHTML = `<div style="font-size:13px;font-weight:800;color:#f5f5f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.title}</div>
+        <div style="font-size:10px;color:#ff6600;margin-top:2px;">${seasons.length} season • ${totalEps} episodes</div>
+        <div style="font-size:10px;color:${filledEps>0?'#ff6600':'#555555'};margin-top:1px;">📤 ${filledEps}/${totalEps} videos uploaded</div>`;
 
       const delBtn = document.createElement('button');
       delBtn.className = 'adm-del-btn'; delBtn.textContent = '🗑️';
@@ -5120,7 +5059,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
 
       const expandIcon = document.createElement('span');
       expandIcon.textContent = '▼';
-      expandIcon.style.cssText = 'font-size:10px;color:#a855f7;flex:0 0 auto;';
+      expandIcon.style.cssText = 'font-size:10px;color:#ff6600;flex:0 0 auto;';
 
       header.appendChild(thumb); header.appendChild(info); header.appendChild(delBtn); header.appendChild(expandIcon);
       card.appendChild(header);
@@ -5128,7 +5067,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
       // Card body (episodes editor)
       const body = document.createElement('div');
       body.id = 'aniBody_' + item.id;
-      body.style.cssText = 'display:none;padding:12px;border-top:1px solid rgba(168,85,247,.12);';
+      body.style.cssText = 'display:none;padding:12px;border-top:1px solid rgba(255,102,0,.12);';
 
       // Poster update
       const posterRow = document.createElement('div');
@@ -5154,14 +5093,14 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
       };
       posterThumb.appendChild(posterFile); posterThumb.appendChild(posterData);
       const posterInfo = document.createElement('div');
-      posterInfo.style.cssText = 'flex:1;font-size:11px;color:#7a9ab8;';
+      posterInfo.style.cssText = 'flex:1;font-size:11px;color:#777777;';
       posterInfo.textContent = 'Poster tap karo update karne ke liye';
       posterRow.appendChild(posterThumb); posterRow.appendChild(posterInfo);
       body.appendChild(posterRow);
 
       // Add season button
       const addSeasonBtn = document.createElement('button');
-      addSeasonBtn.style.cssText = 'width:100%;padding:8px;border:1px dashed rgba(168,85,247,.35);border-radius:10px;background:rgba(168,85,247,.06);color:#c084fc;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:10px;';
+      addSeasonBtn.style.cssText = 'width:100%;padding:8px;border:1px dashed rgba(255,102,0,.35);border-radius:10px;background:rgba(255,102,0,.06);color:#ff8800;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:10px;';
       addSeasonBtn.textContent = '➕ Naya Season Add Karo';
       addSeasonBtn.onclick = () => {
         const sName = prompt('Season name?', 'Season ' + (item.seasons.length + 1));
@@ -5185,10 +5124,10 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
 
         const seasonHead = document.createElement('div');
         seasonHead.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;';
-        seasonHead.innerHTML = `<span style="font-size:12px;font-weight:900;color:#a855f7;letter-spacing:.04em;">${season.name}</span>`;
+        seasonHead.innerHTML = `<span style="font-size:12px;font-weight:900;color:#ff6600;letter-spacing:.04em;">${season.name}</span>`;
 
         const addEpBtn = document.createElement('button');
-        addEpBtn.style.cssText = 'padding:4px 10px;border:1px solid rgba(168,85,247,.25);border-radius:8px;background:rgba(168,85,247,.08);color:#c084fc;font-size:10px;font-weight:700;cursor:pointer;';
+        addEpBtn.style.cssText = 'padding:4px 10px;border:1px solid rgba(255,102,0,.25);border-radius:8px;background:rgba(255,102,0,.08);color:#ff8800;font-size:10px;font-weight:700;cursor:pointer;';
         addEpBtn.textContent = '+ Ep';
         addEpBtn.onclick = () => {
           const epTitle = prompt('Episode title?', season.name + ' Ep ' + (season.episodes.length + 1));
@@ -5209,13 +5148,13 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
 
         eps.forEach((ep, ei) => {
           const epRow = document.createElement('div');
-          epRow.style.cssText = 'display:grid;gap:6px;padding:10px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid rgba(168,85,247,.10);margin-bottom:6px;';
+          epRow.style.cssText = 'display:grid;gap:6px;padding:10px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid rgba(255,102,0,.10);margin-bottom:6px;';
 
           const epTitle = document.createElement('div');
           epTitle.style.cssText = 'display:flex;align-items:center;gap:8px;';
-          epTitle.innerHTML = `<span style="font-size:11px;font-weight:900;color:#a855f7;flex:0 0 auto;">${String(ei+1).padStart(2,'0')}</span>
-            <span style="font-size:12px;color:${ep.videoUrl?'#eaffff':'#7a9ab8'};flex:1;">${ep.title}</span>
-            <span style="font-size:9px;color:${ep.videoUrl?'#00e5ff':'#4a6a88'};font-weight:700;">${ep.videoUrl?'✅':'⏳'}</span>`;
+          epTitle.innerHTML = `<span style="font-size:11px;font-weight:900;color:#ff6600;flex:0 0 auto;">${String(ei+1).padStart(2,'0')}</span>
+            <span style="font-size:12px;color:${ep.videoUrl?'#f5f5f5':'#777777'};flex:1;">${ep.title}</span>
+            <span style="font-size:9px;color:${ep.videoUrl?'#ff6600':'#555555'};font-weight:700;">${ep.videoUrl?'✅':'⏳'}</span>`;
           epRow.appendChild(epTitle);
 
           // Video URL input
@@ -5229,22 +5168,22 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
           urlInput.style.cssText = 'flex:1;font-size:11px;padding:7px 10px;';
 
           const saveUrlBtn = document.createElement('button');
-          saveUrlBtn.style.cssText = 'padding:7px 12px;border:none;border-radius:10px;background:linear-gradient(135deg,#a855f7,#00e5ff);color:#fff;font-size:11px;font-weight:800;cursor:pointer;flex:0 0 auto;';
+          saveUrlBtn.style.cssText = 'padding:7px 12px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff6600,#ff6600);color:#fff;font-size:11px;font-weight:800;cursor:pointer;flex:0 0 auto;';
           saveUrlBtn.textContent = '✓ Save';
           saveUrlBtn.onclick = () => {
             let val = urlInput.value.trim();
-            if (!val) { ep.videoUrl = null; persist(); toast('❌ URL hata diya'); epTitle.querySelector('span:last-child').textContent = '⏳'; epTitle.querySelector('span:last-child').style.color = '#4a6a88'; return; }
+            if (!val) { ep.videoUrl = null; persist(); toast('❌ URL hata diya'); epTitle.querySelector('span:last-child').textContent = '⏳'; epTitle.querySelector('span:last-child').style.color = '#555555'; return; }
             ep.videoUrl = val;
             persist();
             toast('✅ Video link saved!');
             epTitle.querySelector('span:last-child').textContent = '✅';
-            epTitle.querySelector('span:last-child').style.color = '#00e5ff';
-            epTitle.querySelector('span:nth-child(2)').style.color = '#eaffff';
+            epTitle.querySelector('span:last-child').style.color = '#ff6600';
+            epTitle.querySelector('span:nth-child(2)').style.color = '#f5f5f5';
           };
 
           // Gallery/local MP4 upload
           const fileBtn = document.createElement('button');
-          fileBtn.style.cssText = 'padding:7px 12px;border:1px solid rgba(168,85,247,.25);border-radius:10px;background:rgba(168,85,247,.08);color:#c084fc;font-size:11px;font-weight:800;cursor:pointer;flex:0 0 auto;';
+          fileBtn.style.cssText = 'padding:7px 12px;border:1px solid rgba(255,102,0,.25);border-radius:10px;background:rgba(255,102,0,.08);color:#ff8800;font-size:11px;font-weight:800;cursor:pointer;flex:0 0 auto;';
           fileBtn.textContent = '📁';
           fileBtn.title = 'Gallery se MP4 upload karo';
 
@@ -5263,7 +5202,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
               toast('✅ Video ready! (Local — Drive pe bhi upload karo)');
               fileBtn.textContent = '✅';
               epTitle.querySelector('span:last-child').textContent = '✅';
-              epTitle.querySelector('span:last-child').style.color = '#00e5ff';
+              epTitle.querySelector('span:last-child').style.color = '#ff6600';
             } catch(err) { toast('❌ Failed'); fileBtn.textContent = '📁'; }
           };
           fileBtn.onclick = () => fileInput.click();
@@ -5296,7 +5235,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     const desc = (document.getElementById('aniDesc')?.value || '').trim() || '';
     const tagsRaw = (document.getElementById('aniTags')?.value || '').trim() || 'Anime,Hindi';
     const tags = tagsRaw.split(',').map(s => s.trim()).filter(Boolean);
-    const thumb = (document.getElementById('aniThumbData')?.value || '').trim() || 'linear-gradient(135deg,rgba(168,85,247,.5),rgba(0,229,255,.3))';
+    const thumb = (document.getElementById('aniThumbData')?.value || '').trim() || 'linear-gradient(135deg,rgba(255,102,0,.5),rgba(255,102,0,.3))';
     const seasonCount = parseInt(document.getElementById('aniSeasonCount')?.value || '1') || 1;
     const epCount = parseInt(document.getElementById('aniEpCount')?.value || '12') || 12;
 
@@ -5331,12 +5270,12 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
 
     // Stats card
     const statsCard = document.createElement('div');
-    statsCard.style.cssText = 'background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.14);border-radius:16px;padding:16px;margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;';
+    statsCard.style.cssText = 'background:rgba(255,102,0,.06);border:1px solid rgba(255,102,0,.14);border-radius:16px;padding:16px;margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;';
     statsCard.innerHTML =
-      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#00e5ff;">' + total + '</div><div style="font-size:10px;color:#5dd8ff;margin-top:2px;">Total Items</div></div>' +
-      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#ff9944;">' + hot + '</div><div style="font-size:10px;color:#5dd8ff;margin-top:2px;">🔥 Hot</div></div>' +
-      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#44ffaa;">' + gal + '</div><div style="font-size:10px;color:#5dd8ff;margin-top:2px;">🖼️ Gallery</div></div>' +
-      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#a855f7;">' + ani + '</div><div style="font-size:10px;color:#5dd8ff;margin-top:2px;">🎌 Anime</div></div>';
+      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#ff6600;">' + total + '</div><div style="font-size:10px;color:#999999;margin-top:2px;">Total Items</div></div>' +
+      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#ff9944;">' + hot + '</div><div style="font-size:10px;color:#999999;margin-top:2px;">🔥 Hot</div></div>' +
+      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#44ffaa;">' + gal + '</div><div style="font-size:10px;color:#999999;margin-top:2px;">🖼️ Gallery</div></div>' +
+      '<div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#ff6600;">' + ani + '</div><div style="font-size:10px;color:#999999;margin-top:2px;">🎌 Anime</div></div>';
     c.appendChild(statsCard);
 
     // Danger zone
@@ -5379,7 +5318,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     c.appendChild(delBtn);
 
     const note = document.createElement('div');
-    note.style.cssText = 'margin-top:10px;font-size:11px;color:#4a6a88;text-align:center;line-height:1.6;';
+    note.style.cssText = 'margin-top:10px;font-size:11px;color:#555555;text-align:center;line-height:1.6;';
     note.textContent = 'Ye button dono jagah se delete karta hai — LocalStorage aur Firebase — dono clean ho jayenge.';
     c.appendChild(note);
   }
@@ -5398,7 +5337,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     info.style.cssText = 'flex:1;min-width:0;';
     info.innerHTML = '<div style="font-size:12px;font-weight:700;color:#e0faff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">#'
       + String(num).padStart(2, '0') + ' ' + (item.title || 'Untitled') + '</div>'
-      + '<div style="font-size:10px;color:#5dd8ff;margin-top:1px;">' + (item.videoUrl ? '\u{1F3A5} Video linked' : '\u{1F4F7} No video') + '</div>';
+      + '<div style="font-size:10px;color:#999999;margin-top:1px;">' + (item.videoUrl ? '\u{1F3A5} Video linked' : '\u{1F4F7} No video') + '</div>';
     const editBtn = document.createElement('button');
     editBtn.className = 'adm-edit-btn';
     editBtn.id = 'edit-' + item.id;
@@ -5436,7 +5375,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     panel.style.display = 'grid';
     panel.style.gap = '8px';
     const head = document.createElement('div');
-    head.style.cssText = 'font-size:11px;color:#5dd8ff;font-weight:700;letter-spacing:.04em;';
+    head.style.cssText = 'font-size:11px;color:#999999;font-weight:700;letter-spacing:.04em;';
     head.textContent = '\u270F\uFE0F EDIT';
     panel.appendChild(head);
     const currentThumb = item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http')) ? item.thumb : '';
@@ -5623,7 +5562,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     state.items.unshift({
       id: 'movie-' + Date.now(), type: 'movie', num, title,
       desc: desc || 'Movie.', quality: 'HD', meta: 'Movie • HD',
-      thumb: thumb || 'linear-gradient(135deg,rgba(0,80,255,.7),rgba(0,200,255,.3))',
+      thumb: thumb || 'linear-gradient(135deg,rgba(0,80,255,.7),rgba(255,102,0,.3))',
       videoUrl, tags: ['Movie','HD'], createdAt: Date.now()
     });
     persist();
