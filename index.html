@@ -5,6 +5,11 @@
   <meta name="referrer" content="no-referrer" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Neon Stream V2.7</title>
+  <!-- Banner image preloads — fast first load -->
+  <link rel="preload" as="image" href="https://i.postimg.cc/wMfZkzr2/IMG_20260413_201132.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="https://i.postimg.cc/L5CwVSWL/Gjbokupa_IAA7LQ4.jpg">
+  <link rel="preload" as="image" href="https://i.postimg.cc/BbYkC3zK/image_14.jpg">
+  <link rel="preconnect" href="https://i.postimg.cc" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -530,7 +535,7 @@
 
     .grid{
       display:grid;
-      gap:10px;
+      gap:12px;
       grid-template-columns:repeat(2, minmax(0,1fr));
     }
     @media (min-width: 768px){.grid{grid-template-columns:repeat(4, minmax(0,1fr));}}
@@ -538,7 +543,7 @@
 
     .card{
       position:relative;
-      min-height:190px;
+      min-height:208px;
       border-radius:10px;
       overflow:hidden;
       cursor:pointer;
@@ -558,13 +563,13 @@
       background:rgba(0,0,0,.65);
     }
     .card-media{
-      height:70%;
+      height:72%;
       position:relative;
       overflow:hidden;
-      background:linear-gradient(160deg, #1e1e1e 0%, #141414 100%);
+      background:#111;
     }
     .card-media img{
-      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block;
+      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:0;display:block;
     }
     .card-media::before{ display:none; }
     .card-media::after{ display:none; }
@@ -1583,38 +1588,45 @@ backface-visibility:hidden;
 
         <!-- SINGLE FULL-WIDTH BANNER — all 10 slides -->
         <div class="banner" id="bannerLeft" style="flex:1 1 100%;width:100%;">
-          <div class="banner-slide active" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/wv1LLVdS/Hot_Chinese_girl.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide active" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/wMfZkzr2/IMG_20260413_201132.jpg') center center/cover no-repeat;">
             <h2>Feel the Heat.</h2>
             <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Watch Now</button></div>
           </div>
-          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/Y9vYY3wP/6d92d046_5ce4_47c3_80d8_b215b11447e8.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/L5CwVSWL/Gjbokupa_IAA7LQ4.jpg') center center/cover no-repeat;">
             <h2>Unlock It All.</h2>
             <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Tap In</button></div>
           </div>
-          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/XJtF8CVm/acd33457_4636_4318_bb96_631221b483e4.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/BbYkC3zK/image_14.jpg') center center/cover no-repeat;">
             <h2>Zero Blur.</h2>
             <div class="banner-actions"><button class="btn btn-primary" data-scroll="movie">Stream Now</button></div>
           </div>
-          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/Y9vYY3HK/081e89e7_3d4f_4c64_93a7_9627af89cebf.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/HnZRtmN5/e149f4fe_fe52_4965_9fe0_597c7579961f.jpg') center center/cover no-repeat;">
             <h2>Tonight's Best.</h2>
             <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Open Hot</button></div>
           </div>
-          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/DZSLLgTV/485085a3_9277_43a8_8d7f_d6185bfa1bb4.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/Kjqw5bWt/IMG_20260413_201056.jpg') center center/cover no-repeat;">
             <h2>Tap. Play. Done.</h2>
             <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Play</button></div>
           </div>
-
-          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/C1RkkNgY/c23fdc5cd6b9922150a8d7437d559adc.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/XqHmgWPc/IMG_20260413_200906.jpg') center center/cover no-repeat;">
             <h2>All New Drops.</h2>
             <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Watch</button></div>
           </div>
-          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/qRWnL3k5/e13b0179_4c89_43df_8467_b14c08023347.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/5y7TmJr5/IMG_20260413_200844.jpg') center center/cover no-repeat;">
             <h2>Crystal Clear.</h2>
             <div class="banner-actions"><button class="btn btn-primary" data-scroll="movie">Stream</button></div>
           </div>
-          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/XJtF8CVh/image.jpg') center top/115% auto no-repeat;">
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/x8xhPQZP/IMG_20260413_200750.jpg') center center/cover no-repeat;">
             <h2>Go Premium.</h2>
             <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Start</button></div>
+          </div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/vTqkvyKt/IMG_20260413_200822.jpg') center center/cover no-repeat;">
+            <h2>Pure Fire.</h2>
+            <div class="banner-actions"><button class="btn btn-primary" data-scroll="hot">Watch Now</button></div>
+          </div>
+          <div class="banner-slide" data-side="L" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 60%,transparent 100%),url('https://i.postimg.cc/4yLq1G0c/IMG_20260413_200720.jpg') center center/cover no-repeat;">
+            <h2>Next Level.</h2>
+            <div class="banner-actions"><button class="btn btn-gold" data-scroll="hot">Explore</button></div>
           </div>
         </div>
 
@@ -1655,12 +1667,12 @@ backface-visibility:hidden;
         <span>Gallery</span>
       </button>
       <button class="nav-item" data-tab="save">
-        <svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 011 1v16l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-        <span>Save</span>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>Profile</span>
       </button>
       <button class="nav-item" data-tab="anime">
         <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M8 4v16M16 4v16M2 10h20M2 14h20"/></svg>
-        <span>Movie</span>
+        <span>Anime</span>
       </button>
     </div>
   </div>
@@ -1920,6 +1932,12 @@ backface-visibility:hidden;
       }
     }
 
+    window.clearWatchHistory = function() {
+      if(confirm('Watch history clear karo?')) {
+        localStorage.removeItem('ns_watch_history');
+        render();
+      }
+    };
     window.toast = function toast(msg) {
       const el = $('#toast');
       el.textContent = msg;
@@ -1941,49 +1959,63 @@ backface-visibility:hidden;
       );
     }
 
+    // Short desc list for gallery cards
+    const _galDescs = [
+      'Beautiful girl 💕','Hot & Cute 🌸','Gorgeous look ✨','Stunning beauty 🔥','Sweet & Bold 💋',
+      'Classy vibes 👑','Wild side 🌙','Pure charm 🌺','Irresistible 💫','Soft & Sexy 🍑',
+      'Cute pose 🎀','Elegance 🌹','Fire look 🔥','Sweet dreams 💤','Eye candy 🍬'
+    ];
+
     function galleryCardHTML(item) {
       const num = item.num || 1;
-      const ratio = item.ratio || '9:16'; // default portrait
-
-      // 9:16 portrait photo
-      const isImg916 = item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http'));
-      // 16:9 landscape photo
-      const isImg169 = item.thumb16 && (item.thumb16.startsWith('data:') || item.thumb16.startsWith('http'));
-
+      const ratio = item.ratio || '9:16';
       const activeThumb = ratio === '16:9' ? (item.thumb16 || item.thumb || '') : (item.thumb || item.thumb16 || '');
       const activeType = ratio === '16:9' ? (item.mediaType16 || item.mediaType || 'image') : (item.mediaType || item.mediaType16 || 'image');
       const hasPhoto = !!activeThumb;
-      const thumbStyle = hasPhoto ? 'background-image:url(' + activeThumb + ');background-size:cover;background-position:center center;' : '';
       const mediaMarkup = hasPhoto
         ? (activeType === 'video'
             ? '<video src="' + activeThumb + '" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;"></video>'
-            : '<img src="' + activeThumb + '" alt="gallery media" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;filter:contrast(1.02) saturate(1.08);">')
+            : '<img src="' + activeThumb + '" alt="gallery media" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;pointer-events:none;filter:contrast(1.02) saturate(1.08);">')
         : '';
+      const shortDesc = item.desc && item.desc.trim() ? item.desc.trim() : _galDescs[(num - 1) % _galDescs.length];
 
-      // Card height based on ratio — full width single column
-      const cardH = ratio === '16:9' ? '56vw' : '133vw';
-      const cardMaxH = ratio === '16:9' ? '440px' : '620px';
+      const _isMob = typeof window !== 'undefined' && window.innerWidth <= 768;
+      const cardH = ratio === '16:9' ? (_isMob ? '56vw' : '45vw') : (_isMob ? '133vw' : '65vw');
+      const cardMaxH = ratio === '16:9' ? (_isMob ? '440px' : '520px') : (_isMob ? '620px' : '680px');
 
       return `
-        <article class="card revealed is-visible" data-id="${item.id}" style="grid-column:1/-1;height:${cardH};max-height:${cardMaxH};cursor:default;border-radius:22px;overflow:hidden;position:relative;display:block;margin-bottom:4px;transition:height .3s ease;">
-          <!-- Number badge -->
-          <div style="position:absolute;top:12px;left:12px;z-index:5;font-size:11px;font-weight:800;letter-spacing:.08em;color:#ff8800;padding:5px 10px;border-radius:999px;background:rgba(10,10,10,.75);border:1px solid rgba(255,102,0,.25);">${String(num).padStart(2,'0')}</div>
-          <!-- Photo area — full inset, no click to player -->
-          <div id="galMedia_${item.id}" style="position:absolute;inset:0;${thumbStyle}background-size:cover;background-position:center center;background-color:rgba(15,15,15,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .2s;cursor:${hasPhoto?'default':'pointer'};" ${hasPhoto ? '' : 'onclick="galUploadClick(\''+item.id+'\')"'}>
+        <article class="card revealed is-visible" data-id="${item.id}" style="grid-column:1/-1;height:${cardH};max-height:${cardMaxH};cursor:${hasPhoto?'pointer':'default'};border-radius:22px;overflow:hidden;position:relative;display:block;margin-bottom:4px;transition:height .3s ease;" ${hasPhoto ? 'onclick="galOpenFullscreen(\'' + item.id + '\')"' : ''}>
+          <div id="galMedia_${item.id}" style="position:absolute;inset:0;background-color:rgba(15,15,15,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;" ${!hasPhoto ? 'onclick="galUploadClick(\'' + item.id + '\')"' : ''}>
             ${hasPhoto ? mediaMarkup : '<div style="font-size:44px;opacity:.4;">📷</div><div style="font-size:13px;color:#999999;font-weight:800;letter-spacing:.06em;">Upload ' + ratio + ' Photo</div>'}
             <input type="file" id="galFile_${item.id}" accept="image/*" style="display:none;" onchange="galHandleUpload(event,'${item.id}')">
           </div>
-          <!-- Footer — compact 2-col -->
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 14px 18px;background:linear-gradient(transparent,rgba(0,0,0,.92));z-index:3;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:${hasPhoto?'8px':'0'};">
-              <span style="font-size:13px;color:#ff8800;font-weight:700;">${item.title||''}</span>
-              ${hasPhoto ? '<button onclick="event.stopPropagation();galUploadClick(\''+item.id+'\')" style="padding:3px 6px;border:none;border-radius:999px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:9px;cursor:pointer;">🔄</button>' : ''}
-            </div>
-            ${hasPhoto ? `<button onclick="event.stopPropagation();galDownload('${item.id}')" style="width:100%;padding:11px;border:none;border-radius:14px;background:linear-gradient(90deg,rgba(255,102,0,.22),rgba(255,102,0,.18));border:1px solid rgba(255,102,0,.35);color:#ff6600;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:8px;">⬇️ Download</button>` : ''}
-          </div>
+          ${hasPhoto ? `<div style="position:absolute;bottom:0;left:0;right:0;padding:10px 14px 14px;background:linear-gradient(transparent,rgba(0,0,0,.80));z-index:3;pointer-events:none;">
+            <span style="font-size:12px;color:#ffcc99;font-weight:600;">${shortDesc}</span>
+          </div>` : ''}
         </article>
       `;
     }
+
+    window.galOpenFullscreen = function(id) {
+      const item = state.items.find(x => x.id === id);
+      if (!item) return;
+      const ratio = item.ratio || '9:16';
+      const url = ratio === '16:9' ? (item.thumb16 || item.thumb) : (item.thumb || item.thumb16);
+      const type = ratio === '16:9' ? (item.mediaType16 || 'image') : (item.mediaType || 'image');
+      if (!url) return;
+      const existing = document.getElementById('galLightbox');
+      if (existing) existing.remove();
+      const lb = document.createElement('div');
+      lb.id = 'galLightbox';
+      lb.style.cssText = 'position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;animation:galLbIn .18s ease;touch-action:pinch-zoom;';
+      lb.innerHTML = '<style>@keyframes galLbIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}</style>' +
+        '<button onclick="document.getElementById(\'galLightbox\').remove()" style="position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border:none;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>' +
+        (type === 'video'
+          ? '<video src="'+url+'" autoplay controls playsinline style="max-width:100vw;max-height:100vh;object-fit:contain;"></video>'
+          : '<img src="'+url+'" style="max-width:100vw;max-height:100vh;object-fit:contain;user-select:none;" draggable="false">');
+      lb.addEventListener('click', function(e){ if(e.target===lb) lb.remove(); });
+      document.body.appendChild(lb);
+    };
 
     function galSetRatio(id, ratio) {
       let item = state.items.find(x => x.id === id);
@@ -2156,13 +2188,34 @@ backface-visibility:hidden;
       });
     }
 
+    // Auto title generator for hot cards
+    const _autoTitles = [
+      'Wild Passion', 'Steamy Encounter', 'Secret Desire', 'Midnight Lust',
+      'Burning Hunger', 'Raw Pleasure', 'Forbidden Night', 'Deep Craving',
+      'Hot Fantasy', 'Intense Mood', 'Naughty Bliss', 'Savage Heat',
+      'Silky Temptation', 'Filthy Dreams', 'Irresistible Fire', 'Wicked Thrill',
+      'Lusty Affair', 'Reckless Night', 'Seductive Power', 'Sensual Storm'
+    ];
+    function getAutoTitle(num) {
+      return _autoTitles[(num - 1) % _autoTitles.length];
+    }
+
     function cardHTML(item) {
       const liked = !!state.likes[item.id];
       const saved = state.saved.includes(item.id);
       const index = item.id.split('-').pop();
       const num = item.num || (Number(index) + 1) || 1;
       const isImg = item.thumb && (item.thumb.startsWith('data:') || item.thumb.startsWith('http'));
-      // Subtle per-card dark gradient variation (PornHub style - dark, clean, slight warmth)
+
+      // ── Hide hot cards with no thumbnail ──
+      if (item.type === 'hot' && !isImg) return '';
+
+      // ── Auto-title: if title is blank, generic "Hot #N", or just a dot ──
+      const _rawTitle = (item.title || '').trim();
+      const _isGenericTitle = !_rawTitle || _rawTitle === '.' || _rawTitle === ',' || /^hot\s*#?\d*$/i.test(_rawTitle);
+      const displayTitle = (item.type === 'hot' && _isGenericTitle) ? getAutoTitle(num) : (_rawTitle || getAutoTitle(num));
+
+      // Subtle per-card dark gradient variation
       const _ph = [
         'linear-gradient(160deg,#1c1c1c,#131313)',
         'linear-gradient(160deg,#1e1a18,#141210)',
@@ -2191,7 +2244,7 @@ backface-visibility:hidden;
           ${seasonBadge}
           <div class="card-media" style="${thumbBgStyle}">${thumbImgTag}</div>
           <div class="card-footer">
-            <h3 class="card-title">${item.title}</h3>
+            <h3 class="card-title">${displayTitle}</h3>
             <div class="card-meta">
               <span style="color:${isAnime?'#ff8800':'var(--muted)'};">${isAnime ? '🎌 Anime' : item.meta}</span>
               <div class="mini-actions">
@@ -2215,7 +2268,7 @@ backface-visibility:hidden;
       `;
     }
 
-    const PAGE_SIZE = 25;
+    const PAGE_SIZE = 30;
     let currentPage = 1;
 
     window.render = function render(resetPage = true) {
@@ -2230,6 +2283,10 @@ backface-visibility:hidden;
       if (state.tab === 'gallery') {
         grid.style.gridTemplateColumns = '1fr';
         grid.style.gap = '14px';
+        // Desktop: limit gallery width so portrait photos don't stretch full screen
+        const _isMobGrid = window.innerWidth <= 768;
+        grid.style.maxWidth = _isMobGrid ? '' : '480px';
+        grid.style.margin = _isMobGrid ? '' : '0 auto';
         const ratio = state.galRatio || '9:16';
         const prefix = ratio === '16:9' ? 'gal16_slot_' : 'gal_slot_';
         const galItems = state.items.filter(i => i.type === 'gallery');
@@ -2280,22 +2337,47 @@ backface-visibility:hidden;
       } else {
         grid.style.gridTemplateColumns = '';
         grid.style.gap = '';
+        grid.style.maxWidth = '';
+        grid.style.margin = '';
         const _grt = document.getElementById('galRatioTabs');
         if (_grt) _grt.style.display = 'none';
       }
 
       if (state.tab === 'save') {
-        items = state.items.filter(i => state.saved.includes(i.id));
-        if (!items.length) { grid.innerHTML = emptyState('No saved items yet.'); attachCardEvents(); return; }
+        renderProfilePage(grid);
+        return;
       } else {
         items = list;
       }
 
-      const visible = items.slice(0, currentPage * PAGE_SIZE);
-      const hasMore = visible.length < items.length;
+      const totalPages = Math.ceil(items.length / PAGE_SIZE);
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const visible = items.slice(start, start + PAGE_SIZE);
 
-      grid.innerHTML = visible.map(cardHTML).join('') +
-        (hasMore ? `<div class="lazy-sentinel" id="lazySentinel"><div class="lazy-loader"></div><span>Lazy loading… aur cards niche se aa rahe hain</span></div>` : '');
+      // Insert native banner after every 10 cards
+      const adBanners = [
+        { icon:'🔥', text:'Premium Unlocked — Exclusive Content Watch Karo', cta:'GET →' },
+        { icon:'⚡', text:'HD Streaming — Zero Buffering. Upgrade Now!', cta:'JOIN →' },
+        { icon:'👑', text:'VIP Access — 4K Quality Sabke Liye Unlock', cta:'TRY →' },
+        { icon:'💎', text:'Premium Members ke liye Special Content Available', cta:'OPEN →' },
+      ];
+      let adIdx = 0;
+      const cardsWithAds = visible.reduce((acc, item, i) => {
+        acc += cardHTML(item);
+        if ((i + 1) % 10 === 0 && i + 1 < visible.length) {
+          const ad = adBanners[adIdx % adBanners.length]; adIdx++;
+          acc += `<div style="grid-column:1/-1;width:100%;padding:4px 0 8px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:linear-gradient(90deg,rgba(255,102,0,.13),rgba(255,102,0,.09),rgba(255,102,0,.06));border:1px solid rgba(255,102,0,.22);border-radius:16px;color:#ff8800;font-size:13px;font-weight:800;letter-spacing:.04em;box-shadow:0 0 20px rgba(255,102,0,.07);">
+              <span style="font-size:20px;flex:0 0 auto;">${ad.icon}</span>
+              <span style="flex:1;line-height:1.35;">${ad.text}</span>
+              <span style="font-size:11px;font-weight:900;color:#ff6600;background:rgba(255,102,0,.14);border:1px solid rgba(255,102,0,.30);padding:5px 14px;border-radius:999px;flex-shrink:0;white-space:nowrap;">${ad.cta}</span>
+            </div>
+          </div>`;
+        }
+        return acc;
+      }, '');
+
+      grid.innerHTML = cardsWithAds + renderPagination(currentPage, totalPages);
 
       attachCardEvents();
       updateCounts();
@@ -2303,17 +2385,235 @@ backface-visibility:hidden;
       if (typeof applySavedSectionStyles === 'function') applySavedSectionStyles();
       setTimeout(restorePlaceholderImages, 100);
       setTimeout(() => setupLazyReveal(), 0);
-      setTimeout(() => setupInfiniteScroll(hasMore), 0);
     }
 
+    const _pageAdImgs = [
+      'https://i.postimg.cc/wMfZkzr2/IMG_20260413_201132.jpg',
+      'https://i.postimg.cc/L5CwVSWL/Gjbokupa_IAA7LQ4.jpg',
+      'https://i.postimg.cc/BbYkC3zK/image_14.jpg',
+    ];
+
+    function renderPagination(page, total) {
+      if (total <= 1) return '';
+
+      // Ad banner above pagination (random rotate)
+      const adImg = _pageAdImgs[(page - 1) % _pageAdImgs.length];
+      const adHtml = `
+        <div style="grid-column:1/-1;width:100%;padding:6px 0 4px;position:relative;">
+          <div style="position:absolute;top:14px;right:8px;z-index:2;background:rgba(255,102,0,.88);color:#fff;font-size:9px;font-weight:900;padding:2px 6px;border-radius:4px;letter-spacing:.05em;">AD</div>
+          <div style="width:100%;border-radius:14px;overflow:hidden;border:1px solid rgba(255,102,0,.22);box-shadow:0 8px 28px rgba(0,0,0,.55);cursor:pointer;position:relative;">
+            <img src="${adImg}" style="width:100%;max-height:220px;object-fit:cover;object-position:center top;display:block;filter:brightness(.92) contrast(1.05);">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.75));display:flex;align-items:flex-end;padding:14px 16px;">
+              <div style="flex:1;">
+                <div style="font-size:11px;font-weight:900;color:#ff8800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;">🔥 Sponsored</div>
+                <div style="font-size:14px;font-weight:800;color:#fff;line-height:1.3;">Premium Content — Watch Now, No Limits</div>
+              </div>
+              <span style="font-size:12px;font-weight:900;color:#0f0f0f;background:linear-gradient(135deg,#ff6600,#ff8800);padding:7px 16px;border-radius:999px;white-space:nowrap;flex-shrink:0;box-shadow:0 0 14px rgba(255,102,0,.55);">JOIN →</span>
+            </div>
+          </div>
+        </div>`;
+
+      const range = 2;
+      let startP = Math.max(1, page - range);
+      let endP = Math.min(total, page + range);
+      if (endP - startP < 4) {
+        if (startP === 1) endP = Math.min(total, startP + 4);
+        else startP = Math.max(1, endP - 4);
+      }
+
+      let btns = '';
+      for (let p = startP; p <= endP; p++) {
+        const active = p === page;
+        btns += `<button onclick="window.gotoPage(${p})" style="min-width:56px;height:56px;padding:0 14px;border:none;border-radius:14px;font-size:19px;font-weight:${active?'900':'700'};cursor:pointer;transition:all .18s;letter-spacing:-.01em;${active
+          ? 'background:linear-gradient(135deg,#ff5500,#ff8800);color:#fff;box-shadow:0 0 0 2px rgba(255,102,0,.35),0 6px 20px rgba(255,102,0,.50);transform:scale(1.08);'
+          : 'background:rgba(255,102,0,.10);border:1.5px solid rgba(255,102,0,.28);color:#ff8800;box-shadow:0 2px 8px rgba(0,0,0,.3);'}">${p}</button>`;
+      }
+
+      const prevDisabled = page <= 1;
+      const nextDisabled = page >= total;
+      return adHtml + `<div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 0 10px;flex-wrap:wrap;">
+        <button onclick="window.gotoPage(${page-1})" ${prevDisabled?'disabled':''} style="min-width:80px;height:56px;padding:0 18px;border:none;border-radius:14px;font-size:17px;font-weight:800;cursor:${prevDisabled?'not-allowed':'pointer'};transition:all .18s;${prevDisabled
+          ? 'background:rgba(255,102,0,.05);color:rgba(255,102,0,.25);border:1.5px solid rgba(255,102,0,.10);'
+          : 'background:linear-gradient(135deg,#ff5500,#ff8800);color:#fff;box-shadow:0 0 0 2px rgba(255,102,0,.25),0 6px 22px rgba(255,102,0,.45);'}">‹ Prev</button>
+        ${btns}
+        <button onclick="window.gotoPage(${page+1})" ${nextDisabled?'disabled':''} style="min-width:80px;height:56px;padding:0 18px;border:none;border-radius:14px;font-size:17px;font-weight:800;cursor:${nextDisabled?'not-allowed':'pointer'};transition:all .18s;${nextDisabled
+          ? 'background:rgba(255,102,0,.05);color:rgba(255,102,0,.25);border:1.5px solid rgba(255,102,0,.10);'
+          : 'background:linear-gradient(135deg,#ff5500,#ff8800);color:#fff;box-shadow:0 0 0 2px rgba(255,102,0,.25),0 6px 22px rgba(255,102,0,.45);'}">Next ›</button>
+      </div>`;
+    }
+
+    window.gotoPage = function(p) {
+      const list = getFilteredItems();
+      let items;
+      if (state.tab === 'save') items = state.items.filter(i => state.saved.includes(i.id));
+      else items = list;
+      const total = Math.ceil(items.length / PAGE_SIZE);
+      if (p < 1 || p > total) return;
+      currentPage = p;
+      render(false);
+      // Scroll to top of grid
+      const gs = document.getElementById('gridSection');
+      if (gs) gs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    // ══════════════════════════════════════════
+    // PROFILE PAGE
+    // ══════════════════════════════════════════
+    function renderProfilePage(grid) {
+      grid.style.gridTemplateColumns = '1fr';
+      grid.style.gap = '0';
+      grid.style.maxWidth = '';
+      grid.style.margin = '';
+
+      // Load data
+      const watchHistory = (() => { try { return JSON.parse(localStorage.getItem('ns_watch_history') || '[]'); } catch(e) { return []; } })();
+      const myList = state.items.filter(i => state.saved.includes(i.id));
+      const privateMode = localStorage.getItem('ns_private_mode') === '1';
+
+      // Watch history HTML
+      const whCards = watchHistory.length ? watchHistory.slice(0,20).map(v => {
+        const thumbUrl = v.thumb && (v.thumb.startsWith('http')||v.thumb.startsWith('data:')) ? v.thumb : null;
+        return `<div onclick="openPlayer('${v.id}')" style="flex:0 0 100px;cursor:pointer;border-radius:10px;overflow:hidden;border:1px solid rgba(255,102,0,.18);background:#1a1a1a;position:relative;">
+          <div style="height:70px;background:#222;overflow:hidden;position:relative;">
+            ${thumbUrl ? '<img src="'+thumbUrl+'" style="width:100%;height:100%;object-fit:cover;">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:24px;">▶️</div>'}
+          </div>
+          <div style="padding:4px 6px;font-size:9px;font-weight:700;color:#e0e0e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.title||'Video'}</div>
+        </div>`;
+      }).join('') : '<div style="padding:14px;color:#555;font-size:13px;">Abhi koi video nahi dekhi</div>';
+
+      // My list HTML
+      const mlCards = myList.length ? myList.slice(0,20).map(item => {
+        const thumbUrl = item.thumb && (item.thumb.startsWith('http')||item.thumb.startsWith('data:')) ? item.thumb : null;
+        return `<div onclick="openPlayer('${item.id}')" style="flex:0 0 100px;cursor:pointer;border-radius:10px;overflow:hidden;border:1px solid rgba(255,102,0,.18);background:#1a1a1a;position:relative;">
+          <div style="height:70px;background:#222;overflow:hidden;">
+            ${thumbUrl ? '<img src="'+thumbUrl+'" style="width:100%;height:100%;object-fit:cover;">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px;">🔖</div>'}
+          </div>
+          <div style="padding:4px 6px;font-size:9px;font-weight:700;color:#e0e0e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.title||'Item'}</div>
+        </div>`;
+      }).join('') : '<div style="padding:14px;color:#555;font-size:13px;">Koi saved item nahi</div>';
+
+      grid.innerHTML = `<div style="grid-column:1/-1;padding:4px 0 20px;">
+
+        <!-- Avatar + Name -->
+        <div style="display:flex;align-items:center;gap:14px;padding:18px 16px 12px;">
+          <div style="width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#ff6600,#ff8800);display:flex;align-items:center;justify-content:center;font-size:26px;flex:0 0 auto;box-shadow:0 0 20px rgba(255,102,0,.35);">👤</div>
+          <div>
+            <div style="font-size:18px;font-weight:900;color:#f5f5f5;letter-spacing:-.02em;">My Profile</div>
+            <div style="font-size:11px;color:#999;margin-top:2px;">${myList.length} saved · ${watchHistory.length} watched</div>
+          </div>
+        </div>
+
+        <!-- Watch History -->
+        <div style="padding:0 16px 6px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div>
+              <div style="font-size:14px;font-weight:800;color:#f5f5f5;">🕐 Watch History</div>
+              <div style="font-size:10px;color:#777;margin-top:1px;">${watchHistory.length} videos</div>
+            </div>
+            ${watchHistory.length ? '<button onclick="clearWatchHistory()" style="font-size:10px;padding:4px 10px;border:1px solid rgba(255,60,60,.30);background:rgba(255,60,60,.08);border-radius:999px;color:#ff8888;cursor:pointer;font-weight:700;">Clear</button>' : ''}
+          </div>
+          <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+            ${whCards}
+          </div>
+        </div>
+
+        <!-- My List -->
+        <div style="padding:12px 16px 6px;">
+          <div style="margin-bottom:10px;">
+            <div style="font-size:14px;font-weight:800;color:#f5f5f5;">🔖 My List</div>
+            <div style="font-size:10px;color:#777;margin-top:1px;">${myList.length} items saved</div>
+          </div>
+          <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+            ${mlCards}
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div style="height:1px;background:rgba(255,102,0,.10);margin:14px 16px;"></div>
+
+        <!-- Settings -->
+        <div style="padding:0 16px;">
+          <div style="font-size:14px;font-weight:800;color:#f5f5f5;margin-bottom:12px;">⚙️ Settings</div>
+
+          <!-- Private Mode -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,102,0,.12);border-radius:14px;margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#f5f5f5;">🔒 Private Mode</div>
+              <div style="font-size:10px;color:#777;margin-top:2px;">Videos blur ho jaayenge jab ON ho</div>
+            </div>
+            <div id="privModeToggle" onclick="window.togglePrivateMode()" style="width:50px;height:28px;border-radius:999px;cursor:pointer;transition:background .2s;position:relative;flex:0 0 auto;background:${privateMode ? 'linear-gradient(135deg,#ff6600,#ff8800)' : 'rgba(255,255,255,.10)'};">
+              <div style="position:absolute;top:3px;${privateMode ? 'right:3px' : 'left:3px'};width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);transition:all .2s;"></div>
+            </div>
+          </div>
+
+          <!-- Check Update -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:14px;margin-bottom:10px;cursor:pointer;" onclick="toast('✅ Latest version chal rahi hai!');">
+            <span style="font-size:13px;font-weight:600;color:#ccc;">🔄 Check Update</span>
+            <span style="color:#666;font-size:16px;">›</span>
+          </div>
+
+          <!-- Privacy Policy -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:14px;margin-bottom:10px;cursor:pointer;" onclick="toast('Privacy Policy: All data stays on your device.');">
+            <span style="font-size:13px;font-weight:600;color:#ccc;">📄 Privacy Policy</span>
+            <span style="color:#666;font-size:16px;">›</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div style="height:1px;background:rgba(255,102,0,.10);margin:14px 16px;"></div>
+
+        <!-- Feedback -->
+        <div style="padding:0 16px 20px;">
+          <div style="font-size:14px;font-weight:800;color:#f5f5f5;margin-bottom:10px;">💬 Feedback</div>
+          <textarea id="feedbackText" placeholder="Kuch bhi likho — suggestions, problems, ideas…" style="width:100%;min-height:90px;background:rgba(255,255,255,.05);border:1px solid rgba(255,102,0,.20);border-radius:14px;color:#f0f0f0;font-size:13px;padding:12px;font-family:inherit;resize:vertical;outline:none;box-sizing:border-box;"></textarea>
+          <button onclick="window.submitFeedback()" style="width:100%;margin-top:10px;padding:14px;background:linear-gradient(135deg,#ff5500,#ff8800);border:none;border-radius:14px;color:#fff;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 18px rgba(255,102,0,.40);letter-spacing:.03em;">Send Feedback 📨</button>
+        </div>
+
+      </div>`;
+    }
+
+    // Toggle private mode
+    window.togglePrivateMode = function() {
+      const on = localStorage.getItem('ns_private_mode') === '1';
+      localStorage.setItem('ns_private_mode', on ? '0' : '1');
+      applyPrivateMode();
+      render();
+    };
+
+    function applyPrivateMode() {
+      const on = localStorage.getItem('ns_private_mode') === '1';
+      const style = document.getElementById('privateModeStyle') || (() => {
+        const s = document.createElement('style'); s.id = 'privateModeStyle'; document.head.appendChild(s); return s;
+      })();
+      style.textContent = on
+        ? '.card[data-id] .card-media img, .card[data-id] .card-media video { filter: blur(14px) brightness(.6) !important; } .card[data-id]:hover .card-media img, .card[data-id]:hover .card-media video { filter: blur(14px) brightness(.6) !important; }'
+        : '';
+    }
+    applyPrivateMode();
+
+    // Submit feedback → localStorage + Firebase
+    window.submitFeedback = function() {
+      const txt = (document.getElementById('feedbackText') || {}).value || '';
+      if (!txt.trim()) { toast('Kuch toh likho!'); return; }
+      try {
+        let fb = JSON.parse(localStorage.getItem('ns_feedback') || '[]');
+        fb.unshift({ id: 'fb_' + Date.now(), msg: txt.trim(), time: new Date().toLocaleString('hi-IN'), ts: Date.now() });
+        localStorage.setItem('ns_feedback', JSON.stringify(fb));
+        // Firebase save if available
+        if (window._nsFireDb) {
+          window._nsFireDb.ref('feedback/' + Date.now()).set({ msg: txt.trim(), time: Date.now() });
+        }
+      } catch(e) {}
+      const el = document.getElementById('feedbackText');
+      if (el) el.value = '';
+      toast('✅ Feedback bhej diya! Shukriya 🙏');
+    };
+
     let lazyRevealObserver = null;
-    let infiniteObserver = null;
-    let lazyLoadLock = false;
 
     function setupLazyReveal() {
       const cards = Array.from(document.querySelectorAll('.card[data-lazy-card="1"]'));
       if (!cards.length) return;
-
       if (lazyRevealObserver) lazyRevealObserver.disconnect();
       lazyRevealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -2323,33 +2623,10 @@ backface-visibility:hidden;
           }
         });
       }, { root: null, rootMargin: '120px 0px 160px 0px', threshold: 0.12 });
-
       cards.forEach((card, i) => {
         card.style.setProperty('--reveal-delay', `${Math.min(i, 18) * 28}ms`);
         requestAnimationFrame(() => lazyRevealObserver.observe(card));
       });
-    }
-
-    function setupInfiniteScroll(hasMore) {
-      const sentinel = document.getElementById('lazySentinel');
-      if (!hasMore || !sentinel) {
-        if (infiniteObserver) infiniteObserver.disconnect();
-        infiniteObserver = null;
-        return;
-      }
-
-      if (infiniteObserver) infiniteObserver.disconnect();
-      infiniteObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting || lazyLoadLock) return;
-          lazyLoadLock = true;
-          currentPage++;
-          render(false);
-          setTimeout(() => { lazyLoadLock = false; }, 260);
-        });
-      }, { root: null, rootMargin: '700px 0px 900px 0px', threshold: 0.01 });
-
-      infiniteObserver.observe(sentinel);
     }
 
     function applyCardPhotos() {
@@ -2374,6 +2651,9 @@ backface-visibility:hidden;
       $$('.card[data-id]').forEach(card => {
         card.onclick = (e) => {
           if (e.target.closest('button')) return;
+          // Edit mode mein player nahi kholna
+          if (editMode) return;
+          if (window._cardDragActive) return;
           // Gallery mein player nahi kholna
           if (state.tab === 'gallery') return;
           openPlayer(card.dataset.id);
@@ -2539,55 +2819,67 @@ backface-visibility:hidden;
       const oldIfrm = frame.querySelector('iframe');
       if (oldIfrm) oldIfrm.remove();
 
-      const videoSrc = ep.videoUrl || '';
+      const videoSrc = ep.rawVideo || ep.videoUrl || '';
 
       if (videoSrc) {
-        const isYT = /youtu/.test(videoSrc);
-        const isDrive = /drive\.google|docs\.google/.test(videoSrc);
+        let _vurl2 = videoSrc;
+        const iframeSrc = adminExtractIframeSrc(_vurl2);
+        if (iframeSrc && iframeSrc !== _vurl2) _vurl2 = iframeSrc;
+        const isYT = /youtu/.test(_vurl2);
+        const isDrive = /drive\.google|docs\.google/.test(_vurl2);
+        const isStreamtape = /streamtape\.com/.test(_vurl2);
+        const isArchive = /archive\.org\/(details|embed|download)\//.test(_vurl2);
+        const isDood = /dood\.|doodstream\.com|ds2play\.com|doods\.pro|dooood\.com/.test(_vurl2);
+        const isStreamSB = /streamsb\.net|sbembed\.|watchsb\.com|sbplay\.|sblongvu\.|sbchill\./.test(_vurl2);
+        const isFilemoon = /filemoon\.|moonplayer\./.test(_vurl2);
+        const isVidhide = /vidhide\.|vidhidevip\.|vidhideplus\./.test(_vurl2);
+        const isOtherEmbed = /mixdrop\.|streamlare\.|mp4upload\.com|terabox\.com/.test(_vurl2);
+        const isDirectMedia2 = /\.(mp4|webm|m3u8|mkv|ogg|mov)(\?|#|$)/i.test(_vurl2) || _vurl2.includes('cloudinary.com') || _vurl2.includes('.m3u8');
 
-        const isStreamtape = /streamtape\.com/.test(videoSrc);
-        if (isStreamtape) {
-          const stId = videoSrc.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/)?.[1] || '';
+        function _makeAnimeIframe(src, extraStyle) {
           vid.style.display = 'none';
           bigPlay.classList.add('hidden');
           const ifrm = document.createElement('iframe');
-          ifrm.src = 'https://streamtape.com/e/' + stId + '/';
-          ifrm.style.cssText = 'position:absolute;top:-58px;left:-2px;width:calc(100% + 4px);height:calc(100% + 116px);border:none;z-index:1;';
+          ifrm.src = src;
+          ifrm.style.cssText = (extraStyle || 'position:absolute;inset:0;width:100%;height:100%;') + 'border:none;z-index:1;';
           ifrm.setAttribute('allowfullscreen','');
-          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media');
+          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture');
+          ifrm.setAttribute('sandbox','allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation');
           frame.style.overflow = 'hidden';
           frame.appendChild(ifrm);
+        }
+
+        if (isArchive) {
+          let archiveSrc = _vurl2.replace('archive.org/details/', 'archive.org/embed/').replace('archive.org/download/', 'archive.org/embed/');
+          _makeAnimeIframe(archiveSrc);
+        } else if (isStreamtape) {
+          const stId = _vurl2.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/)?.[1] || '';
+          _makeAnimeIframe('https://streamtape.com/e/' + stId + '/', 'position:absolute;top:-58px;left:-2px;width:calc(100% + 4px);height:calc(100% + 116px);');
         } else if (isYT) {
-          const ytMatch = videoSrc.match(/(?:youtu\.be\/|[?&]v=|embed\/)([A-Za-z0-9_-]{11})/);
-          const ytId = ytMatch ? ytMatch[1] : videoSrc.split('/').pop();
-          vid.style.display = 'none';
-          bigPlay.classList.add('hidden');
-          const ifrm = document.createElement('iframe');
-          ifrm.src = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1&playsinline=1';
-          ifrm.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;z-index:1;';
-          ifrm.setAttribute('allowfullscreen','');
-          ifrm.setAttribute('allow','autoplay; encrypted-media; fullscreen');
-          frame.appendChild(ifrm);
+          const ytMatch2 = _vurl2.match(/(?:youtu\.be\/|[?&]v=|embed\/)([A-Za-z0-9_-]{11})/);
+          const ytId = ytMatch2 ? ytMatch2[1] : _vurl2.split('/').pop();
+          _makeAnimeIframe('https://www.youtube.com/embed/' + ytId + '?autoplay=1&playsinline=1');
         } else if (isDrive) {
-          const driveId = videoSrc.match(/\/d\/([^/?]+)/)?.[1] || videoSrc.match(/id=([^&]+)/)?.[1] || '';
-          const directUrl = 'https://drive.google.com/uc?export=download&id=' + driveId + '&confirm=t';
+          const driveId = _vurl2.match(/\/d\/([^/?]+)/)?.[1] || _vurl2.match(/id=([^&]+)/)?.[1] || '';
+          _makeAnimeIframe('https://drive.google.com/file/d/' + driveId + '/preview', 'position:absolute;top:-62px;left:0;width:100%;height:calc(100% + 124px);');
+        } else if (isDood) {
+          _makeAnimeIframe(_vurl2.replace('/d/', '/e/').replace('/f/', '/e/'));
+        } else if (isStreamSB) {
+          _makeAnimeIframe(_vurl2.replace('/v/', '/e/').replace('/d/', '/e/'));
+        } else if (isFilemoon || isVidhide || isOtherEmbed) {
+          _makeAnimeIframe(_vurl2.replace('/v/', '/e/').replace('/d/', '/e/').replace('/f/', '/e/'));
+        } else if (isDirectMedia2) {
           vid.style.display = 'block';
           vid.style.cssText += ';position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;background:#000;';
-          vid.src = directUrl;
+          vid.src = _vurl2;
           vid.load();
-          vid.addEventListener('loadedmetadata', function _sk1(){ vid.currentTime = 5; vid.removeEventListener('loadedmetadata', _sk1); });
+          vid.addEventListener('loadedmetadata', function _sk2a(){ vid.currentTime = 3; vid.removeEventListener('loadedmetadata', _sk2a); });
           vid.play().catch(function(){});
           bigPlay.classList.remove('hidden');
           frame.style.overflow = '';
         } else {
-          // Direct video URL
-          vid.style.display = 'block';
-          vid.style.cssText += ';position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;';
-          vid.src = videoSrc;
-          vid.load();
-          vid.addEventListener('loadedmetadata', function _sk2(){ vid.currentTime = 5; vid.removeEventListener('loadedmetadata', _sk2); });
-          vid.play().catch(function(){});
-          bigPlay.classList.remove('hidden');
+          // Unknown URL — fallback to iframe
+          _makeAnimeIframe(_vurl2);
         }
         // Reset frame bg
         frame.style.backgroundImage = '';
@@ -2636,6 +2928,14 @@ backface-visibility:hidden;
     function openPlayer(id) {
       const item = state.items.find(x => x.id === id);
       if (!item) return;
+      // Track watch history
+      try {
+        let wh = JSON.parse(localStorage.getItem('ns_watch_history') || '[]');
+        wh = wh.filter(x => x.id !== id);
+        wh.unshift({ id, title: item.title, thumb: item.thumb, meta: item.meta, watchedAt: Date.now() });
+        if (wh.length > 50) wh = wh.slice(0, 50);
+        localStorage.setItem('ns_watch_history', JSON.stringify(wh));
+      } catch(e) {}
       // Anime items → anime player
       if (item.type === 'anime') { openAnimePlayer(id); return; }
       state.current = item;
@@ -2655,47 +2955,71 @@ backface-visibility:hidden;
       const oldIframe = frame.querySelector('iframe');
       if (oldIframe) oldIframe.remove();
 
-      if (item.videoUrl) {
-        const ytMatch = item.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
-        const driveMatch = item.videoUrl.includes('drive.google') || item.videoUrl.includes('docs.google');
-        const stMatch = item.videoUrl.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/);
-        if (stMatch) {
+      if (item.rawVideo || item.videoUrl) {
+        let _vurl = item.rawVideo || item.videoUrl;
+        const iframeSrc = adminExtractIframeSrc(_vurl);
+        if (iframeSrc && iframeSrc !== _vurl) _vurl = iframeSrc;
+        const ytMatch = _vurl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
+        const driveMatch = _vurl.includes('drive.google') || _vurl.includes('docs.google');
+        const stMatch = _vurl.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/);
+        const archiveMatch = /archive\.org\/(details|embed|download)\//.test(_vurl);
+        const doodMatch = /dood\.|doodstream\.com|ds2play\.com|doods\.pro|dooood\.com|d0o0d\.|doodcdn/.test(_vurl);
+        const streamSBMatch = /streamsb\.net|sbembed\.|watchsb\.com|sbplay\.|sblongvu\.|sblanh\.|sbchill\.|sbhight\.|sbspeed\./.test(_vurl);
+        const filemoonMatch = /filemoon\.|moonplayer\.|filemoon-cdn/.test(_vurl);
+        const vidhideMatch = /vidhide\.|vidhidevip\.|vidhideplus\.|vidhidepro\./.test(_vurl);
+        const mixdropMatch = /mixdrop\./.test(_vurl);
+        const streamlareMatch = /streamlare\.|slmaxed\./.test(_vurl);
+        const mp4uploadMatch = /mp4upload\.com/.test(_vurl);
+        const teraMatch = /terabox\.com|teraboxapp\.com|4funbox\.com/.test(_vurl);
+        const isDirectMedia = /\.(mp4|webm|m3u8|mkv|ogg|mov|avi)(\?|#|$)/i.test(_vurl) || _vurl.includes('cloudinary.com') || _vurl.includes('res.cloudinary') || _vurl.includes('.m3u8');
+
+        // Helper: create full-cover iframe
+        function _makeIframe(src, extraStyle) {
           vid.style.display = 'none';
-          bigPlay.classList.add('hidden');
           const ifrm = document.createElement('iframe');
-          ifrm.src = 'https://streamtape.com/e/' + stMatch[1] + '/';
-          ifrm.style.cssText = 'position:absolute;top:-58px;left:-2px;width:calc(100% + 4px);height:calc(100% + 116px);border:none;z-index:1;';
-          ifrm.setAttribute('allowfullscreen','');
-          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media');
-          frame.style.overflow = 'hidden';
-          frame.appendChild(ifrm);
-        } else if (ytMatch) {
-          vid.style.display = 'none';
-          bigPlay.classList.add('hidden');
-          const ifrm = document.createElement('iframe');
-          ifrm.src = 'https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1';
-          ifrm.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;z-index:1;';
-          ifrm.setAttribute('allowfullscreen','');
-          ifrm.setAttribute('allow','autoplay; encrypted-media');
-          frame.appendChild(ifrm);
-        } else if (driveMatch) {
-          vid.style.display = 'none';
-          bigPlay.classList.add('hidden');
-          const driveId = item.driveId || item.videoUrl.match(/\/d\/([^/?]+)/)?.[1] || item.videoUrl.match(/id=([^&]+)/)?.[1] || '';
-          const ifrm = document.createElement('iframe');
-          ifrm.src = 'https://drive.google.com/file/d/' + driveId + '/preview';
-          ifrm.style.cssText = 'position:absolute;top:-62px;left:0;width:100%;height:calc(100% + 124px);border:none;z-index:1;';
+          ifrm.src = src;
+          ifrm.style.cssText = (extraStyle || 'position:absolute;inset:0;width:100%;height:100%;') + 'border:none;z-index:1;';
           ifrm.setAttribute('allowfullscreen','');
           ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture');
+          ifrm.setAttribute('sandbox','allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation');
           frame.style.overflow = 'hidden';
           frame.appendChild(ifrm);
-        } else {
+        }
+
+        if (archiveMatch) {
+          let archiveSrc = _vurl.replace('archive.org/details/', 'archive.org/embed/').replace('archive.org/download/', 'archive.org/embed/');
+          _makeIframe(archiveSrc);
+        } else if (stMatch) {
+          _makeIframe('https://streamtape.com/e/' + stMatch[1] + '/', 'position:absolute;top:-58px;left:-2px;width:calc(100% + 4px);height:calc(100% + 116px);');
+        } else if (ytMatch) {
+          _makeIframe('https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1&playsinline=1');
+        } else if (driveMatch) {
+          const driveId = item.driveId || _vurl.match(/\/d\/([^/?]+)/)?.[1] || _vurl.match(/id=([^&]+)/)?.[1] || '';
+          _makeIframe('https://drive.google.com/file/d/' + driveId + '/preview', 'position:absolute;top:-62px;left:0;width:100%;height:calc(100% + 124px);');
+        } else if (doodMatch) {
+          // Doodstream: /d/ → /e/
+          const doodSrc = _vurl.replace('/d/', '/e/').replace('/f/', '/e/');
+          _makeIframe(doodSrc);
+        } else if (streamSBMatch) {
+          // StreamSB: /e/ or /embed-
+          const sbSrc = _vurl.replace('/v/', '/e/').replace('/d/', '/e/');
+          _makeIframe(sbSrc);
+        } else if (filemoonMatch || vidhideMatch || mixdropMatch || streamlareMatch || mp4uploadMatch || teraMatch) {
+          // These are all iframe-embeddable sites — use directly
+          const embedSrc = _vurl.replace('/v/', '/e/').replace('/d/', '/e/').replace('/f/', '/e/');
+          _makeIframe(embedSrc);
+        } else if (isDirectMedia) {
+          // Direct playable media (mp4, cloudinary, m3u8, etc.)
           vid.style.display = 'block';
-          vid.src = item.videoUrl;
+          vid.style.cssText += ';position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;background:#000;';
+          vid.src = _vurl;
           vid.load();
-          vid.addEventListener('loadedmetadata', function _sk3(){ vid.currentTime = 5; vid.removeEventListener('loadedmetadata', _sk3); });
+          vid.addEventListener('loadedmetadata', function _sk3(){ vid.currentTime = 3; vid.removeEventListener('loadedmetadata', _sk3); });
           vid.play().catch(()=>{});
-          bigPlay.classList.remove('hidden');
+          frame.style.background = '#000';
+        } else {
+          // Unknown URL — try as iframe first (safest fallback for embed pages)
+          _makeIframe(_vurl);
         }
       } else {
         vid.pause(); vid.src = ''; vid.style.display = 'block';
@@ -2840,36 +3164,11 @@ backface-visibility:hidden;
       function handleFrameTap(e) {
         // Ignore if clicking overlay buttons directly
         if (e.target.closest('button') || e.target.closest('#vcSeekTrack') ) return;
-        const now = Date.now();
-        const fr = frame();
-        if (!fr) return;
-        const rect = fr.getBoundingClientRect();
-        const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-        const zone = x < rect.width * 0.33 ? 'L' : x > rect.width * 0.67 ? 'R' : 'C';
-
-        clearTimeout(tapTimer);
-
-        if (now - lastTap < 350 && tapCount === 1) {
-          // ── DOUBLE TAP ──
-          tapCount = 0;
-          lastTap = 0;
-          if (zone === 'L') skip(-10);
-          else if (zone === 'R') skip(10);
-          else togglePlay();
-          showControls();
-        } else {
-          // ── SINGLE TAP (wait to confirm not double) ──
-          tapCount = 1;
-          lastTap = now;
-          tapTimer = setTimeout(() => {
-            tapCount = 0;
-            // Single tap = just toggle controls visibility
-            const o = ov();
-            if (!o) return;
-            if (o.style.opacity === '1') hideControls();
-            else showControls();
-          }, 360);
-        }
+        // ── SINGLE TAP ONLY: toggle controls visibility ──
+        const o = ov();
+        if (!o) return;
+        if (o.style.opacity === '1') hideControls();
+        else showControls();
       }
 
       // Seekbar touch/click
@@ -3023,7 +3322,11 @@ backface-visibility:hidden;
         }
 
         const title = $('#vcTitle');
-        if (title && item) title.textContent = item.title || '';
+        if (title && item) {
+          const _rt = (item.title || '').trim();
+          const _gen = !_rt || _rt === '.' || _rt === ',' || /^hot\s*#?\d*$/i.test(_rt);
+          title.textContent = (_gen && item.type === 'hot') ? getAutoTitle(item.num || 1) : (_rt || '');
+        }
 
         // Rotating ad text
         const adTexts = [
@@ -3546,7 +3849,8 @@ backface-visibility:hidden;
       <button class="adm-nav" data-atab="all" onclick="adminTab('all')">📹<span>All</span></button>
       <button class="adm-nav" data-atab="hot" onclick="adminTab('hot')">🔥<span>Hot</span></button>
       <button class="adm-nav" data-atab="gallery" onclick="adminTab('gallery')">🖼️<span>Gallery</span></button>
-      <button class="adm-nav" data-atab="anime" onclick="adminTab('anime')">🎬<span>Movie</span></button>
+      <button class="adm-nav" data-atab="movie" onclick="adminTab('movie')">🎬<span>Movie</span></button>
+      <button class="adm-nav" data-atab="anime" onclick="adminTab('anime')">🎌<span>Anime</span></button>
       <button class="adm-nav" data-atab="settings" onclick="adminTab('settings')">⚙️<span>Settings</span></button>
     </div>
   </div>
@@ -3729,7 +4033,256 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
 }
 });
 });
-</script></body>
+</script>
+
+<style>
+/* ── CARD DRAG-REORDER ── */
+.card-drag-ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.92;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.75), 0 0 0 2px #ff6600;
+  transition: none !important;
+  animation: none !important;
+  will-change: transform;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.card-drag-src {
+  opacity: 0.28 !important;
+  border: 2px dashed rgba(255,102,0,.55) !important;
+}
+.card-drag-over {
+  outline: 2.5px solid #ff6600 !important;
+  outline-offset: 2px;
+  background: rgba(255,102,0,.10) !important;
+}
+body.edit-mode .card[data-id] {
+  cursor: grab;
+}
+body.edit-mode .card[data-id]:active {
+  cursor: grabbing;
+}
+.drag-reorder-hint {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,102,0,.92);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 999px;
+  z-index: 9998;
+  letter-spacing: .03em;
+  box-shadow: 0 6px 24px rgba(0,0,0,.55);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.drag-reorder-hint.show { opacity: 1; }
+</style>
+
+<div class="drag-reorder-hint" id="dragHint">📦 Yahan chhodo swap ke liye</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   CARD DRAG-REORDER SYSTEM (Edit Mode only)
+   Long press 600ms → drag → drop to swap
+═══════════════════════════════════════════════ */
+(function () {
+  let holdTimer = null;
+  let ghost = null;
+  let srcCard = null;
+  let overCard = null;
+  let dragStartX = 0, dragStartY = 0;
+  let ghostOffX = 0, ghostOffY = 0;
+  let _pendingX = 0, _pendingY = 0;
+  let _dragRaf = null;
+  window._cardDragActive = false;
+
+  const HOLD_MS = 600;
+
+  function isEditMode() {
+    return document.body.classList.contains('edit-mode');
+  }
+
+  function getCardFromPoint(x, y) {
+    if (ghost) ghost.style.visibility = 'hidden';
+    const el = document.elementFromPoint(x, y);
+    if (ghost) ghost.style.visibility = '';
+    if (!el) return null;
+    return el.closest('.card[data-id]');
+  }
+
+  function showHint(show) {
+    const h = document.getElementById('dragHint');
+    if (h) h.classList.toggle('show', show);
+  }
+
+  function clearOver() {
+    if (overCard) { overCard.classList.remove('card-drag-over'); overCard = null; }
+  }
+
+  function startDrag(card, touchX, touchY) {
+    if (!isEditMode()) return;
+    window._cardDragActive = true;
+    srcCard = card;
+    card.classList.add('card-drag-src');
+
+    const rect = card.getBoundingClientRect();
+    ghostOffX = touchX - rect.left;
+    ghostOffY = touchY - rect.top;
+
+    ghost = document.createElement('div');
+    ghost.className = 'card-drag-ghost';
+    ghost.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:9999;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;width:' + rect.width + 'px;height:' + rect.height + 'px;border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.75),0 0 0 2px #ff6600;opacity:0.93;transition:none!important;animation:none!important;';
+    ghost.innerHTML = card.innerHTML;
+    _pendingX = touchX; _pendingY = touchY;
+    ghost.style.transform = 'translate3d(' + (touchX - ghostOffX) + 'px,' + (touchY - ghostOffY) + 'px,0) scale(1.04)';
+    document.body.appendChild(ghost);
+
+    showHint(false);
+    if (navigator.vibrate) navigator.vibrate([25, 15, 25]);
+  }
+
+  function _doRafMove() {
+    if (!ghost) return;
+    ghost.style.transform = 'translate3d(' + (_pendingX - ghostOffX) + 'px,' + (_pendingY - ghostOffY) + 'px,0) scale(1.04)';
+    _dragRaf = null;
+  }
+
+  function moveDrag(touchX, touchY) {
+    if (!ghost) return;
+    _pendingX = touchX;
+    _pendingY = touchY;
+    if (!_dragRaf) _dragRaf = requestAnimationFrame(_doRafMove);
+
+    clearOver();
+    const target = getCardFromPoint(touchX, touchY);
+    if (target && target !== srcCard) {
+      target.classList.add('card-drag-over');
+      overCard = target;
+      showHint(true);
+    } else {
+      showHint(false);
+    }
+  }
+
+  function endDrag(touchX, touchY) {
+    clearTimeout(holdTimer);
+    showHint(false);
+
+    const target = getCardFromPoint(touchX, touchY) || overCard;
+    clearOver();
+
+    if (ghost) { ghost.remove(); ghost = null; }
+    if (srcCard) srcCard.classList.remove('card-drag-src');
+
+    if (target && target !== srcCard && srcCard) {
+      const srcId = srcCard.dataset.id;
+      const tgtId = target.dataset.id;
+      const items = window._appState ? window._appState.items : (typeof state !== 'undefined' ? state.items : null);
+      if (items) {
+        const si = items.findIndex(x => x.id === srcId);
+        const ti = items.findIndex(x => x.id === tgtId);
+        if (si !== -1 && ti !== -1) {
+          // Swap
+          const tmp = items[si];
+          items[si] = items[ti];
+          items[ti] = tmp;
+          // Save + re-render
+          if (typeof persist === 'function') persist();
+          if (typeof render === 'function') render();
+          if (typeof toast === 'function') toast('✅ Card swap ho gaya!');
+        }
+      }
+    }
+
+    srcCard = null;
+    overCard = null;
+    setTimeout(() => { window._cardDragActive = false; }, 50);
+  }
+
+  // ── Touch listeners on document (delegated) ──
+  document.addEventListener('touchstart', function (e) {
+    if (!isEditMode()) return;
+    const card = e.target.closest('.card[data-id]');
+    if (!card) return;
+    if (e.target.closest('button')) return;
+
+    const t = e.touches[0];
+    dragStartX = t.clientX;
+    dragStartY = t.clientY;
+
+    // Show hold ring animation
+    const ring = document.getElementById('holdRing');
+    if (ring) {
+      ring.style.left = t.clientX + 'px';
+      ring.style.top = t.clientY + 'px';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.opacity = '1';
+    }
+
+    holdTimer = setTimeout(() => {
+      if (ring) { ring.style.transform = 'translate(-50%,-50%) scale(0)'; ring.style.opacity = '0'; }
+      startDrag(card, dragStartX, dragStartY);
+    }, HOLD_MS);
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function (e) {
+    if (!isEditMode()) return;
+
+    const t = e.touches[0];
+    const dx = Math.abs(t.clientX - dragStartX);
+    const dy = Math.abs(t.clientY - dragStartY);
+
+    // Cancel hold if moved too much before drag started
+    if (!window._cardDragActive && (dx > 10 || dy > 10)) {
+      clearTimeout(holdTimer);
+      const ring = document.getElementById('holdRing');
+      if (ring) { ring.style.transform = 'translate(-50%,-50%) scale(0)'; ring.style.opacity = '0'; }
+    }
+
+    if (window._cardDragActive && ghost) {
+      e.preventDefault();
+      moveDrag(t.clientX, t.clientY);
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', function (e) {
+    clearTimeout(holdTimer);
+    const ring = document.getElementById('holdRing');
+    if (ring) { ring.style.transform = 'translate(-50%,-50%) scale(0)'; ring.style.opacity = '0'; }
+
+    if (!window._cardDragActive || !ghost) return;
+    const t = e.changedTouches[0];
+    endDrag(t.clientX, t.clientY);
+  }, { passive: true });
+
+  document.addEventListener('touchcancel', function () {
+    clearTimeout(holdTimer);
+    if (ghost) { ghost.remove(); ghost = null; }
+    if (srcCard) srcCard.classList.remove('card-drag-src');
+    clearOver();
+    showHint(false);
+    window._cardDragActive = false;
+    srcCard = null;
+  }, { passive: true });
+})();
+
+// Expose state for drag system
+window._appState = typeof state !== 'undefined' ? state : null;
+document.addEventListener('DOMContentLoaded', () => {
+  window._appState = typeof state !== 'undefined' ? state : null;
+});
+</script>
+
+</body>
   <script>
   /* ============================================================
      INLINE EDIT ENGINE v2
@@ -4629,6 +5182,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     else if (tab === 'hot') renderAdminHot();
     else if (tab === 'gallery') renderAdminGallery();
     else if (tab === 'anime') renderAdminAnime();
+    else if (tab === 'movie') renderAdminMovie();
     else if (tab === 'settings') renderAdminSettings();
   }
 
@@ -4640,6 +5194,16 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
   }
   function adminDriveEmbed(id) { return 'https://drive.google.com/file/d/' + id + '/preview'; }
   function adminDriveThumb(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w400'; }
+
+  function adminExtractIframeSrc(input) {
+    const val = (input || '').trim();
+    if (!val) return '';
+    const iframeMatch = val.match(/<iframe[^>]+src\s*=\s*["']([^"']+)["']/i);
+    if (iframeMatch && iframeMatch[1]) return iframeMatch[1].trim();
+    const srcMatch = val.match(/src\s*=\s*["']([^"']+)["']/i);
+    if (srcMatch && srcMatch[1]) return srcMatch[1].trim();
+    return val;
+  }
 
   function adminFileToDataUrl(file) {
     return new Promise(res => { const r = new FileReader(); r.onload = e => res(e.target.result); r.readAsDataURL(file); });
@@ -4832,21 +5396,49 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     const driveInput = document.createElement('input');
     driveInput.className = 'adm-input';
     driveInput.id = 'hotCloudUrl';
-    driveInput.placeholder = '🎬 Cloudinary video URL paste karo (https://res.cloudinary.com/.../video.mp4)';
+    driveInput.placeholder = '🎬 Video URL — Cloudinary, Archive.org, YouTube, Streamtape, Doodstream, StreamSB, Filemoon, ya koi bhi embed URL';
     driveInput.oninput = () => {
       const st = document.getElementById('hotDriveStatus');
       const val = driveInput.value.trim();
       if (!val) { st.innerHTML = ''; return; }
-      const ok = val.includes('cloudinary.com') || val.includes('.mp4') || val.includes('.m3u8') || val.includes('youtube') || val.includes('streamtape');
-      st.innerHTML = ok
-        ? '<span style="color:#ff6600;font-size:11px;">✅ Valid video URL!</span>'
-        : '<span style="color:#ff9944;font-size:11px;">⚠️ Cloudinary URL hona chahiye (.mp4)</span>';
+      let msg = '';
+      if (val.includes('cloudinary.com') || val.includes('.mp4') || val.includes('.m3u8') || val.includes('.webm'))
+        msg = '✅ Direct video — chalega!';
+      else if (val.includes('archive.org')) msg = '✅ Archive.org — auto embed!';
+      else if (val.includes('youtube') || val.includes('youtu.be')) msg = '✅ YouTube detected!';
+      else if (val.includes('streamtape')) msg = '✅ Streamtape detected!';
+      else if (val.includes('dood') || val.includes('doodstream')) msg = '✅ Doodstream detected!';
+      else if (val.includes('streamsb') || val.includes('sbplay') || val.includes('watchsb')) msg = '✅ StreamSB detected!';
+      else if (val.includes('filemoon') || val.includes('vidhide') || val.includes('mixdrop') || val.includes('mp4upload') || val.includes('streamlare')) msg = '✅ Embed player — iframe load hoga!';
+      else if (val.startsWith('http')) msg = '⚠️ Unknown — iframe load hone ki koshish hogi';
+      st.innerHTML = msg ? '<span style="color:' + (msg.startsWith('✅') ? '#ff6600' : '#ffaa33') + ';font-size:11px;">' + msg + '</span>' : '';
     };
     form.appendChild(driveInput);
 
     const driveStatus = document.createElement('div');
     driveStatus.id = 'hotDriveStatus';
     form.appendChild(driveStatus);
+
+    const doodInput = document.createElement('textarea');
+    doodInput.className = 'adm-input';
+    doodInput.id = 'hotDoodEmbed';
+    doodInput.placeholder = '🟧 DoodStream embed code paste karo — iframe ya URL dono chalega';
+    doodInput.style.cssText = 'min-height:72px;resize:vertical;';
+    doodInput.oninput = () => {
+      const st = document.getElementById('hotDoodStatus');
+      const val = doodInput.value.trim();
+      if (!val) { st.innerHTML = ''; return; }
+      const src = adminExtractIframeSrc(val);
+      const isDood = /<iframe/i.test(val) || /src=["']https?:\/\//i.test(val);
+      st.innerHTML = isDood
+        ? '<span style="color:#ff6600;font-size:11px;">✅ DoodStream embed ready — iframe paste hoga</span>'
+        : '<span style="color:#ffaa33;font-size:11px;">⚠️ Valid iframe/embed detect nahi hua</span>';
+    };
+    form.appendChild(doodInput);
+
+    const doodStatus = document.createElement('div');
+    doodStatus.id = 'hotDoodStatus';
+    form.appendChild(doodStatus);
 
     // Desc
     const descEl = document.createElement('textarea');
@@ -5163,7 +5755,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
 
           const urlInput = document.createElement('input');
           urlInput.className = 'adm-input';
-          urlInput.placeholder = 'Cloudinary video URL ya YouTube link…';
+          urlInput.placeholder = 'Video URL — Archive.org / Cloudinary / YouTube / Streamtape…';
           urlInput.value = ep.videoUrl || '';
           urlInput.style.cssText = 'flex:1;font-size:11px;padding:7px 10px;';
 
@@ -5321,6 +5913,48 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     note.style.cssText = 'margin-top:10px;font-size:11px;color:#555555;text-align:center;line-height:1.6;';
     note.textContent = 'Ye button dono jagah se delete karta hai — LocalStorage aur Firebase — dono clean ho jayenge.';
     c.appendChild(note);
+
+    // ── Feedback Section ──
+    const fbHead = document.createElement('div');
+    fbHead.style.cssText = 'font-size:13px;font-weight:800;color:#ff8800;letter-spacing:.05em;margin:22px 0 12px;';
+    fbHead.textContent = '💬 User Feedback';
+    c.appendChild(fbHead);
+
+    function renderFeedbackList() {
+      const fbListEl = document.getElementById('adminFbList');
+      if (!fbListEl) return;
+      let fb = [];
+      try { fb = JSON.parse(localStorage.getItem('ns_feedback') || '[]'); } catch(e) {}
+      if (!fb.length) { fbListEl.innerHTML = '<div style="padding:14px;color:#555;font-size:12px;text-align:center;">Abhi koi feedback nahi aaya</div>'; return; }
+      fbListEl.innerHTML = fb.map((f, i) => `
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,102,0,.14);border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+          <div style="font-size:12px;color:#d0e8ff;line-height:1.5;margin-bottom:6px;">${f.msg}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:10px;color:#555;">${f.time||''}</div>
+            <button onclick="window._adminDeleteFb(${i})" style="font-size:10px;padding:3px 10px;border:1px solid rgba(255,60,60,.35);background:rgba(255,60,60,.10);border-radius:999px;color:#ff8888;cursor:pointer;font-weight:700;">Delete</button>
+          </div>
+        </div>`).join('');
+    }
+
+    window._adminDeleteFb = function(idx) {
+      let fb = [];
+      try { fb = JSON.parse(localStorage.getItem('ns_feedback') || '[]'); } catch(e) {}
+      fb.splice(idx, 1);
+      localStorage.setItem('ns_feedback', JSON.stringify(fb));
+      renderFeedbackList();
+      toast('🗑️ Feedback deleted');
+    };
+
+    const fbWrap = document.createElement('div');
+    fbWrap.id = 'adminFbList';
+    c.appendChild(fbWrap);
+    renderFeedbackList();
+
+    const fbClearBtn = document.createElement('button');
+    fbClearBtn.style.cssText = 'width:100%;margin-top:8px;padding:10px;border:1px solid rgba(255,60,60,.25);background:rgba(255,60,60,.07);border-radius:12px;color:#ff8888;font-size:12px;font-weight:700;cursor:pointer;';
+    fbClearBtn.textContent = '🗑️ Clear All Feedback';
+    fbClearBtn.onclick = () => { if(!confirm('Sab feedback delete karo?')) return; localStorage.removeItem('ns_feedback'); renderFeedbackList(); toast('Cleared!'); };
+    c.appendChild(fbClearBtn);
   }
 
   // ── Item row (Hot + Movie list) — DOM-based ───────────────────
@@ -5445,7 +6079,7 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     const driveInput = document.createElement('input');
     driveInput.className = 'adm-input';
     driveInput.id = 'ep-drive-' + id;
-    driveInput.placeholder = 'Cloudinary video URL (https://res.cloudinary.com/...mp4)';
+    driveInput.placeholder = 'Video URL — Archive.org / Cloudinary / YouTube / Streamtape (https://…)';
     driveInput.value = item.videoUrl && !item.videoUrl.includes('drive.google') ? item.videoUrl : '';
     panel.appendChild(driveInput);
     const descEl = document.createElement('textarea');
@@ -5491,7 +6125,9 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     if (descEl) item.desc = descEl.value.trim();
     if (newThumbEl && newThumbEl.value) item.thumb = newThumbEl.value;
     if (driveEl && driveEl.value.trim()) {
-      item.videoUrl = driveEl.value.trim();
+      const raw = driveEl.value.trim();
+      item.videoUrl = adminExtractIframeSrc(raw);
+      item.rawVideo = raw;
       item.driveId = null;
     }
     persist();
@@ -5506,20 +6142,24 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     const desc = (document.getElementById('hotDesc').value || '').trim();
     if (!title) { toast('Title daalo!'); return; }
     const cloudUrl = (document.getElementById('hotCloudUrl').value || '').trim();
-    const videoUrl = cloudUrl || null;
+    const doodEmbed = (document.getElementById('hotDoodEmbed').value || '').trim();
+    const rawVideo = doodEmbed || cloudUrl || '';
+    const videoUrl = rawVideo ? adminExtractIframeSrc(rawVideo) : null;
     const num = state.items.filter(i => i.type === 'hot').length + 1;
     state.items.unshift({
       id: 'hot-' + Date.now(), type: 'hot', num, title,
       desc: desc || 'Hot content.', quality: 'HD', meta: 'Hot • HD',
       thumb: thumb || 'linear-gradient(135deg,rgba(255,80,0,.7),rgba(255,200,0,.3))',
-      videoUrl, tags: ['Hot','HD'], createdAt: Date.now()
+      videoUrl, rawVideo, tags: ['Hot','HD'], createdAt: Date.now()
     });
     persist();
     document.getElementById('hotThumbData').value = '';
     document.getElementById('hotTitle').value = '';
     document.getElementById('hotCloudUrl').value = '';
+    document.getElementById('hotDoodEmbed').value = '';
     document.getElementById('hotDesc').value = '';
     document.getElementById('hotDriveStatus').innerHTML = '';
+    document.getElementById('hotDoodStatus').innerHTML = '';
     const htPrev = document.getElementById('hotThumbPreview');
     if (htPrev) htPrev.style.display = 'none';
     toast('✅ Hot video add ho gaya!');
@@ -5578,6 +6218,134 @@ img.src="https://picsum.photos/400/600?random="+Math.floor(Math.random()*1000);
     if (lbl) lbl.style.display = 'flex';
     toast('✅ Movie add ho gaya!');
     renderAdminMovie();
+  }
+
+  // ── MOVIE tab ─────────────────────────────────────────────────
+  function renderAdminMovie() {
+    const c = document.getElementById('adminContent');
+    const items = state.items.filter(i => i.type === 'movie');
+    const next = items.length + 1;
+    c.innerHTML = '';
+
+    const h1 = document.createElement('div');
+    h1.className = 'adm-section-head';
+    h1.textContent = '🎬 Naya Movie Add Karo';
+    c.appendChild(h1);
+
+    // Archive.org help tip
+    const tip = document.createElement('div');
+    tip.style.cssText = 'background:rgba(255,102,0,.07);border:1px solid rgba(255,102,0,.18);border-radius:12px;padding:10px 12px;font-size:11px;color:#ff9944;line-height:1.6;margin-bottom:10px;';
+    tip.innerHTML = '<b>💡 Archive.org kaise use karein:</b><br>1. archive.org pe video upload karo<br>2. URL copy karo — <code style="color:#fff;background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;">archive.org/details/video-name</code><br>3. Neeche paste karo — automatically embed hoga ✅';
+    c.appendChild(tip);
+
+    const form = document.createElement('div');
+    form.style.cssText = 'display:grid;gap:10px;margin-bottom:20px;';
+
+    // Thumbnail
+    const thumbBox = document.createElement('div');
+    thumbBox.className = 'adm-thumb-upload';
+    thumbBox.id = 'movThumbBox';
+    thumbBox.style.cssText = 'position:relative;height:110px;border-radius:14px;overflow:hidden;cursor:pointer;background:rgba(255,102,0,.06);border:1px dashed rgba(255,102,0,.28);display:flex;align-items:center;justify-content:center;';
+    const thumbLabel = document.createElement('div');
+    thumbLabel.id = 'movThumbLabel';
+    thumbLabel.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px;color:#ff8800;font-size:12px;font-weight:700;pointer-events:none;';
+    thumbLabel.innerHTML = '<span style="font-size:24px;">🖼️</span><span>Thumbnail Upload / URL</span>';
+    const thumbFileInput = document.createElement('input');
+    thumbFileInput.type = 'file'; thumbFileInput.accept = 'image/*'; thumbFileInput.style.display = 'none';
+    thumbFileInput.id = 'movThumbFile';
+    thumbFileInput.onchange = (e) => adminHandleThumb(e, 'movThumbBox', 'movThumbLabel', 'movThumbData');
+    thumbBox.onclick = () => thumbFileInput.click();
+    thumbBox.appendChild(thumbLabel);
+    thumbBox.appendChild(thumbFileInput);
+    form.appendChild(thumbBox);
+
+    const thumbData = document.createElement('input');
+    thumbData.className = 'adm-input'; thumbData.id = 'movThumbData'; thumbData.type = 'url';
+    thumbData.placeholder = '🖼️ Ya seedha thumbnail URL paste karo';
+    thumbData.oninput = () => {
+      const val = thumbData.value.trim();
+      if (!val) return;
+      const box = document.getElementById('movThumbBox');
+      const lbl = document.getElementById('movThumbLabel');
+      if (lbl) lbl.style.display = 'none';
+      const old = box && box.querySelector('.adm-prev-img');
+      if (old) old.remove();
+      const img = document.createElement('img');
+      img.className = 'adm-prev-img';
+      img.src = val;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px;pointer-events:none;';
+      if (box) box.appendChild(img);
+    };
+    form.appendChild(thumbData);
+
+    // Title
+    const titleInput = document.createElement('input');
+    titleInput.className = 'adm-input'; titleInput.id = 'movTitle';
+    titleInput.placeholder = 'Movie Title — e.g. KGF Chapter 2';
+    form.appendChild(titleInput);
+
+    // Video URL — supports archive.org, cloudinary, youtube, streamtape
+    const urlInput = document.createElement('input');
+    urlInput.className = 'adm-input'; urlInput.id = 'movDriveLink'; urlInput.type = 'url';
+    urlInput.placeholder = '🎬 Video URL — Archive.org / Cloudinary / YouTube / Streamtape';
+    urlInput.oninput = () => {
+      const val = urlInput.value.trim();
+      const st = document.getElementById('movDriveStatus');
+      if (!st) return;
+      if (!val) { st.innerHTML = ''; return; }
+      if (val.includes('archive.org')) {
+        st.innerHTML = '<span style="color:#ff6600;font-size:11px;">✅ Archive.org — auto embed hoga!</span>';
+      } else if (val.includes('cloudinary.com') || val.includes('.mp4') || val.includes('.m3u8') || val.includes('.webm')) {
+        st.innerHTML = '<span style="color:#ff6600;font-size:11px;">✅ Direct video URL — chalega!</span>';
+      } else if (val.includes('youtube') || val.includes('youtu.be')) {
+        st.innerHTML = '<span style="color:#ff6600;font-size:11px;">✅ YouTube link detected!</span>';
+      } else if (val.includes('streamtape')) {
+        st.innerHTML = '<span style="color:#ff6600;font-size:11px;">✅ Streamtape detected!</span>';
+      } else if (val.includes('dood') || val.includes('doodstream')) {
+        st.innerHTML = '<span style="color:#ff6600;font-size:11px;">✅ Doodstream detected!</span>';
+      } else if (val.includes('streamsb') || val.includes('sbplay') || val.includes('watchsb')) {
+        st.innerHTML = '<span style="color:#ff6600;font-size:11px;">✅ StreamSB detected!</span>';
+      } else if (val.includes('filemoon') || val.includes('vidhide') || val.includes('mixdrop') || val.includes('mp4upload') || val.includes('streamlare')) {
+        st.innerHTML = '<span style="color:#ff6600;font-size:11px;">✅ Embed player detected — iframe load hoga!</span>';
+      } else if (val.startsWith('http')) {
+        st.innerHTML = '<span style="color:#ffaa33;font-size:11px;">⚠️ Unknown source — iframe mein load karne ki koshish hogi</span>';
+      }
+    };
+    form.appendChild(urlInput);
+
+    const driveStatus = document.createElement('div');
+    driveStatus.id = 'movDriveStatus';
+    form.appendChild(driveStatus);
+
+    // Description
+    const descEl = document.createElement('textarea');
+    descEl.className = 'adm-input'; descEl.id = 'movDesc';
+    descEl.placeholder = 'Description (optional)';
+    descEl.style.cssText = 'min-height:60px;resize:vertical;';
+    form.appendChild(descEl);
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'adm-btn'; addBtn.textContent = '➕ Add Movie';
+    addBtn.onclick = adminAddMovie;
+    form.appendChild(addBtn);
+
+    c.appendChild(form);
+
+    // List
+    const h2 = document.createElement('div');
+    h2.className = 'adm-section-head';
+    h2.style.marginTop = '4px';
+    h2.textContent = '🎬 Movie List (' + items.length + ')';
+    c.appendChild(h2);
+
+    const listWrap = document.createElement('div');
+    listWrap.style.cssText = 'display:grid;gap:8px;margin-top:10px;';
+    if (!items.length) {
+      listWrap.innerHTML = '<div class="adm-empty">Abhi koi movie nahi. Upar se add karo!</div>';
+    } else {
+      items.forEach((it, i) => listWrap.appendChild(adminBuildItemRow(it, i + 1)));
+    }
+    c.appendChild(listWrap);
   }
 
   function adminDeleteItem(id) {
