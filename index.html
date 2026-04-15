@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="referrer" content="no-referrer" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Neon Stream V2.7</title>
+  <title>Neon Stream V2.8</title>
   <!-- Banner image preloads — fast first load -->
   <link rel="preload" as="image" href="https://i.postimg.cc/wMfZkzr2/IMG_20260413_201132.jpg" fetchpriority="high">
   <link rel="preload" as="image" href="https://i.postimg.cc/L5CwVSWL/Gjbokupa_IAA7LQ4.jpg">
@@ -859,6 +859,13 @@
     .video-frame video, .video-frame iframe{
       width:100%;height:100%;object-fit:fill;display:block;background:#000;border:none;
     }
+    /* Block fullscreen — revenue protection */
+    .video-frame iframe:fullscreen,
+    .video-frame video:fullscreen,
+    .video-frame iframe:-webkit-full-screen,
+    .video-frame video:-webkit-full-screen { display:none !important; }
+    #playerModal:-webkit-full-screen { display:none !important; }
+    #playerModal:fullscreen { display:none !important; }
     .big-play{
       position:absolute;inset:50% auto auto 50%;
       transform:translate(-50%,-50%);
@@ -1724,7 +1731,7 @@ backface-visibility:hidden;
                 </div>
 
                 <!-- BOTTOM: seekbar + time + [ad box left | volume] + actions -->
-                <div style="display:flex;flex-direction:column;gap:0;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.5) 100%);padding:6px 10px 8px;">
+                <div style="display:flex;flex-direction:column;gap:0;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.5) 100%);padding:6px 10px 20px;">
                   <!-- Slim seekbar -->
                   <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
                     <span id="vcCurTime" style="font-size:10px;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;white-space:nowrap;">0:00</span>
@@ -2819,12 +2826,10 @@ backface-visibility:hidden;
       const oldIfrm = frame.querySelector('iframe');
       if (oldIfrm) oldIfrm.remove();
 
-      const videoSrc = ep.rawVideo || ep.videoUrl || '';
+      const videoSrc = ep.videoUrl || '';
 
       if (videoSrc) {
-        let _vurl2 = videoSrc;
-        const iframeSrc = adminExtractIframeSrc(_vurl2);
-        if (iframeSrc && iframeSrc !== _vurl2) _vurl2 = iframeSrc;
+        const _vurl2 = videoSrc;
         const isYT = /youtu/.test(_vurl2);
         const isDrive = /drive\.google|docs\.google/.test(_vurl2);
         const isStreamtape = /streamtape\.com/.test(_vurl2);
@@ -2839,11 +2844,14 @@ backface-visibility:hidden;
         function _makeAnimeIframe(src, extraStyle) {
           vid.style.display = 'none';
           bigPlay.classList.add('hidden');
+          // Hide custom overlay so it doesn't block iframe interaction
+          const _ov3 = $('#vcOverlay');
+          if (_ov3) { _ov3.style.display = 'none'; _ov3.style.pointerEvents = 'none'; }
+          frame.dataset.iframeMode = '1';
           const ifrm = document.createElement('iframe');
           ifrm.src = src;
-          ifrm.style.cssText = (extraStyle || 'position:absolute;inset:0;width:100%;height:100%;') + 'border:none;z-index:1;';
-          ifrm.setAttribute('allowfullscreen','');
-          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture');
+          ifrm.style.cssText = (extraStyle || 'position:absolute;inset:0;width:100%;height:100%;') + 'border:none;z-index:2;';
+          ifrm.setAttribute('allow','autoplay; encrypted-media; picture-in-picture');
           ifrm.setAttribute('sandbox','allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation');
           frame.style.overflow = 'hidden';
           frame.appendChild(ifrm);
@@ -2851,6 +2859,11 @@ backface-visibility:hidden;
 
         if (isArchive) {
           let archiveSrc = _vurl2.replace('archive.org/details/', 'archive.org/embed/').replace('archive.org/download/', 'archive.org/embed/');
+          // Block archive.org bottom toolbar (share/timer/embed/delete icons) — cross-origin iframe ke andar CSS nahi chalti
+          const _archiveBlocker = document.createElement('div');
+          _archiveBlocker.id = 'archiveBottomBlocker';
+          _archiveBlocker.style.cssText = 'position:absolute;bottom:0;left:0;width:100%;height:42px;z-index:10;background:transparent;pointer-events:all;';
+          frame.appendChild(_archiveBlocker);
           _makeAnimeIframe(archiveSrc);
         } else if (isStreamtape) {
           const stId = _vurl2.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/)?.[1] || '';
@@ -2955,10 +2968,8 @@ backface-visibility:hidden;
       const oldIframe = frame.querySelector('iframe');
       if (oldIframe) oldIframe.remove();
 
-      if (item.rawVideo || item.videoUrl) {
-        let _vurl = item.rawVideo || item.videoUrl;
-        const iframeSrc = adminExtractIframeSrc(_vurl);
-        if (iframeSrc && iframeSrc !== _vurl) _vurl = iframeSrc;
+      if (item.videoUrl) {
+        const _vurl = item.videoUrl;
         const ytMatch = _vurl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
         const driveMatch = _vurl.includes('drive.google') || _vurl.includes('docs.google');
         const stMatch = _vurl.match(/streamtape\.com\/(?:v|e)\/([A-Za-z0-9_-]+)/);
@@ -2976,11 +2987,14 @@ backface-visibility:hidden;
         // Helper: create full-cover iframe
         function _makeIframe(src, extraStyle) {
           vid.style.display = 'none';
+          // Hide custom overlay so it doesn't block iframe interaction
+          const _ov = $('#vcOverlay');
+          if (_ov) { _ov.style.display = 'none'; _ov.style.pointerEvents = 'none'; }
+          frame.dataset.iframeMode = '1';
           const ifrm = document.createElement('iframe');
           ifrm.src = src;
-          ifrm.style.cssText = (extraStyle || 'position:absolute;inset:0;width:100%;height:100%;') + 'border:none;z-index:1;';
-          ifrm.setAttribute('allowfullscreen','');
-          ifrm.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture');
+          ifrm.style.cssText = (extraStyle || 'position:absolute;inset:0;width:100%;height:100%;') + 'border:none;z-index:2;';
+          ifrm.setAttribute('allow','autoplay; encrypted-media; picture-in-picture');
           ifrm.setAttribute('sandbox','allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation');
           frame.style.overflow = 'hidden';
           frame.appendChild(ifrm);
@@ -2988,6 +3002,11 @@ backface-visibility:hidden;
 
         if (archiveMatch) {
           let archiveSrc = _vurl.replace('archive.org/details/', 'archive.org/embed/').replace('archive.org/download/', 'archive.org/embed/');
+          // Block archive.org bottom toolbar
+          const _archiveBlocker2 = document.createElement('div');
+          _archiveBlocker2.id = 'archiveBottomBlocker2';
+          _archiveBlocker2.style.cssText = 'position:absolute;bottom:0;left:0;width:100%;height:42px;z-index:10;background:transparent;pointer-events:all;';
+          frame.appendChild(_archiveBlocker2);
           _makeIframe(archiveSrc);
         } else if (stMatch) {
           _makeIframe('https://streamtape.com/e/' + stMatch[1] + '/', 'position:absolute;top:-58px;left:-2px;width:calc(100% + 4px);height:calc(100% + 116px);');
@@ -3010,6 +3029,10 @@ backface-visibility:hidden;
           _makeIframe(embedSrc);
         } else if (isDirectMedia) {
           // Direct playable media (mp4, cloudinary, m3u8, etc.)
+          // Restore custom overlay for direct video
+          const _ov2 = $('#vcOverlay');
+          if (_ov2) { _ov2.style.display = ''; }
+          frame.dataset.iframeMode = '';
           vid.style.display = 'block';
           vid.style.cssText += ';position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;background:#000;';
           vid.src = _vurl;
@@ -3078,9 +3101,14 @@ backface-visibility:hidden;
       if (vid) vid.pause();
       const ifrm = $('#playerFrame iframe');
       if (ifrm) ifrm.remove();
-      // Hide controls
+      // Remove archive bottom blockers
+      ['archiveBottomBlocker','archiveBottomBlocker2'].forEach(id => { const el = document.getElementById(id); if (el) el.remove(); });
+      // Reset iframe mode
+      const fr = $('#playerFrame');
+      if (fr) fr.dataset.iframeMode = '';
+      // Hide controls but restore display for next open
       const ov = $('#vcOverlay');
-      if (ov) { ov.style.opacity = '0'; ov.style.pointerEvents = 'none'; }
+      if (ov) { ov.style.display = ''; ov.style.opacity = '0'; ov.style.pointerEvents = 'none'; }
     }
 
     // ══ CUSTOM VIDEO CONTROLS LOGIC ══
@@ -3845,9 +3873,10 @@ backface-visibility:hidden;
     <!-- Scrollable content -->
     <div id="adminContent" style="flex:1;overflow-y:auto;padding:16px;padding-bottom:90px;-webkit-overflow-scrolling:touch;"></div>
     <!-- Bottom Nav (5 tabs) -->
-    <div style="position:fixed;bottom:0;left:0;right:0;z-index:10;background:rgba(2,10,18,.97);border-top:1px solid rgba(255,102,0,.14);backdrop-filter:blur(20px);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 4px;gap:4px;">
+    <div style="position:fixed;bottom:0;left:0;right:0;z-index:10;background:rgba(2,10,18,.97);border-top:1px solid rgba(255,102,0,.14);backdrop-filter:blur(20px);display:grid;grid-template-columns:repeat(6,1fr);padding:6px 4px;gap:4px;">
       <button class="adm-nav" data-atab="all" onclick="adminTab('all')">📹<span>All</span></button>
       <button class="adm-nav" data-atab="hot" onclick="adminTab('hot')">🔥<span>Hot</span></button>
+      <button class="adm-nav" data-atab="embed" onclick="adminTab('embed')">🔗<span>Embed</span></button>
       <button class="adm-nav" data-atab="gallery" onclick="adminTab('gallery')">🖼️<span>Gallery</span></button>
       <button class="adm-nav" data-atab="movie" onclick="adminTab('movie')">🎬<span>Movie</span></button>
       <button class="adm-nav" data-atab="anime" onclick="adminTab('anime')">🎌<span>Anime</span></button>
@@ -5180,6 +5209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cnt) cnt.textContent = state.items.length + ' items';
     if (tab === 'all') renderAdminAll();
     else if (tab === 'hot') renderAdminHot();
+    else if (tab === 'embed') renderAdminEmbed();
     else if (tab === 'gallery') renderAdminGallery();
     else if (tab === 'anime') renderAdminAnime();
     else if (tab === 'movie') renderAdminMovie();
@@ -5194,16 +5224,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function adminDriveEmbed(id) { return 'https://drive.google.com/file/d/' + id + '/preview'; }
   function adminDriveThumb(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w400'; }
-
-  function adminExtractIframeSrc(input) {
-    const val = (input || '').trim();
-    if (!val) return '';
-    const iframeMatch = val.match(/<iframe[^>]+src\s*=\s*["']([^"']+)["']/i);
-    if (iframeMatch && iframeMatch[1]) return iframeMatch[1].trim();
-    const srcMatch = val.match(/src\s*=\s*["']([^"']+)["']/i);
-    if (srcMatch && srcMatch[1]) return srcMatch[1].trim();
-    return val;
-  }
 
   function adminFileToDataUrl(file) {
     return new Promise(res => { const r = new FileReader(); r.onload = e => res(e.target.result); r.readAsDataURL(file); });
@@ -5419,27 +5439,6 @@ document.addEventListener('DOMContentLoaded', () => {
     driveStatus.id = 'hotDriveStatus';
     form.appendChild(driveStatus);
 
-    const doodInput = document.createElement('textarea');
-    doodInput.className = 'adm-input';
-    doodInput.id = 'hotDoodEmbed';
-    doodInput.placeholder = '🟧 DoodStream embed code paste karo — iframe ya URL dono chalega';
-    doodInput.style.cssText = 'min-height:72px;resize:vertical;';
-    doodInput.oninput = () => {
-      const st = document.getElementById('hotDoodStatus');
-      const val = doodInput.value.trim();
-      if (!val) { st.innerHTML = ''; return; }
-      const src = adminExtractIframeSrc(val);
-      const isDood = /<iframe/i.test(val) || /src=["']https?:\/\//i.test(val);
-      st.innerHTML = isDood
-        ? '<span style="color:#ff6600;font-size:11px;">✅ DoodStream embed ready — iframe paste hoga</span>'
-        : '<span style="color:#ffaa33;font-size:11px;">⚠️ Valid iframe/embed detect nahi hua</span>';
-    };
-    form.appendChild(doodInput);
-
-    const doodStatus = document.createElement('div');
-    doodStatus.id = 'hotDoodStatus';
-    form.appendChild(doodStatus);
-
     // Desc
     const descEl = document.createElement('textarea');
     descEl.className = 'adm-input';
@@ -5472,6 +5471,189 @@ document.addEventListener('DOMContentLoaded', () => {
       items.forEach((it, i) => {
         listWrap.appendChild(adminBuildItemRow(it, i + 1));
       });
+    }
+    c.appendChild(listWrap);
+  }
+
+  // ── EMBED tab ─────────────────────────────────────────────────
+  const EMBED_AUTO_TITLES = [
+    'Epic Stream','Fire Mix','Neon Blast','Ultra HD','Night Vibe','Mega Stream','Top Pick','Wild Drop',
+    'Hot Zone','Crystal Clear','Flash Play','Heat Wave','Dark Side','Prime Cut','Raw Energy','Glow Up',
+    'Power Play','Deep Dive','Sky High','Burn It','Neon Rush','Viral Hit','Stealth Mode','Ghost Wave',
+    'Thunder Roll','Lava Flow','Storm Drop','Cosmic Beat','Zero Gravity','Turbo Stream'
+  ];
+  const EMBED_AUTO_DESCS = [
+    'Best content just for you. Watch now!',
+    'Exclusive video. Play and enjoy.',
+    'Top trending. You will love it.',
+    'Premium stream. Full quality.',
+    'Hot pick of the day. Enjoy!',
+    'Viral right now. Must watch.',
+    'Latest drop. Fresh and fire.',
+    'Hand-picked for you. Press play.',
+    'Limited time stream. Watch fast.',
+    'Insane content. No spoilers!'
+  ];
+  const EMBED_THUMB_SETS = [
+    'https://picsum.photos/seed/SEED/400/225',
+    'https://picsum.photos/seed/SEED2/400/225',
+  ];
+
+  function embedAutoGenerate() {
+    const seed = Math.floor(Math.random() * 9000) + 1000;
+    const title = EMBED_AUTO_TITLES[Math.floor(Math.random() * EMBED_AUTO_TITLES.length)] + ' #' + seed;
+    const desc = EMBED_AUTO_DESCS[Math.floor(Math.random() * EMBED_AUTO_DESCS.length)];
+    const thumbUrl = 'https://picsum.photos/seed/' + seed + '/400/225';
+    const tInput = document.getElementById('embTitle');
+    const dInput = document.getElementById('embDesc');
+    const tData  = document.getElementById('embThumbData');
+    if (tInput) tInput.value = title;
+    if (dInput) dInput.value = desc;
+    if (tData)  { tData.value = thumbUrl; updateEmbThumbPreview(thumbUrl); }
+    toast('✨ Auto-generated!');
+  }
+
+  function updateEmbThumbPreview(url) {
+    const prev = document.getElementById('embThumbPreview');
+    if (!prev) return;
+    if (url) { prev.src = url; prev.style.display = 'block'; }
+    else { prev.style.display = 'none'; }
+  }
+
+  function adminAddEmbed() {
+    const embedUrl = (document.getElementById('embUrl').value || '').trim();
+    const title    = (document.getElementById('embTitle').value || '').trim() || ('Embed #' + (state.items.filter(i => i.type === 'hot').length + 1));
+    const desc     = (document.getElementById('embDesc').value || '').trim() || 'Embedded video.';
+    const thumb    = (document.getElementById('embThumbData').value || '').trim() ||
+                     'linear-gradient(135deg,rgba(255,102,0,.35),rgba(255,136,0,.15))';
+    if (!embedUrl) { toast('Embed URL daalo!'); return; }
+
+    state.items.unshift({
+      id: 'embed-' + Date.now(),
+      type: 'hot',
+      title,
+      desc,
+      quality: 'HD',
+      meta: 'Embed • HD',
+      thumb,
+      videoUrl: embedUrl,
+      tags: ['Embed','HD'],
+      createdAt: Date.now()
+    });
+    persist();
+
+    // Reset form
+    ['embUrl','embTitle','embDesc','embThumbData'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.value = '';
+    });
+    updateEmbThumbPreview('');
+    toast('✅ Video Hot section mein add ho gaya!');
+    renderAdminEmbed();
+  }
+
+  function renderAdminEmbed() {
+    const c = document.getElementById('adminContent');
+    c.innerHTML = '';
+
+    // Header
+    const h1 = document.createElement('div');
+    h1.className = 'adm-section-head';
+    h1.textContent = '🔗 Embed Karo — Koi Bhi Website';
+    c.appendChild(h1);
+
+    // Info tip
+    const tip = document.createElement('div');
+    tip.style.cssText = 'background:rgba(255,102,0,.07);border:1px solid rgba(255,102,0,.18);border-radius:12px;padding:10px 12px;font-size:11px;color:#ff9944;line-height:1.7;margin-bottom:12px;';
+    tip.innerHTML = '<b>💡 Supported Sources:</b><br>' +
+      'YouTube • Streamtape • Doodstream • Archive.org<br>StreamSB • Filemoon • Vidhide • Mixdrop<br>' +
+      'Cloudinary MP4 • Google Drive • Koi bhi Iframe URL ✅';
+    c.appendChild(tip);
+
+    const form = document.createElement('div');
+    form.style.cssText = 'display:grid;gap:10px;margin-bottom:20px;';
+
+    // Embed URL input
+    const urlInput = document.createElement('input');
+    urlInput.className = 'adm-input'; urlInput.id = 'embUrl'; urlInput.type = 'url';
+    urlInput.placeholder = '🔗 Embed / Video URL paste karo (koi bhi site)';
+
+    const urlStatus = document.createElement('div');
+    urlStatus.id = 'embUrlStatus';
+    urlInput.oninput = () => {
+      const v = urlInput.value.trim();
+      let msg = '', color = '#ff6600';
+      if (!v) { urlStatus.innerHTML = ''; return; }
+      if (/youtube|youtu\.be/.test(v)) msg = '✅ YouTube';
+      else if (/streamtape/.test(v)) msg = '✅ Streamtape';
+      else if (/dood|doodstream|ds2play/.test(v)) msg = '✅ Doodstream';
+      else if (/archive\.org/.test(v)) msg = '✅ Archive.org';
+      else if (/streamsb|sbembed|watchsb|sbplay/.test(v)) msg = '✅ StreamSB';
+      else if (/filemoon|moonplayer/.test(v)) msg = '✅ Filemoon';
+      else if (/vidhide/.test(v)) msg = '✅ Vidhide';
+      else if (/mixdrop/.test(v)) msg = '✅ Mixdrop';
+      else if (/drive\.google|docs\.google/.test(v)) msg = '✅ Google Drive';
+      else if (/cloudinary|\.mp4|\.m3u8|\.webm/.test(v)) msg = '✅ Direct Media';
+      else if (v.startsWith('http')) { msg = '⚠️ Unknown — iframe mein try hoga'; color = '#ffaa33'; }
+      urlStatus.innerHTML = '<span style="font-size:11px;color:' + color + ';">' + msg + '</span>';
+    };
+    form.appendChild(urlInput);
+    form.appendChild(urlStatus);
+
+    // Thumbnail URL input + preview
+    const thumbInput = document.createElement('input');
+    thumbInput.className = 'adm-input'; thumbInput.id = 'embThumbData'; thumbInput.type = 'url';
+    thumbInput.placeholder = '🖼️ Thumbnail URL (ya Auto Generate karo)';
+    const thumbPreview = document.createElement('img');
+    thumbPreview.id = 'embThumbPreview';
+    thumbPreview.style.cssText = 'width:100%;height:110px;object-fit:cover;border-radius:12px;display:none;margin-top:2px;';
+    thumbInput.oninput = () => updateEmbThumbPreview(thumbInput.value.trim());
+    form.appendChild(thumbInput);
+    form.appendChild(thumbPreview);
+
+    // Title input
+    const titleInput = document.createElement('input');
+    titleInput.className = 'adm-input'; titleInput.id = 'embTitle';
+    titleInput.placeholder = 'Title (ya Auto Generate karo)';
+    form.appendChild(titleInput);
+
+    // Description input
+    const descEl = document.createElement('textarea');
+    descEl.className = 'adm-input'; descEl.id = 'embDesc';
+    descEl.placeholder = 'Description (ya Auto Generate karo)';
+    descEl.style.cssText = 'min-height:55px;resize:vertical;';
+    form.appendChild(descEl);
+
+    // Auto Generate button
+    const autoBtn = document.createElement('button');
+    autoBtn.className = 'adm-btn';
+    autoBtn.style.cssText = 'background:linear-gradient(135deg,rgba(138,92,255,.5),rgba(255,102,0,.35));border:1px solid rgba(138,92,255,.45);';
+    autoBtn.innerHTML = '✨ Auto Generate (Title + Desc + Thumb)';
+    autoBtn.onclick = embedAutoGenerate;
+    form.appendChild(autoBtn);
+
+    // Add button
+    const addBtn = document.createElement('button');
+    addBtn.className = 'adm-btn';
+    addBtn.innerHTML = '➕ Hot Section Mein Add Karo';
+    addBtn.onclick = adminAddEmbed;
+    form.appendChild(addBtn);
+
+    c.appendChild(form);
+
+    // List of existing embed/hot items
+    const hotItems = state.items.filter(i => i.type === 'hot');
+    const h2 = document.createElement('div');
+    h2.className = 'adm-section-head';
+    h2.style.marginTop = '4px';
+    h2.textContent = '🔥 Hot/Embed Items (' + hotItems.length + ')';
+    c.appendChild(h2);
+
+    const listWrap = document.createElement('div');
+    listWrap.style.cssText = 'display:grid;gap:8px;margin-top:10px;';
+    if (!hotItems.length) {
+      listWrap.innerHTML = '<div class="adm-empty">Abhi koi hot/embed video nahi</div>';
+    } else {
+      hotItems.forEach((it, i) => listWrap.appendChild(adminBuildItemRow(it, i + 1)));
     }
     c.appendChild(listWrap);
   }
@@ -6125,9 +6307,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (descEl) item.desc = descEl.value.trim();
     if (newThumbEl && newThumbEl.value) item.thumb = newThumbEl.value;
     if (driveEl && driveEl.value.trim()) {
-      const raw = driveEl.value.trim();
-      item.videoUrl = adminExtractIframeSrc(raw);
-      item.rawVideo = raw;
+      item.videoUrl = driveEl.value.trim();
       item.driveId = null;
     }
     persist();
@@ -6142,24 +6322,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const desc = (document.getElementById('hotDesc').value || '').trim();
     if (!title) { toast('Title daalo!'); return; }
     const cloudUrl = (document.getElementById('hotCloudUrl').value || '').trim();
-    const doodEmbed = (document.getElementById('hotDoodEmbed').value || '').trim();
-    const rawVideo = doodEmbed || cloudUrl || '';
-    const videoUrl = rawVideo ? adminExtractIframeSrc(rawVideo) : null;
+    const videoUrl = cloudUrl || null;
     const num = state.items.filter(i => i.type === 'hot').length + 1;
     state.items.unshift({
       id: 'hot-' + Date.now(), type: 'hot', num, title,
       desc: desc || 'Hot content.', quality: 'HD', meta: 'Hot • HD',
       thumb: thumb || 'linear-gradient(135deg,rgba(255,80,0,.7),rgba(255,200,0,.3))',
-      videoUrl, rawVideo, tags: ['Hot','HD'], createdAt: Date.now()
+      videoUrl, tags: ['Hot','HD'], createdAt: Date.now()
     });
     persist();
     document.getElementById('hotThumbData').value = '';
     document.getElementById('hotTitle').value = '';
     document.getElementById('hotCloudUrl').value = '';
-    document.getElementById('hotDoodEmbed').value = '';
     document.getElementById('hotDesc').value = '';
     document.getElementById('hotDriveStatus').innerHTML = '';
-    document.getElementById('hotDoodStatus').innerHTML = '';
     const htPrev = document.getElementById('hotThumbPreview');
     if (htPrev) htPrev.style.display = 'none';
     toast('✅ Hot video add ho gaya!');
